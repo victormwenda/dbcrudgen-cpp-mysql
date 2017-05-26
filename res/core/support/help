@@ -1,0 +1,6 @@
+Commands:
+ --help, -h Show this help message
+
+ --database-crud Shows you want to perform a database crud action
+    --all create the whole crud of a database
+    --table <tablename> create the crud of only the specified table
