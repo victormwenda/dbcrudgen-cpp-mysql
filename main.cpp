@@ -1,11 +1,12 @@
 #include <iostream>
 #include "core/cli/CliParser.h"
 #include "core/crud/actions/DatabaseCrudActions.h"
-#include "core/io/FilesManager.h"
+#include "core/database/schemas/DatabaseSchemas.h"
+#include <algorithm>
 
 using namespace std;
 
-int main(int argc, char *argv[]) {
+int handleCliLaunch(int argc, char *argv[]) {
 
     FilesManager filesManager;
 
@@ -33,6 +34,28 @@ int main(int argc, char *argv[]) {
         }
 
     }
+
+}
+
+int main(int argc, char *argv[]) {
+
+    std::string databaseName{"test_database"};
+
+    std::vector<TableColumn> tableColumns{
+            TableColumn{"username", "varchar(128) not null", "NO", "PRI", "NULL", ""},
+            TableColumn{"password", "varchar(128) not null", "NO", "", "NULL", ""}
+    };
+
+    DatabaseConnection connection{"127.0.0.1", "root", "rootPass"};
+
+    DatabaseSchemas<TableColumn> databaseSchemas{databaseName, tableColumns, connection};
+    cout << databaseSchemas.getDatabaseName() << std::endl;
+
+    auto container = databaseSchemas.getTableColumns();
+    auto printValue = [](TableColumn tableColumn) { cout << "Column : " << tableColumn.getField() << endl; };
+
+    for_each(begin(container), end(container), printValue);
+
 
     return 0;
 }
