@@ -46,15 +46,35 @@ int main(int argc, char *argv[]) {
             TableColumn{"password", "varchar(128) not null", "NO", "", "NULL", ""}
     };
 
+    std::vector<DatabaseTable> databaseTables{
+            DatabaseTable{"users", tableColumns},
+            DatabaseTable{"authentication", tableColumns}
+    };
+
+
+
     DatabaseConnection connection{"127.0.0.1", "root", "rootPass"};
 
-    DatabaseSchemas<TableColumn> databaseSchemas{databaseName, tableColumns, connection};
-    cout << databaseSchemas.getDatabaseName() << std::endl;
+    DatabaseSchemas<DatabaseTable> databaseSchemas{databaseName, databaseTables, connection};
 
-    auto container = databaseSchemas.getTableColumns();
-    auto printValue = [](TableColumn tableColumn) { cout << "Column : " << tableColumn.getField() << endl; };
 
-    for_each(begin(container), end(container), printValue);
+    auto container = databaseSchemas.getDatabaseTables();
+
+    auto printTables = [](DatabaseTable databaseTable) {
+
+        cout << "Table : " << databaseTable.getTableName() << endl;
+
+        auto columns = databaseTable.getTableColumns();
+
+        auto printTableColumns = [](TableColumn tableColumn) {
+            cout << "\tColumn : " << tableColumn.getField() << endl;
+        };
+
+        for_each(begin(columns), end(columns), printTableColumns);
+
+    };
+
+    for_each(begin(container), end(container), printTables);
 
 
     return 0;

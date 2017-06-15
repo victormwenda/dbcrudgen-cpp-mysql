@@ -13,23 +13,25 @@
 #include <vector>
 #include "../connection/DatabaseConnection.h"
 #include "../columns/TableColumn.h"
+#include "../relations/DatabaseTable.h"
 
 using namespace std;
 
 template<typename T>
 class DatabaseSchemas {
 
-    //Ensure that the vector of table columns holds class of base table column
-    static_assert(std::is_base_of<TableColumn, T>::value, "Table columns must be base of TableColumn");
+    //Ensure that the vector of tables holds class of base database table
+    static_assert(std::is_base_of<DatabaseTable, T>::value, "Table columns must be base of DatabaseTable");
 
 private:
     std::string databaseName;
-    std::vector<T> tableColumns;
+    std::vector<T> databaseTables;
     DatabaseConnection connection;
+
 public:
-    DatabaseSchemas(const std::string databaseName, const std::vector<T> tableColumns,
+    DatabaseSchemas(const std::string databaseName, const std::vector<T> databaseTables,
                     const DatabaseConnection connection) :
-            databaseName(databaseName), tableColumns(tableColumns), connection(connection) {
+            databaseName(databaseName), databaseTables(databaseTables), connection(connection) {
 
     }
 
@@ -37,8 +39,8 @@ public:
         return databaseName;
     }
 
-    const vector<T> &getTableColumns() const {
-        return tableColumns;
+    const vector<T> &getDatabaseTables() const {
+        return databaseTables;
     }
 
     const DatabaseConnection &getConnection() const {
