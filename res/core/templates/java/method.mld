@@ -1,0 +1,8 @@
+${VISIBILITY} ${RETURN_TYPE} ${METHOD_NAME} ($PARAMETERS) {
+
+    ${STUB}
+
+    #if (${RETURN_TYPE} != "void")
+    return ${RETURN_VALUE}
+    #end
+}

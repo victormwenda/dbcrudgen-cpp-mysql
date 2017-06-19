@@ -1,0 +1,5 @@
+${VISIBILITY} ${METHOD_NAME} ($PARAMETERS) {
+
+    ${STUB}
+
+}

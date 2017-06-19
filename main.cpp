@@ -52,11 +52,9 @@ int main(int argc, char *argv[]) {
     };
 
 
-
     DatabaseConnection connection{"127.0.0.1", "root", "rootPass"};
 
     DatabaseSchemas<DatabaseTable> databaseSchemas{databaseName, databaseTables, connection};
-
 
     auto container = databaseSchemas.getDatabaseTables();
 
@@ -75,7 +73,6 @@ int main(int argc, char *argv[]) {
     };
 
     for_each(begin(container), end(container), printTables);
-
 
     return 0;
 }

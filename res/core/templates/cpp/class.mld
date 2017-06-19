@@ -1,0 +1,16 @@
+class ${CLASSNAME} {
+
+    public:
+        ${PUBLIC_PROPERTIES}
+        ${PUBLIC_CONST}
+        ${PUBLIC_METHODS}
+    protected:
+        ${PROTECTED_PROPERTIES}
+        ${PROTECTED_CONST}
+        ${PROTECTED_METHODS}
+    private:
+       ${PRIVATE_PROPERTIES}
+       ${PRIVATE_CONST}
+       ${PRIVATE_METHODS}
+
+}
