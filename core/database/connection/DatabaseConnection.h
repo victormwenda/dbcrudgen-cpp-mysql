@@ -11,7 +11,8 @@
 
 #include <iostream>
 
-class DatabaseConnection {
+template<class T>
+class DatabaseConnection<T> {
     std::string host;
     std::string username;
     std::string password;
@@ -42,6 +43,12 @@ public:
     void setPassword(const std::string &password) {
         DatabaseConnection::password = password;
     }
+
+    /**
+     * Get a database connection
+     * @return
+     */
+    virtual T &getConnection() = 0;
 };
 
 
