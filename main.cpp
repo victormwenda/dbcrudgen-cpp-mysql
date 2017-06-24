@@ -2,6 +2,9 @@
 #include "core/cli/CliParser.h"
 #include "core/crud/actions/DatabaseCrudActions.h"
 #include "core/database/schemas/DatabaseSchemas.h"
+#include "lang/dsl/JavaLangDSL.h"
+#include "lang/dsl/PHPLangDSL.h"
+#include "lang/dsl/CPPLangDSL.h"
 #include <algorithm>
 
 using namespace std;
@@ -37,7 +40,7 @@ int handleCliLaunch(int argc, char *argv[]) {
 
 }
 
-int main(int argc, char *argv[]) {
+void mockDatabase() {
 
     std::string databaseName{"test_database"};
 
@@ -74,5 +77,23 @@ int main(int argc, char *argv[]) {
 
     for_each(begin(container), end(container), printTables);
 
+}
+
+int main(int argc, char *argv[]) {
+    CPPLangDSL cppLangDSL;
+    const vector<LanguageFilesProperties> &cppProperties = cppLangDSL.getLanguageFileProperties();
+    for (auto property : cppProperties) {
+        cout << property.getFileType() << endl;
+    }
+    JavaLangDSL javaLangDSL;
+    const vector<LanguageFilesProperties> &javaProperties = javaLangDSL.getLanguageFileProperties();
+    for (auto property : javaProperties) {
+        cout << property.getFileType() << endl;
+    }
+    PHPLangDSL phpLangDSL;
+    const vector<LanguageFilesProperties> &phpLangProperties = phpLangDSL.getLanguageFileProperties();
+    for (auto property : javaProperties) {
+        cout << property.getFileType() << endl;
+    }
     return 0;
 }
