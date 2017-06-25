@@ -1,5 +1,3 @@
-
-
 /* Standard C++ includes */
 #include <stdlib.h>
 #include <iostream>
@@ -35,7 +33,7 @@ int main(void)
         con = driver->connect("tcp://127.0.0.1:3306", "root", "root3358");
 
         /* Connect to the MySQL test database */
-        con->setSchema("test");
+        con->setSchema("dbcrudgen");
 
         stmt = con->createStatement();
         res = stmt->executeQuery("SELECT 'Hello World!' AS _message");
@@ -62,4 +60,5 @@ int main(void)
     cout << endl;
 
     return EXIT_SUCCESS;
+
 }
