@@ -1,99 +1,65 @@
+
+
+/* Standard C++ includes */
+#include <stdlib.h>
 #include <iostream>
-#include "core/cli/CliParser.h"
-#include "core/crud/actions/DatabaseCrudActions.h"
-#include "core/database/schemas/DatabaseSchemas.h"
-#include "lang/dsl/JavaLangDSL.h"
-#include "lang/dsl/PHPLangDSL.h"
-#include "lang/dsl/CPPLangDSL.h"
-#include <algorithm>
+
+/*
+  Include directly the different
+  headers from cppconn/ and mysql_driver.h + mysql_util.h
+  (and mysql_connection.h). This will reduce your build time!
+*/
+#include "mysql_connection.h"
+
+#include <cppconn/driver.h>
+#include <cppconn/exception.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
 
 using namespace std;
 
-int handleCliLaunch(int argc, char *argv[]) {
+int main(void)
+{
+    cout << endl;
+    cout << "Running 'SELECT 'Hello World!'     AS _message'..." << endl;
 
-    FilesManager filesManager;
+    try {
+        sql::Driver *driver;
+        sql::Connection *con;
+        sql::Statement *stmt;
+        sql::ResultSet *res;
 
-    CliParser cliParser;
+        /* Create a connection */
+        driver = get_driver_instance();
 
-    if (argc < 2) {
-        string command(argv[0]);
-        (&cliParser)->logInvalidArguments(1, command, 2, "No argument provided");
-        return 0;
-    } else {
-        string action = std::string(argv[1]);
-        int actionId = (&cliParser)->parse(action);
-        switch (actionId) {
-            case DatabaseCrudActions::INVALID_ACTION:
-                (&cliParser)->logInvalidAction(action);
-                break;
-            case DatabaseCrudActions::HELP:
-                (&cliParser)->showAvailableActions();
-                break;
-            case DatabaseCrudActions::ENABLE_DATABASE_CRUD:
+        con = driver->connect("tcp://127.0.0.1:3306", "root", "root3358");
 
-                break;
-            default:
-                std::cerr << "Found undefined action : " << actionId << endl;
+        /* Connect to the MySQL test database */
+        con->setSchema("test");
+
+        stmt = con->createStatement();
+        res = stmt->executeQuery("SELECT 'Hello World!' AS _message");
+        while (res->next()) {
+            cout << "\t... MySQL replies: ";
+            /* Access column data by alias or column name */
+            cout << res->getString("_message") << endl;
+            cout << "\t... MySQL says it again: ";
+            /* Access column data by numeric offset, 1 is the first column */
+            cout << res->getString(1) << endl;
         }
+        delete res;
+        delete stmt;
+        delete con;
 
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__;
+        cout << "(" << __FUNCTION__ << ") on line "         << __LINE__ << endl;
+        cout << "# ERR: " << e.what();
+        cout << " (MySQL error code: " << e.getErrorCode();
+        cout << ", SQLState: " << e.getSQLState() << " )" << endl;
     }
 
-}
+    cout << endl;
 
-void mockDatabase() {
-
-    std::string databaseName{"test_database"};
-
-    std::vector<TableColumn> tableColumns{
-            TableColumn{"username", "varchar(128) not null", "NO", "PRI", "NULL", ""},
-            TableColumn{"password", "varchar(128) not null", "NO", "", "NULL", ""}
-    };
-
-    std::vector<DatabaseTable> databaseTables{
-            DatabaseTable{"users", tableColumns},
-            DatabaseTable{"authentication", tableColumns}
-    };
-
-
-    DatabaseConnection connection{"127.0.0.1", "root", "rootPass"};
-
-    DatabaseSchemas<DatabaseTable> databaseSchemas{databaseName, databaseTables, connection};
-
-    auto container = databaseSchemas.getDatabaseTables();
-
-    auto printTables = [](DatabaseTable databaseTable) {
-
-        cout << "Table : " << databaseTable.getTableName() << endl;
-
-        auto columns = databaseTable.getTableColumns();
-
-        auto printTableColumns = [](TableColumn tableColumn) {
-            cout << "\tColumn : " << tableColumn.getField() << endl;
-        };
-
-        for_each(begin(columns), end(columns), printTableColumns);
-
-    };
-
-    for_each(begin(container), end(container), printTables);
-
-}
-
-int main(int argc, char *argv[]) {
-    CPPLangDSL cppLangDSL;
-    const vector<LanguageFilesProperties> &cppProperties = cppLangDSL.getLanguageFileProperties();
-    for (auto property : cppProperties) {
-        cout << property.getFileType() << endl;
-    }
-    JavaLangDSL javaLangDSL;
-    const vector<LanguageFilesProperties> &javaProperties = javaLangDSL.getLanguageFileProperties();
-    for (auto property : javaProperties) {
-        cout << property.getFileType() << endl;
-    }
-    PHPLangDSL phpLangDSL;
-    const vector<LanguageFilesProperties> &phpLangProperties = phpLangDSL.getLanguageFileProperties();
-    for (auto property : javaProperties) {
-        cout << property.getFileType() << endl;
-    }
-    return 0;
+    return EXIT_SUCCESS;
 }
