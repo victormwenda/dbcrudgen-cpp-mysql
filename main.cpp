@@ -40,8 +40,7 @@ int handleCliLaunch(int argc, char *argv[]) {
 
 }
 
-void mockDatabase() {
-
+int main(int argc, char *argv[]) {
     std::string databaseName{"test_database"};
 
     std::vector<TableColumn> tableColumns{
@@ -77,23 +76,5 @@ void mockDatabase() {
 
     for_each(begin(container), end(container), printTables);
 
-}
-
-int main(int argc, char *argv[]) {
-    CPPLangDSL cppLangDSL;
-    const vector<LanguageFilesProperties> &cppProperties = cppLangDSL.getLanguageFileProperties();
-    for (auto property : cppProperties) {
-        cout << property.getFileType() << endl;
-    }
-    JavaLangDSL javaLangDSL;
-    const vector<LanguageFilesProperties> &javaProperties = javaLangDSL.getLanguageFileProperties();
-    for (auto property : javaProperties) {
-        cout << property.getFileType() << endl;
-    }
-    PHPLangDSL phpLangDSL;
-    const vector<LanguageFilesProperties> &phpLangProperties = phpLangDSL.getLanguageFileProperties();
-    for (auto property : javaProperties) {
-        cout << property.getFileType() << endl;
-    }
     return 0;
 }
