@@ -1,3 +1,5 @@
-${VISIBILITY} ${CLASSNAME} {
+${VISIBILITY} ${CLASS_NAME} {
+
+    ${STUB}
 
 }

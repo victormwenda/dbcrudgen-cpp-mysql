@@ -1,0 +1,1 @@
+#if(${CLASS_PROPERTY} != void ) lazy #end ${OBJECT_TYPE} ${OBJECT_NAME} : ${DATA_TYPE}

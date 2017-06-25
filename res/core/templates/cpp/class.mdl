@@ -1,4 +1,4 @@
-class ${CLASSNAME} {
+class ${CLASS_NAME} {
 
     public:
         ${PUBLIC_PROPERTIES}

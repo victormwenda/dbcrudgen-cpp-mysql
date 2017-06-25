@@ -1,5 +1,7 @@
 namespace ${NAMESPACE}
 
-${CLASSNAME} {
+${CLASS_NAME} {
+
+    ${STUB}
 
 }

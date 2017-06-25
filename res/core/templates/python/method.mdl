@@ -1,0 +1,2 @@
+def ${METHOD_NAME}(self #if (${PARAMETERS} != void), ${PARAMETERS} #end):
+    ${STUB}
