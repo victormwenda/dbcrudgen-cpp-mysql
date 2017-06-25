@@ -1,78 +1,32 @@
 #include <iostream>
 #include "core/cli/CliParser.h"
-#include "core/crud/actions/DatabaseCrudActions.h"
 #include "core/database/schemas/DatabaseSchemas.h"
+#include "lang/parser/java/JavaLangTemplateParser.h"
 #include <algorithm>
 
 using namespace std;
 
-int handleCliLaunch(int argc, char *argv[]) {
-
-    FilesManager filesManager;
-
-    CliParser cliParser;
-
-    if (argc < 2) {
-        string command(argv[0]);
-        (&cliParser)->logInvalidArguments(1, command, 2, "No argument provided");
-        return 0;
-    } else {
-        string action = std::string(argv[1]);
-        int actionId = (&cliParser)->parse(action);
-        switch (actionId) {
-            case DatabaseCrudActions::INVALID_ACTION:
-                (&cliParser)->logInvalidAction(action);
-                break;
-            case DatabaseCrudActions::HELP:
-                (&cliParser)->showAvailableActions();
-                break;
-            case DatabaseCrudActions::ENABLE_DATABASE_CRUD:
-
-                break;
-            default:
-                std::cerr << "Found undefined action : " << actionId << endl;
-        }
-
-    }
-
-}
-
 int main(int argc, char *argv[]) {
+    std::string model = "${CLASSNAME} . . 1 ${METHOD_NAME} . . 6 ${JAVA} . . 7.. ${JAVA}. . 9 ";
+    JavaLangTemplateParser javaLangTemplateParser{model};
 
-    std::string databaseName{"test_database"};
+    std::string tag1 = "${CLASSNAME}";
+    std::string tag2 = "${METHOD_NAME}";
+    std::string tag3 = "${JAVA}";
 
-    std::vector<TableColumn> tableColumns{
-            TableColumn{"username", "varchar(128) not null", "NO", "PRI", "NULL", ""},
-            TableColumn{"password", "varchar(128) not null", "NO", "", "NULL", ""}
-    };
+    std::string value1 = "Foo";
+    std::string value2 = "foo";
+    std::string value3 = "bar";
 
-    std::vector<DatabaseTable> databaseTables{
-            DatabaseTable{"users", tableColumns},
-            DatabaseTable{"authentication", tableColumns}
-    };
+    javaLangTemplateParser.parse(tag1, value1);
+    javaLangTemplateParser.parse(tag2, value2);
+    javaLangTemplateParser.parse(tag3, value3);
+
+    string newData = javaLangTemplateParser
+            .getTemplate();
 
 
-    DatabaseConnection connection{"127.0.0.1", "root", "rootPass"};
-
-    DatabaseSchemas<DatabaseTable> databaseSchemas{databaseName, databaseTables, connection};
-
-    auto container = databaseSchemas.getDatabaseTables();
-
-    auto printTables = [](DatabaseTable databaseTable) {
-
-        cout << "Table : " << databaseTable.getTableName() << endl;
-
-        auto columns = databaseTable.getTableColumns();
-
-        auto printTableColumns = [](TableColumn tableColumn) {
-            cout << "\tColumn : " << tableColumn.getField() << endl;
-        };
-
-        for_each(begin(columns), end(columns), printTableColumns);
-
-    };
-
-    for_each(begin(container), end(container), printTables);
+    cout << newData << endl;
 
     return 0;
 }
