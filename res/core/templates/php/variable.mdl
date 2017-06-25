@@ -1,1 +1,1 @@
-/*@var ${DATATYPE}*/ $${OBJECTNAME};
+/*@var ${DATA_TYPE}*/ $${OBJECT_NAME};
