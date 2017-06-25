@@ -18,11 +18,12 @@ int main(int argc, char *argv[]) {
     std::string value2 = "foo";
     std::string value3 = "bar";
 
-    javaLangTemplateParser.parse(tag1, value1);
-    javaLangTemplateParser.parse(tag2, value2);
-    javaLangTemplateParser.parse(tag3, value3);
+
 
     string newData = javaLangTemplateParser
+    .parse(tag1, value1)
+    .parse(tag2, value2)
+    .parse(tag3, value3)
             .getTemplate();
 
 

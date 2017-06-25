@@ -36,6 +36,7 @@ public:
          */
     JavaLangTemplateParser parse(std::string &tag, std::string &value) {
         parseTag(tag, value);
+        return *this;
     }
 
     /**
