@@ -1,1 +1,1 @@
-#if(${BEHAVIOR} != void ) mutating #end func ${METHOD_NAME} (#if (${PARAMETERS} != void) ${PARAMETERS} #end)  #if(${RETURN_TYPE} != void) -> ${RETURN_TYPE} #end
+#if(${BEHAVIOR} != void ) mutating #end func ${METHOD_NAME} (#if (${PARAMETERS} != void) ${PARAMETERS} #end)  #if(${RETURN_TYPE} != void) -> ${RETURN_TYPE} #end { ${STUB} }
