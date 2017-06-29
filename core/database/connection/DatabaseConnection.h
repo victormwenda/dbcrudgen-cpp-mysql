@@ -16,9 +16,19 @@ class DatabaseConnection {
     std::string username;
     std::string password;
 public:
+    DatabaseConnection(const std::string databaseFilePath) {
+
+    }
+
     DatabaseConnection(const std::string &host, const std::string &username, const std::string &password)
             : host(host), username(username), password(password) {}
 
+    /**
+     * Returns the database host
+     * This can be the server the database is hosted,
+     * the file path to the database or the database connection string
+     * @return
+     */
     const std::string &getHost() const {
         return host;
     }

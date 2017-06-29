@@ -1,80 +1,20 @@
+#include <stdio.h>
+#include <sqlite3.h>
 #include <iostream>
-#include "core/cli/CliParser.h"
-#include "core/crud/actions/DatabaseCrudActions.h"
-#include "core/database/schemas/DatabaseSchemas.h"
-#include "lang/dsl/JavaLangDSL.h"
-#include "lang/dsl/PHPLangDSL.h"
-#include "lang/dsl/CPPLangDSL.h"
-#include <algorithm>
+int main(int argc, char* argv[]) {
 
-using namespace std;
+    sqlite3 *db;
+    char *zErrMsg = 0;
+    int rc;
 
-int handleCliLaunch(int argc, char *argv[]) {
+    std::string dbFile = "/home/victor/Documents/workspace/c++/dbcrudgen-cpp/res/test/databases/dbcrudgen-db-sqlite.db";
+    rc = sqlite3_open(dbFile.c_str(), &db);
 
-    FilesManager filesManager;
-
-    CliParser cliParser;
-
-    if (argc < 2) {
-        string command(argv[0]);
-        (&cliParser)->logInvalidArguments(1, command, 2, "No argument provided");
-        return 0;
+    if( rc ) {
+        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+        return(0);
     } else {
-        string action = std::string(argv[1]);
-        int actionId = (&cliParser)->parse(action);
-        switch (actionId) {
-            case DatabaseCrudActions::INVALID_ACTION:
-                (&cliParser)->logInvalidAction(action);
-                break;
-            case DatabaseCrudActions::HELP:
-                (&cliParser)->showAvailableActions();
-                break;
-            case DatabaseCrudActions::ENABLE_DATABASE_CRUD:
-
-                break;
-            default:
-                std::cerr << "Found undefined action : " << actionId << endl;
-        }
-
+        fprintf(stderr, "Opened database successfully\n");
     }
-
-}
-
-int main(int argc, char *argv[]) {
-    std::string databaseName{"test_database"};
-
-    std::vector<TableColumn> tableColumns{
-            TableColumn{"username", "varchar(128) not null", "NO", "PRI", "NULL", ""},
-            TableColumn{"password", "varchar(128) not null", "NO", "", "NULL", ""}
-    };
-
-    std::vector<DatabaseTable> databaseTables{
-            DatabaseTable{"users", tableColumns},
-            DatabaseTable{"authentication", tableColumns}
-    };
-
-
-    DatabaseConnection connection{"127.0.0.1", "root", "rootPass"};
-
-    DatabaseSchemas<DatabaseTable> databaseSchemas{databaseName, databaseTables, connection};
-
-    auto container = databaseSchemas.getDatabaseTables();
-
-    auto printTables = [](DatabaseTable databaseTable) {
-
-        cout << "Table : " << databaseTable.getTableName() << endl;
-
-        auto columns = databaseTable.getTableColumns();
-
-        auto printTableColumns = [](TableColumn tableColumn) {
-            cout << "\tColumn : " << tableColumn.getField() << endl;
-        };
-
-        for_each(begin(columns), end(columns), printTableColumns);
-
-    };
-
-    for_each(begin(container), end(container), printTables);
-
-    return 0;
+    sqlite3_close(db);
 }
