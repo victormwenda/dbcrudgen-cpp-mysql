@@ -12,6 +12,8 @@
 #define DBCRUDGEN_CPP_MSSQLDATABASECONNECTION_H
 
 #include <iostream>
+#include <sstream>
+#include <memory.h>
 
 /**
 * MSSQLDatabaseConnection
@@ -20,22 +22,60 @@ class MSSQLDatabaseConnection {
 
 private:
     std::string host;
+    std::string port;
+    std::string serverName;
     std::string username;
     std::string password;
 public:
-    MSSQLDatabaseConnection(const std::string &host, const std::string &username,
-                            const std::string &password) :
-            host(host), username(username), password(password) {}
+    /**
+     * Connect to a Microsoft SQL Server database
+     * @param serverName (host:port)
+     * @param username
+     * @param password
+     */
+    MSSQLDatabaseConnection(std::string serverName, std::string username,
+                            std::string password) :
+            serverName(serverName), username(username), password(password) {
+    }
 
-    const std::string &getHost() const {
+
+    /**
+     * Connect to a Microsoft SQL Server database
+     * @param host
+     * @param port
+     * @param username
+     * @param password
+     */
+    MSSQLDatabaseConnection(std::string host, std::string port, std::string username,
+                            std::string password)
+            : host(host), port(port), username(username), password(password) {
+        serverName = createServerName(host, port);
+    }
+
+    std::string
+    createServerName(std::string host, std::string port) {
+        std::stringstream buffer;
+        buffer << host << ":" << port;
+        return buffer.str();
+    }
+
+    std::string getHost() {
         return host;
     }
 
-    const std::string &getUsername() const {
+    std::string getPort() {
+        return port;
+    }
+
+    std::string getServerName() {
+        return serverName;
+    }
+
+    std::string getUsername() {
         return username;
     }
 
-    const std::string &getPassword() const {
+    std::string getPassword() {
         return password;
     }
 };
