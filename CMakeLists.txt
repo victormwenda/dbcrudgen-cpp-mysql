@@ -4,6 +4,7 @@ project(dbcrudgen_cpp)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+#Include the Mysql Dirs
 include_directories(/usr/local/include/mysql-connector-cpp/include)
 
 set(SOURCE_FILES
@@ -43,10 +44,9 @@ set(SOURCE_FILES
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
-target_link_libraries(dbcrudgen_cpp mysqlcppconn)
-
 #Link SQLite3 libs
 target_link_libraries(dbcrudgen_cpp sqlite3)
 
-
+#Link MysqlCpp libs
+target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 
