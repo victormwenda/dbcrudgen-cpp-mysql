@@ -11,17 +11,16 @@ set(SOURCE_FILES
 
         main.cpp
 
-        core/io/FilesReader.h
-        core/io/FilesWriter.h
-        core/io/FilesManager.h
-
         core/database/schemas/OracleDatabaseSchemas.h
         core/database/schemas/SQLDatabaseSchemas.h
         core/database/schemas/MYSQLDatabaseSchemas.h
         core/database/schemas/MSSQLDatabaseSchemas.h
         core/database/schemas/DatabaseSchemas.h
 
-        core/database/connectors/Connector.cpp
+        core/database/connectors/DatabaseConnector.h
+        core/database/connectors/MYSQLDatabaseConnector.h
+        core/database/connectors/SQLiteDatabaseConnector.h
+
         core/database/connectors/credentials/DatabaseConnection.h
         core/database/connectors/credentials/SQLDatabaseConnectionParams.h
         core/database/connectors/credentials/MSSQLDatabaseConnectionParams.h
@@ -43,6 +42,10 @@ set(SOURCE_FILES
 
         core/crud/actions/DatabaseCrudActions.h
 
+        core/io/FilesReader.h
+        core/io/FilesWriter.h
+        core/io/FilesManager.h
+
         lang/dsl/LanguageDSL.h
         lang/dsl/LanguageFilesProperties.h
         lang/dsl/JavaLangDSL.h
@@ -52,7 +55,7 @@ set(SOURCE_FILES
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
 
-        utils/StringUtils.h)
+        utils/StringUtils.h )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
