@@ -1,11 +1,9 @@
 #include <iostream>
-<<<<<<< HEAD
-=======
+
 #include "core/cli/CliParser.h"
 #include "core/database/schemas/DatabaseSchemas.h"
 #include "lang/parser/java/JavaLangTemplateParser.h"
 #include <algorithm>
->>>>>>> lang-parsers
 
 using namespace std;
 
@@ -13,8 +11,6 @@ int main(int argc, char *argv[]) {
     std::string model = "${CLASSNAME} . . 1 ${METHOD_NAME} . . 6 ${JAVA} . . 7.. ${JAVA}. . 9 ";
     JavaLangTemplateParser javaLangTemplateParser{model};
 
-<<<<<<< HEAD
-=======
     std::string tag1 = "${CLASSNAME}";
     std::string tag2 = "${METHOD_NAME}";
     std::string tag3 = "${JAVA}";
@@ -34,6 +30,5 @@ int main(int argc, char *argv[]) {
 
     cout << newData << endl;
 
->>>>>>> lang-parsers
     return 0;
 }
