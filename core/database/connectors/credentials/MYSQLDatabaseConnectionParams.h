@@ -13,7 +13,7 @@
 
 #include <iostream>
 
-class MYSQLDatabaseConnection {
+class MYSQLDatabaseConnectionParams {
 
 private:
     std::string host;
@@ -21,7 +21,7 @@ private:
     std::string password;
 
 public:
-    MYSQLDatabaseConnection(const std::string &host, const std::string &username,
+    MYSQLDatabaseConnectionParams(const std::string &host, const std::string &username,
                             const std::string &password) : host(
             host), username(username), password(password) {}
 

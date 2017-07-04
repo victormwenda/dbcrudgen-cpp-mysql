@@ -16,7 +16,7 @@
 /**
 * OracleDatabaseConnection
 * */
-class OracleDatabaseConnection {
+class OracleDatabaseConnectionParams {
 
 private:
 
@@ -33,14 +33,14 @@ private:
     }
 
 public:
-    OracleDatabaseConnection(const std::string &host, const std::string &port, const std::string &username,
+    OracleDatabaseConnectionParams(const std::string &host, const std::string &port, const std::string &username,
                              const std::string &password, const std::string &serviceName)
             : host(host), port(port),
               username(username),
               password(password),
               serviceName(serviceName) {}
 
-    OracleDatabaseConnection(const std::string &connectString) : connectString(connectString) {}
+    OracleDatabaseConnectionParams(const std::string &connectString) : connectString(connectString) {}
 
     const std::string &getConnectString() const {
         return connectString;

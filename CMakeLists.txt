@@ -21,13 +21,13 @@ set(SOURCE_FILES
         core/database/schemas/MSSQLDatabaseSchemas.h
         core/database/schemas/DatabaseSchemas.h
 
-        core/database/connection/Connector.cpp
-        core/database/connection/DatabaseConnection.h
-        core/database/connection/SQLDatabaseConnection.h
-        core/database/connection/MSSQLDatabaseConnection.h
-        core/database/connection/MYSQLDatabaseConnection.h
-        core/database/connection/OracleDatabaseConnection.h
-        core/database/connection/SQLiteDatabaseConnection.h
+        core/database/connectors/Connector.cpp
+        core/database/connectors/credentials/DatabaseConnection.h
+        core/database/connectors/credentials/SQLDatabaseConnectionParams.h
+        core/database/connectors/credentials/MSSQLDatabaseConnectionParams.h
+        core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h
+        core/database/connectors/credentials/OracleDatabaseConnectionParams.h
+        core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
 
         core/database/columns/TableColumn.h
 

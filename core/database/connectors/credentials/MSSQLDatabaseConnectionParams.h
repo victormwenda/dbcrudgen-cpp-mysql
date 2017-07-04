@@ -18,7 +18,7 @@
 /**
 * MSSQLDatabaseConnection
 * */
-class MSSQLDatabaseConnection {
+class MSSQLDatabaseConnectionParams {
 
 private:
     std::string host;
@@ -33,7 +33,7 @@ public:
      * @param username
      * @param password
      */
-    MSSQLDatabaseConnection(std::string serverName, std::string username,
+    MSSQLDatabaseConnectionParams(std::string serverName, std::string username,
                             std::string password) :
             serverName(serverName), username(username), password(password) {
     }
@@ -46,7 +46,7 @@ public:
      * @param username
      * @param password
      */
-    MSSQLDatabaseConnection(std::string host, std::string port, std::string username,
+    MSSQLDatabaseConnectionParams(std::string host, std::string port, std::string username,
                             std::string password)
             : host(host), port(port), username(username), password(password) {
         serverName = createServerName(host, port);

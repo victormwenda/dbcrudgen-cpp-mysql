@@ -14,9 +14,9 @@
 #include "DatabaseConnection.h"
 
 //
-// SQLiteDatabaseConnection
+// SQLiteDatabaseConnectionParams
 // //
-class SQLiteDatabaseConnection : public DatabaseConnection {
+class SQLiteDatabaseConnectionParams : public DatabaseConnection {
 
 private:
     std::string filePath;
@@ -27,7 +27,7 @@ public:
      * Handles SQLite Database connection
      * @param filePath
      */
-    SQLiteDatabaseConnection(const std::string &filePath)
+    SQLiteDatabaseConnectionParams(const std::string &filePath)
             : DatabaseConnection(filePath, nullptr, nullptr),
               filePath(std::move(filePath)) {}
 

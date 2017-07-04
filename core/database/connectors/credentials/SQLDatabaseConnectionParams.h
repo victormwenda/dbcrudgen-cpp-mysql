@@ -13,7 +13,7 @@
 /**
 * SQLDatabaseConnection
 * */
-class SQLDatabaseConnection {
+class SQLDatabaseConnectionParams {
 
 };
 

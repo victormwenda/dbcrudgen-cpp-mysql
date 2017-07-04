@@ -1,4 +1,4 @@
-#include "DatabaseConnection.h"
+#include "credentials/DatabaseConnection.h"
 
 /**
 * @author Victor Mwenda
