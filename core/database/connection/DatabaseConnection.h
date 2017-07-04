@@ -42,6 +42,15 @@ public:
     void setPassword(const std::string &password) {
         DatabaseConnection::password = password;
     }
+
+    /**
+     * Get a database connection
+     * @return
+     */
+    template<typename T>
+    T &getConnection() {
+
+    };
 };
 
 

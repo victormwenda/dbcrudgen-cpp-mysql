@@ -1,13 +1,17 @@
 #include <iostream>
+<<<<<<< HEAD
 
 #include "core/cli/CliParser.h"
 #include "core/database/schemas/DatabaseSchemas.h"
 #include "lang/parser/java/JavaLangTemplateParser.h"
 #include <algorithm>
+=======
+>>>>>>> db-connector
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
+<<<<<<< HEAD
     std::string model = "${CLASSNAME} . . 1 ${METHOD_NAME} . . 6 ${JAVA} . . 7.. ${JAVA}. . 9 ";
     JavaLangTemplateParser javaLangTemplateParser{model};
 
@@ -29,6 +33,8 @@ int main(int argc, char *argv[]) {
 
 
     cout << newData << endl;
+=======
+>>>>>>> db-connector
 
     return 0;
 }
