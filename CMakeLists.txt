@@ -45,3 +45,8 @@ add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
 target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 
+#Link SQLite3 libs
+target_link_libraries(dbcrudgen_cpp sqlite3)
+
+
+
