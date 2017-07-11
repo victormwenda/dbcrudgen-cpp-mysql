@@ -37,12 +37,12 @@ public:
      */
     virtual bool close() = 0;
 
-    virtual /**
+    /**
      * Called when an error occurs
      * @param errorLevel
      * @param errorMessage
      */
-    void onError(std::string errorLevel, std::string errorMessage, bool logError = false) {
+    virtual void onError(std::string errorLevel, std::string errorMessage, bool logError = false) {
         if (logError) {
             std::cerr << errorLevel << ":" << errorMessage;
         }

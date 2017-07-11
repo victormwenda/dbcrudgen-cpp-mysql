@@ -33,6 +33,9 @@ set(SOURCE_FILES
 
         core/database/datatypes/DataType.h
 
+        core/database/executors/MYSQLQueryExecutor.h
+        core/database/executors/SQLiteQueryExecutor.h
+
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
         core/database/formats/RowFormats.h
@@ -54,7 +57,7 @@ set(SOURCE_FILES
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
 
-        utils/StringUtils.h core/database/executors/MYSQLQueryExecutor.h)
+        utils/StringUtils.h core/database/error/DatabaseError.h)
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 

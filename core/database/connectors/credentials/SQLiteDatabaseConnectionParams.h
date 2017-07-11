@@ -16,7 +16,7 @@
 //
 // SQLiteDatabaseConnectionParams
 // //
-class SQLiteDatabaseConnectionParams : public DatabaseConnection {
+class SQLiteDatabaseConnectionParams {
 
 private:
     std::string filePath;
@@ -28,8 +28,7 @@ public:
      * @param filePath
      */
     SQLiteDatabaseConnectionParams(const std::string &filePath)
-            : DatabaseConnection(filePath, nullptr, nullptr),
-              filePath(std::move(filePath)) {}
+            : filePath(filePath) {}
 
     /**
      * Returns the file path to the SQLite database
@@ -37,6 +36,14 @@ public:
      */
     const std::string &getFilePath() const {
         return filePath;
+    }
+
+    /**
+     * Sets the file path to the SQLite database
+     * @param filePath
+     */
+    void setFilepath(const std::string filePath) {
+        SQLiteDatabaseConnectionParams::filePath = filePath;
     }
 };
 
