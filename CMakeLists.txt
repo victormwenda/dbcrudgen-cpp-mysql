@@ -29,10 +29,9 @@ set(SOURCE_FILES
         core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
 
         core/database/columns/TableColumn.h
+        core/database/constraints/ColumnConstraints.h
 
         core/database/datatypes/DataType.h
-
-        core/database/constraints/ColumnConstraints.h
 
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
@@ -55,7 +54,7 @@ set(SOURCE_FILES
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
 
-        utils/StringUtils.h )
+        utils/StringUtils.h core/database/executors/MYSQLQueryExecutor.h)
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
