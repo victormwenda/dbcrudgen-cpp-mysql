@@ -21,3 +21,7 @@ Supported databases
   DbCrudGen helps to improve the whole developer workflow of imbedding a database in your application.
   
   It allows connecting to one of the supported Databases and creating CRUD code's for the target supported platforms.
+
+External libraries
+  1. Googletest - Google C++ Unit testing library
+  2. Benchmark - Google C++ benchmarking library 
