@@ -19,6 +19,7 @@ set(SOURCE_FILES
 
         core/database/connectors/DatabaseConnector.h
         core/database/connectors/MYSQLDatabaseConnector.h
+        core/database/connectors/OracleDatabaseConnector.h
         core/database/connectors/SQLiteDatabaseConnector.h
 
         core/database/connectors/credentials/DatabaseConnection.h
@@ -33,6 +34,7 @@ set(SOURCE_FILES
 
         core/database/datatypes/DataType.h
 
+        core/database/error/DatabaseError.h
         core/database/executors/MYSQLQueryExecutor.h
         core/database/executors/SQLiteQueryExecutor.h
 
@@ -57,7 +59,7 @@ set(SOURCE_FILES
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
 
-        utils/StringUtils.h core/database/error/DatabaseError.h)
+        utils/StringUtils.h)
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
