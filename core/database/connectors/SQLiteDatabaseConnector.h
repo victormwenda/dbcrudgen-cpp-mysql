@@ -62,13 +62,14 @@ public:
         connectionParams.setFilepath(schema);
 
     }
+
     /**
      * Opens an sqlite database
      * @param filename
      * @return
      */
-    int open_sqlite_database(const char * filename){
-       return sqlite3_open(filename, &database);
+    int open_sqlite_database(const char *filename) {
+        return sqlite3_open(filename, &database);
     }
 
     bool open() override {
@@ -79,12 +80,11 @@ public:
 
             int responseCode = open_sqlite_database(filename);
 
-            if (responseCode) {
+            if (responseCode) { // TODO This responseCode is mostly zero
                 opened = false;
                 std::stringstream errorMessage;
                 errorMessage << sqlite3_errcode(database) << ":" << sqlite3_errmsg(database);
-                //onError("FATAL", errorMessage.str() , true);
-                std::cout << errorMessage.str() << std::endl;
+                onError("FATAL", errorMessage.str() , true);
             } else {
                 opened = true;
             }
@@ -110,29 +110,31 @@ public:
     }
 
     static int onDataFound(void *data, int argc, char **argv, char **azColName) {
-        int i;
+      /*  int i;
         fprintf(stderr, "%s: ", (const char *) data);
 
         for (i = 0; i < argc; i++) {
             printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
         }
 
-        printf("\n");
+        printf("\n");*/
+
+        for( int i =0;i < argc; i++){
+            std::cout << azColName[i]<< " -> " << argv[i] << std::endl;
+        }
         return 0;
     }
 
-    void exec(const char *query) {
+    /**
+     * Execute a query
+     * @param query
+     * @return SQLITE_OK, SQLITE_ERROR among other defined constants
+     */
+    int exec(const char *query) {
         std::string data = "Calling callback function";
         char **errMessage = 0;
 
-        int result = sqlite3_exec(database, query, onDataFound, (void *) data.c_str(), errMessage);
-
-        if (result != SQLITE_OK) {
-            std::cout << sqlite3_errstr(result) << std::endl;
-            std::cout << "Executing : " << query << std::endl;
-        } else {
-            std::cout << "Executing : " << query << std::endl;
-        }
+        return sqlite3_exec(database, query, onDataFound, (void *) data.c_str(), errMessage);
     }
 };
 
