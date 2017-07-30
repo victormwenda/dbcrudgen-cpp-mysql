@@ -78,7 +78,7 @@ public:
         return connection == nullptr && driver == nullptr;
     }
 
-    void onError(std::string errorLevel, std::string errorMessage, bool logError) override {
+    void onError(const std::string &errorLevel, const std::string &errorMessage, bool logError) override {
         DatabaseConnector::onError(errorLevel, errorMessage, logError);
     }
 

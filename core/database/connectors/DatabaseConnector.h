@@ -42,7 +42,7 @@ public:
      * @param errorLevel
      * @param errorMessage
      */
-    virtual void onError(std::string errorLevel, std::string errorMessage, bool logError = false) {
+    virtual void onError(const std::string &errorLevel, const std::string &errorMessage, bool logError) {
         if (logError) {
             std::cerr << errorLevel << ":" << errorMessage;
         }

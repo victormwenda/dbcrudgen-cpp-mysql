@@ -30,8 +30,7 @@ private:
     bool autoConnect;
 public:
     explicit SQLiteDatabaseConnector(SQLiteDatabaseConnectionParams connectionParams, bool autoConnect = false)
-            : connectionParams{connectionParams}, autoConnect{autoConnect} {
-
+            : connectionParams{connectionParams}, autoConnect{autoConnect},database{nullptr} , opened{false}{
         opened = false;
 
         if (autoConnect) {
@@ -57,7 +56,7 @@ public:
      * Change the database
      * @param schema
      */
-    void changeSchema(const std::string schema) {
+    void changeSchema(const std::string &schema) {
 
         connectionParams.setFilepath(schema);
 
@@ -72,6 +71,10 @@ public:
         return sqlite3_open(filename, &database);
     }
 
+    /**
+     * Tries to open the database if it is not connected, else returns a true
+     * @return
+     */
     bool open() override {
 
         if (!opened) {
@@ -80,23 +83,31 @@ public:
 
             int responseCode = open_sqlite_database(filename);
 
-            if (responseCode) { // TODO This responseCode is mostly zero
+            if (responseCode == SQLITE_OK) {
+                opened = true;
+            } else {
                 opened = false;
                 std::stringstream errorMessage;
-                errorMessage << sqlite3_errcode(database) << ":" << sqlite3_errmsg(database);
-                onError("FATAL", errorMessage.str() , true);
-            } else {
-                opened = true;
+                errorMessage << " Error " << sqlite3_errcode(database) << " : " << sqlite3_errmsg(database);
+                onError("FATAL ", errorMessage.str(), true);
             }
         }
 
         return opened;
     }
 
+    /**
+     * Return true if database is connected false otherwise
+     * @return
+     */
     bool isOpen() override {
         return opened;
     }
 
+    /**
+     * Tries to close the database if it is open
+     * @return
+     */
     bool close() override {
         if (isOpen()) {
             sqlite3_close(database);
@@ -105,22 +116,22 @@ public:
         return !opened;
     }
 
-    void onError(std::string errorLevel, std::string errorMessage, bool logError) override {
+    void onError(const std::string &errorLevel, const std::string &errorMessage, bool logError) override {
         DatabaseConnector::onError(errorLevel, errorMessage, logError);
     }
 
     static int onDataFound(void *data, int argc, char **argv, char **azColName) {
-      /*  int i;
-        fprintf(stderr, "%s: ", (const char *) data);
+        /*  int i;
+          fprintf(stderr, "%s: ", (const char *) data);
 
-        for (i = 0; i < argc; i++) {
-            printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-        }
+          for (i = 0; i < argc; i++) {
+              printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
+          }
 
-        printf("\n");*/
+          printf("\n");*/
 
-        for( int i =0;i < argc; i++){
-            std::cout << azColName[i]<< " -> " << argv[i] << std::endl;
+        for (int i = 0; i < argc; i++) {
+            std::cout << azColName[i] << " -> " << argv[i] << std::endl;
         }
         return 0;
     }
@@ -132,7 +143,7 @@ public:
      */
     int exec(const char *query) {
         std::string data = "Calling callback function";
-        char **errMessage = 0;
+        char **errMessage = nullptr;
 
         return sqlite3_exec(database, query, onDataFound, (void *) data.c_str(), errMessage);
     }
