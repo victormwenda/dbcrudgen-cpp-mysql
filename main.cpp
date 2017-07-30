@@ -1,15 +1,12 @@
 #include <iostream>
-#include "core/database/connectors/MYSQLDatabaseConnector.h"
-#include "core/database/executors/SQLiteQueryExecutor.h"
+#include "core/database/connectors/credentials/OracleDatabaseConnectionParams.h"
+#include "core/database/connectors/OracleDatabaseConnector.h"
 
 using namespace std;
 
 
-int main(void) {
-    std::string filename = "/home/victor/Documents/workspace/c++/dbcrudgen-cpp/res/test/databases/dbcrudgen-db-sqlite.db";
-    SQLiteDatabaseConnectionParams connectionParams {filename};
-    SQLiteDatabaseConnector connector {connectionParams,true};
-    SQLiteQueryExecutor sqLiteQueryExecutor{&connector,filename};
-    sqLiteQueryExecutor.executeQuery("SELECT * FROM bug_logger");
+int main(int argc, char **argv) {
+    OracleDatabaseConnectionParams connectionParams {"victor",1521,"victor","root3358","victor"};
+    OracleDatabaseConnector databaseConnector{connectionParams, true};
      return EXIT_SUCCESS;
 }
