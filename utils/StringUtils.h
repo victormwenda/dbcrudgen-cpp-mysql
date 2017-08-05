@@ -13,6 +13,7 @@
 
 
 #include <iostream>
+#include <vector>
 
 //
 // StringUtils
@@ -52,12 +53,28 @@ class StringUtils {
         return subject.find(search.c_str(), position) != std::string::npos;
     }
 
-    //TODO Add implementation
-    std::string *split(const std::string subject, const std::string delimiter) {
-        if (StringUtils::contains(subject, delimiter, 0)) {
-            return nullptr;
+    /**
+     * Splits the provided strings into a string vector
+     * @param subject
+     * @param delimiter
+     * @return
+     */
+    std::vector<std::string> split(const std::string& subject, const std::string& delimiter) {
+        std::vector<std::string> parts;
+
+        size_t lastPosition = 0;
+        size_t currentPosition = 0;
+
+        while ((currentPosition = subject.find(delimiter, lastPosition)) != std::string::npos) {
+            parts.push_back(subject.substr(lastPosition, currentPosition - lastPosition));
+            lastPosition = ++currentPosition;
         }
-        return nullptr;
+
+        if (subject.find(delimiter) != std::string::npos && (lastPosition != subject.length() - 1) ) {
+            parts.push_back(subject.substr(lastPosition));
+        }
+
+        return parts;
     }
 };
 
