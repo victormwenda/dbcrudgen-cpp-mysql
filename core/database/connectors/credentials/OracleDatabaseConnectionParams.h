@@ -23,7 +23,7 @@ private:
     std::string connectString;
 
     std::string host;
-    std::string port;
+    int port;
     std::string username;
     std::string password;
     std::string serviceName;
@@ -33,14 +33,14 @@ private:
     }
 
 public:
-    OracleDatabaseConnectionParams(const std::string &host, const std::string &port, const std::string &username,
-                             const std::string &password, const std::string &serviceName)
+    OracleDatabaseConnectionParams(const std::string &host, const int &port, const std::string &username,
+                                   const std::string &password, const std::string &serviceName)
             : host(host), port(port),
               username(username),
               password(password),
               serviceName(serviceName) {}
 
-    OracleDatabaseConnectionParams(const std::string &connectString) : connectString(connectString) {}
+    explicit OracleDatabaseConnectionParams(std::string &connectString) : connectString(connectString) {}
 
     const std::string &getConnectString() const {
         return connectString;
@@ -50,7 +50,7 @@ public:
         return host;
     }
 
-    const std::string &getPort() const {
+    const int &getPort() const {
         return port;
     }
 

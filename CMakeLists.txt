@@ -7,13 +7,18 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 #Include the Mysql Dirs
 include_directories(/usr/local/include/mysql-connector-cpp/include)
 
+#Include the Oracle OCI dir
+#include_directories(/usr/local/include/oracle/instant-client)
+
 set(SOURCE_FILES
 
         main.cpp
 
-        core/io/FilesReader.h
-        core/io/FilesWriter.h
-        core/io/FilesManager.h
+        creators/DatabaseModelCreator.h
+        creators/MYSQLDatabaseModelCreator.h
+        creators/OracleDatabaseModelCreator.h
+        creators/SQLiteDatabaseModelCreator.h
+
 
         core/database/schemas/OracleDatabaseSchemas.h
         core/database/schemas/SQLDatabaseSchemas.h
@@ -21,7 +26,11 @@ set(SOURCE_FILES
         core/database/schemas/MSSQLDatabaseSchemas.h
         core/database/schemas/DatabaseSchemas.h
 
-        core/database/connectors/Connector.cpp
+        core/database/connectors/DatabaseConnector.h
+        core/database/connectors/MYSQLDatabaseConnector.h
+        core/database/connectors/OracleDatabaseConnector.h
+        core/database/connectors/SQLiteDatabaseConnector.h
+
         core/database/connectors/credentials/DatabaseConnection.h
         core/database/connectors/credentials/SQLDatabaseConnectionParams.h
         core/database/connectors/credentials/MSSQLDatabaseConnectionParams.h
@@ -30,10 +39,13 @@ set(SOURCE_FILES
         core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
 
         core/database/columns/TableColumn.h
+        core/database/constraints/ColumnConstraints.h
 
         core/database/datatypes/DataType.h
 
-        core/database/constraints/ColumnConstraints.h
+        core/database/error/DatabaseError.h
+        core/database/executors/MYSQLQueryExecutor.h
+        core/database/executors/SQLiteQueryExecutor.h
 
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
@@ -42,6 +54,10 @@ set(SOURCE_FILES
         core/cli/CliParser.h
 
         core/crud/actions/DatabaseCrudActions.h
+
+        core/io/FilesReader.h
+        core/io/FilesWriter.h
+        core/io/FilesManager.h
 
         lang/dsl/LanguageDSL.h
         lang/dsl/LanguageFilesProperties.h
@@ -61,4 +77,11 @@ target_link_libraries(dbcrudgen_cpp sqlite3)
 
 #Link MysqlCpp libs
 target_link_libraries(dbcrudgen_cpp mysqlcppconn)
+
+#Link the Oracle libs
+#target_link_libraries(dbcrudgen_cpp libclntsh.so)
+#target_link_libraries(dbcrudgen_cpp libocci.so.10.1)
+#target_link_libraries(dbcrudgen_cpp libocijdbc10.so)
+#target_link_libraries(dbcrudgen_cpp libnnz10.so)
+#target_link_libraries(dbcrudgen_cpp libociei.so)
 

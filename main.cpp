@@ -1,8 +1,11 @@
 #include <iostream>
+#include "core/database/connectors/credentials/OracleDatabaseConnectionParams.h"
+#include "core/database/connectors/OracleDatabaseConnector.h"
+#include <vector>
 
-using namespace std;
 
-int main(void)
-{
-    return EXIT_SUCCESS;
+
+int main(int argc, char **argv) {
+
+     return EXIT_SUCCESS;
 }
