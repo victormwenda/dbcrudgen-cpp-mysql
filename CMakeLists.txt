@@ -68,6 +68,11 @@ set(SOURCE_FILES
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
 
+
+        models/MYSQLDatabaseModel.h
+        models/OracleDatabaseModel.h
+        models/SQLiteDatabaseModel.h
+
         utils/StringUtils.h)
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
