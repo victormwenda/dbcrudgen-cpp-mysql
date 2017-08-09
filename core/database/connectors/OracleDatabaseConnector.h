@@ -41,7 +41,7 @@ public:
     }
 
     bool open() override {
-        /*const std::string userName = "victor";
+        const std::string userName = "victor";
         const std::string password = "root3358";
         const std::string connectString = "";
 
@@ -60,7 +60,7 @@ public:
         conn->terminateStatement(stmt);
         env->terminateConnection(conn);
 
-        Environment::terminateEnvironment(env);*/
+        Environment::terminateEnvironment(env);
         return false;
     }
 

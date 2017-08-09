@@ -8,16 +8,27 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 include_directories(/usr/local/include/mysql-connector-cpp/include)
 
 #Include the Oracle OCI dir
-#include_directories(/usr/local/include/oracle/instant-client)
+include_directories(/u01/app/oracle/product/11.2.0/xe/rdbms/public)
+
+#include the oracle insant-client dir
+include_directories(/usr/local/include/oracle/instant-client)
+
+#Create the oracle libraries for linking
+add_library(occi SHARED /usr/local/include/oracle/instant-client/libocci.so.10.1)
+set_target_properties(occi PROPERTIES LINKER_LANGUAGE CXX)
+
+add_library(clntsh SHARED /usr/local/include/oracle/instant-client/libclntsh.so.10.1)
+set_target_properties(clntsh PROPERTIES LINKER_LANGUAGE CXX)
+
 
 set(SOURCE_FILES
 
         main.cpp
 
-        creators/DatabaseModelCreator.h
-        creators/MYSQLDatabaseModelCreator.h
-        creators/OracleDatabaseModelCreator.h
-        creators/SQLiteDatabaseModelCreator.h
+        #creators/DatabaseModelCreator.h
+        #creators/MYSQLDatabaseModelCreator.h
+        #creators/OracleDatabaseModelCreator.h
+        #creators/SQLiteDatabaseModelCreator.h
 
 
         core/database/schemas/OracleDatabaseSchemas.h
@@ -79,8 +90,8 @@ target_link_libraries(dbcrudgen_cpp sqlite3)
 target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 
 #Link the Oracle libs
-#target_link_libraries(dbcrudgen_cpp libclntsh.so)
-#target_link_libraries(dbcrudgen_cpp libocci.so.10.1)
+target_link_libraries(dbcrudgen_cpp clntsh)
+target_link_libraries(dbcrudgen_cpp occi)
 #target_link_libraries(dbcrudgen_cpp libocijdbc10.so)
 #target_link_libraries(dbcrudgen_cpp libnnz10.so)
 #target_link_libraries(dbcrudgen_cpp libociei.so)
