@@ -10,3 +10,4 @@ CREATE TABLE `bug_logger` (
   `application_version_code` int(11) NOT NULL,
   `local_event_time` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1
+InnoDB DEFAULT CHARSET=latin1

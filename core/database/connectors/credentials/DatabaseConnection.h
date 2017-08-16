@@ -16,10 +16,6 @@ class DatabaseConnection {
     std::string username;
     std::string password;
 public:
-    DatabaseConnection(const std::string databaseFilePath) {
-
-    }
-
     DatabaseConnection(const std::string &host, const std::string &username, const std::string &password)
             : host(host), username(username), password(password) {}
 
@@ -52,15 +48,6 @@ public:
     void setPassword(const std::string &password) {
         DatabaseConnection::password = password;
     }
-
-    /**
-     * Get a database connection
-     * @return
-     */
-    template<typename T>
-    T &getConnection() {
-
-    };
 };
 
 
