@@ -18,7 +18,7 @@ Supported databases
   6. PHP
   7. Swift
   
-  DbCrudGen helps to improve the whole developer workflow of imbedding a database in your application.
+  DbCrudGen helps to improve the whole developer workflow of embedding a database in your application.
   
   It allows connecting to one of the supported Databases and creating CRUD code's for the target supported platforms.
 
