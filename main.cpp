@@ -16,7 +16,7 @@ int main(int argc, char **argv) {
         Statement *statement = conn->createStatement("SELECT * FROM BUG_LOGGER");
         ResultSet *resultSet = statement->executeQuery();
         resultSet->next();
-        std::string index =resultSet->getString(2);
+        std::string index =resultSet->getString(4);
         std::cout << index << std::endl;
         env->terminateConnection(conn);
     } catch (const SQLException& exception) {

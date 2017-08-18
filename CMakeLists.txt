@@ -18,10 +18,10 @@ set(SOURCE_FILES
 
         main.cpp
 
-        #creators/DatabaseModelCreator.h
-        #creators/MYSQLDatabaseModelCreator.h
-        #creators/OracleDatabaseModelCreator.h
-        #creators/SQLiteDatabaseModelCreator.h
+        creators/DatabaseModelCreator.h
+        creators/MYSQLDatabaseModelCreator.h
+        creators/OracleDatabaseModelCreator.h
+        creators/SQLiteDatabaseModelCreator.h
 
 
         core/database/schemas/OracleDatabaseSchemas.h
