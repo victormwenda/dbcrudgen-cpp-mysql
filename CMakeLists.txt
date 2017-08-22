@@ -94,7 +94,10 @@ set(SOURCE_FILES
         models/OracleDatabaseModel.h
         models/SQLiteDatabaseModel.h
 
-        utils/StringUtils.h)
+        utils/DbCrudgenError.h
+        utils/StringUtils.h
+        utils/TransactionUtils.h
+        )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
