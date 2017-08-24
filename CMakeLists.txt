@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.7)
 project(dbcrudgen_cpp)
 
 #Compilers
-SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
-SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
+#SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
+#SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
 
 #Linker flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -94,6 +94,7 @@ set(SOURCE_FILES
         models/OracleDatabaseModel.h
         models/SQLiteDatabaseModel.h
 
+        utils/ConnectorUtils.h
         utils/DbCrudgenError.h
         utils/StringUtils.h
         utils/TransactionUtils.h

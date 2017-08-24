@@ -14,6 +14,8 @@
 
 #include <cppconn/connection.h>
 #include <cppconn/driver.h>
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
 
 #include "DatabaseConnector.h"
 #include "credentials/MYSQLDatabaseConnectionParams.h"
@@ -32,6 +34,8 @@ public:
     explicit MYSQLDatabaseConnector(MYSQLDatabaseConnectionParams connectionParams,
                                     bool autoConnect)
             : connectionParams{connectionParams}, autoConnect{autoConnect} {
+
+        connection = nullptr;
 
         driver = get_driver_instance();
 
@@ -57,25 +61,42 @@ public:
         return *connection;
     }
 
+    /**
+     * Create a statement
+     * @return
+     */
+    sql::Statement &createStatement() {
+        return *connection->createStatement();
+    }
+
+    /**
+     * Executes the sql query
+     * @param sql
+     * @return result set
+     */
+    sql::ResultSet &executeQuery(const sql::SQLString sql) {
+        return *createStatement().executeQuery(sql);
+    }
+
     bool open() override {
 
-        if (connection == nullptr) {
-            sql::SQLString host = connectionParams.getHost();
-            sql::SQLString user = connectionParams.getUsername();
-            sql::SQLString password = connectionParams.getPassword();
-            connection = driver->connect(host, user, password);
-        }
+        sql::SQLString host = connectionParams.getHost();
+        sql::SQLString user = connectionParams.getUsername();
+        sql::SQLString password = connectionParams.getPassword();
+        sql::SQLString schemas = connectionParams.getSchemas();
+
+        connection = driver->connect(host, user, password);
+        connection->setSchema(schemas);
 
         return connection != nullptr;
     }
 
     bool isOpen() override {
-        return open();
+        return connection != nullptr;
     }
 
     bool close() override {
-        delete connection;
-        return connection == nullptr && driver == nullptr;
+        connection->close();
     }
 
     void onError(const std::string &errorLevel, const std::string &errorMessage, bool logError) override {
@@ -85,7 +106,6 @@ public:
     ~MYSQLDatabaseConnector() {
         if (isOpen()) { close(); }
     }
-
 };
 
 

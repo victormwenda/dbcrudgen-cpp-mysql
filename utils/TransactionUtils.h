@@ -13,6 +13,9 @@
 
 
 #include "../core/database/connectors/OracleDatabaseConnector.h"
+#include "../core/database/connectors/MYSQLDatabaseConnector.h"
+#include "../core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h"
+#include "ConnectorUtils.h"
 
 //
 // TransactionUtils
@@ -20,9 +23,25 @@
 class TransactionUtils {
 
 public:
-    static OracleDatabaseConnector openOracleDatabase(OracleDatabaseConnectionParams connectionParams){
-        OracleDatabaseConnector oracleDatabaseConnector{connectionParams, true};
-        return oracleDatabaseConnector;
+    /**
+     * Get the list of all tables in a MYSQL Database
+     *
+     * @param connectionParams
+     * @return
+     */
+    static std::vector<std::string> getMYSQLDatabaseTables(MYSQLDatabaseConnectionParams connectionParams) {
+        std::vector<std::string> tablesNames;
+        /*std::string query = "SHOW TABLES IN " + connectionParams.getSchemas();
+        MYSQLDatabaseConnector connector = ConnectorUtils::openMYSQLDatabase(connectionParams);
+        sql::Statement &statement = connector.createStatement();
+        sql::ResultSet resultSet = *statement.executeQuery(query);
+
+
+        while (resultSet.next()) {
+            tablesNames.push_back(resultSet.getString(1));
+        }
+*/
+        return tablesNames;
     }
 };
 

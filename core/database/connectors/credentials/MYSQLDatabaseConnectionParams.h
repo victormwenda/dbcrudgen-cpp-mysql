@@ -19,11 +19,11 @@ private:
     std::string host;
     std::string username;
     std::string password;
-
+    std::string schemas;
 public:
     MYSQLDatabaseConnectionParams(const std::string &host, const std::string &username,
-                            const std::string &password) : host(
-            host), username(username), password(password) {}
+                                  const std::string &password, const std::string &schemas) : host(
+            host), username(username), password(password), schemas(schemas) {}
 
     const std::string &getHost() const {
         return host;
@@ -36,6 +36,8 @@ public:
     const std::string &getPassword() const {
         return password;
     }
+
+    const std::string &getSchemas() const { return schemas; }
 };
 
 
