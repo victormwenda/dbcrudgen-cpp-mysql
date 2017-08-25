@@ -41,14 +41,14 @@ class MYSQLDatabaseTable : public DatabaseTable {
 
 public:
 
-    MYSQLDatabaseTable(const std::string &name, const std::string &engine,
-                       const std::string &version, MYSQLRowFormats row_format, const std::string &rows,
+    MYSQLDatabaseTable(const std::string &name, const std::string &engine, const std::string &version,
+                       MYSQLRowFormats row_format, const std::string &rows,
                        const std::string &avg_row_length, const std::string &data_length,
                        const std::string &max_data_length, const std::string &index_length,
                        const std::string &data_free, const std::string &auto_increment, const std::string &create_time,
                        const std::string &update_time, const std::string &check_time, const std::string &collation,
                        const std::string &checksum, const std::string &create_options, const std::string &comment)
-            : DatabaseTable(name), name(name), engine(engine), version(version), row_format(row_format),
+            :    name(name), engine(engine), version(version), row_format(row_format),
               rows(rows), avg_row_length(avg_row_length), data_length(data_length), max_data_length(max_data_length),
               index_length(index_length), data_free(data_free), auto_increment(auto_increment),
               create_time(create_time), update_time(update_time), check_time(check_time), collation(collation),

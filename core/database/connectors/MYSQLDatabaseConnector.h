@@ -86,7 +86,11 @@ public:
         sql::SQLString schemas = connectionParams.getSchemas();
 
         connection = driver->connect(host, user, password);
-        connection->setSchema(schemas);
+
+        if (schemas != "") {
+            connection->setSchema(schemas);
+        }
+
 
         return connection != nullptr;
     }

@@ -60,6 +60,8 @@ set(SOURCE_FILES
         core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
 
         core/database/columns/TableColumn.h
+        core/database/columns/MYSQLTableColumn.h
+
         core/database/constraints/ColumnConstraints.h
 
         core/database/datatypes/DataType.h
@@ -67,6 +69,8 @@ set(SOURCE_FILES
         core/database/error/DatabaseError.h
         core/database/executors/MYSQLQueryExecutor.h
         core/database/executors/SQLiteQueryExecutor.h
+
+        core/database/exceptions/MYSQLDatabaseException.h
 
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
@@ -88,6 +92,7 @@ set(SOURCE_FILES
 
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
+        lang/parser/mysql/MYSQLLangParser.h
 
 
         models/MYSQLDatabaseModel.h

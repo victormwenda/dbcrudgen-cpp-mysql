@@ -22,7 +22,7 @@ private:
     std::string schemas;
 public:
     MYSQLDatabaseConnectionParams(const std::string &host, const std::string &username,
-                                  const std::string &password, const std::string &schemas) : host(
+                                  const std::string &password, const std::string &schemas = "") : host(
             host), username(username), password(password), schemas(schemas) {}
 
     const std::string &getHost() const {

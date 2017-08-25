@@ -30,7 +30,7 @@ private:
     std::vector<TableColumn> tableColumns;
 public:
 
-    DatabaseTable(const std::string &tableName, const std::vector<TableColumn> tableColumns)
+    DatabaseTable(std::string &tableName, const std::vector<TableColumn> &tableColumns)
             : tableName(tableName), tableColumns(tableColumns) {}
 
     const std::string &getTableName() const {
