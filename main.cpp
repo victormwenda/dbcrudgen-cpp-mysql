@@ -5,18 +5,16 @@
 #include <cppconn/statement.h>
 #include <mysql_connection.h>
 #include "core/database/connectors/MYSQLDatabaseConnector.h"
+#include "utils/TransactionUtils.h"
 
 
 int main(int argc, char **argv) {
 
+    const std::vector<std::string> &databaseTables = TransactionUtils::getMYSQLDatabaseTables(MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358", "dbcrudgen"});
 
-    sql::Driver *driver = get_driver_instance();
-    sql::Connection *connection = driver->connect("tcp://127.0.0.1","root","root3358");
-    connection->setSchema("dbcrudgen");
-    sql::Statement *statement = connection->createStatement();
-    sql::ResultSet *resultSet = statement->executeQuery("show tables;");
-    while(resultSet->next()){
-        std::cout << resultSet->getString(1);
+    for(std::string databaseTable : databaseTables){
+        std::cout << databaseTable << std::endl;
     }
+
     return EXIT_SUCCESS;
 }

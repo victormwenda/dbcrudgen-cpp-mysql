@@ -16,6 +16,8 @@
 #include "../core/database/connectors/MYSQLDatabaseConnector.h"
 #include "../core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h"
 #include "ConnectorUtils.h"
+#include <cppconn/statement.h>
+#include <cppconn/resultset.h>
 
 //
 // TransactionUtils
@@ -31,16 +33,16 @@ public:
      */
     static std::vector<std::string> getMYSQLDatabaseTables(MYSQLDatabaseConnectionParams connectionParams) {
         std::vector<std::string> tablesNames;
-        /*std::string query = "SHOW TABLES IN " + connectionParams.getSchemas();
+        std::string query = "SHOW TABLES IN " + connectionParams.getSchemas();
         MYSQLDatabaseConnector connector = ConnectorUtils::openMYSQLDatabase(connectionParams);
-        sql::Statement &statement = connector.createStatement();
-        sql::ResultSet resultSet = *statement.executeQuery(query);
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
 
-
-        while (resultSet.next()) {
-            tablesNames.push_back(resultSet.getString(1));
+        while (resultSet->next()) {
+            tablesNames.push_back(resultSet->getString(1));
         }
-*/
+        resultSet->close();
+        statement->close();
         return tablesNames;
     }
 };
