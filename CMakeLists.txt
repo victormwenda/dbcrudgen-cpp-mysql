@@ -72,9 +72,13 @@ set(SOURCE_FILES
 
         core/database/exceptions/MYSQLDatabaseException.h
 
+        core/database/formats/RowFormats.h
+
+        core/database/prepared/MYSQLStatements.h
+
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
-        core/database/formats/RowFormats.h
+
 
         core/cli/CliParser.h
 
@@ -103,6 +107,7 @@ set(SOURCE_FILES
         utils/DbCrudgenError.h
         utils/StringUtils.h
         utils/TransactionUtils.h
+        utils/Tags.h
         )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})

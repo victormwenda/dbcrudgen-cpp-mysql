@@ -36,7 +36,7 @@ public:
         }
 
         //Get list of all the tables in the database
-        std::vector<std::string> databaseTables = TransactionUtils::getMYSQLDatabaseTables(connector, schemas);
+        std::vector<std::string> databaseTables = TransactionUtils::getMYSQLDatabaseTableNames(connector, schemas);
 
 
         //Get all the table structure
