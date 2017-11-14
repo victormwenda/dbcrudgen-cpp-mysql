@@ -19,6 +19,8 @@
 class Tags {
 
 public :
+    constexpr static char * SCHEMAS = "${SCHEMAS}";
+    constexpr static char * SCHEMA = "${SCHEMA}";
     constexpr static char * TABLE_NAME = "${TABLE_NAME}";
 };
 

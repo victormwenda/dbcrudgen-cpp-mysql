@@ -21,6 +21,8 @@ public:
     constexpr static char * TABLE_SCHEMA_STATEMENT = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE TABLE_NAME LIKE '${TABLE_NAME}'";
 
     constexpr static char *  TABLE_COLUMNS_FULL = "SHOW FULL COLUMNS IN ${TABLE_NAME}";
+
+    constexpr static char * SCHEMAS_TABLES_QUERY = "SHOW TABLES IN ${SCHEMA}";
 };
 
 

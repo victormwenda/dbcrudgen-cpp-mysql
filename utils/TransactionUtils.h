@@ -39,7 +39,8 @@ public:
     static std::vector<std::string>
     getMYSQLDatabaseTableNames(MYSQLDatabaseConnector &connector, const std::string &schemas) {
         std::vector<std::string> tablesNames;
-        std::string query = "SHOW TABLES IN " + schemas;
+        std::string showSchemasTablesQuery = MYSQLStatements::SCHEMAS_TABLES_QUERY;
+        std::string query = StringUtils::parseTemplate(showSchemasTablesQuery,Tags::SCHEMA, schemas);
         sql::Statement *statement = &connector.createStatement();
         sql::ResultSet *resultSet = statement->executeQuery(query);
 

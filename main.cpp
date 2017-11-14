@@ -5,13 +5,22 @@
 #include "utils/TransactionUtils.h"
 
 
+void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+void showMYSQLDatabaseTableNames(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
 int main(int argc, char **argv) {
 
     MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
             MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
 
-    const std::vector<MYSQLDatabaseTable> &tables = TransactionUtils::getMYSQLDatabaseTables(mysqlDatabaseConnector,
-                                                                                             "dbcrudgen");
+    showMYSQLDatabaseTableNames(mysqlDatabaseConnector);
+
+    return EXIT_SUCCESS;
+}
+
+void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    const std::vector<MYSQLDatabaseTable> &tables
+            = TransactionUtils::getMYSQLDatabaseTables(mysqlDatabaseConnector,"dbcrudgen");
 
     for (const MYSQLDatabaseTable &table : tables) {
 
@@ -28,6 +37,12 @@ int main(int argc, char **argv) {
         }
 
     }
+}
 
-    return EXIT_SUCCESS;
+void showMYSQLDatabaseTableNames(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    const std::vector<std::string> &tableNames =
+            TransactionUtils::getMYSQLDatabaseTableNames(mysqlDatabaseConnector, "dbcrudgen");
+    for (const std::string &tableName : tableNames) {
+        std::cout << tableName << std::endl;
+    }
 }
