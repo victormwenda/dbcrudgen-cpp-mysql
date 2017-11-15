@@ -6,18 +6,29 @@
 
 
 void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
 void showMYSQLDatabaseTableNames(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
 void getMYSQLDatabaseTablesCreateStatements(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
+void getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
 int main(int argc, char **argv) {
 
     MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
             MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
 
-    getMYSQLDatabaseTablesCreateStatements(mysqlDatabaseConnector);
+    getMYSQLDatabaseTableCreateStatement(mysqlDatabaseConnector);
 
     return EXIT_SUCCESS;
 }
+
+void getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    std::string createStatement = TransactionUtils::getMYSQLDatabaseTableCreateStatement(mysqlDatabaseConnector,
+                                                                                         "dbcrudgen", "bug_logger");
+    std::cout << createStatement << std::endl;
+}
+
 void getMYSQLDatabaseTablesCreateStatements(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
     const std::vector<std::string> &tableNames =
             TransactionUtils::getMYSQLDatabaseTablesCreateStatements(mysqlDatabaseConnector, "dbcrudgen");
@@ -36,7 +47,7 @@ void showMYSQLDatabaseTableNames(MYSQLDatabaseConnector &mysqlDatabaseConnector)
 
 void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
     const std::vector<MYSQLDatabaseTable> &tables
-            = TransactionUtils::getMYSQLDatabaseTables(mysqlDatabaseConnector,"dbcrudgen");
+            = TransactionUtils::getMYSQLDatabaseTables(mysqlDatabaseConnector, "dbcrudgen");
 
     for (const MYSQLDatabaseTable &table : tables) {
 

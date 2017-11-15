@@ -12,15 +12,18 @@
 #define DBCRUDGEN_CPP_TRANSACTIONUTILS_H
 
 
+#include "ConnectorUtils.h"
+#include "Tags.h"
+
+#include "../core/database/columns/MYSQLTableColumn.h"
 #include "../core/database/connectors/OracleDatabaseConnector.h"
 #include "../core/database/connectors/MYSQLDatabaseConnector.h"
 #include "../core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h"
-#include "ConnectorUtils.h"
-#include "../core/database/relations/MYSQLDatabaseTable.h"
-#include "../lang/parser/mysql/MYSQLLangParser.h"
-#include "../core/database/columns/MYSQLTableColumn.h"
 #include "../core/database/prepared/MYSQLStatements.h"
-#include "Tags.h"
+#include "../core/database/relations/MYSQLDatabaseTable.h"
+
+#include "../lang/parser/mysql/MYSQLLangParser.h"
+
 #include <cppconn/statement.h>
 #include <cppconn/resultset.h>
 
@@ -50,7 +53,9 @@ public:
         resultSet->close();
         statement->close();
         return tablesNames;
-    }/**
+    }
+
+    /**
      * Get the list of all tables in a MYSQL Database
      *
      * @param connectionParams
@@ -76,13 +81,50 @@ public:
             while (resultSet->next()) {
                 tableCreateStatements.push_back(resultSet->getString(2));
             }
-             resultSet->close();
+            resultSet->close();
         }
 
         statement->close();
         return tableCreateStatements;
     }
 
+    /**
+     * Get the create table statement for a MYSQL Database table
+     *
+     * @param connectionParams
+     * @return
+     */
+    static std::string
+    getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas,
+                                         const std::string tableName) {
+
+        std::string tableCreateStatement = "";
+
+        std::string tablesCreateStatementQuery = MYSQLStatements::TABLES_CREATE_QUERY;
+        std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
+        query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::TABLE_NAME, tableName);
+
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            tableCreateStatement = resultSet->getString(2);
+        }
+
+        resultSet->close();
+        statement->close();
+
+        return tableCreateStatement;
+    }
+
+    /**
+     * Returns a vector of MYSQLTableColumns found in the provided table
+     *
+     * @param connector
+     * @param schemas
+     * @param tableName
+     * @return
+     */
     static std::vector<MYSQLTableColumn>
     getMYSQLTableColumns(MYSQLDatabaseConnector &connector, const std::string &schemas, std::string tableName) {
 
@@ -115,6 +157,13 @@ public:
         return tableColumns;
     }
 
+    /**
+     * Returns the names of the tables in a MYSQL Database
+     *
+     * @param connector
+     * @param schemas
+     * @return
+     */
     static std::vector<MYSQLDatabaseTable>
     getMYSQLDatabaseTables(MYSQLDatabaseConnector &connector, const std::string &schemas) {
 
