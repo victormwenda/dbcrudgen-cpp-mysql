@@ -40,7 +40,7 @@ public:
     getMYSQLDatabaseTableNames(MYSQLDatabaseConnector &connector, const std::string &schemas) {
         std::vector<std::string> tablesNames;
         std::string showSchemasTablesQuery = MYSQLStatements::SCHEMAS_TABLES_QUERY;
-        std::string query = StringUtils::parseTemplate(showSchemasTablesQuery,Tags::SCHEMA, schemas);
+        std::string query = StringUtils::parseTemplate(showSchemasTablesQuery, Tags::SCHEMA, schemas);
         sql::Statement *statement = &connector.createStatement();
         sql::ResultSet *resultSet = statement->executeQuery(query);
 
@@ -50,6 +50,37 @@ public:
         resultSet->close();
         statement->close();
         return tablesNames;
+    }/**
+     * Get the list of all tables in a MYSQL Database
+     *
+     * @param connectionParams
+     * @return
+     */
+    static std::vector<std::string>
+    getMYSQLDatabaseTablesCreateStatements(MYSQLDatabaseConnector &connector, const std::string &schemas) {
+
+        std::vector<std::string> tablesNames = getMYSQLDatabaseTableNames(connector, schemas);
+
+        sql::Statement *statement = &connector.createStatement();
+
+        std::vector<std::string> tableCreateStatements;
+
+        for (std::string tableName : tablesNames) {
+
+            std::string tablesCreateStatementQuery = MYSQLStatements::TABLES_CREATE_QUERY;
+            std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
+            query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::TABLE_NAME, tableName);
+
+            sql::ResultSet *resultSet = statement->executeQuery(query);
+
+            while (resultSet->next()) {
+                tableCreateStatements.push_back(resultSet->getString(2));
+            }
+             resultSet->close();
+        }
+
+        statement->close();
+        return tableCreateStatements;
     }
 
     static std::vector<MYSQLTableColumn>

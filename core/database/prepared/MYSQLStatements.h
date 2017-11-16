@@ -23,6 +23,8 @@ public:
     constexpr static char *  TABLE_COLUMNS_FULL = "SHOW FULL COLUMNS IN ${TABLE_NAME}";
 
     constexpr static char * SCHEMAS_TABLES_QUERY = "SHOW TABLES IN ${SCHEMA}";
+
+    constexpr static char * TABLES_CREATE_QUERY = "SHOW CREATE TABLE ${SCHEMAS}.${TABLE_NAME}";
 };
 
 
