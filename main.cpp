@@ -4,10 +4,11 @@
 #include "core/database/connectors/MYSQLDatabaseConnector.h"
 #include "utils/TransactionUtils.h"
 
-
-void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+void showMYSQLDatabaseNames(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
 void showMYSQLDatabaseTableNames(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
+void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
 void getMYSQLDatabaseTablesCreateStatements(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
@@ -18,7 +19,7 @@ int main(int argc, char **argv) {
     MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
             MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
 
-    getMYSQLDatabaseTableCreateStatement(mysqlDatabaseConnector);
+    showMYSQLDatabaseNames(mysqlDatabaseConnector);
 
     return EXIT_SUCCESS;
 }
@@ -63,5 +64,13 @@ void showMYSQLDatabaseTableColumns(MYSQLDatabaseConnector &mysqlDatabaseConnecto
 
         }
 
+    }
+}
+
+void showMYSQLDatabaseNames(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    const std::vector<std::string> &databaseNames =
+            TransactionUtils::getMYSQLDatabaseNames(mysqlDatabaseConnector);
+    for (const std::string &databaseName : databaseNames) {
+        std::cout << databaseName << std::endl;
     }
 }

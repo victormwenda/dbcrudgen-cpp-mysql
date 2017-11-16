@@ -12,19 +12,22 @@
 #define DBCRUDGEN_CPP_STATEMENTS_H
 
 #include <string>
+
 //
 // statements
 // //
 class MYSQLStatements {
 
 public:
-    constexpr static char * TABLE_SCHEMA_STATEMENT = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE TABLE_NAME LIKE '${TABLE_NAME}'";
+    constexpr static char *SHOW_SCHEMAS_QUERY = "SHOW DATABASES";
 
-    constexpr static char *  TABLE_COLUMNS_FULL = "SHOW FULL COLUMNS IN ${TABLE_NAME}";
+    constexpr static char *TABLE_SCHEMA_STATEMENT = "SELECT * FROM `INFORMATION_SCHEMA`.`TABLES` WHERE TABLE_NAME LIKE '${TABLE_NAME}'";
 
-    constexpr static char * SCHEMAS_TABLES_QUERY = "SHOW TABLES IN ${SCHEMA}";
+    constexpr static char *TABLE_COLUMNS_FULL = "SHOW FULL COLUMNS IN ${TABLE_NAME}";
 
-    constexpr static char * TABLES_CREATE_QUERY = "SHOW CREATE TABLE ${SCHEMAS}.${TABLE_NAME}";
+    constexpr static char *SCHEMAS_TABLES_QUERY = "SHOW TABLES IN ${SCHEMA}";
+
+    constexpr static char *TABLES_CREATE_QUERY = "SHOW CREATE TABLE ${SCHEMAS}.${TABLE_NAME}";
 };
 
 

@@ -40,6 +40,26 @@ public:
      * @return
      */
     static std::vector<std::string>
+    getMYSQLDatabaseNames(MYSQLDatabaseConnector &connector) {
+        std::vector<std::string> schemaNames;
+        std::string query = MYSQLStatements::SHOW_SCHEMAS_QUERY;
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            schemaNames.push_back(resultSet->getString(1));
+        }
+        resultSet->close();
+        statement->close();
+        return schemaNames;
+    }
+/**
+     * Get the list of all tables in a MYSQL Database
+     *
+     * @param connectionParams
+     * @return
+     */
+    static std::vector<std::string>
     getMYSQLDatabaseTableNames(MYSQLDatabaseConnector &connector, const std::string &schemas) {
         std::vector<std::string> tablesNames;
         std::string showSchemasTablesQuery = MYSQLStatements::SCHEMAS_TABLES_QUERY;
