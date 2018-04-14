@@ -79,6 +79,8 @@ set(SOURCE_FILES
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
 
+        core/database/tables/MysqlRelationTypes.h
+
 
         core/cli/CliParser.h
 
@@ -108,6 +110,7 @@ set(SOURCE_FILES
         utils/StringUtils.h
         utils/TransactionUtils.h
         utils/Tags.h
+        utils/MysqlTags.h
         )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})

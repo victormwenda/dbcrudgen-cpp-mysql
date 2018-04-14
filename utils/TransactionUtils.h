@@ -23,6 +23,8 @@
 #include "../core/database/relations/MYSQLDatabaseTable.h"
 
 #include "../lang/parser/mysql/MYSQLLangParser.h"
+#include "../core/database/tables/MysqlRelationTypes.h"
+#include "MysqlTags.h"
 
 #include <cppconn/statement.h>
 #include <cppconn/resultset.h>
@@ -53,7 +55,8 @@ public:
         statement->close();
         return schemaNames;
     }
-/**
+
+    /**
      * Get the list of all tables in a MYSQL Database
      *
      * @param connectionParams
@@ -241,6 +244,30 @@ public:
 
 
         return dbTables;
+    }
+
+    /**
+     * Get the list of all tables in a MYSQL Database
+     *
+     * @param connectionParams
+     * @return
+     */
+    static std::vector<std::string>
+    getMYSQLDatabaseViewNames(MYSQLDatabaseConnector &connector, const std::string &schemas) {
+        std::vector<std::string> viewNames;
+        std::string showSchemasTablesQuery = MYSQLStatements::SCHEMAS_VIEWS_QUERY;
+        std::string query = StringUtils::parseTemplate(showSchemasTablesQuery, Tags::SCHEMA, schemas);
+        query = StringUtils::parseTemplate(showSchemasTablesQuery, MysqlTags::TABLE_TYPE_VIEW,
+                                           MysqlRelationTypes::TABLE_TYPE_VIEW);
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            viewNames.push_back(resultSet->getString(1));
+        }
+        resultSet->close();
+        statement->close();
+        return viewNames;
     }
 };
 
