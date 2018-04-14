@@ -21,6 +21,8 @@
 #include "../core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h"
 #include "../core/database/prepared/MYSQLStatements.h"
 #include "../core/database/relations/MYSQLDatabaseTable.h"
+#include "../core/database/relations/MysqlKeyColumnUsage.h"
+#include "../core/database/reserved/MysqlKeyColumnUsageTableColumns.h"
 
 #include "../lang/parser/mysql/MYSQLLangParser.h"
 #include "../core/database/tables/MysqlRelationTypes.h"
@@ -278,7 +280,7 @@ public:
     */
     static std::string
     getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas,
-                                         const std::string viewName) {
+                                        const std::string viewName) {
 
         std::string tableCreateStatement = "";
 
@@ -297,6 +299,52 @@ public:
         statement->close();
 
         return tableCreateStatement;
+    }
+
+    /**
+     * Returns all the references used in a MYSQL table schema
+     *
+     * @param connector
+     * @param schemas
+     * @return
+     */
+    static std::vector<MysqlKeyColumnUsage>
+    getMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &connector, std::string schemas) {
+        std::vector<MysqlKeyColumnUsage> references;
+
+        std::string columnsUsageQuery = MYSQLStatements::KEY_COLUMN_USAGES;
+        std::string query = StringUtils::parseTemplate(columnsUsageQuery, Tags::SCHEMA, schemas);
+
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+
+            std::string constraintCatalog = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_CATALOG);
+            std::string constraintSchema = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_SCHEMA);
+            std::string constraintName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_NAME);
+            std::string tableCatalog = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_TABLE_CATALOG);
+            std::string tableSchema = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_TABLE_SCHEMA);
+            std::string tableName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_TABLE_NAME);
+            std::string columnName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_COLUMN_NAME);
+            long int ordinalPosition =  resultSet->getInt(MysqlKeyColumnUsageTableColumns::COLUMN_ORDINAL_POSITION);
+            long int positionInUniqueConstraint =  resultSet->getInt(MysqlKeyColumnUsageTableColumns::COLUMN_POSITION_IN_UNIQUE_CONSTRAINT);
+            std::string referencedTableSchema = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_TABLE_SCHEMA);
+            std::string referencedTableName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_TABLE_NAME);
+            std::string referencedColumnName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_COLUMN_NAME);
+
+            references.push_back(MysqlKeyColumnUsage {constraintCatalog, constraintSchema, constraintName,
+                                                      tableCatalog, tableSchema, tableName,
+                                                      columnName,   ordinalPosition,
+                                                      positionInUniqueConstraint,
+                                                      referencedTableSchema, referencedTableName,
+                                                      referencedColumnName});
+        }
+
+        resultSet->close();
+        statement->close();
+
+        return references;
     }
 };
 

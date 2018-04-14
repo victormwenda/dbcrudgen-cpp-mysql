@@ -18,12 +18,14 @@ void getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseC
 
 void getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
+void showMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
 int main(int argc, char **argv) {
 
     MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
             MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
 
-    getMYSQLDatabaseViewCreateStatement(mysqlDatabaseConnector);
+    showMYSQLDatabaseColumnsUsages(mysqlDatabaseConnector);
 
     return EXIT_SUCCESS;
 }
@@ -89,6 +91,16 @@ void showMYSQLDatabaseNames(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
 
 void getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
     std::string createStatement = TransactionUtils::getMYSQLDatabaseViewCreateStatement(mysqlDatabaseConnector,
-                                                                                         "dbcrudgen", "bug_logger_view");
+                                                                                        "dbcrudgen", "bug_logger_view");
     std::cout << createStatement << std::endl;
+}
+
+void showMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    std::vector<MysqlKeyColumnUsage> columnsUsages
+            = TransactionUtils::getMYSQLDatabaseColumnsUsages(mysqlDatabaseConnector, "dbcrudgen");
+
+    for (MysqlKeyColumnUsage &columnUsage : columnsUsages) {
+        std::cout << columnUsage.getTableName() << "." << columnUsage.getColumnName() << " -> ";
+        std::cout << columnUsage.getReferencedTableName() << "." << columnUsage.getReferencedColumnName() << "\n";
+    }
 }

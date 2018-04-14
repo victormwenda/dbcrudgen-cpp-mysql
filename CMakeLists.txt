@@ -78,6 +78,9 @@ set(SOURCE_FILES
 
         core/database/relations/DatabaseTable.h
         core/database/relations/MYSQLDatabaseTable.h
+        core/database/relations/MysqlKeyColumnUsage.h
+
+        core/database/reserved/MysqlKeyColumnUsageTableColumns.h
 
         core/database/tables/MysqlRelationTypes.h
 
