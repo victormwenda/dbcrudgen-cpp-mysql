@@ -36,6 +36,9 @@ public:
     constexpr static char *VIEW_CREATE_QUERY = "SHOW CREATE VIEW ${SCHEMAS}.${VIEW_NAME}";
 
     constexpr  static char *KEY_COLUMN_USAGES = "SELECT * FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA = '${SCHEMA}'";
+
+    constexpr  static char *GET_USERS = "SELECT * FROM mysql.user";
+
 };
 
 

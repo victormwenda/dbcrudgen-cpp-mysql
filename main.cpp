@@ -20,12 +20,14 @@ void getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseCo
 
 void showMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
+void showMYSQLUsers(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
 int main(int argc, char **argv) {
 
     MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
             MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
 
-    showMYSQLDatabaseColumnsUsages(mysqlDatabaseConnector);
+    showMYSQLUsers(mysqlDatabaseConnector);
 
     return EXIT_SUCCESS;
 }
@@ -102,5 +104,14 @@ void showMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &mysqlDatabaseConnect
     for (MysqlKeyColumnUsage &columnUsage : columnsUsages) {
         std::cout << columnUsage.getTableName() << "." << columnUsage.getColumnName() << " -> ";
         std::cout << columnUsage.getReferencedTableName() << "." << columnUsage.getReferencedColumnName() << "\n";
+    }
+}
+
+void showMYSQLUsers(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    std::vector<MysqlUser> users
+            = TransactionUtils::getMYSQLUsers(mysqlDatabaseConnector);
+
+    for (MysqlUser &user : users) {
+        std::cout << user.getUser() << "@" << user.getHost() << "\n";
     }
 }

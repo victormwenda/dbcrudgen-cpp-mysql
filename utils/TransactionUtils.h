@@ -27,6 +27,8 @@
 #include "../lang/parser/mysql/MYSQLLangParser.h"
 #include "../core/database/tables/MysqlRelationTypes.h"
 #include "MysqlTags.h"
+#include "../core/database/relations/MysqlUser.h"
+#include "../core/database/reserved/MysqlUserColumn.h"
 
 #include <cppconn/statement.h>
 #include <cppconn/resultset.h>
@@ -320,22 +322,28 @@ public:
 
         while (resultSet->next()) {
 
-            std::string constraintCatalog = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_CATALOG);
-            std::string constraintSchema = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_SCHEMA);
+            std::string constraintCatalog = resultSet->getString(
+                    MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_CATALOG);
+            std::string constraintSchema = resultSet->getString(
+                    MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_SCHEMA);
             std::string constraintName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_CONSTRAINT_NAME);
             std::string tableCatalog = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_TABLE_CATALOG);
             std::string tableSchema = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_TABLE_SCHEMA);
             std::string tableName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_TABLE_NAME);
             std::string columnName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_COLUMN_NAME);
-            long int ordinalPosition =  resultSet->getInt(MysqlKeyColumnUsageTableColumns::COLUMN_ORDINAL_POSITION);
-            long int positionInUniqueConstraint =  resultSet->getInt(MysqlKeyColumnUsageTableColumns::COLUMN_POSITION_IN_UNIQUE_CONSTRAINT);
-            std::string referencedTableSchema = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_TABLE_SCHEMA);
-            std::string referencedTableName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_TABLE_NAME);
-            std::string referencedColumnName = resultSet->getString(MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_COLUMN_NAME);
+            long int ordinalPosition = resultSet->getInt(MysqlKeyColumnUsageTableColumns::COLUMN_ORDINAL_POSITION);
+            long int positionInUniqueConstraint = resultSet->getInt(
+                    MysqlKeyColumnUsageTableColumns::COLUMN_POSITION_IN_UNIQUE_CONSTRAINT);
+            std::string referencedTableSchema = resultSet->getString(
+                    MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_TABLE_SCHEMA);
+            std::string referencedTableName = resultSet->getString(
+                    MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_TABLE_NAME);
+            std::string referencedColumnName = resultSet->getString(
+                    MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_COLUMN_NAME);
 
             references.push_back(MysqlKeyColumnUsage {constraintCatalog, constraintSchema, constraintName,
                                                       tableCatalog, tableSchema, tableName,
-                                                      columnName,   ordinalPosition,
+                                                      columnName, ordinalPosition,
                                                       positionInUniqueConstraint,
                                                       referencedTableSchema, referencedTableName,
                                                       referencedColumnName});
@@ -345,6 +353,97 @@ public:
         statement->close();
 
         return references;
+    }
+
+    /**
+     * Returns all the mysql users on the server
+     *
+     * @param connector
+     * @param schemas
+     * @return
+     */
+    static std::vector<MysqlUser>
+    getMYSQLUsers(MYSQLDatabaseConnector &connector) {
+        std::vector<MysqlUser> users;
+
+        std::string query = MYSQLStatements::GET_USERS;
+
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+
+            std::string host = resultSet->getString(MysqlUserColumn::HOST);
+            std::string user = resultSet->getString(MysqlUserColumn::USER);
+            std::string select_priv = resultSet->getString(MysqlUserColumn::SELECT_PRIV);
+            std::string insert_priv = resultSet->getString(MysqlUserColumn::INSERT_PRIV);
+            std::string update_priv = resultSet->getString(MysqlUserColumn::UPDATE_PRIV);
+            std::string delete_priv = resultSet->getString(MysqlUserColumn::DELETE_PRIV);
+            std::string create_priv = resultSet->getString(MysqlUserColumn::CREATE_PRIV);
+            std::string drop_priv = resultSet->getString(MysqlUserColumn::DROP_PRIV);
+            std::string reload_priv = resultSet->getString(MysqlUserColumn::RELOAD_PRIV);
+            std::string shutdown_priv = resultSet->getString(MysqlUserColumn::SHUTDOWN_PRIV);
+            std::string process_priv = resultSet->getString(MysqlUserColumn::PROCESS_PRIV);
+            std::string file_priv = resultSet->getString(MysqlUserColumn::FILE_PRIV);
+            std::string grant_priv = resultSet->getString(MysqlUserColumn::GRANT_PRIV);
+            std::string references_priv = resultSet->getString(MysqlUserColumn::REFERENCES_PRIV);
+            std::string index_priv = resultSet->getString(MysqlUserColumn::INDEX_PRIV);
+            std::string alter_priv = resultSet->getString(MysqlUserColumn::ALTER_PRIV);
+            std::string show_db_priv = resultSet->getString(MysqlUserColumn::SHOW_DB_PRIV);
+            std::string super_priv = resultSet->getString(MysqlUserColumn::SUPER_PRIV);
+            std::string create_tmp_table_priv = resultSet->getString(MysqlUserColumn::CREATE_TMP_TABLE_PRIV);
+            std::string lock_tables_priv = resultSet->getString(MysqlUserColumn::LOCK_TABLES_PRIV);
+            std::string execute_priv = resultSet->getString(MysqlUserColumn::EXECUTE_PRIV);
+            std::string repl_slave_priv = resultSet->getString(MysqlUserColumn::REPL_SLAVE_PRIV);
+            std::string repl_client_priv = resultSet->getString(MysqlUserColumn::REPL_CLIENT_PRIV);
+            std::string create_view_priv = resultSet->getString(MysqlUserColumn::CREATE_VIEW_PRIV);
+            std::string show_view_priv = resultSet->getString(MysqlUserColumn::SHOW_VIEW_PRIV);
+            std::string create_routine_priv = resultSet->getString(MysqlUserColumn::CREATE_ROUTINE_PRIV);
+            std::string alter_routine_priv = resultSet->getString(MysqlUserColumn::ALTER_ROUTINE_PRIV);
+            std::string create_user_priv = resultSet->getString(MysqlUserColumn::CREATE_USER_PRIV);
+            std::string event_priv = resultSet->getString(MysqlUserColumn::EVENT_PRIV);
+            std::string trigger_priv = resultSet->getString(MysqlUserColumn::TRIGGER_PRIV);
+            std::string create_tablespace_priv = resultSet->getString(MysqlUserColumn::CREATE_TABLESPACE_PRIV);
+            std::string ssl_type = resultSet->getString(MysqlUserColumn::SSL_TYPE);
+            std::string ssl_cipher = resultSet->getString(MysqlUserColumn::SSL_CIPHER);
+            std::string x509_issuer = resultSet->getString(MysqlUserColumn::X509_ISSUER);
+            std::string x509_subject = resultSet->getString(MysqlUserColumn::X509_SUBJECT);
+            std::string max_questions = resultSet->getString(MysqlUserColumn::MAX_QUESTIONS);
+            std::string max_updates = resultSet->getString(MysqlUserColumn::MAX_UPDATES);
+            std::string max_connections = resultSet->getString(MysqlUserColumn::MAX_CONNECTIONS);
+            std::string max_user_connections = resultSet->getString(MysqlUserColumn::MAX_USER_CONNECTIONS);
+            std::string plugin = resultSet->getString(MysqlUserColumn::PLUGIN);
+            std::string authentication_string = resultSet->getString(MysqlUserColumn::AUTHENTICATION_STRING);
+            std::string password_expired = resultSet->getString(MysqlUserColumn::PASSWORD_EXPIRED);
+            std::string password_last_changed = resultSet->getString(MysqlUserColumn::PASSWORD_LAST_CHANGED);
+            std::string password_lifetime = resultSet->getString(MysqlUserColumn::PASSWORD_LIFETIME);
+            std::string account_locked = resultSet->getString(MysqlUserColumn::ACCOUNT_LOCKED);
+
+
+            users.push_back(MysqlUser   {host, user, select_priv,
+                                         insert_priv, update_priv, delete_priv,
+                                         create_priv, drop_priv, reload_priv,
+                                         shutdown_priv, process_priv, file_priv,
+                                         grant_priv, references_priv, index_priv,
+                                         alter_priv, show_db_priv, super_priv,
+                                         create_tmp_table_priv, lock_tables_priv,
+                                         execute_priv, repl_slave_priv, repl_client_priv,
+                                         create_view_priv, show_view_priv,
+                                         create_routine_priv, alter_routine_priv,
+                                         create_user_priv, event_priv, trigger_priv,
+                                         create_tablespace_priv, ssl_type, ssl_cipher,
+                                         x509_issuer, x509_subject, max_questions,
+                                         max_updates, max_connections,
+                                         max_user_connections, plugin,
+                                         authentication_string, password_expired,
+                                         password_last_changed, password_lifetime,
+                                         account_locked});
+        }
+
+        resultSet->close();
+        statement->close();
+
+        return users;
     }
 };
 
