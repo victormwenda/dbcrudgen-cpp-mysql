@@ -269,6 +269,35 @@ public:
         statement->close();
         return viewNames;
     }
+
+    /**
+    * Get the create table statement for a MYSQL Database table
+    *
+    * @param connectionParams
+    * @return
+    */
+    static std::string
+    getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas,
+                                         const std::string viewName) {
+
+        std::string tableCreateStatement = "";
+
+        std::string tablesCreateStatementQuery = MYSQLStatements::VIEW_CREATE_QUERY;
+        std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
+        query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::VIEW_NAME, viewName);
+
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            tableCreateStatement = resultSet->getString(2);
+        }
+
+        resultSet->close();
+        statement->close();
+
+        return tableCreateStatement;
+    }
 };
 
 

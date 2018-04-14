@@ -22,6 +22,7 @@ public :
     constexpr static char * SCHEMAS = "${SCHEMAS}";
     constexpr static char * SCHEMA = "${SCHEMA}";
     constexpr static char * TABLE_NAME = "${TABLE_NAME}";
+    constexpr static char * VIEW_NAME = "${VIEW_NAME}";
 };
 
 

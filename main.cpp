@@ -16,12 +16,14 @@ void getMYSQLDatabaseTablesCreateStatements(MYSQLDatabaseConnector &mysqlDatabas
 
 void getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
+void getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector);
+
 int main(int argc, char **argv) {
 
     MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
             MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
 
-    showMYSQLDatabaseViewNames(mysqlDatabaseConnector);
+    getMYSQLDatabaseViewCreateStatement(mysqlDatabaseConnector);
 
     return EXIT_SUCCESS;
 }
@@ -83,4 +85,10 @@ void showMYSQLDatabaseNames(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
     for (const std::string &databaseName : databaseNames) {
         std::cout << databaseName << std::endl;
     }
+}
+
+void getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &mysqlDatabaseConnector) {
+    std::string createStatement = TransactionUtils::getMYSQLDatabaseViewCreateStatement(mysqlDatabaseConnector,
+                                                                                         "dbcrudgen", "bug_logger_view");
+    std::cout << createStatement << std::endl;
 }
