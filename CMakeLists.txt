@@ -17,13 +17,13 @@ set(MYSQL_HOME /usr/local/include/mysql-connector-cpp/include)
 #Oracle Instant client dir
 set(ORACLE_INSTANT_CLIENT_HOME
 
-        /usr/local/include/oracle/instant-client
-        /usr/local/include/oracle/instant-client/include)
+        oracle/instant-client
+        oracle/instant-client/include)
 
 #Instant client libs
 set(OCCI_LIBS
-        /usr/local/include/oracle/instant-client/libocci.so
-        /usr/local/include/oracle/instant-client/libclntsh.so)
+        oracle/instant-client/libocci.so
+        oracle/instant-client/libclntsh.so)
 
 #Include the Mysql Dirs
 include_directories(${MYSQL_HOME})
