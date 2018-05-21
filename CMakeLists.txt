@@ -33,89 +33,89 @@ include_directories(${ORACLE_INSTANT_CLIENT_HOME})
 
 set(SOURCE_FILES
 
-        main.cpp
+        src/main.cpp
 
-        creators/DatabaseModelCreator.h
-        creators/MYSQLDatabaseModelCreator.h
-        creators/OracleDatabaseModelCreator.h
-        creators/SQLiteDatabaseModelCreator.h
-
-
-        core/database/schemas/OracleDatabaseSchemas.h
-        core/database/schemas/SQLDatabaseSchemas.h
-        core/database/schemas/MYSQLDatabaseSchemas.h
-        core/database/schemas/MSSQLDatabaseSchemas.h
-        core/database/schemas/DatabaseSchemas.h
-
-        core/database/connectors/DatabaseConnector.h
-        core/database/connectors/MYSQLDatabaseConnector.h
-        core/database/connectors/OracleDatabaseConnector.h
-        core/database/connectors/SQLiteDatabaseConnector.h
-
-        core/database/connectors/credentials/DatabaseConnection.h
-        core/database/connectors/credentials/SQLDatabaseConnectionParams.h
-        core/database/connectors/credentials/MSSQLDatabaseConnectionParams.h
-        core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h
-        core/database/connectors/credentials/OracleDatabaseConnectionParams.h
-        core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
-
-        core/database/columns/TableColumn.h
-        core/database/columns/MYSQLTableColumn.h
-
-        core/database/constraints/ColumnConstraints.h
-
-        core/database/datatypes/DataType.h
-
-        core/database/error/DatabaseError.h
-        core/database/executors/MYSQLQueryExecutor.h
-        core/database/executors/SQLiteQueryExecutor.h
-
-        core/database/exceptions/MYSQLDatabaseException.h
-
-        core/database/formats/RowFormats.h
-
-        core/database/prepared/MYSQLStatements.h
-
-        core/database/relations/DatabaseTable.h
-        core/database/relations/MYSQLDatabaseTable.h
-        core/database/relations/MysqlKeyColumnUsage.h
-        core/database/relations/MysqlUser.h
-
-        core/database/reserved/MysqlKeyColumnUsageTableColumns.h
-        core/database/reserved/MysqlUserColumn.h
-
-        core/database/tables/MysqlRelationTypes.h
+        src/creators/DatabaseModelCreator.h
+        src/creators/MYSQLDatabaseModelCreator.h
+        src/creators/OracleDatabaseModelCreator.h
+        src/creators/SQLiteDatabaseModelCreator.h
 
 
-        core/cli/CliParser.h
+        src/core/database/schemas/OracleDatabaseSchemas.h
+        src/core/database/schemas/SQLDatabaseSchemas.h
+        src/core/database/schemas/MYSQLDatabaseSchemas.h
+        src/core/database/schemas/MSSQLDatabaseSchemas.h
+        src/core/database/schemas/DatabaseSchemas.h
 
-        core/crud/actions/DatabaseCrudActions.h
+        src/core/database/connectors/DatabaseConnector.h
+        src/core/database/connectors/MYSQLDatabaseConnector.h
+        src/core/database/connectors/OracleDatabaseConnector.h
+        src/core/database/connectors/SQLiteDatabaseConnector.h
 
-        core/io/FilesReader.h
-        core/io/FilesWriter.h
-        core/io/FilesManager.h
+        src/core/database/connectors/credentials/DatabaseConnection.h
+        src/core/database/connectors/credentials/SQLDatabaseConnectionParams.h
+        src/core/database/connectors/credentials/MSSQLDatabaseConnectionParams.h
+        src/core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h
+        src/core/database/connectors/credentials/OracleDatabaseConnectionParams.h
+        src/core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
 
-        lang/dsl/LanguageDSL.h
-        lang/dsl/LanguageFilesProperties.h
-        lang/dsl/JavaLangDSL.h
-        lang/dsl/PHPLangDSL.h
-        lang/dsl/CPPLangDSL.h
+        src/core/database/columns/TableColumn.h
+        src/core/database/columns/MYSQLTableColumn.h
 
-        lang/parser/LangTemplateParser.h
-        lang/parser/java/JavaLangTemplateParser.h
-        lang/parser/mysql/MYSQLLangParser.h
+        src/core/database/constraints/ColumnConstraints.h
+
+        src/core/database/datatypes/DataType.h
+
+        src/core/database/error/DatabaseError.h
+        src/core/database/executors/MYSQLQueryExecutor.h
+        src/core/database/executors/SQLiteQueryExecutor.h
+
+        src/core/database/exceptions/MYSQLDatabaseException.h
+
+        src/core/database/formats/RowFormats.h
+
+        src/core/database/prepared/MYSQLStatements.h
+
+        src/core/database/relations/DatabaseTable.h
+        src/core/database/relations/MYSQLDatabaseTable.h
+        src/core/database/relations/MysqlKeyColumnUsage.h
+        src/core/database/relations/MysqlUser.h
+
+        src/core/database/reserved/MysqlKeyColumnUsageTableColumns.h
+        src/core/database/reserved/MysqlUserColumn.h
+
+        src/core/database/tables/MysqlRelationTypes.h
 
 
-        models/MYSQLDatabaseModel.h
-        models/OracleDatabaseModel.h
-        models/SQLiteDatabaseModel.h
+        src/core/cli/CliParser.h
 
-        utils/ConnectorUtils.h
-        utils/DbCrudgenError.h
-        utils/StringUtils.h
-        utils/TransactionUtils.h
-        utils/Tags.h
-        utils/MysqlTags.h
+        src/core/crud/actions/DatabaseCrudActions.h
+
+        src/core/io/FilesReader.h
+        src/core/io/FilesWriter.h
+        src/core/io/FilesManager.h
+
+        src/lang/dsl/LanguageDSL.h
+        src/lang/dsl/LanguageFilesProperties.h
+        src/lang/dsl/JavaLangDSL.h
+        src/lang/dsl/PHPLangDSL.h
+        src/lang/dsl/CPPLangDSL.h
+
+        src/lang/parser/LangTemplateParser.h
+        src/lang/parser/java/JavaLangTemplateParser.h
+        src/lang/parser/mysql/MYSQLLangParser.h
+
+
+        src/models/MYSQLDatabaseModel.h
+        src/models/OracleDatabaseModel.h
+        src/models/SQLiteDatabaseModel.h
+
+        src/utils/ConnectorUtils.h
+        src/utils/DbCrudgenError.h
+        src/utils/StringUtils.h
+        src/utils/TransactionUtils.h
+        src/utils/Tags.h
+        src/utils/MysqlTags.h
         )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
