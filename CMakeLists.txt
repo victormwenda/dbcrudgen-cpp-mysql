@@ -12,18 +12,18 @@ project(dbcrudgen_cpp)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 #MYSQL connector dir
-set(MYSQL_HOME /usr/local/include/mysql-connector-cpp/include)
+set(MYSQL_HOME include/mysql-connector-cpp/include)
 
 #Oracle Instant client dir
 set(ORACLE_INSTANT_CLIENT_HOME
 
-        oracle/instant-client
-        oracle/instant-client/include)
+        include/oracle/instant-client
+        include/oracle/instant-client/include)
 
 #Instant client libs
 set(OCCI_LIBS
-        oracle/instant-client/libocci.so
-        oracle/instant-client/libclntsh.so)
+        include/oracle/instant-client/libocci.so
+        include/oracle/instant-client/libclntsh.so)
 
 #Include the Mysql Dirs
 include_directories(${MYSQL_HOME})
