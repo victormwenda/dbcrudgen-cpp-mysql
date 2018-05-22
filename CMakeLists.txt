@@ -11,19 +11,21 @@ project(dbcrudgen_cpp)
 #Linker flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+#Project path
+set(PROJECT_DIR /home/victor/Workspace/Cpp/dbcrudgen) #Replace with the path to your project
+
 #MYSQL connector dir
-set(MYSQL_HOME include/mysql-connector-cpp/include)
+set(MYSQL_HOME ${PROJECT_DIR}/include/mysql-connector-cpp/include)
 
 #Oracle Instant client dir
-set(ORACLE_INSTANT_CLIENT_HOME
+set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instant-client
+        ${PROJECT_DIR}/include/oracle/instant-client/include)
 
-        include/oracle/instant-client
-        include/oracle/instant-client/include)
 
 #Instant client libs
 set(OCCI_LIBS
-        include/oracle/instant-client/libocci.so
-        include/oracle/instant-client/libclntsh.so)
+        ${PROJECT_DIR}/include/oracle/instant-client/libocci.so
+        ${PROJECT_DIR}/include/oracle/instant-client/libclntsh.so)
 
 #Include the Mysql Dirs
 include_directories(${MYSQL_HOME})

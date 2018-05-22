@@ -20,11 +20,11 @@ Go to CMakeLists.txt
 
     6) Include the Oracle header files to your project
 
-    7) Install Sqlite3 to your PC
+    7) Install Sqlite3 to your PC (sudo apt-get install libsqlite3-dev)
 
     8) Add libnnz11.so to your environment variables
 
     9) Add other required libs to your LD_LIBRARY_PATH
 
-
+    10) Set your project path on CMakeLists ==> set(PROJECT_DIR PROJECT _PATH) #Replace with the path to your project
 Build your project
