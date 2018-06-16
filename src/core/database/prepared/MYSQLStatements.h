@@ -27,6 +27,8 @@ public:
 
     constexpr static char *SCHEMAS_TABLES_QUERY = "SHOW TABLES IN ${SCHEMA}";
 
+    constexpr static char *SCHEMAS_FULL_TABLES_QUERY = "SHOW FULL TABLES IN ${SCHEMA}";
+
     constexpr static char *TABLES_CREATE_QUERY = "SHOW CREATE TABLE ${SCHEMAS}.${TABLE_NAME}";
 
     constexpr static char *SCHEMAS_VIEWS_QUERY = "SHOW FULL TABLES IN ${SCHEMA} WHERE TABLE_TYPE LIKE '${TABLE_TYPE_VIEW}'";

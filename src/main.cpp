@@ -3,6 +3,7 @@
 #include <mysql_connection.h>
 #include "core/database/connectors/MYSQLDatabaseConnector.h"
 #include "utils/TransactionUtils.h"
+#include "models/MYSQLDatabaseModel.h"
 
 void showMYSQLDatabaseNames(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
@@ -24,10 +25,27 @@ void showMYSQLUsers(MYSQLDatabaseConnector &mysqlDatabaseConnector);
 
 int main(int argc, char **argv) {
 
-    MYSQLDatabaseConnector mysqlDatabaseConnector = ConnectorUtils::openMYSQLDatabase(
-            MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358"});
+    std::string host = "tcp://127.0.0.1";
+    std::string user = "root";
+    std::string auth_string = "root3358";
+    std::string schemas = "cscart";
 
-    showMYSQLUsers(mysqlDatabaseConnector);
+    MYSQLDatabaseConnectionParams connectionParams = MYSQLDatabaseConnectionParams{host, user, auth_string,
+                                                                                   schemas};
+
+    MYSQLDatabaseConnector connector = ConnectorUtils::openMYSQLDatabase(connectionParams);
+
+
+    MYSQLDatabaseModel dbModel{connector};
+    auto items = dbModel.getTables(schemas);
+
+
+    int index = 0;
+    for (auto item : items) {
+        std::cout << ++index << " ";
+        std::cout << item.getName() << " " << item.getType() << std::endl;
+
+    }
 
     return EXIT_SUCCESS;
 }

@@ -27,11 +27,11 @@ class MYSQLDatabaseConnector : public DatabaseConnector {
 
 private:
     bool autoConnect;
-    MYSQLDatabaseConnectionParams connectionParams;
+    MYSQLDatabaseConnectionParams &connectionParams;
     sql::Driver *driver;
     sql::Connection *connection;
 public:
-    explicit MYSQLDatabaseConnector(MYSQLDatabaseConnectionParams connectionParams,
+    explicit MYSQLDatabaseConnector(MYSQLDatabaseConnectionParams &connectionParams,
                                     bool autoConnect)
             : connectionParams{connectionParams}, autoConnect{autoConnect} {
 
@@ -105,6 +105,10 @@ public:
 
     void onError(const std::string &errorLevel, const std::string &errorMessage, bool logError) override {
         DatabaseConnector::onError(errorLevel, errorMessage, logError);
+    }
+
+    MYSQLDatabaseConnectionParams &getConnectionParams() {
+        return connectionParams;
     }
 
     ~MYSQLDatabaseConnector() {
