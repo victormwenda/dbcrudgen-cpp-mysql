@@ -97,7 +97,7 @@ public:
 
         std::vector<std::string> tableCreateStatements;
 
-        for (std::string tableName : tablesNames) {
+        for (const std::string& tableName : tablesNames) {
 
             std::string tablesCreateStatementQuery = MYSQLStatements::TABLES_CREATE_QUERY;
             std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
@@ -123,9 +123,9 @@ public:
      */
     static std::string
     getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas,
-                                         const std::string tableName) {
+                                         const std::string &tableName) {
 
-        std::string tableCreateStatement = "";
+        std::string tableCreateStatement;
 
         std::string tablesCreateStatementQuery = MYSQLStatements::TABLES_CREATE_QUERY;
         std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
@@ -153,7 +153,7 @@ public:
      * @return
      */
     static std::vector<MYSQLTableColumn>
-    getMYSQLTableColumns(MYSQLDatabaseConnector &connector, const std::string &schemas, std::string tableName) {
+    getMYSQLTableColumns(MYSQLDatabaseConnector &connector, const std::string &schemas, const std::string &tableName) {
 
         std::vector<MYSQLTableColumn> tableColumns;
 
@@ -233,12 +233,12 @@ public:
                 std::vector<MYSQLTableColumn> tableColumns =
                         TransactionUtils::getMYSQLTableColumns(connector, schemas, table_name);
 
-                dbTables.push_back(MYSQLDatabaseTable {table_catalog,
-                                                       table_schema, table_name, table_type, engine, version,
-                                                       row_format, rows, avg_row_length,
-                                                       data_length, max_data_length, index_length, data_free,
-                                                       auto_increment, create_time, update_time, check_time,
-                                                       collation, checksum, create_options, comment, tableColumns});
+                dbTables.emplace_back(MYSQLDatabaseTable{table_catalog,
+                                                         table_schema, table_name, table_type, engine, version,
+                                                         row_format, rows, avg_row_length,
+                                                         data_length, max_data_length, index_length, data_free,
+                                                         auto_increment, create_time, update_time, check_time,
+                                                         collation, checksum, create_options, comment, tableColumns});
 
             }
 
@@ -282,9 +282,9 @@ public:
     */
     static std::string
     getMYSQLDatabaseViewCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas,
-                                        const std::string viewName) {
+                                        const std::string& viewName) {
 
-        std::string tableCreateStatement = "";
+        std::string tableCreateStatement;
 
         std::string tablesCreateStatementQuery = MYSQLStatements::VIEW_CREATE_QUERY;
         std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
@@ -311,7 +311,7 @@ public:
      * @return
      */
     static std::vector<MysqlKeyColumnUsage>
-    getMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &connector, std::string schemas) {
+    getMYSQLDatabaseColumnsUsages(MYSQLDatabaseConnector &connector, const std::string& schemas) {
         std::vector<MysqlKeyColumnUsage> references;
 
         std::string columnsUsageQuery = MYSQLStatements::KEY_COLUMN_USAGES;
@@ -341,12 +341,12 @@ public:
             std::string referencedColumnName = resultSet->getString(
                     MysqlKeyColumnUsageTableColumns::COLUMN_REFERENCED_COLUMN_NAME);
 
-            references.push_back(MysqlKeyColumnUsage {constraintCatalog, constraintSchema, constraintName,
-                                                      tableCatalog, tableSchema, tableName,
-                                                      columnName, ordinalPosition,
-                                                      positionInUniqueConstraint,
-                                                      referencedTableSchema, referencedTableName,
-                                                      referencedColumnName});
+            references.emplace_back(MysqlKeyColumnUsage{constraintCatalog, constraintSchema, constraintName,
+                                                        tableCatalog, tableSchema, tableName,
+                                                        columnName, ordinalPosition,
+                                                        positionInUniqueConstraint,
+                                                        referencedTableSchema, referencedTableName,
+                                                        referencedColumnName});
         }
 
         resultSet->close();
@@ -420,7 +420,7 @@ public:
             std::string account_locked = resultSet->getString(MysqlUserColumn::ACCOUNT_LOCKED);
 
 
-            users.push_back(MysqlUser   {host, user, select_priv,
+            users.emplace_back(MysqlUser{host, user, select_priv,
                                          insert_priv, update_priv, delete_priv,
                                          create_priv, drop_priv, reload_priv,
                                          shutdown_priv, process_priv, file_priv,
