@@ -19,6 +19,7 @@
 #include "../core/database/tables/MysqlTable.h"
 #include "../core/database/reserved/MysqlFullTablesColumns.h"
 #include "../core/database/reserved/MysqlCreateTableColumns.h"
+#include "../core/database/reserved/MysqlTableColumnColumns.h"
 
 //
 // MYSQLDatabaseModel
@@ -253,7 +254,8 @@ public:
      * @return
      */
     static std::string
-    getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas, const std::string &tableName) {
+    getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas,
+                                         const std::string &tableName) {
 
         sql::Statement *statement = &connector.createStatement();
 
@@ -293,17 +295,19 @@ public:
         sql::ResultSet *resultSet = statement->executeQuery(query);
 
         while (resultSet->next()) {
-            std::string field = resultSet->getString("Field");
-            std::string type = resultSet->getString("Type");
-            std::string collation = resultSet->getString("Collation");
-            std::string allowNull = resultSet->getString("Null");
-            std::string key = resultSet->getString("Key");
-            std::string defaultValue = resultSet->getString("Default");
-            std::string extra = resultSet->getString("Extra");
-            std::string privileges = resultSet->getString("Privileges");
-            std::string comment = resultSet->getString("Comment");
+            std::string field = resultSet->getString(MysqlTableColumnColumns::FIELD);
+            std::string type = resultSet->getString(MysqlTableColumnColumns::TYPE);
+            std::string collation = resultSet->getString(MysqlTableColumnColumns::COLLATION);
+            std::string allowNull = resultSet->getString(MysqlTableColumnColumns::ALLOW_NULL);
+            std::string key = resultSet->getString(MysqlTableColumnColumns::KEY);
+            std::string defaultValue = resultSet->getString(MysqlTableColumnColumns::DEFAULT_VALUE);
+            std::string extra = resultSet->getString(MysqlTableColumnColumns::EXTRA);
+            std::string privileges = resultSet->getString(MysqlTableColumnColumns::PRIVILEGES);
+            std::string comment = resultSet->getString(MysqlTableColumnColumns::COMMENT);
+
             MYSQLTableColumn mysqlTable{field, type, collation, allowNull, key, defaultValue, extra, privileges,
                                         comment};
+            
             tableColumns.push_back(mysqlTable);
         }
         resultSet->close();

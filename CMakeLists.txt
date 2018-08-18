@@ -84,6 +84,7 @@ set(SOURCE_FILES
         src/core/database/relations/MysqlUser.h
 
         src/core/database/reserved/MysqlCreateTableColumns.h
+        src/core/database/reserved/MysqlTableColumnColumns.h
         src/core/database/reserved/MysqlFullTablesColumns.h
         src/core/database/reserved/MysqlKeyColumnUsageTableColumns.h
         src/core/database/reserved/MysqlUserColumn.h
