@@ -12,6 +12,7 @@
 #define DBCRUDGEN_CPP_TABLECOLUMN_H
 
 #include <iostream>
+#include <utility>
 
 /**
 * TableColumn
@@ -19,11 +20,13 @@
 class TableColumn {
 
 private:
-    std::string columnName;
+    const std::string columnName;
+    const std::string dataType;
 public:
 
 public:
-    explicit TableColumn(const std::string &columnName) : columnName(columnName) {}
+    explicit TableColumn(std::string columnName, std::string dataType)
+            : columnName(std::move(columnName)), dataType(std::move(dataType)) {}
 
     bool operator==(const TableColumn &rhs) const;
 

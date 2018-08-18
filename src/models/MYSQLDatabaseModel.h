@@ -18,6 +18,7 @@
 #include "../utils/TransactionUtils.h"
 #include "../core/database/tables/MysqlTable.h"
 #include "../core/database/reserved/MysqlFullTablesColumns.h"
+#include "../core/database/reserved/MysqlCreateTableColumns.h"
 
 //
 // MYSQLDatabaseModel
@@ -236,13 +237,79 @@ public:
             sql::ResultSet *resultSet = statement->executeQuery(query);
 
             while (resultSet->next()) {
-                tableCreateStatements.emplace_back(resultSet->getString(2));
+                tableCreateStatements.emplace_back(resultSet->getString(MysqlCreateTableColumns::CREATE_TABLE));
             }
             resultSet->close();
         }
 
         statement->close();
         return tableCreateStatements;
+    }
+
+    /**
+     * Get all the CREATE STATEMENT for a database table
+     * @param schemas
+     * @param tablesNames
+     * @return
+     */
+    static std::string
+    getMYSQLDatabaseTableCreateStatement(MYSQLDatabaseConnector &connector, const std::string &schemas, const std::string &tableName) {
+
+        sql::Statement *statement = &connector.createStatement();
+
+
+        std::string tablesCreateStatementQuery = MYSQLStatements::TABLES_CREATE_QUERY;
+        std::string query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::SCHEMAS, schemas);
+        query = StringUtils::parseTemplate(tablesCreateStatementQuery, Tags::TABLE_NAME, tableName);
+
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+        resultSet->first();
+        std::string createTable = resultSet->getString(MysqlCreateTableColumns::CREATE_TABLE);
+
+        resultSet->close();
+        statement->close();
+
+        return createTable;
+    }
+
+    /**
+     * Returns a vector of MYSQLTableColumns found in the provided table
+     *
+     * @param connector
+     * @param schemas
+     * @param tableName
+     * @return
+     */
+    static std::vector<MYSQLTableColumn>
+    getMYSQLTableColumns(MYSQLDatabaseConnector &connector, const std::string &schemas, std::string &tableName) {
+
+        std::vector<MYSQLTableColumn> tableColumns;
+
+        std::string absoluteTableName{MYSQLLangParser::toAbsolutePath(schemas, tableName)};
+        std::string getTableColumnsQuery{MYSQLStatements::TABLE_COLUMNS_FULL};
+        std::string query = StringUtils::parseTemplate(getTableColumnsQuery, Tags::TABLE_NAME, absoluteTableName);
+
+        sql::Statement *statement = &connector.createStatement();
+        sql::ResultSet *resultSet = statement->executeQuery(query);
+
+        while (resultSet->next()) {
+            std::string field = resultSet->getString("Field");
+            std::string type = resultSet->getString("Type");
+            std::string collation = resultSet->getString("Collation");
+            std::string allowNull = resultSet->getString("Null");
+            std::string key = resultSet->getString("Key");
+            std::string defaultValue = resultSet->getString("Default");
+            std::string extra = resultSet->getString("Extra");
+            std::string privileges = resultSet->getString("Privileges");
+            std::string comment = resultSet->getString("Comment");
+            MYSQLTableColumn mysqlTable{field, type, collation, allowNull, key, defaultValue, extra, privileges,
+                                        comment};
+            tableColumns.push_back(mysqlTable);
+        }
+        resultSet->close();
+        statement->close();
+
+        return tableColumns;
     }
 };
 

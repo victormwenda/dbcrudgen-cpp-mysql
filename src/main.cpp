@@ -37,14 +37,26 @@ int main(int argc, char **argv) {
 
 
     MYSQLDatabaseModel dbModel{connector};
-    auto items = dbModel.getTables(schemas);
+    std::vector<MysqlTable> items = dbModel.getTables(schemas);
 
 
     int index = 0;
-    for (auto item : items) {
+
+    for (const MysqlTable &item : items) {
         std::cout << ++index << " ";
         std::cout << item.getName() << " " << item.getType() << std::endl;
 
+        auto&& tableName = item.getName();
+
+        std::string createStatement = MYSQLDatabaseModel::getMYSQLDatabaseTableCreateStatement(connector, schemas,tableName);
+        std::cout << "\n" << createStatement<< "\n\n";
+
+        std::vector<MYSQLTableColumn> tableColumns = MYSQLDatabaseModel::getMYSQLTableColumns(connector,schemas,  tableName);
+        std::cout <<" ------------------------------------------------------------------------- " << std::endl;
+        for(const MYSQLTableColumn &column : tableColumns) {
+            std::cout << column.getField() <<" : " << column.getType() << ",";
+        }
+        std::cout << "\n------------------------------------------------------------------------- \n\n\n\n" ;
     }
 
     return EXIT_SUCCESS;
