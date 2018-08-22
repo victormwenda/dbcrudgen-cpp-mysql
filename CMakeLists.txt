@@ -18,22 +18,22 @@ set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 set(MYSQL_HOME ${PROJECT_DIR}/include/mysql-connector-cpp/include)
 
 #Oracle Instant client dir
-set(ORACLE_INSTANT_CLIENT_HOME #${PROJECT_DIR}/include/oracle/instant-client
-        ${PROJECT_DIR}/include/oracle/instant-client/include)
+set(ORACLE_INSTANT_CLIENT_HOME  ${PROJECT_DIR}/include/oracle-instant-client) #${PROJECT_DIR}/include/oracle/instant-client
 
 
 #Instant client libs
-set(OCCI_LIBS
-        ${PROJECT_DIR}/include/oracle/instant-client/libnnz11
-        ${PROJECT_DIR}/include/oracle/instant-client/libocci.so
-        ${PROJECT_DIR}/include/oracle/instant-client/libclntsh.so
+set(OCCI_LIBS ${ORACLE_INSTANT_CLIENT_HOME}/basic/libocci.so.11.1
+        ${ORACLE_INSTANT_CLIENT_HOME}/basic/libclntsh.so.11.1
+        ${ORACLE_INSTANT_CLIENT_HOME}/basic/libnnz11.so
         )
 
 #Include the Mysql Dirs
 include_directories(${MYSQL_HOME})
 
 #Include the Oracle OCI dir
-include_directories(${ORACLE_INSTANT_CLIENT_HOME})
+include_directories(${ORACLE_INSTANT_CLIENT_HOME}/basic)
+include_directories(${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
+include_directories(${ORACLE_INSTANT_CLIENT_HOME}/odbc)
 
 set(SOURCE_FILES
 
