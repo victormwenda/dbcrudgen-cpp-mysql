@@ -4,9 +4,9 @@
 int main(int argc, char **argv) {
 
 
-    const std::string userName = "mwenda";
+    const std::string userName = "victor";
     const std::string password = "root3358";
-    const std::string connectionString = "jdbc:oracle:thin:@//mwenda:1522/XE";
+    const std::string connectionString = "//victor:1522/XE";
 
 
     oracle::occi::Environment *env = oracle::occi::Environment::createEnvironment();
