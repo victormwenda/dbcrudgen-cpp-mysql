@@ -79,17 +79,20 @@ set(SOURCE_FILES
         src/core/database/formats/RowFormats.h
 
         src/core/database/prepared/MYSQLStatements.h
+        src/core/database/prepared/OracleStatements.h
 
         src/core/database/relations/DatabaseTable.h
         src/core/database/relations/MYSQLDatabaseTable.h
         src/core/database/relations/MysqlKeyColumnUsage.h
         src/core/database/relations/MysqlUser.h
+        src/core/database/relations/OracleUser.h
 
         src/core/database/reserved/MysqlCreateTableColumns.h
         src/core/database/reserved/MysqlTableColumnColumns.h
         src/core/database/reserved/MysqlFullTablesColumns.h
         src/core/database/reserved/MysqlKeyColumnUsageTableColumns.h
         src/core/database/reserved/MysqlUserColumn.h
+        src/core/database/reserved/OracleUsersColumns.h
 
         src/core/database/tables/MysqlRelationTypes.h
         src/core/database/tables/MysqlTable.h
