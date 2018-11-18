@@ -86,6 +86,7 @@ set(SOURCE_FILES
         src/core/database/relations/MysqlKeyColumnUsage.h
         src/core/database/relations/MysqlUser.h
         src/core/database/relations/OracleUser.h
+        src/core/database/relations/OracleDBAUser.h
 
         src/core/database/reserved/MysqlCreateTableColumns.h
         src/core/database/reserved/MysqlTableColumnColumns.h
@@ -93,6 +94,7 @@ set(SOURCE_FILES
         src/core/database/reserved/MysqlKeyColumnUsageTableColumns.h
         src/core/database/reserved/MysqlUserColumn.h
         src/core/database/reserved/OracleUsersColumns.h
+        src/core/database/reserved/OracleDBAUsersColumns.h
 
         src/core/database/tables/MysqlRelationTypes.h
         src/core/database/tables/MysqlTable.h

@@ -19,6 +19,7 @@ class OracleStatements {
 
 public:
     constexpr static const char *GET_ALL_USERS = "SELECT * FROM ALL_USERS";
+    constexpr static const char *GET_DBA_USERS = "SELECT * FROM DBA_USERS";
 };
 
 
