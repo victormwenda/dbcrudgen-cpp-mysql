@@ -87,14 +87,17 @@ set(SOURCE_FILES
         src/core/database/relations/MysqlUser.h
         src/core/database/relations/OracleUser.h
         src/core/database/relations/OracleDBAUser.h
+        src/core/database/relations/OracleUserTables.h
 
         src/core/database/reserved/MysqlCreateTableColumns.h
         src/core/database/reserved/MysqlTableColumnColumns.h
         src/core/database/reserved/MysqlFullTablesColumns.h
         src/core/database/reserved/MysqlKeyColumnUsageTableColumns.h
         src/core/database/reserved/MysqlUserColumn.h
-        src/core/database/reserved/OracleUsersColumns.h
+        src/core/database/reserved/OracleAllTablesColumns.h
         src/core/database/reserved/OracleDBAUsersColumns.h
+        src/core/database/reserved/OracleUsersColumns.h
+        src/core/database/reserved/OracleUserTablesColumns.h
 
         src/core/database/tables/MysqlRelationTypes.h
         src/core/database/tables/MysqlTable.h
@@ -128,6 +131,7 @@ set(SOURCE_FILES
         src/utils/TransactionUtils.h
         src/utils/Tags.h
         src/utils/MysqlTags.h
+        src/utils/OracleTags.h
         )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
