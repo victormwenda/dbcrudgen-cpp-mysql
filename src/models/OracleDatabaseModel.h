@@ -103,10 +103,6 @@ public:
             std::string password_versions = resultSet->getString(OracleDBAUsersColumns::PASSWORD_VERSIONS::INDEX);
             std::string editions_enabled = resultSet->getString(OracleDBAUsersColumns::EDITIONS_ENABLED::INDEX);
             std::string authentication_type = resultSet->getString(OracleDBAUsersColumns::AUTHENTICATION_TYPE::INDEX);
-            std::string proxy_only_connect = resultSet->getString(OracleDBAUsersColumns::PROXY_ONLY_CONNECT::INDEX);
-            std::string common = resultSet->getString(OracleDBAUsersColumns::COMMON::INDEX);
-            std::string last_login = resultSet->getString(OracleDBAUsersColumns::LAST_LOGIN::INDEX);
-            std::string oracle_maintained = resultSet->getString(OracleDBAUsersColumns::ORACLE_MAINTAINED::INDEX);
 
             oracleUsers.emplace_back(OracleDBAUser {
                     username,
@@ -123,11 +119,7 @@ public:
                     external_name,
                     password_versions,
                     editions_enabled,
-                    authentication_type,
-                    proxy_only_connect,
-                    common,
-                    last_login,
-                    oracle_maintained
+                    authentication_type
             });
 
         }

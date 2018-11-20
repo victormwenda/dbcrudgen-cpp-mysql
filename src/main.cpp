@@ -15,11 +15,11 @@ int main(int argc, char **argv) {
     oracle::occi::Connection *conn = env->createConnection(userName, password, connectionString);
 
     OracleDatabaseModel databaseModel{userName, password, connectionString};
-    auto oracleUsers = databaseModel.getOracleUserTables("VICTOR");
+    auto oracleUsers = databaseModel.getAllDBAUsers();
 
 
-    for (OracleUserTables oracleUserTables : oracleUsers) {
-        std::cout << "\tuser id " << oracleUserTables.getOwner()
+    for (OracleDBAUser oracleUserTables : oracleUsers) {
+        std::cout << "\tuser id " << oracleUserTables.getUsername()
 
                   << std::endl;
     }

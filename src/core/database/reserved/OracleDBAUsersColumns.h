@@ -101,31 +101,6 @@ public:
     struct AUTHENTICATION_TYPE {
         static const unsigned int INDEX = 15;
     };
-
-
-    //  Y/N indicating whether a user can connect directly or by proxy only
-    struct PROXY_ONLY_CONNECT {
-        static const unsigned int INDEX = 16;
-    };
-
-
-    //  YES/NO indicating whether a user is common
-    struct COMMON {
-        static const unsigned int INDEX = 17;
-    };
-
-    //Last login time
-    struct LAST_LOGIN {
-        static const unsigned int INDEX = 18;
-    };
-
-
-    //  Y/N indicating whether a user was created and maintained by Oracle-suppllied scripts
-    struct ORACLE_MAINTAINED {
-        static const unsigned int INDEX = 19;
-    };
-
-
 };
 
 

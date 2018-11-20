@@ -46,10 +46,6 @@ public:
     std::string password_versions ;
     std::string editions_enabled ;
     std::string authentication_type ;
-    std::string proxy_only_connect ;
-    std::string common ;
-    std::string last_login ;
-    std::string oracle_maintained ;
 
     OracleDBAUser(const std::string &username, const std::string &user_id, const std::string &password,
                   const std::string &account_status, const std::string &lock_date, const std::string &expiry_date,
@@ -57,15 +53,13 @@ public:
                   const std::string &created, const std::string &profile,
                   const std::string &initial_rsrc_consumer_group, const std::string &external_name,
                   const std::string &password_versions, const std::string &editions_enabled,
-                  const std::string &authentication_type, const std::string &proxy_only_connect,
-                  const std::string &common, const std::string &last_login, const std::string &oracle_maintained)
+                  const std::string &authentication_type)
             : username(username), user_id(user_id), password(password), account_status(account_status),
               lock_date(lock_date), expiry_date(expiry_date), default_tablespace(default_tablespace),
               temporary_tablespace(temporary_tablespace), created(created), profile(profile),
               initial_rsrc_consumer_group(initial_rsrc_consumer_group), external_name(external_name),
               password_versions(password_versions), editions_enabled(editions_enabled),
-              authentication_type(authentication_type), proxy_only_connect(proxy_only_connect), common(common),
-              last_login(last_login), oracle_maintained(oracle_maintained) {}
+              authentication_type(authentication_type) {}
 
     const std::string &getUsername() const {
         return username;
@@ -185,38 +179,6 @@ public:
 
     void setAuthentication_type(const std::string &authentication_type) {
         OracleDBAUser::authentication_type = authentication_type;
-    }
-
-    const std::string &getProxy_only_connect() const {
-        return proxy_only_connect;
-    }
-
-    void setProxy_only_connect(const std::string &proxy_only_connect) {
-        OracleDBAUser::proxy_only_connect = proxy_only_connect;
-    }
-
-    const std::string &getCommon() const {
-        return common;
-    }
-
-    void setCommon(const std::string &common) {
-        OracleDBAUser::common = common;
-    }
-
-    const std::string &getLast_login() const {
-        return last_login;
-    }
-
-    void setLast_login(const std::string &last_login) {
-        OracleDBAUser::last_login = last_login;
-    }
-
-    const std::string &getOracle_maintained() const {
-        return oracle_maintained;
-    }
-
-    void setOracle_maintained(const std::string &oracle_maintained) {
-        OracleDBAUser::oracle_maintained = oracle_maintained;
     }
 };
 
