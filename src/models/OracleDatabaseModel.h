@@ -22,6 +22,8 @@
 #include "../core/database/reserved/OracleAllTablesColumns.h"
 #include "../utils/StringUtils.h"
 #include "../utils/OracleTags.h"
+#include "../core/database/relations/OracleDBATables.h"
+#include "../core/database/reserved/OracleDBATablesColumns.h"
 
 //
 // OracleDatabaseModel
@@ -311,6 +313,136 @@ public:
         }
 
         return userTables;
+    }
+
+    /**
+     * Get DBA_TABLES
+     * @return
+     */
+    std::vector<OracleDBATables> getDBATables(){
+
+        std::vector<OracleDBATables> dbaTables;
+
+        std::string query = OracleStatements::GET_DBA_TABLES;
+        oracle::occi::Statement* statement = conn->createStatement(query);
+        oracle::occi::ResultSet* resultSet = statement->executeQuery();
+
+        while(resultSet->next()){
+            std::string owner = resultSet->getString(OracleDBATablesColumns::OWNER::INDEX);
+            std::string table_name = resultSet->getString(OracleDBATablesColumns::TABLE_NAME::INDEX);
+            std::string tablespace_name = resultSet->getString(OracleDBATablesColumns::TABLESPACE_NAME::INDEX);
+            std::string cluster_name = resultSet->getString(OracleDBATablesColumns::CLUSTER_NAME::INDEX);
+            std::string iot_name = resultSet->getString(OracleDBATablesColumns::IOT_NAME::INDEX);
+            std::string status = resultSet->getString(OracleDBATablesColumns::STATUS::INDEX);
+            int pct_free = resultSet->getInt(OracleDBATablesColumns::PCT_FREE::INDEX);
+            int pct_used = resultSet->getInt(OracleDBATablesColumns::PCT_USED::INDEX);
+            int ini_trans = resultSet->getInt(OracleDBATablesColumns::INI_TRANS::INDEX);
+            int max_trans = resultSet->getInt(OracleDBATablesColumns::MAX_TRANS::INDEX);
+            int initial_extent = resultSet->getInt(OracleDBATablesColumns::INITIAL_EXTENT::INDEX);
+            int next_extent = resultSet->getInt(OracleDBATablesColumns::NEXT_EXTENT::INDEX);
+            int min_extents = resultSet->getInt(OracleDBATablesColumns::MIN_EXTENTS::INDEX);
+            int max_extents = resultSet->getInt(OracleDBATablesColumns::MAX_EXTENTS::INDEX);
+            std::string pct_increase = resultSet->getString(OracleDBATablesColumns::PCT_INCREASE::INDEX);
+            int freelists = resultSet->getInt(OracleDBATablesColumns::FREELISTS::INDEX);
+            int freelist_groups = resultSet->getInt(OracleDBATablesColumns::FREELIST_GROUPS::INDEX);
+            std::string logging = resultSet->getString(OracleDBATablesColumns::LOGGING::INDEX);
+            std::string backed_up = resultSet->getString(OracleDBATablesColumns::BACKED_UP::INDEX);
+            int num_rows = resultSet->getInt(OracleDBATablesColumns::NUM_ROWS::INDEX);
+            int blocks = resultSet->getInt(OracleDBATablesColumns::BLOCKS::INDEX);
+            int empty_blocks = resultSet->getInt(OracleDBATablesColumns::EMPTY_BLOCKS::INDEX);
+            int avg_space = resultSet->getInt(OracleDBATablesColumns::AVG_SPACE::INDEX);
+            int chain_cnt = resultSet->getInt(OracleDBATablesColumns::CHAIN_CNT::INDEX);
+            int avg_row_len = resultSet->getInt(OracleDBATablesColumns::AVG_ROW_LEN::INDEX);
+            int avg_space_freelist_blocks = resultSet->getInt(OracleDBATablesColumns::AVG_SPACE_FREELIST_BLOCKS::INDEX);
+            int num_freelist_blocks = resultSet->getInt(OracleDBATablesColumns::NUM_FREELIST_BLOCKS::INDEX);
+            std::string degree = resultSet->getString(OracleDBATablesColumns::DEGREE::INDEX);
+            std::string instances = resultSet->getString(OracleDBATablesColumns::INSTANCES::INDEX);
+            std::string cache = resultSet->getString(OracleDBATablesColumns::CACHE::INDEX);
+            std::string table_lock = resultSet->getString(OracleDBATablesColumns::TABLE_LOCK::INDEX);
+            int sample_size = resultSet->getInt(OracleDBATablesColumns::SAMPLE_SIZE::INDEX);
+            std::string last_analyzed = resultSet->getString(OracleDBATablesColumns::LAST_ANALYZED::INDEX);
+            std::string partitioned = resultSet->getString(OracleDBATablesColumns::PARTITIONED::INDEX);
+            std::string iot_type = resultSet->getString(OracleDBATablesColumns::IOT_TYPE::INDEX);
+            std::string temporary = resultSet->getString(OracleDBATablesColumns::TEMPORARY::INDEX);
+            std::string secondary = resultSet->getString(OracleDBATablesColumns::SECONDARY::INDEX);
+            std::string nested = resultSet->getString(OracleDBATablesColumns::NESTED::INDEX);
+            std::string buffer_pool = resultSet->getString(OracleDBATablesColumns::BUFFER_POOL::INDEX);
+            std::string flash_cache = resultSet->getString(OracleDBATablesColumns::FLASH_CACHE::INDEX);
+            std::string cell_flash_cache = resultSet->getString(OracleDBATablesColumns::CELL_FLASH_CACHE::INDEX);
+            std::string row_movement = resultSet->getString(OracleDBATablesColumns::ROW_MOVEMENT::INDEX);
+            std::string global_stats = resultSet->getString(OracleDBATablesColumns::GLOBAL_STATS::INDEX);
+            std::string user_stats = resultSet->getString(OracleDBATablesColumns::USER_STATS::INDEX);
+            std::string duration = resultSet->getString(OracleDBATablesColumns::DURATION::INDEX);
+            std::string skip_corrupt = resultSet->getString(OracleDBATablesColumns::SKIP_CORRUPT::INDEX);
+            std::string monitoring = resultSet->getString(OracleDBATablesColumns::MONITORING::INDEX);
+            std::string cluster_owner = resultSet->getString(OracleDBATablesColumns::CLUSTER_OWNER::INDEX);
+            std::string dependencies = resultSet->getString(OracleDBATablesColumns::DEPENDENCIES::INDEX);
+            std::string compression = resultSet->getString(OracleDBATablesColumns::COMPRESSION::INDEX);
+            std::string compress_for = resultSet->getString(OracleDBATablesColumns::COMPRESS_FOR::INDEX);
+            std::string dropped = resultSet->getString(OracleDBATablesColumns::DROPPED::INDEX);
+            std::string read_only = resultSet->getString(OracleDBATablesColumns::READ_ONLY::INDEX);
+            std::string segment_created = resultSet->getString(OracleDBATablesColumns::SEGMENT_CREATED::INDEX);
+            std::string result_cache = resultSet->getString(OracleDBATablesColumns::RESULT_CACHE::INDEX);
+
+            dbaTables.emplace_back(OracleDBATables {
+                    owner,
+                    table_name,
+                    tablespace_name,
+                    cluster_name,
+                    iot_name,
+                    status,
+                    pct_free,
+                    pct_used,
+                    ini_trans,
+                    max_trans,
+                    initial_extent,
+                    next_extent,
+                    min_extents,
+                    max_extents,
+                    pct_increase,
+                    freelists,
+                    freelist_groups,
+                    logging,
+                    backed_up,
+                    num_rows,
+                    blocks,
+                    empty_blocks,
+                    avg_space,
+                    chain_cnt,
+                    avg_row_len,
+                    avg_space_freelist_blocks,
+                    num_freelist_blocks,
+                    degree,
+                    instances,
+                    cache,
+                    table_lock,
+                    sample_size,
+                    last_analyzed,
+                    partitioned,
+                    iot_type,
+                    temporary,
+                    secondary,
+                    nested,
+                    buffer_pool,
+                    flash_cache,
+                    cell_flash_cache,
+                    row_movement,
+                    global_stats,
+                    user_stats,
+                    duration,
+                    skip_corrupt,
+                    monitoring,
+                    cluster_owner,
+                    dependencies,
+                    compression,
+                    compress_for,
+                    dropped,
+                    read_only,
+                    segment_created,
+                    result_cache            });
+        }
+
+        return dbaTables;
     }
 
     /**
