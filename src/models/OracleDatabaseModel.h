@@ -24,6 +24,8 @@
 #include "../utils/OracleTags.h"
 #include "../core/database/relations/OracleDBATables.h"
 #include "../core/database/reserved/OracleDBATablesColumns.h"
+#include "../core/database/reserved/OracleObject.h"
+#include "../core/database/reserved/OracleSchemaObject.h"
 
 //
 // OracleDatabaseModel
@@ -107,21 +109,9 @@ public:
             std::string authentication_type = resultSet->getString(OracleDBAUsersColumns::AUTHENTICATION_TYPE::INDEX);
 
             oracleUsers.emplace_back(OracleDBAUser {
-                    username,
-                    user_id,
-                    password,
-                    account_status,
-                    lock_date,
-                    expiry_date,
-                    default_tablespace,
-                    temporary_tablespace,
-                    created,
-                    profile,
-                    initial_rsrc_consumer_group,
-                    external_name,
-                    password_versions,
-                    editions_enabled,
-                    authentication_type
+                    username, user_id, password, account_status, lock_date, expiry_date, default_tablespace,
+                    temporary_tablespace, created, profile, initial_rsrc_consumer_group, external_name,
+                    password_versions, editions_enabled, authentication_type
             });
 
         }
@@ -319,15 +309,15 @@ public:
      * Get DBA_TABLES
      * @return
      */
-    std::vector<OracleDBATables> getDBATables(){
+    std::vector<OracleDBATables> getDBATables() {
 
         std::vector<OracleDBATables> dbaTables;
 
         std::string query = OracleStatements::GET_DBA_TABLES;
-        oracle::occi::Statement* statement = conn->createStatement(query);
-        oracle::occi::ResultSet* resultSet = statement->executeQuery();
+        oracle::occi::Statement *statement = conn->createStatement(query);
+        oracle::occi::ResultSet *resultSet = statement->executeQuery();
 
-        while(resultSet->next()){
+        while (resultSet->next()) {
             std::string owner = resultSet->getString(OracleDBATablesColumns::OWNER::INDEX);
             std::string table_name = resultSet->getString(OracleDBATablesColumns::TABLE_NAME::INDEX);
             std::string tablespace_name = resultSet->getString(OracleDBATablesColumns::TABLESPACE_NAME::INDEX);
@@ -385,64 +375,55 @@ public:
             std::string result_cache = resultSet->getString(OracleDBATablesColumns::RESULT_CACHE::INDEX);
 
             dbaTables.emplace_back(OracleDBATables {
-                    owner,
-                    table_name,
-                    tablespace_name,
-                    cluster_name,
-                    iot_name,
-                    status,
-                    pct_free,
-                    pct_used,
-                    ini_trans,
-                    max_trans,
-                    initial_extent,
-                    next_extent,
-                    min_extents,
-                    max_extents,
-                    pct_increase,
-                    freelists,
-                    freelist_groups,
-                    logging,
-                    backed_up,
-                    num_rows,
-                    blocks,
-                    empty_blocks,
-                    avg_space,
-                    chain_cnt,
-                    avg_row_len,
-                    avg_space_freelist_blocks,
-                    num_freelist_blocks,
-                    degree,
-                    instances,
-                    cache,
-                    table_lock,
-                    sample_size,
-                    last_analyzed,
-                    partitioned,
-                    iot_type,
-                    temporary,
-                    secondary,
-                    nested,
-                    buffer_pool,
-                    flash_cache,
-                    cell_flash_cache,
-                    row_movement,
-                    global_stats,
-                    user_stats,
-                    duration,
-                    skip_corrupt,
-                    monitoring,
-                    cluster_owner,
-                    dependencies,
-                    compression,
-                    compress_for,
-                    dropped,
-                    read_only,
-                    segment_created,
-                    result_cache            });
+                    owner, table_name, tablespace_name, cluster_name, iot_name, status, pct_free, pct_used,
+                    ini_trans, max_trans, initial_extent, next_extent, min_extents, max_extents, pct_increase,
+                    freelists, freelist_groups, logging, backed_up, num_rows, blocks, empty_blocks, avg_space,
+                    chain_cnt, avg_row_len, avg_space_freelist_blocks, num_freelist_blocks, degree, instances, cache,
+                    table_lock, sample_size, last_analyzed, partitioned, iot_type, temporary, secondary, nested,
+                    buffer_pool, flash_cache, cell_flash_cache, row_movement, global_stats, user_stats, duration,
+                    skip_corrupt, monitoring, cluster_owner, dependencies, compression, compress_for, dropped,
+                    read_only, segment_created, result_cache});
         }
 
         return dbaTables;
+    }
+
+    /**
+     * Returns the DDL for a table
+     * @param schema
+     * @param tableName
+     * @return
+     */
+    std::string getTableDDL(const std::string &schema, const std::string &tableName) {
+        return getDDL(std::string{OracleSchemaObject::TableSpaces::NAME}, schema, tableName);
+    }
+
+    /**
+     * Get the DDL for and Oracle (Schemas) object
+     * @param oracleObject
+     * @param schema
+     * @param objectName
+     * @return
+     */
+    std::string getDDL(const std::string &oracleObject, const std::string &schema, const std::string &objectName) {
+
+        std::string ddl;
+
+        std::string query = OracleStatements::GET_OBJECT_DDL;
+        query = StringUtils::parseTemplate(query, OracleTags::OBJECT, oracleObject);
+        query = StringUtils::parseTemplate(query, OracleTags::SCHEMA, schema);
+        query = StringUtils::parseTemplate(query, OracleTags::OBJECT_NAME, objectName);
+
+        oracle::occi::Statement *statement = conn->createStatement(query);
+        oracle::occi::ResultSet *resultSet = statement->executeQuery();
+
+        int FIRST_COLUMN = 1;
+
+        while( resultSet->next()){
+            ddl = resultSet->getString(1);
+        }
+
+        return ddl;
     }
 
     /**

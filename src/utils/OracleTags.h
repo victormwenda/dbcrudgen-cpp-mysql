@@ -18,6 +18,9 @@
 class OracleTags {
 public :
     constexpr static char *OWNER = "${OWNER}";
+    constexpr static char *OBJECT = "${OBJECT}";
+    constexpr static char *SCHEMA = "${SCHEMA}";
+    constexpr static char *OBJECT_NAME = "${OBJECT_NAME}";
 };
 
 
