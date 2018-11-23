@@ -25,7 +25,7 @@ public:
     constexpr static const char *GET_DBA_TABLES = "SELECT * FROM DBA_TABLES";
     constexpr static const char *GET_OBJECT_DDL = "SELECT DBMS_METADATA.GET_DDL('${OBJECT}', '${OBJECT_NAME}', '${SCHEMA}') FROM DUAL";
     constexpr static const char *GET_TABLE_DDL = "SELECT DBMS_METADATA.GET_DDL('TABLE', '${SCHEMA}', '${TABLE_NAME}') FROM DUAL";
-
+    constexpr static const char *GET_TABLE_COLUMNS = "SELECT * FROM COLS WHERE TABLE_NAME = '${TABLE_NAME}'";
 };
 
 

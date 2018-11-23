@@ -26,6 +26,8 @@
 #include "../core/database/reserved/OracleDBATablesColumns.h"
 #include "../core/database/reserved/OracleObject.h"
 #include "../core/database/reserved/OracleSchemaObject.h"
+#include "../core/database/relations/OracleTableColumn.h"
+#include "../core/database/reserved/OracleColsColumns.h"
 
 //
 // OracleDatabaseModel
@@ -419,11 +421,73 @@ public:
 
         int FIRST_COLUMN = 1;
 
-        while( resultSet->next()){
-            ddl = resultSet->getString(1);
+        while (resultSet->next()) {
+            ddl = resultSet->getString(FIRST_COLUMN);
         }
 
         return ddl;
+    }
+
+    /**
+     * Get all the columns of a table
+     *
+     * @param tableName
+     * @return
+     */
+    std::vector<OracleTableColumn> getTableColumns(std::string tableName) {
+
+        std::vector<OracleTableColumn> tableColumns;
+
+        std::string query = OracleStatements::GET_TABLE_COLUMNS;
+        query = StringUtils::parseTemplate(query, OracleTags::TABLE_NAME, tableName);
+
+        oracle::occi::Statement *statement = conn->createStatement(query);
+        oracle::occi::ResultSet *resultSet = statement->executeQuery();
+
+        while (resultSet->next()) {
+
+            std::string table_name = resultSet->getString(OracleColsColumns::TABLE_NAME::INDEX);
+            std::string column_name = resultSet->getString(OracleColsColumns::COLUMN_NAME::INDEX);
+            std::string data_type = resultSet->getString(OracleColsColumns::DATA_TYPE::INDEX);
+            std::string data_type_mod = resultSet->getString(OracleColsColumns::DATA_TYPE_MOD::INDEX);
+            std::string data_type_owner = resultSet->getString(OracleColsColumns::DATA_TYPE_OWNER::INDEX);
+            int data_length = resultSet->getInt(OracleColsColumns::DATA_LENGTH::INDEX);
+            int data_precision = resultSet->getInt(OracleColsColumns::DATA_PRECISION::INDEX);
+            int data_scale = resultSet->getInt(OracleColsColumns::DATA_SCALE::INDEX);
+            std::string nullable = resultSet->getString(OracleColsColumns::NULLABLE::INDEX);
+            int column_id = resultSet->getInt(OracleColsColumns::COLUMN_ID::INDEX);
+            std::string default_length = resultSet->getString(OracleColsColumns::DEFAULT_LENGTH::INDEX);
+            std::string data_default = resultSet->getString(OracleColsColumns::DATA_DEFAULT::INDEX);
+            int num_distinct = resultSet->getInt(OracleColsColumns::NUM_DISTINCT::INDEX);
+            std::string low_value = resultSet->getString(OracleColsColumns::LOW_VALUE::INDEX);
+            std::string high_value = resultSet->getString(OracleColsColumns::HIGH_VALUE::INDEX);
+            int density = resultSet->getInt(OracleColsColumns::DENSITY::INDEX);
+            int num_nulls = resultSet->getInt(OracleColsColumns::NUM_NULLS::INDEX);
+            int num_buckets = resultSet->getInt(OracleColsColumns::NUM_BUCKETS::INDEX);
+            std::string last_analyzed = resultSet->getString(OracleColsColumns::LAST_ANALYZED::INDEX);
+            int sample_size = resultSet->getInt(OracleColsColumns::SAMPLE_SIZE::INDEX);
+            std::string character_set_name = resultSet->getString(OracleColsColumns::CHARACTER_SET_NAME::INDEX);
+            std::string char_col_decl_length = resultSet->getString(OracleColsColumns::CHAR_COL_DECL_LENGTH::INDEX);
+            std::string global_stats = resultSet->getString(OracleColsColumns::GLOBAL_STATS::INDEX);
+            std::string user_stats = resultSet->getString(OracleColsColumns::USER_STATS::INDEX);
+            int avg_col_len = resultSet->getInt(OracleColsColumns::AVG_COL_LEN::INDEX);
+            int char_length = resultSet->getInt(OracleColsColumns::CHAR_LENGTH::INDEX);
+            std::string char_used = resultSet->getString(OracleColsColumns::CHAR_USED::INDEX);
+            std::string v80_fmt_image = resultSet->getString(OracleColsColumns::V80_FMT_IMAGE::INDEX);
+            std::string data_upgraded = resultSet->getString(OracleColsColumns::DATA_UPGRADED::INDEX);
+            std::string histogram = resultSet->getString(OracleColsColumns::HISTOGRAM::INDEX);
+
+            tableColumns.emplace_back(OracleTableColumn {table_name, column_name, data_type,
+                                                         data_type_mod, data_type_owner,
+                                                         data_length, data_precision, data_scale, nullable,
+                                                         column_id, default_length, data_default, num_distinct,
+                                                         low_value, high_value, density, num_nulls, num_buckets,
+                                                         last_analyzed, sample_size, character_set_name,
+                                                         char_col_decl_length, global_stats, user_stats, avg_col_len,
+                                                         char_length, char_used, v80_fmt_image, data_upgraded, histogram
+            });
+        }
+        return tableColumns;
     }
 
     /**

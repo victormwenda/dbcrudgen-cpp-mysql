@@ -14,9 +14,12 @@ int main(int argc, char **argv) {
     oracle::occi::Connection *conn = env->createConnection(userName, password, connectionString);
 
     OracleDatabaseModel databaseModel{userName, password, connectionString};
-    auto ddl = databaseModel.getTableDDL("VICTOR", "BUG_LOGGER");
+    auto tableColumns = databaseModel.getTableColumns("BUG_LOGGER");
 
-    std::cout << ddl << std::endl;
+    for (OracleTableColumn column : tableColumns) {
+        std::cout << column.getColumn_name() << " " << column.getData_type() << std::endl;
+    }
+
 
     for (int i = 0; i < 0; i++) {
         std::cout << i << std::endl;
