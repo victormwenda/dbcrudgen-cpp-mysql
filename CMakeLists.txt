@@ -80,6 +80,7 @@ set(SOURCE_FILES
         src/core/database/constraints/ColumnConstraints.h
 
         src/core/database/datatypes/DataType.h
+        src/core/database/datatypes/OracleDataTypes.h
 
         src/core/database/error/DatabaseError.h
         src/core/database/executors/MYSQLQueryExecutor.h
