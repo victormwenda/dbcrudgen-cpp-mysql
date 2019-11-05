@@ -71,7 +71,7 @@ public:
             int userid = resultSet->getInt(OracleUsersColumns::USERID::INDEX);
             std::string created = resultSet->getString(OracleUsersColumns::CREATED::INDEX);
 
-            oracleUsers.emplace_back(OracleUser {userid, username, created});
+            oracleUsers.emplace_back(OracleUser{userid, username, created});
 
         }
 
@@ -110,7 +110,7 @@ public:
             std::string editions_enabled = resultSet->getString(OracleDBAUsersColumns::EDITIONS_ENABLED::INDEX);
             std::string authentication_type = resultSet->getString(OracleDBAUsersColumns::AUTHENTICATION_TYPE::INDEX);
 
-            oracleUsers.emplace_back(OracleDBAUser {
+            oracleUsers.emplace_back(OracleDBAUser{
                     username, user_id, password, account_status, lock_date, expiry_date, default_tablespace,
                     temporary_tablespace, created, profile, initial_rsrc_consumer_group, external_name,
                     password_versions, editions_enabled, authentication_type
@@ -194,21 +194,21 @@ public:
             std::string SEGMENT_CREATED = resultSet->getString(OracleAllTablesColumns::SEGMENT_CREATED::INDEX);
             std::string RESULT_CACHE = resultSet->getString(OracleAllTablesColumns::RESULT_CACHE::INDEX);
 
-            userTables.emplace_back(OracleUserTables {OWNER, TABLE_NAME, TABLESPACE_NAME,
-                                                      CLUSTER_NAME, IOT_NAME,
-                                                      STATUS, PCT_FREE, PCT_USED, INI_TRANS, MAX_TRANS, INITIAL_EXTENT,
-                                                      NEXT_EXTENT, MIN_EXTENTS, MAX_EXTENTS, PCT_INCREASE,
-                                                      FREELISTS, FREELIST_GROUPS, LOGGING, BACKED_UP,
-                                                      NUM_ROWS, BLOCKS, EMPTY_BLOCKS,
-                                                      AVG_SPACE, CHAIN_CNT,
-                                                      AVG_ROW_LEN, AVG_SPACE_FREELIST_BLOCKS, NUM_FREELIST_BLOCKS,
-                                                      DEGREE, INSTANCES, CACHE, TABLE_LOCK, SAMPLE_SIZE,
-                                                      LAST_ANALYZED, PARTITIONED, IOT_TYPE, TEMPORARY,
-                                                      SECONDARY, NESTED, BUFFER_POOL, FLASH_CACHE,
-                                                      CELL_FLASH_CACHE, ROW_MOVEMENT, GLOBAL_STATS, USER_STATS,
-                                                      DURATION, SKIP_CORRUPT, MONITORING, CLUSTER_OWNER,
-                                                      DEPENDENCIES, COMPRESSION, COMPRESS_FOR, DROPPED,
-                                                      READ_ONLY, SEGMENT_CREATED, RESULT_CACHE});
+            userTables.emplace_back(OracleUserTables{OWNER, TABLE_NAME, TABLESPACE_NAME,
+                                                     CLUSTER_NAME, IOT_NAME,
+                                                     STATUS, PCT_FREE, PCT_USED, INI_TRANS, MAX_TRANS, INITIAL_EXTENT,
+                                                     NEXT_EXTENT, MIN_EXTENTS, MAX_EXTENTS, PCT_INCREASE,
+                                                     FREELISTS, FREELIST_GROUPS, LOGGING, BACKED_UP,
+                                                     NUM_ROWS, BLOCKS, EMPTY_BLOCKS,
+                                                     AVG_SPACE, CHAIN_CNT,
+                                                     AVG_ROW_LEN, AVG_SPACE_FREELIST_BLOCKS, NUM_FREELIST_BLOCKS,
+                                                     DEGREE, INSTANCES, CACHE, TABLE_LOCK, SAMPLE_SIZE,
+                                                     LAST_ANALYZED, PARTITIONED, IOT_TYPE, TEMPORARY,
+                                                     SECONDARY, NESTED, BUFFER_POOL, FLASH_CACHE,
+                                                     CELL_FLASH_CACHE, ROW_MOVEMENT, GLOBAL_STATS, USER_STATS,
+                                                     DURATION, SKIP_CORRUPT, MONITORING, CLUSTER_OWNER,
+                                                     DEPENDENCIES, COMPRESSION, COMPRESS_FOR, DROPPED,
+                                                     READ_ONLY, SEGMENT_CREATED, RESULT_CACHE});
         }
 
         return userTables;
@@ -287,21 +287,21 @@ public:
             std::string SEGMENT_CREATED = resultSet->getString(OracleAllTablesColumns::SEGMENT_CREATED::INDEX);
             std::string RESULT_CACHE = resultSet->getString(OracleAllTablesColumns::RESULT_CACHE::INDEX);
 
-            userTables.emplace_back(OracleUserTables {OWNER, TABLE_NAME, TABLESPACE_NAME,
-                                                      CLUSTER_NAME, IOT_NAME,
-                                                      STATUS, PCT_FREE, PCT_USED, INI_TRANS, MAX_TRANS, INITIAL_EXTENT,
-                                                      NEXT_EXTENT, MIN_EXTENTS, MAX_EXTENTS, PCT_INCREASE,
-                                                      FREELISTS, FREELIST_GROUPS, LOGGING, BACKED_UP,
-                                                      NUM_ROWS, BLOCKS, EMPTY_BLOCKS,
-                                                      AVG_SPACE, CHAIN_CNT,
-                                                      AVG_ROW_LEN, AVG_SPACE_FREELIST_BLOCKS, NUM_FREELIST_BLOCKS,
-                                                      DEGREE, INSTANCES, CACHE, TABLE_LOCK, SAMPLE_SIZE,
-                                                      LAST_ANALYZED, PARTITIONED, IOT_TYPE, TEMPORARY,
-                                                      SECONDARY, NESTED, BUFFER_POOL, FLASH_CACHE,
-                                                      CELL_FLASH_CACHE, ROW_MOVEMENT, GLOBAL_STATS, USER_STATS,
-                                                      DURATION, SKIP_CORRUPT, MONITORING, CLUSTER_OWNER,
-                                                      DEPENDENCIES, COMPRESSION, COMPRESS_FOR, DROPPED,
-                                                      READ_ONLY, SEGMENT_CREATED, RESULT_CACHE});
+            userTables.emplace_back(OracleUserTables{OWNER, TABLE_NAME, TABLESPACE_NAME,
+                                                     CLUSTER_NAME, IOT_NAME,
+                                                     STATUS, PCT_FREE, PCT_USED, INI_TRANS, MAX_TRANS, INITIAL_EXTENT,
+                                                     NEXT_EXTENT, MIN_EXTENTS, MAX_EXTENTS, PCT_INCREASE,
+                                                     FREELISTS, FREELIST_GROUPS, LOGGING, BACKED_UP,
+                                                     NUM_ROWS, BLOCKS, EMPTY_BLOCKS,
+                                                     AVG_SPACE, CHAIN_CNT,
+                                                     AVG_ROW_LEN, AVG_SPACE_FREELIST_BLOCKS, NUM_FREELIST_BLOCKS,
+                                                     DEGREE, INSTANCES, CACHE, TABLE_LOCK, SAMPLE_SIZE,
+                                                     LAST_ANALYZED, PARTITIONED, IOT_TYPE, TEMPORARY,
+                                                     SECONDARY, NESTED, BUFFER_POOL, FLASH_CACHE,
+                                                     CELL_FLASH_CACHE, ROW_MOVEMENT, GLOBAL_STATS, USER_STATS,
+                                                     DURATION, SKIP_CORRUPT, MONITORING, CLUSTER_OWNER,
+                                                     DEPENDENCIES, COMPRESSION, COMPRESS_FOR, DROPPED,
+                                                     READ_ONLY, SEGMENT_CREATED, RESULT_CACHE});
         }
 
         return userTables;
@@ -376,7 +376,7 @@ public:
             std::string segment_created = resultSet->getString(OracleDBATablesColumns::SEGMENT_CREATED::INDEX);
             std::string result_cache = resultSet->getString(OracleDBATablesColumns::RESULT_CACHE::INDEX);
 
-            dbaTables.emplace_back(OracleDBATables {
+            dbaTables.emplace_back(OracleDBATables{
                     owner, table_name, tablespace_name, cluster_name, iot_name, status, pct_free, pct_used,
                     ini_trans, max_trans, initial_extent, next_extent, min_extents, max_extents, pct_increase,
                     freelists, freelist_groups, logging, backed_up, num_rows, blocks, empty_blocks, avg_space,
@@ -444,6 +444,9 @@ public:
         oracle::occi::Statement *statement = conn->createStatement(query);
         oracle::occi::ResultSet *resultSet = statement->executeQuery();
 
+        //Set max column size to corner :: ORA-32108: max column or parameter size not specified
+        resultSet->setMaxColumnSize(OracleColsColumns::DATA_DEFAULT::INDEX, 128);
+
         while (resultSet->next()) {
 
             std::string table_name = resultSet->getString(OracleColsColumns::TABLE_NAME::INDEX);
@@ -477,14 +480,14 @@ public:
             std::string data_upgraded = resultSet->getString(OracleColsColumns::DATA_UPGRADED::INDEX);
             std::string histogram = resultSet->getString(OracleColsColumns::HISTOGRAM::INDEX);
 
-            tableColumns.emplace_back(OracleTableColumn {table_name, column_name, data_type,
-                                                         data_type_mod, data_type_owner,
-                                                         data_length, data_precision, data_scale, nullable,
-                                                         column_id, default_length, data_default, num_distinct,
-                                                         low_value, high_value, density, num_nulls, num_buckets,
-                                                         last_analyzed, sample_size, character_set_name,
-                                                         char_col_decl_length, global_stats, user_stats, avg_col_len,
-                                                         char_length, char_used, v80_fmt_image, data_upgraded, histogram
+            tableColumns.emplace_back(OracleTableColumn{table_name, column_name, data_type,
+                                                        data_type_mod, data_type_owner,
+                                                        data_length, data_precision, data_scale, nullable,
+                                                        column_id, default_length, data_default, num_distinct,
+                                                        low_value, high_value, density, num_nulls, num_buckets,
+                                                        last_analyzed, sample_size, character_set_name,
+                                                        char_col_decl_length, global_stats, user_stats, avg_col_len,
+                                                        char_length, char_used, v80_fmt_image, data_upgraded, histogram
             });
         }
         return tableColumns;

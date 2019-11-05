@@ -11,22 +11,12 @@ int main(int argc, char **argv) {
     const std::string connectionString = "//localhost:1521/XE";
 
 
-    oracle::occi::Environment *env = oracle::occi::Environment::createEnvironment();
-    oracle::occi::Connection *conn = env->createConnection(userName, password, connectionString);
+    OracleDatabaseModel model{userName, password, connectionString};
+    auto columns = model.getTableColumns("BUG_LOGGER");
 
-
-    oracle::occi::MetaData metaData = conn->getMetaData("BUG_LOGGER", oracle::occi::MetaData::PTYPE_TABLE);
-
-    std::vector<oracle::occi::MetaData> columns = metaData.getVector(oracle::occi::MetaData::ATTR_LIST_COLUMNS);
-
-    for(auto& column : columns) {
-        std::cout << column.getString(oracle::occi::MetaData::ATTR_NAME) << " : ";
-        std::cout << column.getInt(oracle::occi::MetaData::ATTR_DATA_TYPE) << "\n";
+    for (auto column: columns) {
+        std::cout << column.getColumn_name() << " " << column.getData_type() << "\n";
     }
-
-
-    //env->terminateConnection(conn);
-    //oracle::occi::Environment::terminateEnvironment(env);
 
     return EXIT_SUCCESS;
 }
