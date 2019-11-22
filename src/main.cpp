@@ -12,7 +12,7 @@ int main(int argc, char **argv) {
 
 
     OracleDatabaseModel model{userName, password, connectionString};
-    auto columns = model.getTableColumns("BUG_LOGGER");
+    auto columns = model.getTableColumnsDba("BUG_LOGGER");
 
     for (auto column: columns) {
         std::cout << column.getColumn_name() << " " << column.getData_type() << "\n";
