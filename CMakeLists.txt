@@ -100,6 +100,7 @@ set(SOURCE_FILES
         src/core/database/relations/OracleDBATables.h
         src/core/database/relations/OracleDBAUser.h
         src/core/database/relations/OracleTableColumn.h
+        src/core/database/relations/OracleTableColsDba.h
         src/core/database/relations/OracleTableDDL.h
         src/core/database/relations/OracleUser.h
         src/core/database/relations/OracleUserTables.h
@@ -113,6 +114,7 @@ set(SOURCE_FILES
         src/core/database/reserved/OracleColsColumns.h
         src/core/database/reserved/OracleDBATablesColumns.h
         src/core/database/reserved/OracleDBAUsersColumns.h
+        src/core/database/reserved/OracleDbaColsColumns.h
         src/core/database/reserved/OracleObject.h
         src/core/database/reserved/OracleSchemaObject.h
         src/core/database/reserved/OracleUsersColumns.h
