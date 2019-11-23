@@ -7,23 +7,16 @@ int main(int argc, char **argv) {
 
     const std::string userName = "victor";
     const std::string password = "root3358";
+
     const std::string connectionString = "//localhost:1521/XE";
 
 
-    oracle::occi::Environment *env = oracle::occi::Environment::createEnvironment();
-    oracle::occi::Connection *conn = env->createConnection(userName, password, connectionString);
+    OracleDatabaseModel model{userName, password, connectionString};
+    auto columns = model.getTableColumnsDba("BUG_LOGGER");
 
-
-    OracleDatabaseModel databaseModel{userName, password, connectionString};
-     auto ddl = databaseModel.getAllDBAUsers();
-
-     for (const auto &username : ddl) {
-         std::cout << username.username << std::endl;
-     }
-
-
-    env->terminateConnection(conn);
-    oracle::occi::Environment::terminateEnvironment(env);
+    for (auto column: columns) {
+        std::cout << column.getColumn_name() << " " << column.getData_type() << "\n";
+    }
 
     return EXIT_SUCCESS;
 }
