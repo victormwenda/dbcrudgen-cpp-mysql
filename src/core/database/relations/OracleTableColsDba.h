@@ -9,7 +9,7 @@
 
 class OracleTAbleColsDba {
 public:
-
+    std::string owner;
     std::string table_name;
     std::string column_name;
     std::string data_type;
@@ -46,9 +46,9 @@ public:
     std::string histogram;
     std::string qualified_col_name;
 
-    OracleTAbleColsDba(const std::string &tableName, const std::string &columnName, const std::string &dataType,
-                       const std::string &dataTypeMod, const std::string &dataTypeOwner, int dataLength,
-                       int dataPrecision, int dataScale, const std::string &nullable, int columnId,
+    OracleTAbleColsDba(const std::string &owner, const std::string &tableName, const std::string &columnName,
+                       const std::string &dataType, const std::string &dataTypeMod, const std::string &dataTypeOwner,
+                       int dataLength, int dataPrecision, int dataScale, const std::string &nullable, int columnId,
                        const std::string &defaultLength, const std::string &dataDefault, int numDistinct,
                        const std::string &lowValue, const std::string &highValue, int density, int numNulls,
                        int numBuckets, const std::string &lastAnalyzed, int sampleSize,
@@ -57,17 +57,21 @@ public:
                        const std::string &charUsed, const std::string &v80FmtImage, const std::string &dataUpgraded,
                        const std::string &hiddenColumn, const std::string &virtualColumn, int segmentColumnId,
                        int internalColumnId, const std::string &histogram, const std::string &qualifiedColName)
-            : table_name(tableName), column_name(columnName), data_type(dataType), data_type_mod(dataTypeMod),
-              data_type_owner(dataTypeOwner), data_length(dataLength), data_precision(dataPrecision),
-              data_scale(dataScale), nullable(nullable), column_id(columnId), default_length(defaultLength),
-              data_default(dataDefault), num_distinct(numDistinct), low_value(lowValue), high_value(highValue),
-              density(density), num_nulls(numNulls), num_buckets(numBuckets), last_analyzed(lastAnalyzed),
-              sample_size(sampleSize), character_set_name(characterSetName), char_col_decl_length(charColDeclLength),
-              global_stats(globalStats), user_stats(userStats), avg_col_len(avgColLen), char_length(charLength),
-              char_used(charUsed), v80_fmt_image(v80FmtImage), data_upgraded(dataUpgraded), hidden_column(hiddenColumn),
-              virtual_column(virtualColumn), segment_column_id(segmentColumnId), internal_column_id(internalColumnId),
+            : owner(owner), table_name(tableName), column_name(columnName), data_type(dataType),
+              data_type_mod(dataTypeMod), data_type_owner(dataTypeOwner), data_length(dataLength),
+              data_precision(dataPrecision), data_scale(dataScale), nullable(nullable), column_id(columnId),
+              default_length(defaultLength), data_default(dataDefault), num_distinct(numDistinct), low_value(lowValue),
+              high_value(highValue), density(density), num_nulls(numNulls), num_buckets(numBuckets),
+              last_analyzed(lastAnalyzed), sample_size(sampleSize), character_set_name(characterSetName),
+              char_col_decl_length(charColDeclLength), global_stats(globalStats), user_stats(userStats),
+              avg_col_len(avgColLen), char_length(charLength), char_used(charUsed), v80_fmt_image(v80FmtImage),
+              data_upgraded(dataUpgraded), hidden_column(hiddenColumn), virtual_column(virtualColumn),
+              segment_column_id(segmentColumnId), internal_column_id(internalColumnId),
               histogram(histogram), qualified_col_name(qualifiedColName) {}
 
+    std::string getOwner()   {
+        return owner;
+    }
 
     std::string getTable_name() {
         return table_name;
