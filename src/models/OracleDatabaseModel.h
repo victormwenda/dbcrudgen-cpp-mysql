@@ -437,7 +437,7 @@ public:
      * @param tableName
      * @return
      */
-    std::vector<OracleTableColumn> getTableColumns(std::string tableName) {
+    std::vector<OracleTableColumn> getTableColumns(const std::string &tableName) {
 
         std::vector<OracleTableColumn> tableColumns;
 
@@ -502,7 +502,7 @@ public:
      * @param tableName
      * @return
      */
-    std::vector<OracleTAbleColsDba> getTableColumnsDba(std::string tableName) {
+    std::vector<OracleTAbleColsDba> getTableColumnsDba(const std::string& tableName) {
 
         std::vector<OracleTAbleColsDba> tableColumns;
 
@@ -551,7 +551,7 @@ public:
         resultSet->setMaxColumnSize(OracleDbaColsColumns::QUALIFIED_COL_NAME::INDEX, 128);
 
         while (resultSet->next()) {
-
+            std::string owner = resultSet->getString(OracleDbaColsColumns::OWNER::INDEX);
             std::string table_name = resultSet->getString(OracleDbaColsColumns::TABLE_NAME::INDEX);
             std::string column_name = resultSet->getString(OracleDbaColsColumns::COLUMN_NAME::INDEX);
             std::string data_type = resultSet->getString(OracleDbaColsColumns::DATA_TYPE::INDEX);
@@ -588,7 +588,7 @@ public:
             std::string histogram = resultSet->getString(OracleDbaColsColumns::HISTOGRAM::INDEX);
             std::string qualified_col_name = resultSet->getString(OracleDbaColsColumns::QUALIFIED_COL_NAME::INDEX);
 
-            tableColumns.emplace_back(OracleTAbleColsDba{table_name, column_name, data_type,
+            tableColumns.emplace_back(OracleTAbleColsDba{owner, table_name, column_name, data_type,
                                                          data_type_mod, data_type_owner,
                                                          data_length, data_precision, data_scale, nullable,
                                                          column_id, default_length, data_default, num_distinct,
