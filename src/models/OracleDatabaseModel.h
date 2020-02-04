@@ -621,12 +621,11 @@ public:
             unsigned int bufferSize = data.length();
             unsigned int offset = 1;
 
-            // data.setCharSetId("OCCIUTF16");
             unsigned int read = data.read(amount, buffer.data(), bufferSize);
             std::cout << "Size :: " << amount << " read :: " << read << std::endl;
 
-            for (char data : buffer) {
-                std::cout << data;
+            for (char output : buffer) {
+                std::cout << output;
             }
             std::cout << std::endl;
 
