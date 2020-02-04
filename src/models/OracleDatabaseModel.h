@@ -502,7 +502,7 @@ public:
      * @param tableName
      * @return
      */
-    std::vector<OracleTAbleColsDba> getTableColumnsDba(const std::string& tableName) {
+    std::vector<OracleTAbleColsDba> getTableColumnsDba(const std::string &tableName) {
 
         std::vector<OracleTAbleColsDba> tableColumns;
 
@@ -602,6 +602,42 @@ public:
             });
         }
         return tableColumns;
+    }
+
+    void executeQuery() {
+        std::string query{"SELECT DBMS_METADATA.GET_DDL('TABLE','BUG_LOGGER', 'VICTOR') FROM DUAL"};
+
+        std::cout << "Prepared sql :: " << query << std::endl;
+
+        try {
+            oracle::occi::Statement *statement = conn->createStatement(query);
+            std::cout << "Executing sql :: " << statement->getSQL() << std::endl;
+            oracle::occi::ResultSet *resultSet = statement->executeQuery();
+            resultSet->next();
+            auto data = resultSet->getClob(1);
+
+            unsigned int amount = data.length();
+            std::vector<unsigned char> buffer(amount);
+            unsigned int bufferSize = data.length();
+            unsigned int offset = 1;
+
+            // data.setCharSetId("OCCIUTF16");
+            unsigned int read = data.read(amount, buffer.data(), bufferSize);
+            std::cout << "Size :: " << amount << " read :: " << read << std::endl;
+
+            for (char data : buffer) {
+                std::cout << data;
+            }
+            std::cout << std::endl;
+
+        } catch (oracle::occi::SQLException &exception) {
+            std::cerr << exception.getMessage() << std::endl;
+
+        } catch (std::exception &exception) {
+            std::cerr << exception.what() << std::endl;
+
+        }
+
     }
 
     /**
