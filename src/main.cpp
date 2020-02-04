@@ -12,7 +12,8 @@ int main(int argc, char **argv) {
 
 
     OracleDatabaseModel model{userName, password, connectionString};
-    model.executeQuery();
+    std::string ddl = model.getTableDDL("VICTOR", "BUG_LOGGER");
+    std::cout << ddl << std::endl;
 
     return EXIT_SUCCESS;
 }
