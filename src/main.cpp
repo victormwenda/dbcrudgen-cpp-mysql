@@ -1,6 +1,6 @@
 #include <iostream>
 #include <occi.h>
-#include "models/OracleDatabaseModel.h"
+#include "databases/oracle/models/OracleDatabaseModel.h"
 
 int main(int argc, char **argv) {
 
@@ -15,42 +15,5 @@ int main(int argc, char **argv) {
     std::string ddl = model.getTableDDL("VICTOR", "BUG_LOGGER");
     std::cout << ddl << std::endl;
 
-    /**
-     * Objects:
-     * EDITION
-INDEX PARTITION
-TABLE SUBPARTITION
-CONSUMER GROUP
-SEQUENCE
-TABLE PARTITION
-SCHEDULE
-RULE
-PROCEDURE
-OPERATOR
-DESTINATION
-WINDOW
-SCHEDULER GROUP
-PACKAGE
-PACKAGE BODY
-LIBRARY
-PROGRAM
-RULE SET
-CONTEXT
-TYPE BODY
-XML SCHEMA
-TRIGGER
-JOB CLASS
-DIRECTORY
-TABLE
-INDEX
-SYNONYM
-VIEW
-FUNCTION
-INDEXTYPE
-CLUSTER
-TYPE
-JOB
-EVALUATION CONTEXT
-     */
     return EXIT_SUCCESS;
 }
