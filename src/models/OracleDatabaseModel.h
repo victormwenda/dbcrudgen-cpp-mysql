@@ -402,7 +402,7 @@ public:
      * @return
      */
     std::string getTableDDL(const std::string &schema, const std::string &tableName) {
-        return getDDL(std::string{OracleSchemaObject::TableSpaces::NAME}, schema, tableName);
+        return getDDL(std::string{OracleSchemaObject::TABLE::NAME}, schema, tableName);
     }
 
     /**
