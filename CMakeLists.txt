@@ -116,6 +116,7 @@ set(SOURCE_FILES
         src/core/database/reserved/OracleDBAUsersColumns.h
         src/core/database/reserved/OracleDbaColsColumns.h
         src/core/database/reserved/OracleObject.h
+        src/core/database/reserved/OracleObjectTypes.h
         src/core/database/reserved/OracleSchemaObject.h
         src/core/database/reserved/OracleUsersColumns.h
         src/core/database/reserved/OracleUserTablesColumns.h
@@ -153,7 +154,7 @@ set(SOURCE_FILES
         src/utils/Tags.h
         src/utils/MysqlTags.h
         src/utils/OracleTags.h
-        )
+       )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 

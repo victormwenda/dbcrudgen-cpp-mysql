@@ -1,25 +1,16 @@
 //
-// @author Victor Mwenda
-// @author vmwenda.vm@gmail.com
-//
-// Created by victor on 11/22/18.
-// C/C++ Laptop
+// Created by victor on 11/23/19.
 //
 
+#ifndef DBCRUDGEN_CPP_ORACLEOBJECTTYPES_H
+#define DBCRUDGEN_CPP_ORACLEOBJECTTYPES_H
 
+#include <vector>
 
-#ifndef DBCRUDGEN_CPP_ORACLEOBJECTS_H
-#define DBCRUDGEN_CPP_ORACLEOBJECTS_H
-
-
-//
-// OracleObject - https://docs.oracle.com/cd/B19306_01/server.102/b14220/schema.htm
-// //
-class OracleObject {
-public:
-
+class OracleObjectTypes {
     struct CLUSTER {
         constexpr static const char *NAME = "CLUSTER";
+        constexpr static const char *TYPE = "";
     };
     struct CONSUMER_GROUP {
         constexpr static const char *NAME = "CONSUMER GROUP";
@@ -120,8 +111,8 @@ public:
     struct XML_SCHEMA {
         constexpr static const char *NAME = "XML SCHEMA";
     };
-
 };
 
 
-#endif //DBCRUDGEN_CPP_ORACLEOBJECTS_H
+#endif //DBCRUDGEN_CPP_ORACLEOBJECTTYPES_H
+
