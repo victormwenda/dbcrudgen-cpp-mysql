@@ -12,8 +12,10 @@
 #define DBCRUDGEN_CPP_ORACLEDATABASECONNECTOR_H
 
 
+#include <include/occiControl.h>
 #include "DatabaseConnector.h"
 #include "credentials/OracleDatabaseConnectionParams.h"
+#include "../../../utils/DbCrudgenError.h"
 
 //
 // OracleDatabaseConnector
@@ -23,9 +25,15 @@ class OracleDatabaseConnector : public DatabaseConnector {
 private:
     bool autoConnect;
     OracleDatabaseConnectionParams connectionParams;
+    oracle::occi::Environment *environment;
+    oracle::occi::Connection *connection;
 public:
     OracleDatabaseConnector(const OracleDatabaseConnectionParams &connectionParams, bool autoConnect)
             : autoConnect(autoConnect), connectionParams(connectionParams) {
+
+        environment = oracle::occi::Environment::createEnvironment(oracle::occi::Environment::DEFAULT);
+
+        connection = nullptr;
 
         if (autoConnect) {
             open();
@@ -41,35 +49,61 @@ public:
     }
 
     bool open() override {
-        const std::string userName = "victor";
-        const std::string password = "root3358";
-        const std::string connectString = "";
 
-        Environment *env = Environment::createEnvironment();
+        try {
+            connection = environment->createConnection(
+                    connectionParams.getUsername(),
+                    connectionParams.getPassword(),
+                    connectionParams.getConnectString()
+            );
 
-        Connection *conn = env->createConnection(
-                userName, password, connectString);
-        Statement *stmt = conn->createStatement(
-                "SELECT * FROM BUG_LOGGER;");
-        ResultSet *rs = stmt->executeQuery();
-        rs->next();
-        Blob b = rs->getBlob(1);
-        cout << "Length of BLOB : " << b.length();
+        } catch (oracle::occi::SQLException &exception) {
+            onError("FATAL_ERROR", exception.getMessage(), true);
+        }
 
-        stmt->closeResultSet(rs);
-        conn->terminateStatement(stmt);
-        env->terminateConnection(conn);
 
-        Environment::terminateEnvironment(env);
-        return false;
+        return connection != nullptr;
     }
 
     bool isOpen() override {
+        return connection != nullptr;
+    }
+
+    /**
+     * Creates a statement
+     * @param sql
+     * @return
+     */
+    oracle::occi::Statement &getStatement(const std::string &sql = "") {
+        return *connection->createStatement(sql);
+    }
+
+    /**
+     * Executes query
+     * @param sql
+     * @return result set
+     */
+    oracle::occi::ResultSet &executeQuery(const std::string sql) {
+        return *getStatement(sql).executeQuery();
+    }
+
+
+    bool close() override {
+        if (connection != nullptr) {
+            environment->terminateConnection(connection);
+        }
+
         return false;
     }
 
-    bool close() override {
-        return false;
+    ~OracleDatabaseConnector() {
+        if (isOpen()) {
+            close();
+        }
+
+        if (environment != nullptr) {
+            oracle::occi::Environment::terminateEnvironment(environment);
+        }
     }
 };
 

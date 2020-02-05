@@ -19,6 +19,7 @@
 // StringUtils
 // //
 class StringUtils {
+public:
     /**
      * Recursively Replaces the tag in the model with the value
      * @param subject string being manipulated
@@ -26,9 +27,9 @@ class StringUtils {
      * @param value string to replace with
      * @return
      */
-    std::string parseTemplate(std::string &subject, const std::string &search, const std::string &value) {
+    static std::string parseTemplate(std::string &subject, const std::string &search, const std::string &value) {
 
-        std::size_t firstPosition = subject.find(search.c_str());
+        std::size_t firstPosition = subject.find(search);
 
         if (firstPosition != std::string::npos) {
 
@@ -49,8 +50,8 @@ class StringUtils {
      * @param position position to start from
      * @return
      */
-    bool contains(const std::string &subject, const std::string &search, size_t position = 0) const {
-        return subject.find(search.c_str(), position) != std::string::npos;
+    static bool contains(const std::string &subject, const std::string &search, size_t position = 0) {
+        return subject.find(search, position) != std::string::npos;
     }
 
     /**
@@ -59,7 +60,7 @@ class StringUtils {
      * @param delimiter
      * @return
      */
-    std::vector<std::string> split(const std::string& subject, const std::string& delimiter) {
+    static std::vector<std::string> split(const std::string &subject, const std::string &delimiter) {
         std::vector<std::string> parts;
 
         size_t lastPosition = 0;
@@ -70,7 +71,7 @@ class StringUtils {
             lastPosition = ++currentPosition;
         }
 
-        if (subject.find(delimiter) != std::string::npos && (lastPosition != subject.length() - 1) ) {
+        if (subject.find(delimiter) != std::string::npos && (lastPosition != subject.length() - 1)) {
             parts.push_back(subject.substr(lastPosition));
         }
 

@@ -1,27 +1,44 @@
+#Cmake version
 cmake_minimum_required(VERSION 3.7)
 
+#Project name
 project(dbcrudgen_cpp)
 
-SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
-SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
+#Compilers
+#SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
+#SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
 
+#Linker flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+#MYSQL connector dir
+set(MYSQL_HOME /usr/local/include/mysql-connector-cpp/include)
+
+#Oracle Instant client dir
+set(ORACLE_INSTANT_CLIENT_HOME
+
+        /usr/local/include/oracle/instant-client
+        /usr/local/include/oracle/instant-client/include)
+
+#Instant client libs
+set(OCCI_LIBS
+        /usr/local/include/oracle/instant-client/libocci.so
+        /usr/local/include/oracle/instant-client/libclntsh.so)
+
 #Include the Mysql Dirs
-include_directories(/usr/local/include/mysql-connector-cpp/include)
+include_directories(${MYSQL_HOME})
 
 #Include the Oracle OCI dir
-include_directories(/usr/local/include/oracle/instant-client)
-include_directories(/usr/local/include/oracle/instant-client/include)
+include_directories(${ORACLE_INSTANT_CLIENT_HOME})
 
 set(SOURCE_FILES
 
         main.cpp
 
-        #creators/DatabaseModelCreator.h
-        #creators/MYSQLDatabaseModelCreator.h
-        #creators/OracleDatabaseModelCreator.h
-        #creators/SQLiteDatabaseModelCreator.h
+        creators/DatabaseModelCreator.h
+        creators/MYSQLDatabaseModelCreator.h
+        creators/OracleDatabaseModelCreator.h
+        creators/SQLiteDatabaseModelCreator.h
 
 
         core/database/schemas/OracleDatabaseSchemas.h
@@ -72,7 +89,16 @@ set(SOURCE_FILES
         lang/parser/LangTemplateParser.h
         lang/parser/java/JavaLangTemplateParser.h
 
-        utils/StringUtils.h)
+
+        models/MYSQLDatabaseModel.h
+        models/OracleDatabaseModel.h
+        models/SQLiteDatabaseModel.h
+
+        utils/ConnectorUtils.h
+        utils/DbCrudgenError.h
+        utils/StringUtils.h
+        utils/TransactionUtils.h
+        )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
@@ -83,7 +109,6 @@ target_link_libraries(dbcrudgen_cpp sqlite3)
 target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 
 #Link the Oracle libs
-target_link_libraries(dbcrudgen_cpp /usr/local/include/oracle/instant-client/libocci.so)
-target_link_libraries(dbcrudgen_cpp /usr/local/include/oracle/instant-client/libclntsh.so)
+target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
 
 

@@ -1,29 +1,20 @@
 #include <iostream>
-#include <occi.h>
+#include <cppconn/connection.h>
+#include <cppconn/driver.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+#include <mysql_connection.h>
+#include "core/database/connectors/MYSQLDatabaseConnector.h"
+#include "utils/TransactionUtils.h"
 
-using namespace oracle::occi;
 
 int main(int argc, char **argv) {
-    const std::string userName = "victor";
-    const std::string password = "root3358";
-    const std::string connectionString = "//victor:1522/xe";
 
+    const std::vector<std::string> &databaseTables = TransactionUtils::getMYSQLDatabaseTables(MYSQLDatabaseConnectionParams{"tcp://127.0.0.1", "root", "root3358", "dbcrudgen"});
 
-    Environment *env = Environment::createEnvironment();
-    try {
-        Connection *conn = env->createConnection(userName, password,connectionString);
-
-        Statement *statement = conn->createStatement("SELECT * FROM BUG_LOGGER");
-        ResultSet *resultSet = statement->executeQuery();
-        resultSet->next();
-        std::string index =resultSet->getString(2);
-        std::cout << index << std::endl;
-        env->terminateConnection(conn);
-    } catch (const SQLException& exception) {
-        std::cout << exception.getMessage() << std::endl;
+    for(std::string databaseTable : databaseTables){
+        std::cout << databaseTable << std::endl;
     }
-    Environment::terminateEnvironment(env);
-
 
     return EXIT_SUCCESS;
 }

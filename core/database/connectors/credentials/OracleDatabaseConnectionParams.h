@@ -12,6 +12,7 @@
 #define DBCRUDGEN_CPP_ORACLEDATABASECONNECTION_H
 
 #include <iostream>
+#include "../../../../utils/StringUtils.h"
 
 /**
 * OracleDatabaseConnection
@@ -24,17 +25,18 @@ private:
 
     std::string host;
     int port;
+
     std::string username;
     std::string password;
     std::string serviceName;
 
     std::string getConnectStringTemplate() const {
-        return "${USERNAME}/${PASSWORD}@[//]${HOST}[:${PORT}][/${SERVICE_NAME}]";
+        return "//${HOST}:${PORT}/${SERVICE_NAME}";
     }
 
 public:
-    OracleDatabaseConnectionParams(const std::string &host, const int &port, const std::string &username,
-                                   const std::string &password, const std::string &serviceName)
+    OracleDatabaseConnectionParams(std::string &host, int &port, std::string &username,
+                                   std::string &password, std::string &serviceName)
             : host(host), port(port),
               username(username),
               password(password),
@@ -42,7 +44,12 @@ public:
 
     explicit OracleDatabaseConnectionParams(std::string &connectString) : connectString(connectString) {}
 
-    const std::string &getConnectString() const {
+    const std::string &getConnectString() {
+        std::string _connectionString = getConnectStringTemplate();
+        StringUtils::parseTemplate(_connectionString, "${HOST}", host);
+        StringUtils::parseTemplate(_connectionString, "${PORT}", std::to_string(port));
+        StringUtils::parseTemplate(_connectionString, "${SERVICE_NAME}", serviceName);
+        connectString = std::move_if_noexcept(_connectionString);
         return connectString;
     }
 
