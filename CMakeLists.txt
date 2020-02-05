@@ -5,99 +5,182 @@ cmake_minimum_required(VERSION 3.7)
 project(dbcrudgen_cpp)
 
 #Compilers
-#SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
-#SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
+SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
+SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
 
 #Linker flags
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
+#Project path
+set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
+
 #MYSQL connector dir
-set(MYSQL_HOME /usr/local/include/mysql-connector-cpp/include)
+set(MYSQL_HOME ${PROJECT_DIR}/include/mysql-connector-cpp/include)
 
 #Oracle Instant client dir
-set(ORACLE_INSTANT_CLIENT_HOME
+set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instant-client)
 
-        /usr/local/include/oracle/instant-client
-        /usr/local/include/oracle/instant-client/include)
+#Oracle OCCI Headers
+set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/headers)
+
+#Oracle Libs
+set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME}/libs)
+
+
+#Oracle Instant client dir
+set(ORACLE_OCCI_HEADERS ${PROJECT_DIR}/include/oracle/instant-client/include)
 
 #Instant client libs
 set(OCCI_LIBS
-        /usr/local/include/oracle/instant-client/libocci.so
-        /usr/local/include/oracle/instant-client/libclntsh.so)
+        ${ORACLE_LIBS}/libclntsh.so.11.1
+        ${ORACLE_LIBS}/libocci.so.11.1
+        ${ORACLE_LIBS}/libociei.so
+        )
 
 #Include the Mysql Dirs
 include_directories(${MYSQL_HOME})
 
-#Include the Oracle OCI dir
-include_directories(${ORACLE_INSTANT_CLIENT_HOME})
+#Include the Oracle instant client directory
+include_directories(${ORACLE_HEADERS})
+
+#Include the Oracle OCCI headers
+include_directories(${ORACLE_OCCI_HEADERS})
 
 set(SOURCE_FILES
 
-        main.cpp
+        src/main.cpp
 
-        creators/DatabaseModelCreator.h
-        creators/MYSQLDatabaseModelCreator.h
-        creators/OracleDatabaseModelCreator.h
-        creators/SQLiteDatabaseModelCreator.h
+        ##############################################################################################################
+        # MYSQL DATABASE SOURCE FILES
+        ##############################################################################################################
+        src/databases/mssql/connectors/MSSQLDatabaseConnectionParams.h
+        src/databases/mssql/models/MSSQLDatabaseSchemas.h
 
+        src/databases/mysql/columns/MYSQLTableColumn.h
+        src/databases/mysql/connectors/MYSQLDatabaseConnectionParams.h
+        src/databases/mysql/connectors/MYSQLDatabaseConnector.h
+        src/databases/mysql/connectors/MYSQLQueryExecutor.h
 
-        core/database/schemas/OracleDatabaseSchemas.h
-        core/database/schemas/SQLDatabaseSchemas.h
-        core/database/schemas/MYSQLDatabaseSchemas.h
-        core/database/schemas/MSSQLDatabaseSchemas.h
-        core/database/schemas/DatabaseSchemas.h
+        src/databases/mysql/exceptions/MYSQLDatabaseException.h
 
-        core/database/connectors/DatabaseConnector.h
-        core/database/connectors/MYSQLDatabaseConnector.h
-        core/database/connectors/OracleDatabaseConnector.h
-        core/database/connectors/SQLiteDatabaseConnector.h
+        src/databases/mysql/models/MYSQLDatabaseSchemas.h
+        src/databases/mysql/models/MYSQLDatabaseModel.h
+        src/databases/mysql/models/MYSQLDatabaseTable.h
+        src/databases/mysql/models/MysqlKeyColumnUsage.h
+        src/databases/mysql/models/MysqlUser.h
 
-        core/database/connectors/credentials/DatabaseConnection.h
-        core/database/connectors/credentials/SQLDatabaseConnectionParams.h
-        core/database/connectors/credentials/MSSQLDatabaseConnectionParams.h
-        core/database/connectors/credentials/MYSQLDatabaseConnectionParams.h
-        core/database/connectors/credentials/OracleDatabaseConnectionParams.h
-        core/database/connectors/credentials/SQLiteDatabaseConnectionParams.h
+        src/databases/mysql/objects/constraints/ColumnConstraints.h
+        src/databases/mysql/objects/tables/RowFormats.h
+        src/databases/mysql/objects/tables/MysqlTableColumnColumns.h
+        src/databases/mysql/objects/tables/MysqlKeyColumnUsageTableColumns.h
+        src/databases/mysql/objects/tables/MysqlUserColumn.h
+        src/databases/mysql/objects/MysqlRelationTypes.h
 
-        core/database/columns/TableColumn.h
-        core/database/constraints/ColumnConstraints.h
+        src/databases/mysql/queries/MYSQLStatements.h
+        src/databases/mysql/queries/MysqlCreateTableColumns.h
+        src/databases/mysql/queries/MysqlFullTablesColumns.h
 
-        core/database/datatypes/DataType.h
+        src/databases/mysql/parsers/MYSQLLangParser.h
 
-        core/database/error/DatabaseError.h
-        core/database/executors/MYSQLQueryExecutor.h
-        core/database/executors/SQLiteQueryExecutor.h
+        src/databases/mysql/symbols/MysqlTable.h
 
-        core/database/relations/DatabaseTable.h
-        core/database/relations/MYSQLDatabaseTable.h
-        core/database/formats/RowFormats.h
+        ##############################################################################################################
+        # ORACLE DATABASE SOURCE FILES
+        ##############################################################################################################
+        src/databases/oracle/connectors/OracleDatabaseConnector.h
+        src/databases/oracle/connectors/OracleDatabaseConnectionParams.h
 
-        core/cli/CliParser.h
+        src/databases/oracle/dsl/OracleDataTypes.h
 
-        core/crud/actions/DatabaseCrudActions.h
+        src/databases/oracle/indices/OracleAllTablesColumns.h
+        src/databases/oracle/indices/OracleColsColumns.h
+        src/databases/oracle/indices/OracleDBATablesColumns.h
+        src/databases/oracle/indices/OracleDBAUsersColumns.h
+        src/databases/oracle/indices/OracleDbaColsColumns.h
+        src/databases/oracle/indices/OracleObject.h
+        src/databases/oracle/indices/OracleObjectTypes.h
+        src/databases/oracle/indices/OracleSchemaObject.h
+        src/databases/oracle/indices/OracleUsersColumns.h
+        src/databases/oracle/indices/OracleUserTablesColumns.h
 
-        core/io/FilesReader.h
-        core/io/FilesWriter.h
-        core/io/FilesManager.h
+        src/databases/oracle/models/OracleDatabaseSchemas.h
+        src/databases/oracle/models/OracleDatabaseModel.h
 
-        lang/dsl/LanguageDSL.h
-        lang/dsl/LanguageFilesProperties.h
-        lang/dsl/JavaLangDSL.h
-        lang/dsl/PHPLangDSL.h
-        lang/dsl/CPPLangDSL.h
+        src/databases/oracle/parsers/MysqlTags.h
+        src/databases/oracle/parsers/OracleTags.h
 
-        lang/parser/LangTemplateParser.h
-        lang/parser/java/JavaLangTemplateParser.h
+        src/databases/oracle/queries/OracleStatements.h
 
+        src/databases/oracle/tables/OracleDBATables.h
+        src/databases/oracle/tables/OracleDBAUser.h
+        src/databases/oracle/tables/OracleTableColumn.h
+        src/databases/oracle/tables/OracleTableColsDba.h
+        src/databases/oracle/models/OracleTableDDL.h
+        src/databases/oracle/models/OracleUser.h
 
-        models/MYSQLDatabaseModel.h
-        models/OracleDatabaseModel.h
-        models/SQLiteDatabaseModel.h
+        src/databases/oracle/tables/OracleUserTables.h
 
-        utils/ConnectorUtils.h
-        utils/DbCrudgenError.h
-        utils/StringUtils.h
-        utils/TransactionUtils.h
+        ##############################################################################################################
+        # SQL GENERIC SOURCE FILES
+        ##############################################################################################################
+        src/databases/sql/columns/TableColumn.h
+
+        src/databases/sql/connectors/DatabaseConnector.h
+        src/databases/sql/connectors/DatabaseConnection.h
+        src/databases/sql/connectors/SQLiteDatabaseConnectionParams.h
+
+        src/databases/sql/dsl/DataType.h
+
+        src/databases/sql/exceptions/DatabaseError.h
+
+        src/databases/sql/models/SQLDatabaseSchemas.h
+        src/databases/sql/models/DatabaseSchemas.h
+        src/databases/sql/models/DatabaseTable.h
+
+        src/databases/sql/parsers/Tags.h
+
+        ##############################################################################################################
+        # SQLITE SOURCE FILES
+        ##############################################################################################################
+        src/databases/sqlite/connectors/SQLiteDatabaseConnector.h
+        src/databases/sqlite/connectors/SQLiteQueryExecutor.h
+        src/databases/sqlite/models/SQLiteDatabaseModel.h
+
+        ##############################################################################################################
+        # IO
+        ##############################################################################################################
+
+        src/io/FilesReader.h
+        src/io/FilesWriter.h
+        src/io/FilesManager.h
+
+        ##############################################################################################################
+        # LANGUAGE CORE
+        ##############################################################################################################
+        src/lang/dsl/LanguageDSL.h
+        src/lang/dsl/LanguageFilesProperties.h
+        src/lang/dsl/JavaLangDSL.h
+        src/lang/dsl/PHPLangDSL.h
+        src/lang/dsl/CPPLangDSL.h
+        src/lang/parser/LangTemplateParser.h
+        src/lang/parser/java/JavaLangTemplateParser.h
+
+        ##############################################################################################################
+        # ORM
+        ##############################################################################################################
+        src/orm/cli/CliParser.h
+        src/orm/cli/DatabaseCrudActions.h
+
+        src/orm/creators/DatabaseModelCreator.h
+        src/orm/creators/MYSQLDatabaseModelCreator.h
+        src/orm/creators/OracleDatabaseModelCreator.h
+        src/orm/creators/SQLiteDatabaseModelCreator.h
+
+        src/orm/utils/ConnectorUtils.h
+        src/orm/utils/DbCrudgenError.h
+        src/orm/utils/StringUtils.h
+        src/orm/utils/TransactionUtils.h
+
         )
 
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
@@ -110,5 +193,4 @@ target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
-
 
