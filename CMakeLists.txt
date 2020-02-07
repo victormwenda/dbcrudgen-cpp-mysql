@@ -183,7 +183,16 @@ set(SOURCE_FILES
 
         )
 
+#TODO :: Add Google test framework
+
+#Create executable
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
+
+#Link with GoogleTest
+#target_link_libraries(dbcrudgen_cpp gtest gtest_main)
+
+#Link with GoogleMock
+#target_link_libraries(dbcrudgen_cpp gmock gmock_main)
 
 #Link SQLite3 libs
 target_link_libraries(dbcrudgen_cpp sqlite3)
