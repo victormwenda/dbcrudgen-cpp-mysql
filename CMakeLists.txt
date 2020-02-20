@@ -97,9 +97,9 @@ set(SOURCE_FILES
         src/databases/oracle/indices/OracleDBATablesColumns.h
         src/databases/oracle/indices/OracleDBAUsersColumns.h
         src/databases/oracle/indices/OracleDbaColsColumns.h
-        src/databases/oracle/indices/OracleObject.h
-        src/databases/oracle/indices/OracleObjectTypes.h
-        src/databases/oracle/indices/OracleSchemaObject.h
+        src/databases/oracle/dsl/OracleObject.h
+        src/databases/oracle/dsl/OracleObjectTypes.h
+        src/databases/oracle/dsl/OracleSchemaObject.h
         src/databases/oracle/indices/OracleUsersColumns.h
         src/databases/oracle/indices/OracleUserTablesColumns.h
 
@@ -111,14 +111,14 @@ set(SOURCE_FILES
 
         src/databases/oracle/queries/OracleStatements.h
 
-        src/databases/oracle/tables/OracleDBATables.h
-        src/databases/oracle/tables/OracleDBAUser.h
-        src/databases/oracle/tables/OracleTableColumn.h
-        src/databases/oracle/tables/OracleTableColsDba.h
+        src/databases/oracle/objects/OracleDBATables.h
+        src/databases/oracle/objects/OracleDBAUser.h
+        src/databases/oracle/objects/OracleTableColumn.h
+        src/databases/oracle/objects/OracleTableColsDba.h
         src/databases/oracle/models/OracleTableDDL.h
         src/databases/oracle/models/OracleUser.h
 
-        src/databases/oracle/tables/OracleUserTables.h
+        src/databases/oracle/objects/OracleUserTables.h
 
         ##############################################################################################################
         # SQL GENERIC SOURCE FILES
