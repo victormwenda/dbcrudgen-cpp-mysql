@@ -50,6 +50,11 @@ public:
     void setCreated(const std::string &created) {
         OracleUser::created = created;
     }
+
+    enum Columns {
+        USERNAME = 1, USER_ID = 2, CREATED = 3
+    };
+
 };
 
 

@@ -72,9 +72,9 @@ public:
         std::vector<OracleUser> oracleUsers;
 
         while (resultSet->next()) {
-            std::string username = resultSet->getString(OracleUsersColumns::USERNAME::INDEX);
-            int userid = resultSet->getInt(OracleUsersColumns::USERID::INDEX);
-            std::string created = resultSet->getString(OracleUsersColumns::CREATED::INDEX);
+            std::string username = resultSet->getString(OracleUser::Columns::USERNAME);
+            int userid = resultSet->getInt(OracleUser::Columns::USER_ID);
+            std::string created = resultSet->getString(OracleUser::Columns::CREATED);
 
             oracleUsers.emplace_back(OracleUser{userid, username, created});
 
@@ -215,6 +215,8 @@ public:
                                                      DEPENDENCIES, COMPRESSION, COMPRESS_FOR, DROPPED,
                                                      READ_ONLY, SEGMENT_CREATED, RESULT_CACHE});
         }
+        statement->closeResultSet(resultSet);
+        conn->terminateStatement(statement);
 
         return userTables;
     }
@@ -309,6 +311,9 @@ public:
                                                      READ_ONLY, SEGMENT_CREATED, RESULT_CACHE});
         }
 
+        statement->closeResultSet(resultSet);
+        conn->terminateStatement(statement);
+
         return userTables;
     }
 
@@ -392,6 +397,9 @@ public:
                     read_only, segment_created, result_cache});
         }
 
+        statement->closeResultSet(resultSet);
+        conn->terminateStatement(statement);
+
         return dbaTables;
     }
 
@@ -442,6 +450,9 @@ public:
 
             ddl = builder.str();
         }
+
+        statement->closeResultSet(resultSet);
+        conn->terminateStatement(statement);
 
         return ddl;
     }
@@ -508,6 +519,10 @@ public:
                                                         char_length, char_used, v80_fmt_image, data_upgraded, histogram
             });
         }
+
+        statement->closeResultSet(resultSet);
+        conn->terminateStatement(statement);
+
         return tableColumns;
     }
 
@@ -616,6 +631,10 @@ public:
                                                          histogram, qualified_col_name
             });
         }
+
+        statement->closeResultSet(resultSet);
+        conn->terminateStatement(statement);
+
         return tableColumns;
     }
 

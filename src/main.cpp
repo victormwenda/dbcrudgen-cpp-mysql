@@ -1,5 +1,6 @@
 #include <iostream>
 #include <occi.h>
+#include <algorithm>
 #include "databases/oracle/models/OracleDatabaseModel.h"
 
 int main(int argc, char **argv) {
@@ -12,8 +13,11 @@ int main(int argc, char **argv) {
 
 
     OracleDatabaseModel model{userName, password, connectionString};
-    std::string ddl = model.getTableDDL("VICTOR", "BUG_LOGGER");
-    std::cout << ddl << std::endl;
+    auto users = model.getAllUsers();
+
+    std::for_each(std::begin(users), std::end(users),[] (OracleUser &user) {
+        std::cout << user.getUsername() << std::endl;
+    });
 
     return EXIT_SUCCESS;
 }
