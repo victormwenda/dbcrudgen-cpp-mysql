@@ -188,6 +188,9 @@ add_subdirectory(lib/test/googletest)
 include_directories(lib/test/googletest/googletest/include)
 include_directories(lib/test/googletest/googlemock/include)
 
+#GoogleBenchmark
+add_subdirectory(lib/benchmark/)
+
 #Create executable
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
@@ -196,6 +199,9 @@ target_link_libraries(dbcrudgen_cpp gtest gtest_main pthread)
 
 #Link with GoogleMock
 target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread)
+
+#Link with GoogleBenchmark
+target_link_libraries(dbcrudgen_cpp benchmark)
 
 #Link SQLite3 libs
 target_link_libraries(dbcrudgen_cpp sqlite3)
