@@ -76,6 +76,10 @@ public:
         return *createStatement().executeQuery(sql);
     }
 
+    /**
+     * Open database connection
+     * @return true if connected, false otherwise
+     */
     bool open() override {
 
         sql::SQLString host = connectionParams.getHost();
@@ -83,26 +87,15 @@ public:
         sql::SQLString password = connectionParams.getPassword();
         sql::SQLString schemas = connectionParams.getSchemas();
 
-
-        auto name = driver->getName().c_str();
-
-        std::cout << "Driver name" << name << std::endl;
-
-
         connection = driver->connect(host, user, password);
 
         bool connected = connection->isValid();
 
         if (connected) {
-            std::cout << "Connected";
-        } else {
-            std::cout << "Not connected";
+            if (schemas != "") {
+                connection->setSchema(schemas);
+            }
         }
-
-        if (schemas != "") {
-            connection->setSchema(schemas);
-        }
-
 
         return connected;
     }
