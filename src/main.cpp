@@ -2,22 +2,27 @@
 #include <occi.h>
 #include <algorithm>
 #include "databases/oracle/models/OracleDatabaseModel.h"
+#include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
+#include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
+#include "orm/utils/TransactionUtils.h"
 
 int main(int argc, char **argv) {
 
+    std::string host = "tcp://127.0.0.1:3306";
+    std::string username = "root";
+    std::string password = "root3358";
+    std::string schemas = "pesarika";
+    MYSQLDatabaseConnectionParams params{host, username, password, schemas};
+    MYSQLDatabaseConnector connector{params, false};
+    connector.open();
+     auto users = TransactionUtils::getMYSQLUsers(connector);
 
-    const std::string userName = "victor";
-    const std::string password = "root3358";
+    for (auto& user : users) {
 
-    const std::string connectionString = "//localhost:1521/XE";
+        std::cout << user.getUser() << std::endl;
 
 
-    OracleDatabaseModel model{userName, password, connectionString};
-    auto users = model.getAllUsers();
-
-    std::for_each(std::begin(users), std::end(users),[] (OracleUser &user) {
-        std::cout << user.getUsername() << std::endl;
-    });
+    }
 
     return EXIT_SUCCESS;
 }
