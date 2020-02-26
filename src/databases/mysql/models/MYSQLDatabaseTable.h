@@ -12,7 +12,7 @@
 #define DBCRUDGEN_CPP_MYSQLDATABASETABLE_H
 
 #include <iostream>
-#include <utility> #include "../formats/RowFormats.h"
+#include <utility>
 #include "../../sql/models/DatabaseTable.h"
 #include "../columns/MYSQLTableColumn.h"
 

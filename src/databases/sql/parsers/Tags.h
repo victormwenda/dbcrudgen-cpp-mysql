@@ -19,10 +19,10 @@
 class Tags {
 
 public :
-    constexpr static char * SCHEMAS = "${SCHEMAS}";
-    constexpr static char * SCHEMA = "${SCHEMA}";
-    constexpr static char * TABLE_NAME = "${TABLE_NAME}";
-    constexpr static char * VIEW_NAME = "${VIEW_NAME}";
+    constexpr static char const * SCHEMAS = "${SCHEMAS}";
+    constexpr static char const * SCHEMA = "${SCHEMA}";
+    constexpr static char const * TABLE_NAME = "${TABLE_NAME}";
+    constexpr static char const * VIEW_NAME = "${VIEW_NAME}";
 };
 
 

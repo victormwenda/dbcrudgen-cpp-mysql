@@ -21,15 +21,15 @@ public:
     /**
      * MYSQL Relation types
      */
-    constexpr static char *TABLE_TYPE = "TABLE_TYPE";
+    constexpr static char const *TABLE_TYPE = "TABLE_TYPE";
     /**
      * MYSQL default table relation type
      */
-    constexpr static char *TABLE_TYPE_BASE_TABLE = "BASE TABLE";
+    constexpr static char const * TABLE_TYPE_BASE_TABLE = "BASE TABLE";
     /**
      * MYSQL view relation type
      */
-    constexpr static char *TABLE_TYPE_VIEW = "VIEW";
+    constexpr static char const * TABLE_TYPE_VIEW = "VIEW";
 
 };
 

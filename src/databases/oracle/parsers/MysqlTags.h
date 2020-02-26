@@ -17,9 +17,9 @@
 // //
 class MysqlTags {
 public:
-    constexpr static char *TABLE_TYPE = "${TABLE_TYPE}";
-    constexpr static char *TABLE_TYPE_VIEW = "${TABLE_TYPE_VIEW}";
-    constexpr static char *TABLE_TYPE_BASE_TABLE = "${TABLE_TYPE_BASE_TABLE}";
+    constexpr static char const * TABLE_TYPE = "${TABLE_TYPE}";
+    constexpr static char const * TABLE_TYPE_VIEW = "${TABLE_TYPE_VIEW}";
+    constexpr static char const * TABLE_TYPE_BASE_TABLE = "${TABLE_TYPE_BASE_TABLE}";
 };
 
 

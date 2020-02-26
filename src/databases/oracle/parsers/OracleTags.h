@@ -17,11 +17,11 @@
 // //
 class OracleTags {
 public :
-    constexpr static char *OWNER = "${OWNER}";
-    constexpr static char *OBJECT = "${OBJECT}";
-    constexpr static char *SCHEMA = "${SCHEMA}";
-    constexpr static char *OBJECT_NAME = "${OBJECT_NAME}";
-    constexpr static char *TABLE_NAME = "${TABLE_NAME}";
+    constexpr static char const *OWNER = "${OWNER}";
+    constexpr static char const *OBJECT = "${OBJECT}";
+    constexpr static char const *SCHEMA = "${SCHEMA}";
+    constexpr static char const *OBJECT_NAME = "${OBJECT_NAME}";
+    constexpr static char const *TABLE_NAME = "${TABLE_NAME}";
 };
 
 

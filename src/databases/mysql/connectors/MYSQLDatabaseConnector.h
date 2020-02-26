@@ -27,7 +27,7 @@ class MYSQLDatabaseConnector : public DatabaseConnector {
 
 private:
     bool autoConnect;
-    MYSQLDatabaseConnectionParams &connectionParams;
+    MYSQLDatabaseConnectionParams connectionParams;
     sql::Driver *driver;
     sql::Connection *connection;
 public:
@@ -38,8 +38,6 @@ public:
         connection = nullptr;
 
         driver = get_driver_instance();
-
-        if (autoConnect) { open(); }
     }
 
     /**
@@ -85,14 +83,28 @@ public:
         sql::SQLString password = connectionParams.getPassword();
         sql::SQLString schemas = connectionParams.getSchemas();
 
+
+        auto name = driver->getName().c_str();
+
+        std::cout << "Driver name" << name << std::endl;
+
+
         connection = driver->connect(host, user, password);
+
+        bool connected = connection->isValid();
+
+        if (connected) {
+            std::cout << "Connected";
+        } else {
+            std::cout << "Not connected";
+        }
 
         if (schemas != "") {
             connection->setSchema(schemas);
         }
 
 
-        return connection != nullptr;
+        return connected;
     }
 
     bool isOpen() override {
