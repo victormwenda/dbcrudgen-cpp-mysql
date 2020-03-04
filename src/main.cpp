@@ -12,12 +12,15 @@ int main(int argc, char **argv) {
     std::string username = "root";
     std::string password = "root3358";
     std::string schemas = "pesarika";
-    MYSQLDatabaseConnectionParams params{host, username, password, schemas};
-    MYSQLDatabaseConnector connector{params, false};
-    connector.open();
-     auto users = TransactionUtils::getMYSQLUsers(connector);
 
-    for (auto& user : users) {
+    MYSQLDatabaseConnectionParams params{host, username, password, schemas};
+    MYSQLDatabaseConnector connector{params};
+
+    connector.open();
+
+    auto users = TransactionUtils::getMYSQLUsers(connector);
+
+    for (auto &user : users) {
 
         std::cout << user.getUser() << std::endl;
 

@@ -36,8 +36,8 @@ public:
      * @param connectionParams
      * @return
      */
-    static MYSQLDatabaseConnector openMYSQLDatabase(MYSQLDatabaseConnectionParams connectionParams) {
-        MYSQLDatabaseConnector mysqlDatabaseConnector{connectionParams, true};
+    static MYSQLDatabaseConnector openMYSQLDatabase(MYSQLDatabaseConnectionParams& connectionParams) {
+        MYSQLDatabaseConnector mysqlDatabaseConnector{connectionParams};
         return mysqlDatabaseConnector;
     }
 };

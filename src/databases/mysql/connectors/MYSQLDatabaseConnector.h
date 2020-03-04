@@ -26,14 +26,12 @@
 class MYSQLDatabaseConnector : public DatabaseConnector {
 
 private:
-    bool autoConnect;
     MYSQLDatabaseConnectionParams connectionParams;
     sql::Driver *driver;
     sql::Connection *connection;
 public:
-    explicit MYSQLDatabaseConnector(MYSQLDatabaseConnectionParams &connectionParams,
-                                    bool autoConnect)
-            : connectionParams{connectionParams}, autoConnect{autoConnect} {
+    explicit MYSQLDatabaseConnector(MYSQLDatabaseConnectionParams &connectionParams)
+            : connectionParams{connectionParams} {
 
         connection = nullptr;
 
@@ -72,7 +70,7 @@ public:
      * @param sql
      * @return result set
      */
-    sql::ResultSet &executeQuery(const sql::SQLString sql) {
+    sql::ResultSet &executeQuery(const sql::SQLString& sql) {
         return *createStatement().executeQuery(sql);
     }
 
@@ -101,7 +99,7 @@ public:
     }
 
     bool isOpen() override {
-        return connection != nullptr;
+        return connection->isValid();
     }
 
     bool close() override {
