@@ -1,0 +1,14 @@
+//
+// Created by vrwanda on 3/5/20.
+//
+
+
+
+#ifndef DBCRUDGEN_CPP_PHPSQLITEPROJECTCODEGEN_H
+#define DBCRUDGEN_CPP_PHPSQLITEPROJECTCODEGEN_H
+
+class PHPSQLiteProjectCodeGen {
+
+};
+
+#endif //DBCRUDGEN_CPP_PHPSQLITEPROJECTCODEGEN_H

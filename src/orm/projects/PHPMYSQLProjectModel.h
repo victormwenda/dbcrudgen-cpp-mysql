@@ -1,0 +1,17 @@
+//
+// Created by vrwanda on 3/5/20.
+//
+
+/**
+ * PHP MYSQL Project Model
+ */
+
+
+#ifndef DBCRUDGEN_CPP_PHPMYSQLPROJECTMODEL_H
+#define DBCRUDGEN_CPP_PHPMYSQLPROJECTMODEL_H
+
+class PHPMYSQLProjectModel {
+
+};
+
+#endif //DBCRUDGEN_CPP_PHPMYSQLPROJECTMODEL_H

@@ -1,0 +1,14 @@
+//
+// Created by vrwanda on 3/5/20.
+//
+
+
+#ifndef DBCRUDGEN_CPP_PHPMYSQLPROJECTCODEGEN_H
+#define DBCRUDGEN_CPP_PHPMYSQLPROJECTCODEGEN_H
+
+
+class PHPMYSQLProjectCodeGen {
+
+};
+
+#endif //DBCRUDGEN_CPP_PHPMYSQLPROJECTCODEGEN_H

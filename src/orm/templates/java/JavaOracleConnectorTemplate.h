@@ -1,0 +1,13 @@
+//
+// Created by vrwanda on 3/5/20.
+//
+
+
+#ifndef DBCRUDGEN_CPP_JAVAORACLECONNECTORTEMPLATE_H
+#define DBCRUDGEN_CPP_JAVAORACLECONNECTORTEMPLATE_H
+
+class JavaOracleConnectorTemplate {
+
+};
+
+#endif //DBCRUDGEN_CPP_JAVAORACLECONNECTORTEMPLATE_H

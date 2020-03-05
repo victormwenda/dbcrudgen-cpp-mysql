@@ -19,9 +19,11 @@ int main(int argc, char **argv) {
 
     connector.open();
 
-    int maxLi = MYSQLIdentifierLengthLimits::View::MAX_LIMIT;
+    auto tables = TransactionUtils::getMYSQLDatabaseTables(connector, "pesarika");
 
-    auto users = TransactionUtils::getMYSQLDatabaseTables()
+    for (const auto &table : tables) {
+        std::cout << table.getTable_name() << std::endl;
+    }
 
     return EXIT_SUCCESS;
 }

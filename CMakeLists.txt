@@ -50,13 +50,20 @@ set(SOURCE_FILES
 
         src/main.cpp
 
+        src/databases/mssql/models/MSSQLDatabaseSchemas.h
+
         ##############################################################################################################
         # MYSQL DATABASE SOURCE FILES
         ##############################################################################################################
         src/databases/mssql/connectors/MSSQLDatabaseConnectionParams.h
-        src/databases/mssql/models/MSSQLDatabaseSchemas.h
+        src/databases/mysql/core/MYSQLIdentifierLengthLimits.h
+        src/databases/mysql/core/MYSQLObjects.h
+        src/databases/mysql/core/MYSQLKeyWords.h
+        src/databases/mysql/core/MYSQLReservedWords.h
+        src/databases/mysql/core/RowFormats.h
 
         src/databases/mysql/columns/MYSQLTableColumn.h
+
         src/databases/mysql/connectors/MYSQLDatabaseConnectionParams.h
         src/databases/mysql/connectors/MYSQLDatabaseConnector.h
         src/databases/mysql/connectors/MYSQLQueryExecutor.h
@@ -70,11 +77,19 @@ set(SOURCE_FILES
         src/databases/mysql/models/MysqlUser.h
 
         src/databases/mysql/objects/constraints/ColumnConstraints.h
-        src/databases/mysql/core/RowFormats.h
+        src/databases/mysql/objects/MYSQLTable.h
+        src/databases/mysql/objects/MYSQLDatabase.h
+        src/databases/mysql/objects/stored/MYSQLProcedure.h
+        src/databases/mysql/objects/stored/MYSQLFunction.h
+        src/databases/mysql/objects/stored/MYSQLTrigger.h
+        src/databases/mysql/objects/stored/MYSQLEvent.h
+        src/databases/mysql/objects/stored/MYSQLView.h
+        src/databases/mysql/objects/MysqlRelationTypes.h
+
+
         src/databases/mysql/columns/MysqlTableColumnColumns.h
         src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
         src/databases/mysql/columns/MysqlUserColumn.h
-        src/databases/mysql/objects/MysqlRelationTypes.h
 
         src/databases/mysql/queries/MYSQLStatements.h
         src/databases/mysql/queries/MysqlCreateTableColumns.h
@@ -171,24 +186,24 @@ set(SOURCE_FILES
         src/orm/cli/CliParser.h
         src/orm/cli/DatabaseCrudActions.h
 
-        src/orm/codegen/android/AndroidProjectCodeGen.cpp
+        src/orm/codegen/android/AndroidProjectCodeGen.h
 
-        src/orm/codegen/cpp/CppProjectCodeGen.cpp
-        src/orm/codegen/cpp/CppMYSQLProjectCodeGen.cpp
-        src/orm/codegen/cpp/CppSQLiteProjectCodeGen.cpp
-        src/orm/codegen/cpp/CppOracleProjectCodeGen.cpp
+        src/orm/codegen/cpp/CppProjectCodeGen.h
+        src/orm/codegen/cpp/CppMYSQLProjectCodeGen.h
+        src/orm/codegen/cpp/CppSQLiteProjectCodeGen.h
+        src/orm/codegen/cpp/CppOracleProjectCodeGen.h
 
-        src/orm/codegen/java/JavaProjectCodeGen.cpp
-        src/orm/codegen/java/JavaMYSQLProjectCodeGen.cpp
-        src/orm/codegen/java/JavaSQLiteProjectCodeGen.cpp
-        src/orm/codegen/java/JavaOracleProjectCodeGen.cpp
+        src/orm/codegen/java/JavaProjectCodeGen.h
+        src/orm/codegen/java/JavaMYSQLProjectCodeGen.h
+        src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
+        src/orm/codegen/java/JavaOracleProjectCodeGen.h
 
-        src/orm/codegen/php/PHPProjectCodeGen.cpp
-        src/orm/codegen/php/PHPOracleProjectCodeGen.cpp
-        src/orm/codegen/php/PHPMYSQLProjectCodeGen.cpp
-        src/orm/codegen/php/PHPSQLiteProjectCodeGen.cpp
+        src/orm/codegen/php/PHPProjectCodeGen.h
+        src/orm/codegen/php/PHPOracleProjectCodeGen.h
+        src/orm/codegen/php/PHPMYSQLProjectCodeGen.h
+        src/orm/codegen/php/PHPSQLiteProjectCodeGen.h
 
-        src/orm/codegen/swift/SwiftProjectCodeGen.cpp
+        src/orm/codegen/swift/SwiftProjectCodeGen.h
 
         src/orm/creators/ProjectCreator.h
         src/orm/creators/cpp/CppMYSQLProjectCreator.h
@@ -201,40 +216,40 @@ set(SOURCE_FILES
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
 
-        src/orm/projects/AndroidProjectModel.cpp
-        src/orm/projects/CppMYSQLProjectModel.cpp
-        src/orm/projects/CppOracleProjectModel.cpp
-        src/orm/projects/CppSQLiteProjectModel.cpp
-        src/orm/projects/CppProjectModel.cpp
-        src/orm/projects/JavaMYSQLProjectModel.cpp
-        src/orm/projects/JavaOracleProjectModel.cpp
-        src/orm/projects/JavaProjectModel.cpp
-        src/orm/projects/JavaSQLiteProjectModel.cpp
-        src/orm/projects/PHPMYSQLProjectModel.cpp
-        src/orm/projects/PHPOracleProjectModel.cpp
-        src/orm/projects/PHPProjectModel.cpp
-        src/orm/projects/PHPSQLiteProjectModel.cpp
-        src/orm/projects/ProjectModel.cpp
-        src/orm/projects/SwiftProjectModel.cpp
+        src/orm/projects/AndroidProjectModel.h
+        src/orm/projects/CppMYSQLProjectModel.h
+        src/orm/projects/CppOracleProjectModel.h
+        src/orm/projects/CppSQLiteProjectModel.h
+        src/orm/projects/CppProjectModel.h
+        src/orm/projects/JavaMYSQLProjectModel.h
+        src/orm/projects/JavaOracleProjectModel.h
+        src/orm/projects/JavaProjectModel.h
+        src/orm/projects/JavaSQLiteProjectModel.h
+        src/orm/projects/PHPMYSQLProjectModel.h
+        src/orm/projects/PHPOracleProjectModel.h
+        src/orm/projects/PHPProjectModel.h
+        src/orm/projects/PHPSQLiteProjectModel.h
+        src/orm/projects/ProjectModel.h
+        src/orm/projects/SwiftProjectModel.h
 
-        src/orm/templates/SourceCodeTemplate.cpp
-        src/orm/templates/android/AndroidContentProviderTemplate.cpp
-        src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.cpp
-        src/orm/templates/cpp/CppOracleConnectorTemplate.cpp
-        src/orm/templates/cpp/CppMYSQLConnectorTemplate.cpp
-        src/orm/templates/cpp/CppSQLiteConnectorTemplate.cpp
-        src/orm/templates/java/JavaOracleConnectorTemplate.cpp
-        src/orm/templates/java/JavaMYSQLConnectorTemplate.cpp
-        src/orm/templates/java/JavaSQLiteConnectorTemplate.cpp
-        src/orm/templates/php/PHPOracleConnectorTemplate.cpp
-        src/orm/templates/php/PHPMYSQLConnectorTemplate.cpp
-        src/orm/templates/php/PHPSQLiteConnectorTemplate.cpp
+        src/orm/templates/SourceCodeTemplate.h
+        src/orm/templates/android/AndroidContentProviderTemplate.h
+        src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.h
+        src/orm/templates/cpp/CppOracleConnectorTemplate.h
+        src/orm/templates/cpp/CppMYSQLConnectorTemplate.h
+        src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
+        src/orm/templates/java/JavaOracleConnectorTemplate.h
+        src/orm/templates/java/JavaMYSQLConnectorTemplate.h
+        src/orm/templates/java/JavaSQLiteConnectorTemplate.h
+        src/orm/templates/php/PHPOracleConnectorTemplate.h
+        src/orm/templates/php/PHPMYSQLConnectorTemplate.h
+        src/orm/templates/php/PHPSQLiteConnectorTemplate.h
 
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-        src/databases/mysql/objects/MYSQLTable.cpp src/databases/mysql/objects/MYSQLDatabase.cpp src/databases/mysql/objects/stored/MYSQLProcedure.cpp src/databases/mysql/objects/stored/MYSQLFunction.cpp src/databases/mysql/objects/stored/MYSQLTrigger.cpp src/databases/mysql/objects/stored/MYSQLEvent.cpp src/databases/mysql/objects/stored/MYSQLView.cpp src/databases/mysql/core/MYSQLReservedWords.cpp src/databases/mysql/core/MYSQLIdentifierLengthLimits.h src/databases/mysql/core/MYSQLObjects.h src/databases/mysql/core/MYSQLKeyWords.h)
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)
