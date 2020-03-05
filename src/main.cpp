@@ -18,14 +18,7 @@ int main(int argc, char **argv) {
 
     connector.open();
 
-    auto users = TransactionUtils::getMYSQLUsers(connector);
-
-    for (auto &user : users) {
-
-        std::cout << user.getUser() << std::endl;
-
-
-    }
+    auto users = TransactionUtils::getMYSQLDatabaseTables()
 
     return EXIT_SUCCESS;
 }

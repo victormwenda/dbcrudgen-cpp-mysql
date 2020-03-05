@@ -171,16 +171,69 @@ set(SOURCE_FILES
         src/orm/cli/CliParser.h
         src/orm/cli/DatabaseCrudActions.h
 
-        src/orm/creators/DatabaseModelCreator.h
-        src/orm/creators/MYSQLDatabaseModelCreator.h
-        src/orm/creators/OracleDatabaseModelCreator.h
-        src/orm/creators/SQLiteDatabaseModelCreator.h
+        src/orm/codegen/android/AndroidProjectCodeGen.cpp
+
+        src/orm/codegen/cpp/CppProjectCodeGen.cpp
+        src/orm/codegen/cpp/CppMYSQLProjectCodeGen.cpp
+        src/orm/codegen/cpp/CppSQLiteProjectCodeGen.cpp
+        src/orm/codegen/cpp/CppOracleProjectCodeGen.cpp
+
+        src/orm/codegen/java/JavaProjectCodeGen.cpp
+        src/orm/codegen/java/JavaMYSQLProjectCodeGen.cpp
+        src/orm/codegen/java/JavaSQLiteProjectCodeGen.cpp
+        src/orm/codegen/java/JavaOracleProjectCodeGen.cpp
+
+        src/orm/codegen/php/PHPProjectCodeGen.cpp
+        src/orm/codegen/php/PHPOracleProjectCodeGen.cpp
+        src/orm/codegen/php/PHPMYSQLProjectCodeGen.cpp
+        src/orm/codegen/php/PHPSQLiteProjectCodeGen.cpp
+
+        src/orm/codegen/swift/SwiftProjectCodeGen.cpp
+
+        src/orm/creators/ProjectCreator.h
+        src/orm/creators/cpp/CppMYSQLProjectCreator.h
+        src/orm/creators/cpp/CppOracleProjectCreator.h
+        src/orm/creators/cpp/CppSQLiteProjectCreator.h
+        src/orm/creators/java/JavaMYSQLProjectCreator.h
+        src/orm/creators/java/JavaOracleProjectCreator.h
+        src/orm/creators/java/JavaSQLiteProjectCreator.h
+        src/orm/creators/swift/SwiftSQLiteProjectCreator.h
+        src/orm/creators/swift/SwiftOracleProjectCreator.h
+        src/orm/creators/swift/SwiftMYSQLProjectCreator.h
+
+        src/orm/projects/AndroidProjectModel.cpp
+        src/orm/projects/CppMYSQLProjectModel.cpp
+        src/orm/projects/CppOracleProjectModel.cpp
+        src/orm/projects/CppSQLiteProjectModel.cpp
+        src/orm/projects/CppProjectModel.cpp
+        src/orm/projects/JavaMYSQLProjectModel.cpp
+        src/orm/projects/JavaOracleProjectModel.cpp
+        src/orm/projects/JavaProjectModel.cpp
+        src/orm/projects/JavaSQLiteProjectModel.cpp
+        src/orm/projects/PHPMYSQLProjectModel.cpp
+        src/orm/projects/PHPOracleProjectModel.cpp
+        src/orm/projects/PHPProjectModel.cpp
+        src/orm/projects/PHPSQLiteProjectModel.cpp
+        src/orm/projects/ProjectModel.cpp
+        src/orm/projects/SwiftProjectModel.cpp
+
+        src/orm/templates/SourceCodeTemplate.cpp
+        src/orm/templates/android/AndroidContentProviderTemplate.cpp
+        src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.cpp
+        src/orm/templates/cpp/CppOracleConnectorTemplate.cpp
+        src/orm/templates/cpp/CppMYSQLConnectorTemplate.cpp
+        src/orm/templates/cpp/CppSQLiteConnectorTemplate.cpp
+        src/orm/templates/java/JavaOracleConnectorTemplate.cpp
+        src/orm/templates/java/JavaMYSQLConnectorTemplate.cpp
+        src/orm/templates/java/JavaSQLiteConnectorTemplate.cpp
+        src/orm/templates/php/PHPOracleConnectorTemplate.cpp
+        src/orm/templates/php/PHPMYSQLConnectorTemplate.cpp
+        src/orm/templates/php/PHPSQLiteConnectorTemplate.cpp
 
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-
         )
 
 #GoogleTest

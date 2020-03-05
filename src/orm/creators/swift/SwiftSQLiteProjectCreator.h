@@ -1,0 +1,14 @@
+//
+// Created by vrwanda on 3/5/20.
+//
+
+#ifndef DBCRUDGEN_CPP_SWIFTSQLITEPROJECTCREATOR_H
+#define DBCRUDGEN_CPP_SWIFTSQLITEPROJECTCREATOR_H
+
+
+class SwiftSQLiteProjectCreator {
+
+};
+
+
+#endif //DBCRUDGEN_CPP_SWIFTSQLITEPROJECTCREATOR_H
