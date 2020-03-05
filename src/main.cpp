@@ -5,6 +5,7 @@
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "orm/utils/TransactionUtils.h"
+#include "databases/mysql/core/MYSQLIdentifierLengthLimits.h"
 
 int main(int argc, char **argv) {
 
@@ -17,6 +18,8 @@ int main(int argc, char **argv) {
     MYSQLDatabaseConnector connector{params};
 
     connector.open();
+
+    int maxLi = MYSQLIdentifierLengthLimits::View::MAX_LIMIT;
 
     auto users = TransactionUtils::getMYSQLDatabaseTables()
 

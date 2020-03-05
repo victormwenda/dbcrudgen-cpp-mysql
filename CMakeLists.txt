@@ -70,10 +70,10 @@ set(SOURCE_FILES
         src/databases/mysql/models/MysqlUser.h
 
         src/databases/mysql/objects/constraints/ColumnConstraints.h
-        src/databases/mysql/objects/tables/RowFormats.h
-        src/databases/mysql/objects/tables/MysqlTableColumnColumns.h
-        src/databases/mysql/objects/tables/MysqlKeyColumnUsageTableColumns.h
-        src/databases/mysql/objects/tables/MysqlUserColumn.h
+        src/databases/mysql/core/RowFormats.h
+        src/databases/mysql/columns/MysqlTableColumnColumns.h
+        src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
+        src/databases/mysql/columns/MysqlUserColumn.h
         src/databases/mysql/objects/MysqlRelationTypes.h
 
         src/databases/mysql/queries/MYSQLStatements.h
@@ -234,7 +234,7 @@ set(SOURCE_FILES
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-        )
+        src/databases/mysql/objects/MYSQLTable.cpp src/databases/mysql/objects/MYSQLDatabase.cpp src/databases/mysql/objects/stored/MYSQLProcedure.cpp src/databases/mysql/objects/stored/MYSQLFunction.cpp src/databases/mysql/objects/stored/MYSQLTrigger.cpp src/databases/mysql/objects/stored/MYSQLEvent.cpp src/databases/mysql/objects/stored/MYSQLView.cpp src/databases/mysql/core/MYSQLReservedWords.cpp src/databases/mysql/core/MYSQLIdentifierLengthLimits.h src/databases/mysql/core/MYSQLObjects.h src/databases/mysql/core/MYSQLKeyWords.h)
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

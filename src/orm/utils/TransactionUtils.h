@@ -25,8 +25,8 @@
 #include "../../databases/mysql/parsers/MYSQLLangParser.h"
 #include "../../databases/oracle/parsers/MysqlTags.h"
 #include "../../databases/mysql/models/MysqlUser.h"
-#include "../../databases/mysql/objects/tables/MysqlUserColumn.h"
-#include "../../databases/mysql/objects/tables/MysqlKeyColumnUsageTableColumns.h"
+#include "../../databases/mysql/columns/MysqlUserColumn.h"
+#include "../../databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h"
 #include "../../databases/mysql/objects/MysqlRelationTypes.h"
 
 #include <cppconn/statement.h>
