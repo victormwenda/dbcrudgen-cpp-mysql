@@ -6,23 +6,25 @@
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "orm/utils/TransactionUtils.h"
 #include "databases/mysql/core/MYSQLIdentifierLengthLimits.h"
+#include "databases/mysql/models/MYSQLDatabaseSchemas.h"
 
 int main(int argc, char **argv) {
 
     std::string host = "tcp://127.0.0.1:3306";
     std::string username = "root";
     std::string password = "root3358";
-    std::string schemas = "givewatts";
+    std::string database = "information_schema";
 
-    MYSQLDatabaseConnectionParams params{host, username, password, schemas};
+    MYSQLDatabaseConnectionParams params{host, username, password, database};
     MYSQLDatabaseConnector connector{params};
 
     connector.open();
 
-    auto tables = TransactionUtils::getMYSQLDatabaseTables(connector, "givewatts");
+    MYSQLDatabaseSchemas schemas{connector};
+    auto schematas = schemas.getSchemas();
 
-    for (const auto &table : tables) {
-        std::cout << table.getTable_name() << "Rows " << table.getRows() << std::endl;
+    for (const auto& schema : schematas) {
+        std::cout << schema.getSchemaName() << " ----------- " << schema.getDefaultCollationName() << std::endl;
     }
 
     return EXIT_SUCCESS;

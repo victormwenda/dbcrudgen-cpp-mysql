@@ -7,6 +7,6 @@
 
 #endif //DBCRUDGEN_CPP_CHARACTERSETS_H
 
-namespace dbcrudgen { namespace mysql { namespace schemas {
+class CharacterSets {
 
-} } }
+};
