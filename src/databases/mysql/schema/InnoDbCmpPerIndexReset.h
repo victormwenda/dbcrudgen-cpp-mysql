@@ -1,0 +1,14 @@
+//
+// Created by vrwanda on 3/6/20.
+//
+
+#ifndef DBCRUDGEN_CPP_INNODBCMPPERINDEXRESET_H
+#define DBCRUDGEN_CPP_INNODBCMPPERINDEXRESET_H
+
+
+class InnoDbCmpPerIndexReset {
+
+};
+
+
+#endif //DBCRUDGEN_CPP_INNODBCMPPERINDEXRESET_H

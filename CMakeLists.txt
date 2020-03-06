@@ -9,7 +9,7 @@ SET(CMAKE_C_COMPILER /usr/bin/cc)
 SET(CMAKE_CXX_COMPILER /usr/bin/c++)
 
 #Linker flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
 #Project path
 set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
@@ -96,6 +96,47 @@ set(SOURCE_FILES
         src/databases/mysql/queries/MysqlFullTablesColumns.h
 
         src/databases/mysql/parsers/MYSQLLangParser.h
+
+        src/databases/mysql/schema/CharacterSets.h
+        src/databases/mysql/schema/Collations.h
+        src/databases/mysql/schema/CollationCharacterSetApplicability.h
+        src/databases/mysql/schema/Columns.h
+        src/databases/mysql/schema/ColumnPrivileges.h
+        src/databases/mysql/schema/Engines.h
+        src/databases/mysql/schema/Events.h
+        src/databases/mysql/schema/Files.h
+        src/databases/mysql/schema/GlobalStatus.h
+        src/databases/mysql/schema/GlobalVariables.h
+        src/databases/mysql/schema/KeyColumnUsage.h
+        src/databases/mysql/schema/OptimizerTrace.h
+        src/databases/mysql/schema/Parameters.h
+        src/databases/mysql/schema/Partitions.h
+        src/databases/mysql/schema/Plugins.h
+        src/databases/mysql/schema/ProcessList.h src/databases/mysql/schema/Profiling.h
+        src/databases/mysql/schema/ReferentialConstraints.h
+        src/databases/mysql/schema/Routines.h
+        src/databases/mysql/schema/Schemata.h src/databases/mysql/schema/SchemaPrivileges.h
+        src/databases/mysql/schema/SessionStatus.h src/databases/mysql/schema/SessionVariables.h
+        src/databases/mysql/schema/Statistics.h src/databases/mysql/schema/Tables.h
+        src/databases/mysql/schema/TableSpaces.h src/databases/mysql/schema/TableConstraints.h
+        src/databases/mysql/schema/TablePrivileges.h src/databases/mysql/schema/Triggers.h
+        src/databases/mysql/schema/UserPrivileges.h src/databases/mysql/schema/Views.h
+        src/databases/mysql/schema/InnoDbLocks.h src/databases/mysql/schema/InnoDbTrx.h
+        src/databases/mysql/schema/InnoDbSysDataFiles.h src/databases/mysql/schema/InnoDbFtConfig.h
+        src/databases/mysql/schema/InnoDbSysVirtual.h src/databases/mysql/schema/InnoDbCmp.h
+        src/databases/mysql/schema/InnoDbFtBeingDeleted.h src/databases/mysql/schema/InnoDbCmpReset.h
+        src/databases/mysql/schema/InnoDbCmpPerIndex.h src/databases/mysql/schema/InnoDbCmpMemReset.h
+        src/databases/mysql/schema/InnoDbFtDeleted.h src/databases/mysql/schema/InnoDbBufferPageLru.h
+        src/databases/mysql/schema/InnoDbLockWaits.h src/databases/mysql/schema/InnoDbTempTableInfo.h
+        src/databases/mysql/schema/InnoDbSysIndexes.h src/databases/mysql/schema/InnoDbSysTables.h
+        src/databases/mysql/schema/InnoDbSysFields.h src/databases/mysql/schema/InnoDbCmpPerIndexReset.h
+        src/databases/mysql/schema/InnoDbBufferPage.h src/databases/mysql/schema/InnoDbFtDefaultStopWord.h
+        src/databases/mysql/schema/InnoDbFtIndexTable.h src/databases/mysql/schema/InnoDbFtIndexCache.h
+        src/databases/mysql/schema/InnoDbSysTableSpaces.h src/databases/mysql/schema/InnoDbMetrics.h
+        src/databases/mysql/schema/InnoDbSysForeignCols.h src/databases/mysql/schema/InnoDbCmpMem.h
+        src/databases/mysql/schema/InnoDbBufferPoolStats.h src/databases/mysql/schema/InnoDbSysColumns.h
+        src/databases/mysql/schema/InnoDbSysForeign.h src/databases/mysql/schema/InnoDbSysTableStats.h
+
 
         src/databases/mysql/symbols/MysqlTable.h
 
@@ -249,6 +290,9 @@ set(SOURCE_FILES
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
+
+
+
         )
 
 #GoogleTest

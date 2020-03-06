@@ -1,0 +1,14 @@
+//
+// Created by vrwanda on 3/6/20.
+//
+
+#ifndef DBCRUDGEN_CPP_INNODBSYSTABLESPACES_H
+#define DBCRUDGEN_CPP_INNODBSYSTABLESPACES_H
+
+
+class InnoDbSysTableSpaces {
+
+};
+
+
+#endif //DBCRUDGEN_CPP_INNODBSYSTABLESPACES_H
