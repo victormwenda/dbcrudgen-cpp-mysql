@@ -91,9 +91,10 @@ set(SOURCE_FILES
         src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
         src/databases/mysql/columns/MysqlUserColumn.h
 
-        src/databases/mysql/queries/MYSQLStatements.h
         src/databases/mysql/queries/MysqlCreateTableColumns.h
         src/databases/mysql/queries/MysqlFullTablesColumns.h
+        src/databases/mysql/queries/MysqlQueries.h
+        src/databases/mysql/queries/MYSQLStatements.h
 
         src/databases/mysql/parsers/MYSQLLangParser.h
 
@@ -290,7 +291,6 @@ set(SOURCE_FILES
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-
 
 
         )

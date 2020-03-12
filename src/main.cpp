@@ -7,6 +7,41 @@
 #include "orm/utils/TransactionUtils.h"
 #include "databases/mysql/core/MYSQLIdentifierLengthLimits.h"
 #include "databases/mysql/models/MYSQLDatabaseSchemas.h"
+#include "databases/mysql/models/MYSQLDatabaseModel.h"
+
+
+void getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
+    auto schematas = model.getSchemas();
+
+    for (const auto &schema : schematas) {
+        std::cout << schema.getSchemaName() << std::endl;
+    }
+
+}
+
+void getTables(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
+    std::string schema = "information_schema";
+    auto tables = model.getSchemaTables(schema);
+    for (const auto &table  : tables) {
+        std::cout << table.getTableName() << std::endl;
+
+        std::string createTable = model.getTableCreateStatement(schema,
+                                                                const_cast<std::string &> (   table.getTableName()));
+
+        std::cout << createTable << std::endl;
+    }
+
+}
+
+void getColumns(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string schema, std::string table) {
+
+    auto columns = model.getTableColumns(schema, table);
+
+    for (const auto &column : columns) {
+        std::cout << column.getColumnName() + " " << column.getDataType() << std::endl;
+    }
+}
+
 
 int main(int argc, char **argv) {
 
@@ -17,15 +52,10 @@ int main(int argc, char **argv) {
 
     MYSQLDatabaseConnectionParams params{host, username, password, database};
     MYSQLDatabaseConnector connector{params};
-
     connector.open();
 
-    MYSQLDatabaseSchemas schemas{connector};
-    auto schematas = schemas.getSchemas();
-
-    for (const auto& schema : schematas) {
-        std::cout << schema.getSchemaName() << " ----------- " << schema.getDefaultCollationName() << std::endl;
-    }
+    dbcrudgen::mysql::MYSQLDatabaseModel model{connector};
+    getTables(model);
 
     return EXIT_SUCCESS;
 }

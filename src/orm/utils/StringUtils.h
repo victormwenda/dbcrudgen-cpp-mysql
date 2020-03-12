@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <vector>
+#include <cstring>
 
 //
 // StringUtils
@@ -76,6 +77,37 @@ public:
         }
 
         return parts;
+    }
+
+    /**
+     * Create a camel case class name
+     * @param name
+     * @return
+     */
+    static std::string createClassNameCamelCase(std::string &name) {
+
+        std::string class_name;
+        std::vector<std::string> parts = split(name.c_str(), "_");
+
+        if (parts.size() == 0) {
+            return name;
+        }
+
+
+        for (std::string &part : parts) {
+
+            char firstChar = part[0];
+
+            if (islower(firstChar)) {
+                part[0] = toupper(firstChar);
+            }
+
+            class_name += part;
+        }
+
+        name = class_name;
+
+        return name;
     }
 };
 
