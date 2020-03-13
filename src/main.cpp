@@ -5,57 +5,77 @@
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "orm/utils/TransactionUtils.h"
+#include "orm/parsers/cpp/CppMYSQLParser.h"
 #include "databases/mysql/core/MYSQLIdentifierLengthLimits.h"
 #include "databases/mysql/models/MYSQLDatabaseSchemas.h"
 #include "databases/mysql/models/MYSQLDatabaseModel.h"
+#include "databases/mysql/core/MYSQLDataType.h"
 
 
-void getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
-    auto schematas = model.getSchemas();
-
-    for (const auto &schema : schematas) {
-        std::cout << schema.getSchemaName() << std::endl;
-    }
-
+std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
+    return model.getSchemas();
 }
 
-void getTables(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
-    std::string schema = "information_schema";
-    auto tables = model.getSchemaTables(schema);
-    for (const auto &table  : tables) {
-        std::cout << table.getTableName() << std::endl;
-
-        std::string createTable = model.getTableCreateStatement(schema,
-                                                                const_cast<std::string &> (   table.getTableName()));
-
-        std::cout << createTable << std::endl;
-    }
-
+std::vector<dbcrudgen::mysql::Tables> getTables(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string &schema) {
+    return model.getSchemaTables(schema);
 }
 
-void getColumns(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string schema, std::string table) {
-
-    auto columns = model.getTableColumns(schema, table);
-
-    for (const auto &column : columns) {
-        std::cout << column.getColumnName() + " " << column.getDataType() << std::endl;
-    }
+std::string
+getTableCreateStatement(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string &schema, std::string &table) {
+    return model.getTableCreateStatement(schema, table);
 }
 
+std::vector<dbcrudgen::mysql::Columns>
+getColumns(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string schema, std::string table) {
+    return model.getTableColumns(schema, table);
+}
 
 int main(int argc, char **argv) {
 
-    std::string host = "tcp://127.0.0.1:3306";
-    std::string username = "root";
-    std::string password = "root3358";
-    std::string database = "information_schema";
+    if (true) {
 
-    MYSQLDatabaseConnectionParams params{host, username, password, database};
-    MYSQLDatabaseConnector connector{params};
-    connector.open();
+        std::string host = "tcp://127.0.0.1:3306";
+        std::string username = "root";
+        std::string password = "root3358";
+        std::string database = "dbcrudgen";
 
-    dbcrudgen::mysql::MYSQLDatabaseModel model{connector};
-    getTables(model);
+        MYSQLDatabaseConnectionParams params{host, username, password, database};
+        MYSQLDatabaseConnector connector{params};
+        connector.open();
+
+        dbcrudgen::mysql::MYSQLDatabaseModel model{connector};
+        std::vector<dbcrudgen::mysql::Tables> tables = getTables(model, database);
+
+        for (const auto &table : tables) {
+
+            std::string name = table.getTableName();
+
+            std::cout << "Table name is : " << name << std::endl;
+
+            auto columns = model.getTableColumns(database, name);
+
+            for (const auto &column : columns) {
+                std::cout << column.getColumnName() << " " << column.getDataType() << std::endl;
+                const std::string& dataType = column.getDataType();
+                std::cout << "Cpp data type : "
+                          << dbcrudgen::mysql::CppMYSQLParser::toCppDataType(dataType.c_str()) << std::endl;
+            }
+
+        }
+
+    }
+
+
+    if (false) {
+        auto data_types = dbcrudgen::mysql::MYSQLDataType::getMYSQLDataTypes();
+
+        int index = 0;
+
+
+        for (const auto type  :data_types) {
+        }
+    }
+
 
     return EXIT_SUCCESS;
 }

@@ -61,6 +61,8 @@ set(SOURCE_FILES
         src/databases/mysql/core/MYSQLKeyWords.h
         src/databases/mysql/core/MYSQLReservedWords.h
         src/databases/mysql/core/RowFormats.h
+        src/databases/mysql/core/MYSQLDataType.h
+
 
         src/databases/mysql/columns/MYSQLTableColumn.h
 
@@ -70,6 +72,7 @@ set(SOURCE_FILES
 
         src/databases/mysql/exceptions/MYSQLDatabaseException.h
 
+        src/databases/mysql/models/DataType.h
         src/databases/mysql/models/MYSQLDatabaseSchemas.h
         src/databases/mysql/models/MYSQLDatabaseModel.h
         src/databases/mysql/models/MYSQLDatabaseTable.h
@@ -258,6 +261,8 @@ set(SOURCE_FILES
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
 
+        src/orm/parsers/cpp/CppMYSQLParser.h
+
         src/orm/projects/AndroidProjectModel.h
         src/orm/projects/CppMYSQLProjectModel.h
         src/orm/projects/CppOracleProjectModel.h
@@ -291,9 +296,7 @@ set(SOURCE_FILES
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-
-
-        )
+    )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)
