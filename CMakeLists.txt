@@ -327,3 +327,6 @@ target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
 
+#Copy the template resources
+file(COPY res/core/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+

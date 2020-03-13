@@ -10,7 +10,7 @@
 
 class FilesReader {
 public:
-    FilesReader() {}
+    FilesReader() = default;
 
     /**
      * Read a file
@@ -18,21 +18,26 @@ public:
      * @param filename
      * @return
      */
-    std::string readFile(std::string filename) {
-        std::string fileData = "";
+    static std::string readFile(std::string &filename) {
+        std::string fileData;
 
         std::ifstream handle(filename);
 
         std::string line;
+
         while (std::getline(handle, line)) {
-          if(fileData == "")
-              fileData.append(line);
-          else  fileData.append("\n" +line);
+
+            if (fileData.empty()) {
+                fileData.append(line);
+            } else {
+                fileData.append("\n" + line);
+            }
         }
+
         return fileData;
     }
 
-    ~FilesReader() {}
+    ~FilesReader() = default;
 };
 
 #endif //DBCRUDGEN_CPP_FILESREADER_H

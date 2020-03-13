@@ -5,12 +5,36 @@
 #ifndef DBCRUDGEN_CPP_FILESWRITER_H
 #define DBCRUDGEN_CPP_FILESWRITER_H
 
-#include <iostream>
+#include <fstream>
+#include <string>
 
-class FilesWriter{
+class FilesWriter {
 public:
-    FilesWriter() {}
+    FilesWriter() = default;
 
-    ~FilesWriter() {}
+    /**
+     * Write file
+     * @param filename
+     * @param content
+     * @return
+     */
+    static bool writeFile(std::string &filename, std::string &content) {
+
+        std::ofstream handle(filename.c_str());
+
+        if (!handle.is_open()) {
+            return false;
+        }
+
+        handle << content;
+
+        handle.close();
+
+        return true;
+
+    }
+
+    ~FilesWriter() = default;
 };
+
 #endif //DBCRUDGEN_CPP_FILESWRITER_H

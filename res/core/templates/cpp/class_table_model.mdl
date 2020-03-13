@@ -1,0 +1,26 @@
+#ifndef ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
+#define ${PROJECT_NAME}_ASS_NAME_HEADER}_H
+
+class ${CLASS_NAME} {
+
+private:
+    ${COLUMNS_VARS}
+
+public:
+
+    static constexpr const char *TABLE_NAME = "${TABLE_NAME}";
+
+    struct Columns {
+        ${COLUMNS_METADATA}
+    };
+
+    ${CLASS_NAME} (${CONST_VARS}) : ${CONST_INITIALIZERS} {}
+
+    ${COLUMNS_GETTERS}
+
+    static const char *const getTableName() {
+        return TABLE_NAME;
+    }
+};
+
+#endif //${PROJECT_NAME}_ASS_NAME_HEADER}_H

@@ -10,6 +10,8 @@
 #include "databases/mysql/models/MYSQLDatabaseSchemas.h"
 #include "databases/mysql/models/MYSQLDatabaseModel.h"
 #include "databases/mysql/core/MYSQLDataType.h"
+#include "io/FilesReader.h"
+#include "io/FilesWriter.h"
 
 
 std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
@@ -56,7 +58,7 @@ int main(int argc, char **argv) {
 
             for (const auto &column : columns) {
                 std::cout << column.getColumnName() << " " << column.getDataType() << std::endl;
-                const std::string& dataType = column.getDataType();
+                const std::string &dataType = column.getDataType();
                 std::cout << "Cpp data type : "
                           << dbcrudgen::mysql::CppMYSQLParser::toCppDataType(dataType.c_str()) << std::endl;
             }
@@ -65,6 +67,10 @@ int main(int argc, char **argv) {
 
     }
 
+    std::string filename = "templates/cpp/class.mdl";
+    const std::string &content = FilesReader::readFile(filename);
+
+    std::cout << content << std::endl;
 
     if (false) {
         auto data_types = dbcrudgen::mysql::MYSQLDataType::getMYSQLDataTypes();

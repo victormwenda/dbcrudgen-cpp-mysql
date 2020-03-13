@@ -1,0 +1,4 @@
+struct ${COLUMN_NAME} {
+    static constexpr const char *NAME = "${COLUMN_NAME}";
+    static const int INDEX = ${COLUMN_INDEX};
+};
