@@ -231,6 +231,9 @@ set(SOURCE_FILES
         src/orm/cli/CliParser.h
         src/orm/cli/DatabaseCrudActions.h
 
+        src/orm/codegen/Languages.h
+        src/orm/codegen/Frameworks.h
+
         src/orm/codegen/android/AndroidProjectCodeGen.h
 
         src/orm/codegen/cpp/CppProjectCodeGen.h
@@ -279,12 +282,22 @@ set(SOURCE_FILES
         src/orm/projects/ProjectModel.h
         src/orm/projects/SwiftProjectModel.h
 
+        src/orm/templates/FileSourceCodeTemplate.h
         src/orm/templates/SourceCodeTemplate.h
+        src/orm/templates/StringSourceCodeTemplate.h
+        src/orm/templates/TemplateFiles.h
+
         src/orm/templates/android/AndroidContentProviderTemplate.h
         src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.h
+
         src/orm/templates/cpp/CppOracleConnectorTemplate.h
         src/orm/templates/cpp/CppMYSQLConnectorTemplate.h
         src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
+        src/orm/templates/cpp/CppClassTemplate.h
+        src/orm/templates/cpp/CppClassTableModelTemplate.h
+        src/orm/templates/cpp/CppStructTableColumnModelTemplate.h
+        src/orm/templates/cpp/CppTemplateFiles.h
+
         src/orm/templates/java/JavaOracleConnectorTemplate.h
         src/orm/templates/java/JavaMYSQLConnectorTemplate.h
         src/orm/templates/java/JavaSQLiteConnectorTemplate.h
@@ -296,7 +309,7 @@ set(SOURCE_FILES
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-    )
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)
@@ -328,5 +341,5 @@ target_link_libraries(dbcrudgen_cpp mysqlcppconn)
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
 
 #Copy the template resources
-file(COPY res/core/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
+file(COPY res/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 

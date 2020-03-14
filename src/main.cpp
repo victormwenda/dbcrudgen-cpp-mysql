@@ -12,6 +12,7 @@
 #include "databases/mysql/core/MYSQLDataType.h"
 #include "io/FilesReader.h"
 #include "io/FilesWriter.h"
+#include "orm/templates/cpp/CppClassTemplate.h"
 
 
 std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
@@ -67,8 +68,8 @@ int main(int argc, char **argv) {
 
     }
 
-    std::string filename = "templates/cpp/class.mdl";
-    const std::string &content = FilesReader::readFile(filename);
+    dbcrudgen::orm::templates::CppClassTemplate tmp;
+    std::string content = tmp.getTemplate();
 
     std::cout << content << std::endl;
 
