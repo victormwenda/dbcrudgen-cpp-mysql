@@ -8,7 +8,7 @@
 #include "../../../databases/mysql/core/MYSQLDataType.h"
 
 namespace dbcrudgen {
-    namespace mysql {
+    namespace orm {
         class CppMYSQLParser {
 
         public:

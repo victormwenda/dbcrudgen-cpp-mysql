@@ -11,24 +11,23 @@
 
 namespace dbcrudgen {
     namespace orm {
-        namespace templates {
 
-            class CppClassTemplate : FileSourceCodeTemplate {
+        class CppClassTemplate : FileSourceCodeTemplate {
 
-            public:
-                std::string getSourceFile() override {
-                    return std::string{CppTemplateFiles::CLASS_TEMPLATE};
-                }
+        public:
+            std::string getSourceFile() override {
+                return std::string{CppTemplateFiles::CLASS_TEMPLATE};
+            }
 
-                std::string getTemplate() override {
-                    return FileSourceCodeTemplate::getTemplate();
-                }
+            std::string getTemplate() override {
+                return FileSourceCodeTemplate::getTemplate();
+            }
 
-                std::string getLanguage() override {
-                    return std::string{Languages::CPP};
-                }
-            };
-        }
+            std::string getLanguage() override {
+                return std::string{Languages::CPP};
+            }
+        };
+
     }
 }
 #endif //DBCRUDGEN_CPP_CPPCLASSTEMPLATE_H

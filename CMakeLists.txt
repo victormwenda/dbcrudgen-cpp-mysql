@@ -306,7 +306,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-        )
+        src/orm/codegen/ProjectCodeGen.h)
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

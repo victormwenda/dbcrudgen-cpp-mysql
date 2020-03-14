@@ -5,9 +5,11 @@
 
 #ifndef DBCRUDGEN_CPP_CPPSQLITECONNECTORTEMPLATE_H
 #define DBCRUDGEN_CPP_CPPSQLITECONNECTORTEMPLATE_H
+namespace dbcrudgen {
+    namespace orm {
+        class CppSQLiteConnectorTemplate {
 
-class CppSQLiteConnectorTemplate {
-
-};
-
+        };
+    }
+}
 #endif //DBCRUDGEN_CPP_CPPSQLITECONNECTORTEMPLATE_H

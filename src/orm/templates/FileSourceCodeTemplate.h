@@ -12,30 +12,30 @@
 
 namespace dbcrudgen {
     namespace orm {
-        namespace templates {
 
-            class FileSourceCodeTemplate : SourceCodeTemplate {
-            protected:
+        class FileSourceCodeTemplate : SourceCodeTemplate {
 
-                /**
-                * Get the source code template file
-                * @return
-                */
-                virtual std::string getSourceFile() = 0;
+        protected:
 
-            public:
-                FileSourceCodeTemplate() = default;
+            /**
+            * Get the source code template file
+            * @return
+            */
+            virtual std::string getSourceFile() = 0;
 
-                /**
-                 * Returns the source code template
-                 * @return
-                 */
-                std::string getTemplate() override {
-                    std::string sourceFile = getSourceFile();
-                    return FilesReader::readFile(sourceFile);
-                }
-            };
-        }
+        public:
+            FileSourceCodeTemplate() = default;
+
+            /**
+             * Returns the source code template
+             * @return
+             */
+            std::string getTemplate() override {
+                std::string sourceFile = getSourceFile();
+                return FilesReader::readFile(sourceFile);
+            }
+        };
+
     }
 }
 

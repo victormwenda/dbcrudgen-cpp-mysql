@@ -6,7 +6,6 @@
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
-#include "orm/parsers/cpp/CppMYSQLParser.h"
 #include "databases/mysql/models/MYSQLDatabaseModel.h"
 #include "orm/projects/CppMYSQLProjectModel.h"
 #include "orm/creators/cpp/CppMYSQLProjectCreator.h"
@@ -54,7 +53,7 @@ void test() {
             std::cout << column.getColumnName() << " " << column.getDataType() << std::endl;
             const std::string &dataType = column.getDataType();
             std::cout << "Cpp data type : "
-                      << dbcrudgen::mysql::CppMYSQLParser::toCppDataType(dataType.c_str()) << std::endl;
+                      << dbcrudgen::orm::CppMYSQLParser::toCppDataType(dataType.c_str()) << std::endl;
         }
 
     }
@@ -80,6 +79,8 @@ void createCppProject() {
         std::string tableName = table.getTableName();
         std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
         tableColumns.insert({tableName, columns});
+
+        std::cout << "Adding columns for table " << tableName << std::endl;
     }
 
     dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;

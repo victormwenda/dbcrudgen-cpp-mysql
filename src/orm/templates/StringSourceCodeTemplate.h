@@ -10,21 +10,20 @@
 
 namespace dbcrudgen {
     namespace orm {
-        namespace templates {
 
-            class StringSourceCodeTemplate : SourceCodeTemplate {
+        class StringSourceCodeTemplate : SourceCodeTemplate {
 
-            public:
+        public:
 
-                StringSourceCodeTemplate() = default;
+            StringSourceCodeTemplate() = default;
 
-                /**
-                * Get the source code template string
-                * @return
-                */
-                virtual std::string getSourceString() = 0;
-            };
-        }
+            /**
+            * Get the source code template string
+            * @return
+            */
+            virtual std::string getSourceString() = 0;
+        };
+
     }
 }
 #endif //DBCRUDGEN_CPP_STRINGSOURCECODETEMPLATE_H

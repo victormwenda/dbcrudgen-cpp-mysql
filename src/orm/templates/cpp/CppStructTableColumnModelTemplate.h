@@ -7,10 +7,10 @@
 
 namespace dbcrudgen {
     namespace orm {
-        namespace templates {
-            class CppStructTableColumnModelTemplate {
-            };
-        }
+
+        class CppStructTableColumnModelTemplate {
+        };
+
     }
 }
 #endif //DBCRUDGEN_CPP_CPPSTRUCTTABLECOLUMNMODELTEMPLATE_H
