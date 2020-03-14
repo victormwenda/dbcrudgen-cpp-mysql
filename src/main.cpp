@@ -1,35 +1,31 @@
 #include <iostream>
 #include <occi.h>
-#include <algorithm>
-#include "databases/oracle/models/OracleDatabaseModel.h"
+#include <string>
+#include <vector>
+#include "databases/mysql/schema/Schemata.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
-#include "orm/utils/TransactionUtils.h"
+#include "databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
 #include "orm/parsers/cpp/CppMYSQLParser.h"
-#include "databases/mysql/core/MYSQLIdentifierLengthLimits.h"
-#include "databases/mysql/models/MYSQLDatabaseSchemas.h"
 #include "databases/mysql/models/MYSQLDatabaseModel.h"
-#include "databases/mysql/core/MYSQLDataType.h"
-#include "io/FilesReader.h"
-#include "io/FilesWriter.h"
-#include "orm/templates/cpp/CppClassTemplate.h"
+#include "orm/projects/CppMYSQLProjectModel.h"
 #include "orm/creators/cpp/CppMYSQLProjectCreator.h"
 
-std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
+std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model) {
     return model.getSchemas();
 }
 
-std::vector<dbcrudgen::mysql::Tables> getTables(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string &schema) {
+std::vector<dbcrudgen::mysql::Tables> getTables(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model, std::string &schema) {
     return model.getSchemaTables(schema);
 }
 
 std::string
-getTableCreateStatement(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string &schema, std::string &table) {
+getTableCreateStatement(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model, std::string &schema, std::string &table) {
     return model.getTableCreateStatement(schema, table);
 }
 
 std::vector<dbcrudgen::mysql::Columns>
-getColumns(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string schema, std::string table) {
+getColumns(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model, std::string schema, std::string table) {
     return model.getTableColumns(schema, table);
 }
 
@@ -43,7 +39,7 @@ void test() {
     MYSQLDatabaseConnector connector{params};
     connector.open();
 
-    dbcrudgen::mysql::MYSQLDatabaseModel model{connector};
+    dbcrudgen::mysql::MYSQLDatabaseDecomposer model{connector};
     std::vector<dbcrudgen::mysql::Tables> tables = getTables(model, database);
 
     for (const auto &table : tables) {
@@ -63,25 +59,35 @@ void test() {
 
     }
 
-
-    dbcrudgen::orm::templates::CppClassTemplate tmp;
-    std::string content = tmp.getTemplate();
-
-    std::cout << content << std::endl;
-
-
-    auto data_types = dbcrudgen::mysql::MYSQLDataType::getMYSQLDataTypes();
-
-    int index = 0;
-
-
-    for (const auto type  :data_types) {
-    }
-
-
 }
 
 void createCppProject() {
+    std::string host = "tcp://127.0.0.1:3306";
+    std::string username = "root";
+    std::string password = "root3358";
+    std::string database = "dbcrudgen";
+
+    MYSQLDatabaseConnectionParams params{host, username, password, database};
+    MYSQLDatabaseConnector connector{params};
+    connector.open();
+    dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer{connector};
+
+    std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
+
+    auto tables = decomposer.getSchemaTables(database);
+
+    for (dbcrudgen::mysql::Tables &table : tables) {
+        std::string tableName = table.getTableName();
+        std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
+        tableColumns.insert({tableName, columns});
+    }
+
+    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
+    databaseModel.setDatabaseName(database);
+    databaseModel.setTables(tables);
+    databaseModel.setTableColumns(tableColumns);
+
+
     std::string projectName = "information-schema-cpp";
     std::string workspaceDir = "/opt/victor/workspace/cpp";
     std::string includesDir = "includes";
@@ -90,9 +96,12 @@ void createCppProject() {
 
     dbcrudgen::orm::CppMYSQLProjectModel projectModel{projectName, workspaceDir, includesDir, libsDir,
                                                       generatedCodeDir};
-    dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel};
 
+    dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel};
+    projectCreator.setDatabaseModel(databaseModel);
     projectCreator.createProject();
+
+
 }
 
 int main(int argc, char **argv) {

@@ -13,46 +13,33 @@
 
 
 #include <vector>
-#include "../../../databases/mysql/models/MYSQLDatabaseModel.h"
-#include "../../../databases/mysql/connectors/MYSQLDatabaseConnector.h"
-#include "../../../databases/mysql/models/MYSQLDatabaseTable.h"
-#include "../../utils/TransactionUtils.h"
-#include "../ProjectCreator.h"
+#include "CppProjectCreator.h"
 #include "../../projects/CppMYSQLProjectModel.h"
-#include "../../../io/FilesWriter.h"
 
 namespace dbcrudgen {
 
     namespace orm {
+
         //
         // CppMYSQLDatabaseModelCreator
         // //
-        class CppMYSQLProjectCreator : ProjectCreator {
+        class CppMYSQLProjectCreator : public CppProjectCreator {
 
         private:
             CppMYSQLProjectModel projectModel;
-
+            mysql::MYSQLDatabaseModel model;
 
         public:
 
-            explicit CppMYSQLProjectCreator(CppMYSQLProjectModel &projectModel) : projectModel{projectModel} {}
-
-            const CppMYSQLProjectModel &getProjectModel() const {
-                return projectModel;
-            }
-
-            void createProject() override {
-
-                //Create source dirs
-                createSourceDirs();
-
-            }
+            explicit CppMYSQLProjectCreator(CppMYSQLProjectModel &projectModel) :
+                    CppProjectCreator{projectModel},
+                    projectModel{projectModel} {}
 
             /**
-             *
-             * Get the programming language used to develop the project
-             * @return
-             */
+            *
+            * Get the programming language used to develop the project
+            * @return
+            */
             std::string getLanguage() override {
                 return std::string{"cpp"};
             }
@@ -65,31 +52,28 @@ namespace dbcrudgen {
                 return std::string{"mysql"};
             }
 
-        private:
-            void createSourceDirs() {
+            const CppMYSQLProjectModel &getProjectModel() const {
+                return projectModel;
+            }
 
-                const std::string separator = "/";
+            void setDatabaseModel(mysql::MYSQLDatabaseModel &databaseModel) {
+                CppMYSQLProjectCreator::model = databaseModel;
+            }
 
-                //Create project dir
-                std::string projectDir = projectModel.getProjectDir();
-                FilesWriter::createDir(const_cast<std::string &>(projectDir));
+            void createProject() override {
 
-                //Create includes dir
-                std::string includesDir = projectModel.getIncludesDir();
-                std::string includesPath = {projectDir + separator + includesDir};
-                FilesWriter::createDir(includesPath);
+                //Create source dirs
+                createProjectDirs();
 
-                //create libs dir
-                std::string libsDir = projectModel.getLibsDir();
-                std::string libsPath = projectDir + separator + libsDir;
-                FilesWriter::createDir(libsPath);
+                //create source files
+            }
 
-                //create generated code dir
-                std::string genCodeDir = projectModel.getGeneratedCodeDir();
-                std::string codeGenPath = projectDir + separator + genCodeDir;
-                FilesWriter::createDir(codeGenPath);
+
+            void createSourceFiles() override {
 
             }
+
+
         };
     }
 }

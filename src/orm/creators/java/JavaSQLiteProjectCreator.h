@@ -12,33 +12,37 @@
 #define DBCRUDGEN_CPP_JAVASQLITEPROJECTCREATOR_H
 
 #include "../ProjectCreator.h"
+#include "../../codegen/Languages.h"
+#include "../../codegen/Databases.h"
 
-//
-// CppSQLiteDatabaseModelCreator
-// //
-class JavaSQLiteProjectCreator : ProjectCreator {
+namespace dbcrudgen {
 
-public:
+    namespace orm {
 
-    JavaSQLiteProjectCreator () = default;
+        class JavaSQLiteProjectCreator : ProjectCreator {
 
-    /**
-     *
-     * Get the programming language used to develop the project
-     * @return
-     */
-    std::string getLanguage() override {
-        return std::string{"cpp"};
+        public:
+
+            JavaSQLiteProjectCreator() = default;
+
+            /**
+             *
+             * Get the programming language used to develop the project
+             * @return
+             */
+            std::string getLanguage() override {
+                return std::string{Languages::JAVA};
+            }
+
+            /**
+             * Get the database used for generating the project
+             * @return
+             */
+            std::string getDatabase() override {
+                return std::string{Databases::SQLite};
+            }
+        };
+
     }
-
-    /**
-     * Get the database used for generating the project
-     * @return
-     */
-    std::string getDatabase() override {
-        return std::string{"mysql"};
-    }
-};
-
-
+}
 #endif //DBCRUDGEN_CPP_JAVASQLITEPROJECTCREATOR_H

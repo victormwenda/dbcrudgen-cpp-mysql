@@ -5,8 +5,15 @@
 #ifndef DBCRUDGEN_CPP_SWIFTORACLEPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_SWIFTORACLEPROJECTCREATOR_H
 
-class SwiftOracleProjectCreator {
+#include "../ProjectCreator.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+        class SwiftOracleProjectCreator : ProjectCreator {
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_SWIFTORACLEPROJECTCREATOR_H

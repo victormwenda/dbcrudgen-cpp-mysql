@@ -11,12 +11,7 @@
 #ifndef DBCRUDGEN_CPP_PROJECTCREATOR_H
 #define DBCRUDGEN_CPP_PROJECTCREATOR_H
 
-
-#include "../../databases/oracle/models/OracleDatabaseModel.h"
-#include "java/JavaOracleProjectCreator.h"
-#include "../../databases/mysql/models/MYSQLDatabaseModel.h"
-#include "../../databases/sqlite/models/SQLiteDatabaseModel.h"
-
+#include <string>
 
 namespace dbcrudgen {
 
@@ -43,6 +38,16 @@ namespace dbcrudgen {
              * Creates a project
              */
             virtual void createProject() = 0;
+
+            /**
+             * Create project dirs
+             */
+            virtual void createProjectDirs() = 0;
+
+            /**
+             * Create the source files for the project
+             */
+            virtual void createSourceFiles() = 0;
         };
     }
 }

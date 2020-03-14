@@ -5,9 +5,15 @@
 #ifndef DBCRUDGEN_CPP_SWIFTMYSQLPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_SWIFTMYSQLPROJECTCREATOR_H
 
-class SwiftMYSQLProjectCreator {
+#include "../ProjectCreator.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+        class SwiftMYSQLProjectCreator : ProjectCreator {
+
+        };
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_SWIFTMYSQLPROJECTCREATOR_H

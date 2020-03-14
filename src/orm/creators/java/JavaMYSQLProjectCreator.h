@@ -13,44 +13,39 @@
 
 
 #include <vector>
-#include "../../../databases/mysql/models/MYSQLDatabaseModel.h"
+#include "../../../databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
 #include "../../../databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "../../../databases/mysql/models/MYSQLDatabaseTable.h"
 #include "../../utils/TransactionUtils.h"
 #include "../ProjectCreator.h"
+#include "../../codegen/Languages.h"
+#include "../../codegen/Databases.h"
 
 namespace dbcrudgen {
     namespace orm {
 
+        class JavaMYSQLProjectCreator : ProjectCreator {
+
+        public:
+
+            JavaMYSQLProjectCreator() = default;
+
+        private:
+            std::string getLanguage() override {
+                return std::string{Languages::JAVA};
+            }
+
+            std::string getDatabase() override {
+                return std::string{Databases::MYSQL};
+            }
+
+            void createProject() override {
+
+            }
+        };
+
     }
 }
-
-//
-// JavaMYSQLDatabaseModelCreator
-// //
-class JavaMYSQLProjectCreator {
-
-public:
-
-    JavaMYSQLProjectCreator() = default;
-
-    /**
-     *
-     * Get the programming language used to develop the project
-     * @return
-     */
-    std::string getLanguage() {
-        return std::string{"cpp"};
-    }
-
-    /**
-     * Get the database used for generating the project
-     * @return
-     */
-    std::string getDatabase() {
-        return std::string{"mysql"};
-    }
-};
 
 
 #endif //DBCRUDGEN_CPP_JAVAMYSQLPROJECTCREATOR_H

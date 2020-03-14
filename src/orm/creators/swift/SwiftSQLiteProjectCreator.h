@@ -5,10 +5,17 @@
 #ifndef DBCRUDGEN_CPP_SWIFTSQLITEPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_SWIFTSQLITEPROJECTCREATOR_H
 
+#include "../ProjectCreator.h"
 
-class SwiftSQLiteProjectCreator {
+namespace dbcrudgen {
+    namespace orm {
+        class SwiftSQLiteProjectCreator : ProjectCreator {
 
-};
+        };
+
+
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_SWIFTSQLITEPROJECTCREATOR_H

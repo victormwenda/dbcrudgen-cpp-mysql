@@ -11,34 +11,29 @@
 #ifndef DBCRUDGEN_CPP_CPPORACLEPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_CPPORACLEPROJECTCREATOR_H
 
-
+#include <string>
 #include "../ProjectCreator.h"
 
+namespace dbcrudgen {
+
+    namespace orm {
 //
 // CppOracleProjectCreator
 // //
-class CppOracleProjectCreator : ProjectCreator {
+        class CppOracleProjectCreator : ProjectCreator {
 
-public:
-    CppOracleProjectCreator() = default;
+        public:
+            CppOracleProjectCreator() = default;
 
 
-    /**
-     *
-     * Get the programming language used to develop the project
-     * @return
-     */
-    std::string getLanguage() override {
-        return std::string{"cpp"};
+            /**
+             * Get the database used for generating the project
+             * @return
+             */
+            std::string getDatabase() override {
+                return std::string{"oracle"};
+            }
+        };
     }
-
-    /**
-     * Get the database used for generating the project
-     * @return
-     */
-    std::string getDatabase() override {
-        return std::string{"oracle"};
-    }
-};
-
+}
 #endif //DBCRUDGEN_CPP_CPPORACLEPROJECTCREATOR_H

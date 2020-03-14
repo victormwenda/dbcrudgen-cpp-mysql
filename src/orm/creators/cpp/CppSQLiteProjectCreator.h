@@ -11,35 +11,40 @@
 #ifndef DBCRUDGEN_CPP_CPPSQLITEPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_CPPSQLITEPROJECTCREATOR_H
 
+#include <string>
 #include "../ProjectCreator.h"
 
-//
-// CppSQLiteProjectCreator
-// //
-class CppSQLiteProjectCreator : ProjectCreator {
+namespace dbcrudgen {
 
-public:
+    namespace orm {
+        //
+        // CppSQLiteProjectCreator
+        // //
+        class CppSQLiteProjectCreator : ProjectCreator {
 
-    CppSQLiteProjectCreator() = default;
+        public:
+
+            CppSQLiteProjectCreator() = default;
 
 
-    /**
-     *
-     * Get the programming language used to develop the project
-     * @return
-     */
-    std::string getLanguage() override {
-        return std::string{"cpp"};
+            /**
+             *
+             * Get the programming language used to develop the project
+             * @return
+             */
+            std::string getLanguage() override {
+                return std::string{"cpp"};
+            }
+
+            /**
+             * Get the database used for generating the project
+             * @return
+             */
+            std::string getDatabase() override {
+                return std::string{"oracle"};
+            }
+        };
     }
-
-    /**
-     * Get the database used for generating the project
-     * @return
-     */
-    std::string getDatabase() override {
-        return std::string{"oracle"};
-    }
-};
-
+}
 
 #endif //DBCRUDGEN_CPP_CPPSQLITEPROJECTCREATOR_H

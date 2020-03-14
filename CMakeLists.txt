@@ -63,21 +63,21 @@ set(SOURCE_FILES
         src/databases/mysql/core/RowFormats.h
         src/databases/mysql/core/MYSQLDataType.h
 
-
+        src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
+        src/databases/mysql/columns/MysqlTableColumnColumns.h
         src/databases/mysql/columns/MYSQLTableColumn.h
+        src/databases/mysql/columns/MysqlUserColumn.h
 
         src/databases/mysql/connectors/MYSQLDatabaseConnectionParams.h
         src/databases/mysql/connectors/MYSQLDatabaseConnector.h
         src/databases/mysql/connectors/MYSQLQueryExecutor.h
 
+        src/databases/mysql/decomposer/MYSQLDatabaseDecomposer.h
+
         src/databases/mysql/exceptions/MYSQLDatabaseException.h
 
         src/databases/mysql/models/DataType.h
-        src/databases/mysql/models/MYSQLDatabaseSchemas.h
         src/databases/mysql/models/MYSQLDatabaseModel.h
-        src/databases/mysql/models/MYSQLDatabaseTable.h
-        src/databases/mysql/models/MysqlKeyColumnUsage.h
-        src/databases/mysql/models/MysqlUser.h
 
         src/databases/mysql/objects/constraints/ColumnConstraints.h
         src/databases/mysql/objects/MYSQLTable.h
@@ -89,10 +89,6 @@ set(SOURCE_FILES
         src/databases/mysql/objects/stored/MYSQLView.h
         src/databases/mysql/objects/MysqlRelationTypes.h
 
-
-        src/databases/mysql/columns/MysqlTableColumnColumns.h
-        src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
-        src/databases/mysql/columns/MysqlUserColumn.h
 
         src/databases/mysql/queries/MysqlCreateTableColumns.h
         src/databases/mysql/queries/MysqlFullTablesColumns.h
@@ -231,6 +227,7 @@ set(SOURCE_FILES
         src/orm/cli/CliParser.h
         src/orm/cli/DatabaseCrudActions.h
 
+        src/orm/codegen/Databases.h
         src/orm/codegen/Languages.h
         src/orm/codegen/Frameworks.h
 
@@ -256,6 +253,7 @@ set(SOURCE_FILES
         src/orm/creators/ProjectCreator.h
         src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/creators/cpp/CppOracleProjectCreator.h
+        src/orm/creators/cpp/CppProjectCreator.h
         src/orm/creators/cpp/CppSQLiteProjectCreator.h
         src/orm/creators/java/JavaMYSQLProjectCreator.h
         src/orm/creators/java/JavaOracleProjectCreator.h
@@ -308,8 +306,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-        src/orm/utils/TransactionUtils.h
-        src/orm/codegen/Databases.h)
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)
