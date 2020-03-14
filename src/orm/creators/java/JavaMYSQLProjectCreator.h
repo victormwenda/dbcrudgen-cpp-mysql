@@ -19,10 +19,16 @@
 #include "../../utils/TransactionUtils.h"
 #include "../ProjectCreator.h"
 
+namespace dbcrudgen {
+    namespace orm {
+
+    }
+}
+
 //
 // JavaMYSQLDatabaseModelCreator
 // //
-class JavaMYSQLProjectCreator : ProjectCreator {
+class JavaMYSQLProjectCreator {
 
 public:
 
@@ -33,7 +39,7 @@ public:
      * Get the programming language used to develop the project
      * @return
      */
-    std::string getLanguage() override {
+    std::string getLanguage() {
         return std::string{"cpp"};
     }
 
@@ -41,7 +47,7 @@ public:
      * Get the database used for generating the project
      * @return
      */
-    std::string getDatabase() override {
+    std::string getDatabase() {
         return std::string{"mysql"};
     }
 };

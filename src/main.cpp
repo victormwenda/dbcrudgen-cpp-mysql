@@ -13,7 +13,7 @@
 #include "io/FilesReader.h"
 #include "io/FilesWriter.h"
 #include "orm/templates/cpp/CppClassTemplate.h"
-
+#include "orm/creators/cpp/CppMYSQLProjectCreator.h"
 
 std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseModel &model) {
     return model.getSchemas();
@@ -33,56 +33,71 @@ getColumns(dbcrudgen::mysql::MYSQLDatabaseModel &model, std::string schema, std:
     return model.getTableColumns(schema, table);
 }
 
-int main(int argc, char **argv) {
+void test() {
+    std::string host = "tcp://127.0.0.1:3306";
+    std::string username = "root";
+    std::string password = "root3358";
+    std::string database = "dbcrudgen";
 
-    if (true) {
+    MYSQLDatabaseConnectionParams params{host, username, password, database};
+    MYSQLDatabaseConnector connector{params};
+    connector.open();
 
-        std::string host = "tcp://127.0.0.1:3306";
-        std::string username = "root";
-        std::string password = "root3358";
-        std::string database = "dbcrudgen";
+    dbcrudgen::mysql::MYSQLDatabaseModel model{connector};
+    std::vector<dbcrudgen::mysql::Tables> tables = getTables(model, database);
 
-        MYSQLDatabaseConnectionParams params{host, username, password, database};
-        MYSQLDatabaseConnector connector{params};
-        connector.open();
+    for (const auto &table : tables) {
 
-        dbcrudgen::mysql::MYSQLDatabaseModel model{connector};
-        std::vector<dbcrudgen::mysql::Tables> tables = getTables(model, database);
+        std::string name = table.getTableName();
 
-        for (const auto &table : tables) {
+        std::cout << "Table name is : " << name << std::endl;
 
-            std::string name = table.getTableName();
+        auto columns = model.getTableColumns(database, name);
 
-            std::cout << "Table name is : " << name << std::endl;
-
-            auto columns = model.getTableColumns(database, name);
-
-            for (const auto &column : columns) {
-                std::cout << column.getColumnName() << " " << column.getDataType() << std::endl;
-                const std::string &dataType = column.getDataType();
-                std::cout << "Cpp data type : "
-                          << dbcrudgen::mysql::CppMYSQLParser::toCppDataType(dataType.c_str()) << std::endl;
-            }
-
+        for (const auto &column : columns) {
+            std::cout << column.getColumnName() << " " << column.getDataType() << std::endl;
+            const std::string &dataType = column.getDataType();
+            std::cout << "Cpp data type : "
+                      << dbcrudgen::mysql::CppMYSQLParser::toCppDataType(dataType.c_str()) << std::endl;
         }
 
     }
+
 
     dbcrudgen::orm::templates::CppClassTemplate tmp;
     std::string content = tmp.getTemplate();
 
     std::cout << content << std::endl;
 
-    if (false) {
-        auto data_types = dbcrudgen::mysql::MYSQLDataType::getMYSQLDataTypes();
 
-        int index = 0;
+    auto data_types = dbcrudgen::mysql::MYSQLDataType::getMYSQLDataTypes();
+
+    int index = 0;
 
 
-        for (const auto type  :data_types) {
-        }
+    for (const auto type  :data_types) {
     }
 
+
+}
+
+void createCppProject() {
+    std::string projectName = "information-schema-cpp";
+    std::string workspaceDir = "/opt/victor/workspace/cpp";
+    std::string includesDir = "includes";
+    std::string libsDir = "libs";
+    std::string generatedCodeDir = "orm";
+
+    dbcrudgen::orm::CppMYSQLProjectModel projectModel{projectName, workspaceDir, includesDir, libsDir,
+                                                      generatedCodeDir};
+    dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel};
+
+    projectCreator.createProject();
+}
+
+int main(int argc, char **argv) {
+
+    createCppProject();
 
     return EXIT_SUCCESS;
 }

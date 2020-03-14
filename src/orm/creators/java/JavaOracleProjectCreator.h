@@ -14,30 +14,18 @@
 
 #include "../ProjectCreator.h"
 
-//
-// CppOracleDatabaseModelCreator
-// //
-class JavaOracleProjectCreator : ProjectCreator {
-public:
-    JavaOracleProjectCreator() = default;
+namespace dbcrudgen {
 
-    /**
-     *
-     * Get the programming language used to develop the project
-     * @return
-     */
-    std::string getLanguage() override {
-        return std::string{"cpp"};
+    namespace orm {
+
+        //
+        // JavaOracleProjectCreator
+        // //
+        class JavaOracleProjectCreator {
+
+
+        };
     }
 
-    /**
-     * Get the database used for generating the project
-     * @return
-     */
-    std::string getDatabase() override {
-        return std::string{"mysql"};
-    }
-};
-
-
+}
 #endif //DBCRUDGEN_CPP_JAVAORACLEPROJECTCREATOR_H

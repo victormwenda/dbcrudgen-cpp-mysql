@@ -309,7 +309,7 @@ set(SOURCE_FILES
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
         src/orm/utils/TransactionUtils.h
-        )
+        src/orm/codegen/Databases.h)
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

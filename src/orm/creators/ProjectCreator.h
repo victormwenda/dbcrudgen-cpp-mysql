@@ -17,24 +17,34 @@
 #include "../../databases/mysql/models/MYSQLDatabaseModel.h"
 #include "../../databases/sqlite/models/SQLiteDatabaseModel.h"
 
-//
-// ProjectCreator
-// //
-class ProjectCreator {
 
-public:
-    /**
-     * Get the programming language used for generating the project
-     * @return
-     */
-    virtual std::string getLanguage() = 0;
+namespace dbcrudgen {
 
-    /**
-     * Get the database used for generating the project
-     * @return
-     */
-    virtual std::string getDatabase() = 0;
-};
+    namespace orm {
+        //
+        // ProjectCreator
+        // //
+        class ProjectCreator {
 
+        public:
+            /**
+             * Get the programming language used for generating the project
+             * @return
+             */
+            virtual std::string getLanguage() = 0;
+
+            /**
+             * Get the database used for generating the project
+             * @return
+             */
+            virtual std::string getDatabase() = 0;
+
+            /**
+             * Creates a project
+             */
+            virtual void createProject() = 0;
+        };
+    }
+}
 
 #endif //DBCRUDGEN_CPP_PROJECTCREATOR_H

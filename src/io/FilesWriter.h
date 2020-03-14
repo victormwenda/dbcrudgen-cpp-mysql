@@ -7,6 +7,7 @@
 
 #include <fstream>
 #include <string>
+#include <sys/stat.h>
 
 class FilesWriter {
 public:
@@ -34,7 +35,35 @@ public:
 
     }
 
+    /**
+     * Create directory
+     * @param dir
+     * @return
+     */
+    static bool createDir(std::string &dir) {
+
+        int status = mkdir(dir.c_str(), 0777);
+
+        return status == EEXIST || status == 0;
+
+    }
+
+    /**
+     * Create multiple directories
+     * @param dir
+     * @return
+     */
+    static bool createDirs(std::string &dir) {
+
+        int status = mkdir(dir.c_str(), 0777);
+
+        return status == EEXIST;
+
+    }
+
     ~FilesWriter() = default;
+
+
 };
 
 #endif //DBCRUDGEN_CPP_FILESWRITER_H
