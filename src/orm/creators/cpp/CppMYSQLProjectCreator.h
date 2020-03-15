@@ -16,6 +16,8 @@
 #include "CppProjectCreator.h"
 #include "../../projects/CppMYSQLProjectModel.h"
 #include "../../codegen/cpp/CppMYSQLProjectCodeGen.h"
+#include "../../codegen/cpp/CppMYSQLDbTableModelCodeGen.h"
+#include "../../codegen/cpp/CppMYSQLDbConnectorCodeGen.h"
 
 namespace dbcrudgen {
 
@@ -30,7 +32,9 @@ namespace dbcrudgen {
             CppMYSQLProjectModel projectModel;
             mysql::MYSQLDatabaseModel databaseModel;
 
-            CppMYSQLProjectCodeGen codeGen;
+            CppMYSQLDbTableModelCodeGen tableModelCodeGen;
+            CppMYSQLDbConnectorCodeGen tableModelPropertiesCodeGen;
+
 
         public:
 
@@ -64,7 +68,7 @@ namespace dbcrudgen {
             }
 
             const CppMYSQLProjectCodeGen &getCodeGen() const {
-                return codeGen;
+                return tableModelCodeGen;
             }
 
             void createProject() override {
@@ -80,11 +84,10 @@ namespace dbcrudgen {
             void createSourceFiles() override {
 
                 //Create database table model files
-                std::string tableModelDir = projectModel.getProjectDir() + "/" + projectModel.getGeneratedCodeDir();
-                codeGen.createDatabaseTableModel(databaseModel, tableModelDir);
+                std::string tableModelDir = projectModel.getProjectDir().append("/").append(
+                        projectModel.getGeneratedCodeDir());
+                tableModelCodeGen.createDatabaseTableModel(projectModel, databaseModel, tableModelDir);
             }
-
-
         };
     }
 }

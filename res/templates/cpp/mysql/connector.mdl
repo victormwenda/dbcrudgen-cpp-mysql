@@ -1,0 +1,21 @@
+#ifndef ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
+#define ${PROJECT_NAME}_ASS_NAME_HEADER}_H
+
+class ${CLASS_NAME} {
+
+    public:
+        ${PUBLIC_PROPERTIES}
+        ${PUBLIC_CONST}
+        ${PUBLIC_METHODS}
+    protected:
+        ${PROTECTED_PROPERTIES}
+        ${PROTECTED_CONST}
+        ${PROTECTED_METHODS}
+    private:
+       ${PRIVATE_PROPERTIES}
+       ${PRIVATE_CONST}
+       ${PRIVATE_METHODS}
+
+}
+
+#endif //${PROJECT_NAME}_ASS_NAME_HEADER}_H

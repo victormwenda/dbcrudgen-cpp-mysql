@@ -29,7 +29,7 @@ public:
      * @return
      */
     static std::string parseTemplate(std::string &subject, const std::string &search, const std::string &value) {
-
+        //TODO :: Fix bug
         std::size_t firstPosition = subject.find(search);
 
         if (firstPosition != std::string::npos) {
@@ -68,11 +68,12 @@ public:
         size_t currentPosition = 0;
 
         while ((currentPosition = subject.find(delimiter, lastPosition)) != std::string::npos) {
-            parts.push_back(subject.substr(lastPosition, currentPosition - lastPosition));
+            std::string text = subject.substr(lastPosition, currentPosition - lastPosition);
+            parts.push_back(text);
             lastPosition = ++currentPosition;
         }
 
-        if (subject.find(delimiter) != std::string::npos && (lastPosition != subject.length() - 1)) {
+        if (subject.find(delimiter) != std::string::npos && (lastPosition != subject.length())) {
             parts.push_back(subject.substr(lastPosition));
         }
 
@@ -93,12 +94,11 @@ public:
             return name;
         }
 
-
         for (std::string &part : parts) {
 
             char firstChar = part[0];
 
-            if (islower(firstChar)) {
+            if (isalpha(firstChar) && islower(firstChar)) {
                 part[0] = toupper(firstChar);
             }
 
@@ -107,6 +107,80 @@ public:
 
         name = class_name;
 
+        return name;
+    }
+
+    /**
+     * Create a camel case method name
+     * @param name
+     * @return
+     */
+    static std::string createMethodNameCamelCase(std::string &name) {
+
+        std::string class_name;
+        std::vector<std::string> parts = split(name.c_str(), "_");
+
+        if (parts.size() == 0) {
+            return name;
+        }
+
+
+        for (std::string &part : parts) {
+
+            char partsFirstChar = part[0];
+
+            if (isalpha(partsFirstChar) && islower(partsFirstChar)) {
+                part[0] = toupper(partsFirstChar);
+            }
+
+            class_name += part;
+        }
+
+        //make the first letter a small letter
+        char firstChar = name[0];
+
+        if (isupper(firstChar)) {
+            name[0] = tolower(firstChar);
+        }
+
+        name = class_name;
+
+        return name;
+    }
+
+    /**
+     * Create a camel case variable name
+     * @param name
+     * @return
+     */
+    static std::string createVariableNameCamelCase(std::string &name) {
+
+        std::string class_name;
+        std::vector<std::string> parts = split(name.c_str(), "_");
+
+        if (parts.size() == 0) {
+            return name;
+        }
+
+        for (std::string &part : parts) {
+
+            char partsFirstChar = part[0];
+
+            if (isalpha(partsFirstChar) && islower(partsFirstChar)) {
+                part[0] = toupper(partsFirstChar);
+            }
+
+            class_name += part;
+        }
+
+        //make the first letter a small letter
+        char firstChar = name[0];
+
+        if (isupper(firstChar)) {
+            name[0] = tolower(firstChar);
+        }
+
+        name = class_name;
         return name;
     }
 };

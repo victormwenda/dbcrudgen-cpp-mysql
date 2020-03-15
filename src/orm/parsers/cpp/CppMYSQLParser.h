@@ -6,10 +6,15 @@
 #include <cstring>
 #include "../../../databases/mysql/models/DataType.h"
 #include "../../../databases/mysql/core/MYSQLDataType.h"
+#include "../../templates/cpp/CppPropertyGetterTemplate.h"
+#include "../SyntaxParser.h"
+#include "../../templates/cpp/CppVariableTemplate.h"
+#include "../../templates/cpp/CppCtorInitializersTemplate.h"
+#include "../../templates/cpp/CppStructTableColumnModelTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class CppMYSQLParser {
+        class CppMYSQLParser : public SyntaxParser {
 
         public:
 
@@ -146,6 +151,98 @@ namespace dbcrudgen {
                     return std::string{"std::string"};
                 }
                 return std::string{"null"};
+            }
+
+
+            static std::string
+            parseTableColumnsGetters(CppPropertyGetterTemplate &codeTemplate, mysql::Columns &column) {
+
+                std::string source = codeTemplate.getTemplate();
+                const std::string &dataType = column.getDataType();
+                std::string columnName = column.getColumnName();
+
+                std::string className = toCppClassName(columnName);
+                std::string columnNameProperty = toCppVariableName(columnName);
+                std::string methodName = toCppMethodName(columnName);
+
+                source = StringUtils::parseTemplate(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
+                source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", className);
+                source = StringUtils::parseTemplate(source, "${COLUMN_NAME_PROPERTY}", className);
+                source = StringUtils::parseTemplate(source, "${METHOD_NAME}", className);
+
+
+                return source;
+            }
+
+            /**
+             * Parse Table Column Properties. Or Variables
+             * @param codeTemplate
+             * @param column
+             * @param delimiter
+             * @return
+             */
+            static std::string
+            parseTableColumnVariables(CppVariableTemplate &codeTemplate, mysql::Columns &column,
+                                      std::string &delimiter) {
+
+                std::string source = codeTemplate.getTemplate();
+
+                const std::string &dataType = column.getDataType();
+                std::string columnName = column.getColumnName();
+
+                std::string className = toCppClassName(columnName);
+                std::string columnNameProperty = toCppVariableName(columnName);
+
+                source = StringUtils::parseTemplate(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
+                source = StringUtils::parseTemplate(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::parseTemplate(source, "${DELIMITER}", delimiter);
+
+                return source;
+            }/**
+             * Parse Table Column Properties. Or Variables
+             * @param codeTemplate
+             * @param column
+             * @param delimiter
+             * @return
+             */
+            static std::string
+            parseClassConstructorInitializerProperties(CppCtorInitializersTemplate &codeTemplate,
+                                                       mysql::Columns &column, std::string &delimiter) {
+
+                std::string source = codeTemplate.getTemplate();
+
+                std::string columnName = column.getColumnName();
+
+                std::string columnNameProperty = toCppVariableName(columnName);
+
+                std::cout << source << std::endl;
+
+                source = StringUtils::parseTemplate(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::parseTemplate(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::parseTemplate(source, "${DELIMITER}", delimiter);
+
+                std::cout << source << std::endl;
+
+
+                return source;
+            }
+
+            static std::string
+            parseTableColumnsMetaData(CppStructTableColumnModelTemplate &codeTemplate,
+                                      mysql::Columns column, int index) {
+
+                std::string source = codeTemplate.getTemplate();
+
+                const std::string &columnName = column.getColumnName();
+
+                source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", columnName);
+                source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", columnName);
+                source = StringUtils::parseTemplate(source, "${COLUMN_INDEX}", std::to_string(index));
+
+
+                std::cout << source << std::endl;
+
+                return source;
             }
         };
     }

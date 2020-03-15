@@ -1,5 +1,5 @@
 #ifndef ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
-#define ${PROJECT_NAME}_ASS_NAME_HEADER}_H
+#define ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
 
 class ${CLASS_NAME} {
 
@@ -14,7 +14,7 @@ public:
         ${COLUMNS_METADATA}
     };
 
-    ${CLASS_NAME} (${CONST_VARS}) : ${CONST_INITIALIZERS} {}
+    ${CLASS_NAME} (${CTOR_VARIABLES}) : ${INSTANCE_VARIABLES_INITIALIZERS} {}
 
     ${COLUMNS_GETTERS}
 
@@ -23,4 +23,4 @@ public:
     }
 };
 
-#endif //${PROJECT_NAME}_ASS_NAME_HEADER}_H
+#endif //${PROJECT_NAME}_${CLASS_NAME_HEADER}_H

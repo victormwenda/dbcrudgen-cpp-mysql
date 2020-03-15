@@ -23,6 +23,11 @@ public:
 
         std::ifstream handle(filename);
 
+        if (!handle.is_open()) {
+            std::cerr << "Could not open file " << filename << std::endl;
+        }
+
+
         std::string line;
 
         while (std::getline(handle, line)) {

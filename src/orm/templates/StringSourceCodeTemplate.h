@@ -22,6 +22,11 @@ namespace dbcrudgen {
             * @return
             */
             virtual std::string getSourceString() = 0;
+
+        private:
+            std::string getTemplate() override {
+                return getSourceString();
+            }
         };
 
     }

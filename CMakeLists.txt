@@ -231,6 +231,8 @@ set(SOURCE_FILES
         src/orm/codegen/Languages.h
         src/orm/codegen/Frameworks.h
 
+        src/orm/codegen/ProjectCodeGen.h
+
         src/orm/codegen/android/AndroidProjectCodeGen.h
 
         src/orm/codegen/cpp/CppProjectCodeGen.h
@@ -288,17 +290,19 @@ set(SOURCE_FILES
         src/orm/templates/android/AndroidContentProviderTemplate.h
         src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.h
 
-        src/orm/templates/cpp/CppOracleConnectorTemplate.h
-        src/orm/templates/cpp/CppMYSQLConnectorTemplate.h
-        src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
-        src/orm/templates/cpp/CppClassTemplate.h
         src/orm/templates/cpp/CppClassTableModelTemplate.h
+        src/orm/templates/cpp/CppClassTemplate.h
+        src/orm/templates/cpp/CppMYSQLConnectorTemplate.h
+        src/orm/templates/cpp/CppOracleConnectorTemplate.h
+        src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
         src/orm/templates/cpp/CppStructTableColumnModelTemplate.h
         src/orm/templates/cpp/CppTemplateFiles.h
+        src/orm/templates/cpp/CppVariableTemplate.h
 
         src/orm/templates/java/JavaOracleConnectorTemplate.h
         src/orm/templates/java/JavaMYSQLConnectorTemplate.h
         src/orm/templates/java/JavaSQLiteConnectorTemplate.h
+
         src/orm/templates/php/PHPOracleConnectorTemplate.h
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
         src/orm/templates/php/PHPSQLiteConnectorTemplate.h
@@ -306,7 +310,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-        src/orm/codegen/ProjectCodeGen.h)
+        src/orm/templates/cpp/CppPropertyGetterTemplate.h src/orm/templates/cpp/CppPropertySetterTemplate.h src/orm/templates/cpp/CppPropertyGetterSetterTemplate.h src/orm/parsers/SyntaxParser.h src/orm/codegen/cpp/CppMYSQLDbTableModelCodeGen.h src/orm/codegen/cpp/CppMYSQLDbConnectorCodeGen.h src/orm/templates/cpp/CppCtorInitializersTemplate.h)
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)
