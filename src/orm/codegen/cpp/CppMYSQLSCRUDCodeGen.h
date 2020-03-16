@@ -10,8 +10,13 @@
 
 namespace dbcrudgen {
     namespace orm {
+
         class CppMYSQLSCRUDCodeGen : public CppMYSQLProjectCodeGen {
+
         public:
+
+            CppMYSQLSCRUDCodeGen() = default;
+
             void createDatabaseSCRUD(CppMYSQLProjectModel projectModel, mysql::MYSQLDatabaseModel databaseModel,
                                      const std::string generatedCodeDir) {
                 std::string projectName = projectModel.getProjectName();

@@ -36,7 +36,6 @@ namespace dbcrudgen {
                       projectName(projectName), workspaceDir(workspaceDir), includesDir(includesDir), libsDir(libsDir),
                       generatedCodeDir(generatedCodeDir) {}
 
-
         };
     }
 }

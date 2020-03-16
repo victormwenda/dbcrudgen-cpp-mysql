@@ -8,7 +8,6 @@
 #define DBCRUDGEN_CPP_CPPMYSQLPROJECTCODEGEN_H
 
 #include "../../projects/CppMYSQLProjectModel.h"
-#include "../../creators/cpp/CppMYSQLProjectCreator.h"
 #include "../../parsers/cpp/CppMYSQLParser.h"
 #include "../../templates/cpp/CppClassTableModelTemplate.h"
 #include "CppProjectCodeGen.h"
