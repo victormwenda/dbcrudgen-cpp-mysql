@@ -113,7 +113,14 @@ public:
      * @param name
      * @return
      */
-    static std::string createMethodNameCamelCase(std::string &name) {
+    static std::string createMethodNameCamelCase(std::string name) {
+
+        //convert all letters to small letters
+        int index = 0;
+        while (index < name.length()) {
+            name[index] = tolower(name[index]);
+            index++;
+        }
 
         std::string class_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
@@ -122,8 +129,15 @@ public:
             return name;
         }
 
+        int partsIndex = 0;
 
         for (std::string &part : parts) {
+
+            if (partsIndex == 0) {
+                class_name += part;
+                partsIndex++;
+                continue;
+            }
 
             char partsFirstChar = part[0];
 
@@ -131,18 +145,11 @@ public:
                 part[0] = toupper(partsFirstChar);
             }
 
+            partsIndex++;
             class_name += part;
         }
 
-        //make the first letter a small letter
-        char firstChar = name[0];
-
-        if (isupper(firstChar)) {
-            name[0] = tolower(firstChar);
-        }
-
         name = class_name;
-
         return name;
     }
 
@@ -151,7 +158,14 @@ public:
      * @param name
      * @return
      */
-    static std::string createVariableNameCamelCase(std::string &name) {
+    static std::string createVariableNameCamelCase(std::string name) {
+
+        //convert all letters to small letters
+        int index = 0;
+        while (index < name.length()) {
+            name[index] = tolower(name[index]);
+            index++;
+        }
 
         std::string class_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
@@ -160,7 +174,15 @@ public:
             return name;
         }
 
+        int partsIndex = 0;
+
         for (std::string &part : parts) {
+
+            if (partsIndex == 0) {
+                class_name += part;
+                partsIndex++;
+                continue;
+            }
 
             char partsFirstChar = part[0];
 
@@ -168,14 +190,8 @@ public:
                 part[0] = toupper(partsFirstChar);
             }
 
+            partsIndex++;
             class_name += part;
-        }
-
-        //make the first letter a small letter
-        char firstChar = name[0];
-
-        if (isupper(firstChar)) {
-            name[0] = tolower(firstChar);
         }
 
         name = class_name;

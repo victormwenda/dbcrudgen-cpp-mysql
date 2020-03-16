@@ -153,7 +153,13 @@ namespace dbcrudgen {
                 return std::string{"null"};
             }
 
-
+            /**
+             * Parse table column getters
+             *
+             * @param codeTemplate
+             * @param column
+             * @return
+             */
             static std::string
             parseTableColumnsGetters(CppPropertyGetterTemplate &codeTemplate, mysql::Columns &column) {
 
@@ -167,8 +173,8 @@ namespace dbcrudgen {
 
                 source = StringUtils::parseTemplate(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
                 source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", className);
-                source = StringUtils::parseTemplate(source, "${COLUMN_NAME_PROPERTY}", className);
-                source = StringUtils::parseTemplate(source, "${METHOD_NAME}", className);
+                source = StringUtils::parseTemplate(source, "${COLUMN_NAME_PROPERTY}", columnNameProperty);
+                source = StringUtils::parseTemplate(source, "${METHOD_NAME}", methodName);
 
 
                 return source;
@@ -198,7 +204,9 @@ namespace dbcrudgen {
                 source = StringUtils::parseTemplate(source, "${DELIMITER}", delimiter);
 
                 return source;
-            }/**
+            }
+
+            /**
              * Parse Table Column Properties. Or Variables
              * @param codeTemplate
              * @param column
@@ -223,13 +231,19 @@ namespace dbcrudgen {
 
                 std::cout << source << std::endl;
 
-
                 return source;
             }
 
+            /**
+             * Parse Table columns meta data
+             * @param codeTemplate
+             * @param column
+             * @param index
+             * @return
+             */
             static std::string
             parseTableColumnsMetaData(CppStructTableColumnModelTemplate &codeTemplate,
-                                      mysql::Columns column, int index) {
+                                      mysql::Columns &column, int index) {
 
                 std::string source = codeTemplate.getTemplate();
 
@@ -238,7 +252,6 @@ namespace dbcrudgen {
                 source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", columnName);
                 source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", columnName);
                 source = StringUtils::parseTemplate(source, "${COLUMN_INDEX}", std::to_string(index));
-
 
                 std::cout << source << std::endl;
 
