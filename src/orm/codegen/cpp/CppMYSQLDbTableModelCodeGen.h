@@ -36,51 +36,74 @@ namespace dbcrudgen {
                     //Set the headers
                     std::string projectName = projectModel.getProjectName();
                     content = StringUtils::parseTemplate(content, "${PROJECT_NAME}", projectName);
-                    content = StringUtils::parseTemplate(content, "${PROJECT_NAME}", projectName);
-                    content = StringUtils::parseTemplate(content, "${PROJECT_NAME}", projectName);
 
 
                     //Set the class name
                     std::string class_name = parser.toCppClassName(tableName);
                     content = StringUtils::parseTemplate(content, "${CLASS_NAME_HEADER}", class_name);
-                    content = StringUtils::parseTemplate(content, "${CLASS_NAME_HEADER}", class_name);
-                    content = StringUtils::parseTemplate(content, "${CLASS_NAME_HEADER}", class_name);
                     content = StringUtils::parseTemplate(content, "${CLASS_NAME}", class_name);
 
-
-
+                    //Set the class name
+                    std::string classname = StringUtils::createClassNameCamelCase(tableName);
 
                     //Set the table name
                     content = StringUtils::parseTemplate(content, "${TABLE_NAME}", tableName);
 
 
-                    //create class properties
-                    std::string ctorParams = createClassProperties(databaseModel, table);
-                    content = StringUtils::parseTemplate(content, "${COLUMNS_VARS}", ctorParams);
+                    const auto tableColumnsMap = databaseModel.getTableColumns();
+                    const auto tableColumnsIterator = tableColumnsMap.find(tableName);
 
-                    //create constructor variables
-                    std::string ctorVars = createConstructorParams(databaseModel, table);
-                    content = StringUtils::parseTemplate(content, "${CTOR_VARIABLES}", ctorVars);
+                    if (tableColumnsIterator != tableColumnsMap.end()) {
 
-                    //Create constructor initializers
-                    std::string ctorInitializers = createConstructorParamInitializers(databaseModel, table);
-                    content = StringUtils::parseTemplate(content, "${INSTANCE_VARIABLES_INITIALIZERS}",
-                                                         ctorInitializers);
+                        std::vector<mysql::Columns> tableColumns = tableColumnsIterator->second;
 
-                    //Create column getters
-                    std::string columnGetters = createColumnGetters(databaseModel, table);
-                    content = StringUtils::parseTemplate(content, "${COLUMNS_GETTERS}", columnGetters);
+                        std::string ctorParams{};
+                        std::string ctorVars{};
+                        std::string ctorInitializers{};
+                        std::string columnGetters{};
+                        std::string columnsMetaData{};
+
+                        int index = 0;
 
 
-                    //Create columns meta data
-                    std::string columnsMetaData = createColumnsMetaData(databaseModel, table);
-                    content = StringUtils::parseTemplate(content, "${COLUMNS_METADATA}", columnsMetaData);
+                        for (auto tableColumn : tableColumns) {
+
+                            bool isBeforeLast = index < tableColumns.size() - 1;
+
+                            ctorParams += createClassProperties(CppVariableTemplate{}, tableColumn);
+
+                            ctorVars += createConstructorParams(CppVariableTemplate{}, tableColumn, isBeforeLast);
+
+                            ctorInitializers += createConstructorParamInitializers(CppCtorInitializersTemplate{},
+                                                                                   tableColumn, isBeforeLast);
+
+                            columnGetters += createColumnGetters(CppPropertyGetterTemplate{}, tableColumn);
+
+                            columnsMetaData += createColumnsMetaData(CppStructTableColumnModelTemplate{},
+                                                                     tableColumn, //Add 1 to index for position naming of columns
+                                                                     index + 1);
+
+                            index++;
+                        }
+
+                        //create class properties
+                        content = StringUtils::parseTemplate(content, "${COLUMNS_VARS}", ctorParams);
+
+                        //create constructor variables
+                        content = StringUtils::parseTemplate(content, "${CTOR_VARIABLES}", ctorVars);
+
+                        //Create constructor initializers
+                        content = StringUtils::parseTemplate(content, "${INSTANCE_VARIABLES_INITIALIZERS}",
+                                                             ctorInitializers);
+
+                        //Create column getters
+                        content = StringUtils::parseTemplate(content, "${COLUMNS_GETTERS}", columnGetters);
 
 
-                    std::string tablename = table.getTableName();
-                    std::cout << "Writing code for table " << tablename << std::endl;
+                        //Create columns meta data
+                        content = StringUtils::parseTemplate(content, "${COLUMNS_METADATA}", columnsMetaData);
+                    }
 
-                    std::string classname = StringUtils::createClassNameCamelCase(tablename);
 
                     std::string filename{generatedCodeDir.append("/").append(classname) + ".cpp"};
 
@@ -97,34 +120,90 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            std::string createColumnGetters(mysql::MYSQLDatabaseModel &model, const mysql::Tables &table) {
+            std::string createColumnGetters(CppPropertyGetterTemplate getterTemplate, mysql::Columns column) {
 
-                std::string getters;
+                std::string getterTmp = getterTemplate.getTemplate();
 
-                CppPropertyGetterTemplate getterTemplate;
+                std::string dataType = column.getDataType();
+                std::string columnName = column.getColumnName();
 
-                const auto &columnsMap = model.getTableColumns();
-                const auto &iterator
-                        = columnsMap.find(table.getTableName());
+                getterTmp = parser.parseTableColumnsGetters(getterTemplate, column);
 
-                auto &tableColumns = iterator->second;
-
-                for (auto column : tableColumns) {
-                    std::string getterTmp = getterTemplate.getTemplate();
-
-                    std::string dataType = column.getDataType();
-                    std::string columnName = column.getColumnName();
-
-                    getterTmp = parser.parseTableColumnsGetters(getterTemplate, column);
-
-
-                    getters += getterTmp;
-                }
-
-                return getters;
+                return getterTmp;
             }
 
 
+            std::string createClassProperties(CppVariableTemplate sourceTemplate, mysql::Columns column) {
+
+                std::string source;
+
+
+                std::string srcTmp = sourceTemplate.getTemplate();
+
+                std::string delimiter = ";";
+
+                source += parser.parseTableColumnVariables(sourceTemplate, column, delimiter);
+
+
+                return source;
+            }
+
+            std::string
+            createConstructorParams(CppVariableTemplate sourceTemplate, mysql::Columns column, bool isBeforeLast) {
+
+                std::string source;
+
+                std::string srcTmp = sourceTemplate.getTemplate();
+
+                std::string delimiter = "";
+
+                if (isBeforeLast) {
+                    delimiter = ",";
+                }
+
+                source += parser.parseTableColumnVariables(sourceTemplate, column, delimiter);
+
+                return source;
+            }
+
+            /**
+             * Create constructor param initializers
+             * @param model
+             * @param table
+             * @return
+             */
+            std::string
+            createConstructorParamInitializers(CppCtorInitializersTemplate sourceTemplate, mysql::Columns column,
+                                               bool isBeforeLast) {
+
+                std::string source;
+
+                std::string srcTmp = sourceTemplate.getTemplate();
+
+                std::string delimiter = "";
+
+                if (isBeforeLast) {
+                    delimiter = ",";
+                }
+
+                source += parser.parseClassConstructorInitializerProperties(sourceTemplate, column, delimiter);
+
+                return source;
+            }
+
+            /**
+                 * Create constructor param initializers
+                 * @param model
+                 * @param table
+                 * @return
+                 */
+            std::string
+            createColumnsMetaData(CppStructTableColumnModelTemplate sourceTemplate, mysql::Columns column, int index) {
+                std::string source;
+                std::string srcTmp = sourceTemplate.getTemplate();
+                source += parser.parseTableColumnsMetaData(sourceTemplate, column, index);
+                return source;
+            }
         };
 
     }
