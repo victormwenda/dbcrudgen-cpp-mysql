@@ -33,7 +33,7 @@ namespace dbcrudgen {
             mysql::MYSQLDatabaseModel databaseModel;
 
             CppMYSQLDbTableModelCodeGen tableModelCodeGen;
-            CppMYSQLDbConnectorCodeGen tableModelPropertiesCodeGen;
+            CppMYSQLDbConnectorCodeGen connectorCodeGen;
 
 
         public:
@@ -82,6 +82,11 @@ namespace dbcrudgen {
 
 
             void createSourceFiles() override {
+
+                // Create database connector file
+                std::string connectorScriptDir = projectModel.getProjectDir().append("/").append(
+                        projectModel.getGeneratedCodeDir());
+                connectorCodeGen.createDatabaseConnector(projectModel, connectorScriptDir);
 
                 //Create database table model files
                 std::string tableModelDir = projectModel.getProjectDir().append("/").append(

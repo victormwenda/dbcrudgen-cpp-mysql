@@ -14,6 +14,18 @@ namespace dbcrudgen {
         public:
 
             /**
+            * Recursively Replaces the tag in the model with the value
+            * @param subject string being manipulated
+            * @param search string to search
+            * @param value string to replace with
+            * @return
+            */
+            static std::string
+            replace(std::string &subject, const std::string &search, const std::string &value) {
+                return StringUtils::replace(subject, search, value);
+            }
+
+            /**
             * Create C++ header name
             * @param name
             * @return

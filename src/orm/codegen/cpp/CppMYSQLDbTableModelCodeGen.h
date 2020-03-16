@@ -36,19 +36,19 @@ namespace dbcrudgen {
                     //Set the headers
                     std::string projectName = projectModel.getProjectName();
                     projectName = parser.parseProjectNameToHeaderName(projectName);
-                    content = StringUtils::parseTemplate(content, "${PROJECT_NAME}", projectName);
+                    content = StringUtils::replace(content, "${PROJECT_NAME}", projectName);
 
 
                     //Set the class name
                     std::string classname = parser.toCppClassName(tableName);
-                    content = StringUtils::parseTemplate(content, "${CLASS_NAME}", classname);
+                    content = StringUtils::replace(content, "${CLASS_NAME}", classname);
 
                     std::string classnameHeader = parser.parseClassNameToHeaderName(tableName);
-                    content = StringUtils::parseTemplate(content, "${CLASS_NAME_HEADER}", classnameHeader);
+                    content = StringUtils::replace(content, "${CLASS_NAME_HEADER}", classnameHeader);
 
 
                     //Set the table name
-                    content = StringUtils::parseTemplate(content, "${TABLE_NAME}", tableName);
+                    content = StringUtils::replace(content, "${TABLE_NAME}", tableName);
 
 
                     const auto tableColumnsMap = databaseModel.getTableColumns();
@@ -88,21 +88,21 @@ namespace dbcrudgen {
                         }
 
                         //create class properties
-                        content = StringUtils::parseTemplate(content, "${COLUMNS_VARS}", ctorParams);
+                        content = StringUtils::replace(content, "${COLUMNS_VARS}", ctorParams);
 
                         //create constructor variables
-                        content = StringUtils::parseTemplate(content, "${CTOR_VARIABLES}", ctorVars);
+                        content = StringUtils::replace(content, "${CTOR_VARIABLES}", ctorVars);
 
                         //Create constructor initializers
-                        content = StringUtils::parseTemplate(content, "${INSTANCE_VARIABLES_INITIALIZERS}",
-                                                             ctorInitializers);
+                        content = StringUtils::replace(content, "${INSTANCE_VARIABLES_INITIALIZERS}",
+                                                       ctorInitializers);
 
                         //Create column getters
-                        content = StringUtils::parseTemplate(content, "${COLUMNS_GETTERS}", columnGetters);
+                        content = StringUtils::replace(content, "${COLUMNS_GETTERS}", columnGetters);
 
 
                         //Create columns meta data
-                        content = StringUtils::parseTemplate(content, "${COLUMNS_METADATA}", columnsMetaData);
+                        content = StringUtils::replace(content, "${COLUMNS_METADATA}", columnsMetaData);
                     }
 
 

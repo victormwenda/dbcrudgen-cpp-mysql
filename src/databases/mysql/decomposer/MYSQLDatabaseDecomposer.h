@@ -90,7 +90,7 @@ namespace dbcrudgen {
                 std::vector<Tables> tables;
 
                 std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SCHEMA_TABLES;
-                query = StringUtils::parseTemplate(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema);
+                query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema);
 
                 sql::Statement *statement = &connector.createStatement();
                 sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
@@ -143,8 +143,8 @@ namespace dbcrudgen {
 
 
                 std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SCHEMA_TABLE_COLUMNS;
-                query = StringUtils::parseTemplate(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema_name);
-                query = StringUtils::parseTemplate(query, MYSQLQueries::Tags::TABLE_NAME, table_name);
+                query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema_name);
+                query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_NAME, table_name);
 
                 sql::Statement *statement = &connector.createStatement();
                 sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
@@ -205,8 +205,8 @@ namespace dbcrudgen {
                 const int create_table_statement_index = 2;
 
                 std::string query = MYSQLQueries::GET_TABLE_CREATE_STATEMENT;
-                query = StringUtils::parseTemplate(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema);
-                query = StringUtils::parseTemplate(query, MYSQLQueries::Tags::TABLE_NAME, table);
+                query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema);
+                query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_NAME, table);
 
                 sql::Statement *statement = &connector.createStatement();
                 sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});

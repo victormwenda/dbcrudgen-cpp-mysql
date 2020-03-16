@@ -28,7 +28,7 @@ public:
      * @param value string to replace with
      * @return
      */
-    static std::string parseTemplate(std::string &subject, const std::string &search, const std::string &value) {
+    static std::string replace(std::string &subject, const std::string &search, const std::string &value) {
 
         std::size_t firstPosition = subject.find(search);
 
@@ -36,7 +36,7 @@ public:
 
             subject.replace(firstPosition, search.length(), value);
 
-            return parseTemplate(subject, search, value);
+            return replace(subject, search, value);
         }
 
         return subject;

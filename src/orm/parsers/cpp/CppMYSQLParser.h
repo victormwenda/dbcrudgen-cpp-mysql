@@ -165,16 +165,16 @@ namespace dbcrudgen {
 
                 std::string source = codeTemplate.getTemplate();
                 const std::string &dataType = column.getDataType();
-                std::string columnName = column.getColumnName();
+                const std::string &columnName = column.getColumnName();
 
                 std::string className = toCppClassName(columnName);
                 std::string columnNameProperty = toCppVariableName(columnName);
                 std::string methodName = toCppMethodName(columnName);
 
-                source = StringUtils::parseTemplate(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
-                source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", className);
-                source = StringUtils::parseTemplate(source, "${COLUMN_NAME_PROPERTY}", columnNameProperty);
-                source = StringUtils::parseTemplate(source, "${METHOD_NAME}", methodName);
+                source = StringUtils::replace(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
+                source = StringUtils::replace(source, "${COLUMN_NAME}", className);
+                source = StringUtils::replace(source, "${COLUMN_NAME_PROPERTY}", columnNameProperty);
+                source = StringUtils::replace(source, "${METHOD_NAME}", methodName);
 
 
                 return source;
@@ -194,14 +194,14 @@ namespace dbcrudgen {
                 std::string source = codeTemplate.getTemplate();
 
                 const std::string &dataType = column.getDataType();
-                std::string columnName = column.getColumnName();
+                const std::string &columnName = column.getColumnName();
 
                 std::string className = toCppClassName(columnName);
                 std::string columnNameProperty = toCppVariableName(columnName);
 
-                source = StringUtils::parseTemplate(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
-                source = StringUtils::parseTemplate(source, "${PROPERTY_NAME}", columnNameProperty);
-                source = StringUtils::parseTemplate(source, "${DELIMITER}", delimiter);
+                source = StringUtils::replace(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
+                source = StringUtils::replace(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::replace(source, "${DELIMITER}", delimiter);
 
                 return source;
             }
@@ -219,15 +219,15 @@ namespace dbcrudgen {
 
                 std::string source = codeTemplate.getTemplate();
 
-                std::string columnName = column.getColumnName();
+                const std::string &columnName = column.getColumnName();
 
                 std::string columnNameProperty = toCppVariableName(columnName);
 
                 std::cout << source << std::endl;
 
-                source = StringUtils::parseTemplate(source, "${PROPERTY_NAME}", columnNameProperty);
-                source = StringUtils::parseTemplate(source, "${PROPERTY_NAME}", columnNameProperty);
-                source = StringUtils::parseTemplate(source, "${DELIMITER}", delimiter);
+                source = StringUtils::replace(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::replace(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::replace(source, "${DELIMITER}", delimiter);
 
                 std::cout << source << std::endl;
 
@@ -249,9 +249,9 @@ namespace dbcrudgen {
 
                 const std::string &columnName = column.getColumnName();
 
-                source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", columnName);
-                source = StringUtils::parseTemplate(source, "${COLUMN_NAME}", columnName);
-                source = StringUtils::parseTemplate(source, "${COLUMN_INDEX}", std::to_string(index));
+                source = StringUtils::replace(source, "${COLUMN_NAME}", columnName);
+                source = StringUtils::replace(source, "${COLUMN_NAME}", columnName);
+                source = StringUtils::replace(source, "${COLUMN_INDEX}", std::to_string(index));
 
                 std::cout << source << std::endl;
 

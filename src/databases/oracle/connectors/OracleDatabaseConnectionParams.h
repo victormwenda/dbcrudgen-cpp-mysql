@@ -47,9 +47,9 @@ public:
 
     const std::string &getConnectString() {
         std::string _connectionString = getConnectStringTemplate();
-        StringUtils::parseTemplate(_connectionString, "${HOST}", host);
-        StringUtils::parseTemplate(_connectionString, "${PORT}", std::to_string(port));
-        StringUtils::parseTemplate(_connectionString, "${SERVICE_NAME}", serviceName);
+        StringUtils::replace(_connectionString, "${HOST}", host);
+        StringUtils::replace(_connectionString, "${PORT}", std::to_string(port));
+        StringUtils::replace(_connectionString, "${SERVICE_NAME}", serviceName);
         connectString = std::move_if_noexcept(_connectionString);
         return connectString;
     }

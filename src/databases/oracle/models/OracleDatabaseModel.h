@@ -229,7 +229,7 @@ public:
     std::vector<OracleUserTables> getOracleUserTables(std::string username) {
 
         std::string oracleTablesQuery = OracleStatements::GET_USER_ALL_TABLES;
-        std::string query = StringUtils::parseTemplate(oracleTablesQuery, OracleTags::OWNER, username);
+        std::string query = StringUtils::replace(oracleTablesQuery, OracleTags::OWNER, username);
 
         oracle::occi::Statement *statement = conn->createStatement(query);
         oracle::occi::ResultSet *resultSet = statement->executeQuery();
@@ -425,9 +425,9 @@ public:
         std::string ddl;
 
         std::string query = OracleStatements::GET_OBJECT_DDL;
-        query = StringUtils::parseTemplate(query, OracleTags::OBJECT, oracleObject);
-        query = StringUtils::parseTemplate(query, OracleTags::SCHEMA, schema);
-        query = StringUtils::parseTemplate(query, OracleTags::OBJECT_NAME, objectName);
+        query = StringUtils::replace(query, OracleTags::OBJECT, oracleObject);
+        query = StringUtils::replace(query, OracleTags::SCHEMA, schema);
+        query = StringUtils::replace(query, OracleTags::OBJECT_NAME, objectName);
 
         oracle::occi::Statement *statement = conn->createStatement(query);
         oracle::occi::ResultSet *resultSet = statement->executeQuery();
@@ -468,7 +468,7 @@ public:
         std::vector<OracleTableColumn> tableColumns;
 
         std::string query = OracleStatements::GET_TABLE_COLUMNS;
-        query = StringUtils::parseTemplate(query, OracleTags::TABLE_NAME, tableName);
+        query = StringUtils::replace(query, OracleTags::TABLE_NAME, tableName);
 
         oracle::occi::Statement *statement = conn->createStatement(query);
         oracle::occi::ResultSet *resultSet = statement->executeQuery();
@@ -537,7 +537,7 @@ public:
         std::vector<OracleTAbleColsDba> tableColumns;
 
         std::string query = OracleStatements::GET_TABLE_COLUMNS_DBA;
-        query = StringUtils::parseTemplate(query, OracleTags::TABLE_NAME, tableName);
+        query = StringUtils::replace(query, OracleTags::TABLE_NAME, tableName);
 
         oracle::occi::Statement *statement = conn->createStatement(query);
         oracle::occi::ResultSet *resultSet = statement->executeQuery();
