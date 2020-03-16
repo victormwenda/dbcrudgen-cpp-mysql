@@ -14,13 +14,61 @@ namespace dbcrudgen {
         public:
 
             /**
-             * Create C++ Variable name
+            * Create C++ header name
+            * @param name
+            * @return
+            */
+            static std::string parseProjectNameToHeaderName(std::string name) {
+
+                //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
+
+                int index = 0;
+                while (index < name.length()) {
+
+                    if (!isalpha(name[index])) {
+                        name[index] = '_';
+                    } else {
+                        name[index] = toupper(name[index]);
+                    }
+
+                    index++;
+                }
+
+                return name;
+            }
+
+            /**
+            * Create C++ header name
+            * @param name
+            * @return
+            */
+            static std::string parseClassNameToHeaderName(std::string name) {
+
+                //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
+
+                int index = 0;
+                while (index < name.length()) {
+
+                    if (!isalpha(name[index])) {
+                        name[index] = '_';
+                    } else {
+                        name[index] = toupper(name[index]);
+                    }
+
+                    index++;
+                }
+
+                return name;
+            }
+
+            /**
+             * Create C++ Class name
              * @param name
              * @return
              */
-            static std::string toCppVariableName(std::string &name) {
+            static std::string toCppClassName(std::string name) {
                 //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
-                return StringUtils::createVariableNameCamelCase(name);
+                return StringUtils::createClassNameCamelCase(name);
             }
 
             /**
@@ -28,20 +76,21 @@ namespace dbcrudgen {
              * @param name
              * @return
              */
-            static std::string toCppMethodName(std::string &name) {
+            static std::string toCppMethodName(std::string name) {
                 //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
                 return StringUtils::createMethodNameCamelCase(name);
             }
 
             /**
-                 * Create C++ Class name
-                 * @param name
-                 * @return
-                 */
-            static std::string toCppClassName(std::string &name) {
+            * Create C++ Variable name
+            * @param name
+            * @return
+            */
+            static std::string toCppVariableName(std::string name) {
                 //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
-                return StringUtils::createClassNameCamelCase(name);
+                return StringUtils::createVariableNameCamelCase(name);
             }
+
         };
     }
 }

@@ -35,16 +35,17 @@ namespace dbcrudgen {
 
                     //Set the headers
                     std::string projectName = projectModel.getProjectName();
+                    projectName = parser.parseProjectNameToHeaderName(projectName);
                     content = StringUtils::parseTemplate(content, "${PROJECT_NAME}", projectName);
 
 
                     //Set the class name
-                    std::string class_name = parser.toCppClassName(tableName);
-                    content = StringUtils::parseTemplate(content, "${CLASS_NAME_HEADER}", class_name);
-                    content = StringUtils::parseTemplate(content, "${CLASS_NAME}", class_name);
+                    std::string classname = parser.toCppClassName(tableName);
+                    content = StringUtils::parseTemplate(content, "${CLASS_NAME}", classname);
 
-                    //Set the class name
-                    std::string classname = StringUtils::createClassNameCamelCase(tableName);
+                    std::string classnameHeader = parser.parseClassNameToHeaderName(tableName);
+                    content = StringUtils::parseTemplate(content, "${CLASS_NAME_HEADER}", classnameHeader);
+
 
                     //Set the table name
                     content = StringUtils::parseTemplate(content, "${TABLE_NAME}", tableName);
@@ -105,7 +106,7 @@ namespace dbcrudgen {
                     }
 
 
-                    std::string filename{generatedCodeDir.append("/").append(classname) + ".cpp"};
+                    std::string filename{generatedCodeDir.append("/").append(classname) + ".h"};
 
                     std::cout << "Temp file name " << filename << std::endl;
 

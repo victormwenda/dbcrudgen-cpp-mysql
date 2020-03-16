@@ -72,22 +72,22 @@ namespace dbcrudgen {
                     return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "BINARY") == 0 || strcmp(mysqlDataType, "binary") == 0) {
-                    return std::string{"std::istream *"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "VARBINARY") == 0 || strcmp(mysqlDataType, "varbinary") == 0) {
-                    return std::string{"std::istream *"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "TINYBLOB") == 0 || strcmp(mysqlDataType, "tinyblob") == 0) {
-                    return std::string{"std::istream *"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "BLOB") == 0 || strcmp(mysqlDataType, "blob") == 0) {
-                    return std::string{"std::istream *"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "MEDIUMBLOB") == 0 || strcmp(mysqlDataType, "mediumblob") == 0) {
-                    return std::string{"std::istream *"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "LONGBLOB") == 0 || strcmp(mysqlDataType, "longblob") == 0) {
-                    return std::string{"std::istream *"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "TINYTEXT") == 0 || strcmp(mysqlDataType, "tinytext") == 0) {
                     return std::string{"std::string"};
@@ -102,10 +102,10 @@ namespace dbcrudgen {
                     return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "ENUM") == 0 || strcmp(mysqlDataType, "enum") == 0) {
-                    return std::string{"enum"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "SET") == 0 || strcmp(mysqlDataType, "set") == 0) {
-                    return std::string{"enum"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "DATE") == 0 || strcmp(mysqlDataType, "date") == 0) {
                     return std::string{"std::string"};

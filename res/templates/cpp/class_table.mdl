@@ -1,6 +1,8 @@
 #ifndef ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
 #define ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
 
+#include<string>
+
 class ${CLASS_NAME} {
 
 private:

@@ -79,6 +79,28 @@ public:
     }
 
     /**
+     * Create an all caps header name
+     * @param name
+     * @return
+     */
+    static std::string createCapsHeaderName(std::string name) {
+
+        int index = 0;
+        while (index < name.length()) {
+
+            if (!isalpha(name[index])) {
+                name[index] = '_';
+            } else {
+                name[index] = toupper(name[index]);
+            }
+
+            index++;
+        }
+
+        return name;
+    }
+
+    /**
      * Create a camel case class name
      * @param name
      * @return
@@ -122,7 +144,7 @@ public:
             index++;
         }
 
-        std::string class_name;
+        std::string method_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
 
         if (parts.size() == 0) {
@@ -134,7 +156,7 @@ public:
         for (std::string &part : parts) {
 
             if (partsIndex == 0) {
-                class_name += part;
+                method_name += part;
                 partsIndex++;
                 continue;
             }
@@ -146,10 +168,10 @@ public:
             }
 
             partsIndex++;
-            class_name += part;
+            method_name += part;
         }
 
-        name = class_name;
+        name = method_name;
         return name;
     }
 
@@ -167,7 +189,7 @@ public:
             index++;
         }
 
-        std::string class_name;
+        std::string variable_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
 
         if (parts.size() == 0) {
@@ -179,7 +201,7 @@ public:
         for (std::string &part : parts) {
 
             if (partsIndex == 0) {
-                class_name += part;
+                variable_name += part;
                 partsIndex++;
                 continue;
             }
@@ -191,10 +213,10 @@ public:
             }
 
             partsIndex++;
-            class_name += part;
+            variable_name += part;
         }
 
-        name = class_name;
+        name = variable_name;
         return name;
     }
 };
