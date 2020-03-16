@@ -29,16 +29,14 @@ public:
      * @return
      */
     static std::string parseTemplate(std::string &subject, const std::string &search, const std::string &value) {
-        //TODO :: Fix bug
+
         std::size_t firstPosition = subject.find(search);
 
         if (firstPosition != std::string::npos) {
 
             subject.replace(firstPosition, search.length(), value);
 
-            bool hasMultipleTags = contains(subject, search, firstPosition + search.length());
-
-            return hasMultipleTags ? parseTemplate(subject, search, value) : subject;
+            return parseTemplate(subject, search, value);
         }
 
         return subject;
@@ -85,7 +83,7 @@ public:
      * @param name
      * @return
      */
-    static std::string createClassNameCamelCase(std::string &name) {
+    static std::string createClassNameCamelCase(std::string name) {
 
         std::string class_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
