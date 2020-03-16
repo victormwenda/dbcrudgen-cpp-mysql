@@ -1,0 +1,26 @@
+#ifndef ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
+#define ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
+
+#include <cppconn/driver.h>
+#include "MYSQLDatabaseConnector.h"
+
+class ${CLASS_NAME}Ops {
+
+private:
+    MYSQLDatabaseConnector connector;
+
+public:
+    ${CLASS_NAME}Ops (const MYSQLDatabaseConnector& connector) : connector {connector} {}
+
+
+    /**
+     * Get database connector
+     */
+     const MYSQLDatabaseConnector& getConnector() const {
+        return connector;
+     }
+
+    ~${CLASS_NAME}Ops() {}
+};
+
+#endif //${PROJECT_NAME}_${CLASS_NAME_HEADER}_H

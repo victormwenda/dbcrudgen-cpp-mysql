@@ -105,8 +105,7 @@ namespace dbcrudgen {
                         content = StringUtils::replace(content, "${COLUMNS_METADATA}", columnsMetaData);
                     }
 
-
-                    std::string filename{generatedCodeDir.append("/").append(classname) + ".h"};
+                    std::string filename = generatedCodeDir + "/" + classname + ".h";
 
                     std::cout << "Temp file name " << filename << std::endl;
 

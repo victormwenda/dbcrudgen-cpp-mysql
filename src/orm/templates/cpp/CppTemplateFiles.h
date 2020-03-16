@@ -14,6 +14,8 @@ namespace dbcrudgen {
             static constexpr const char *CLASS_TEMPLATE = "templates/cpp/class.mdl";
             static constexpr const char *CLASS_TABLE_TEMPLATE = "templates/cpp/class_table.mdl";
             static constexpr const char *CLASS_TABLE_MODEL_COLUMN_METADATA_TEMPLATE = "templates/cpp/class_table_model_column_metadata.mdl";
+
+
             static constexpr const char *METHOD_TEMPLATE = "templates/cpp/method.mdl";
 
             static constexpr const char *PROPERTY_GETTER = "templates/cpp/property_getter.mdl";
@@ -25,6 +27,7 @@ namespace dbcrudgen {
 
             struct MYSQL {
                 static constexpr const char *DATABASE_CONNECTOR = "templates/cpp/mysql/connector.mdl";
+                static constexpr const char *CLASS_SCRUD = "templates/cpp/mysql/scrud.mdl";
             };
             struct ORACLE {
                 static constexpr const char *DATABASE_CONNECTOR = "templates/cpp/oracle/connector.mdl";

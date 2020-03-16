@@ -5,8 +5,15 @@
 #ifndef DBCRUDGEN_CPP_CPPORACLEPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_CPPORACLEPROJECTCODEGEN_H
 
-class CppOracleProjectCodeGen {
+#include "CppProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+        class CppOracleProjectCodeGen : CppProjectCodeGen {
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_CPPORACLEPROJECTCODEGEN_H

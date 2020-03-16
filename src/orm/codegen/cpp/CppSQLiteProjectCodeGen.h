@@ -5,8 +5,16 @@
 #ifndef DBCRUDGEN_CPP_CPPSQLITEPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_CPPSQLITEPROJECTCODEGEN_H
 
-class CppSQLiteProjectCodeGen {
+#include "CppProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+
+        class CppSQLiteProjectCodeGen : public CppProjectCodeGen {
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_CPPSQLITEPROJECTCODEGEN_H

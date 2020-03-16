@@ -93,7 +93,7 @@ void createCppProject() {
     std::string workspaceDir = "/opt/victor/workspace/cpp";
     std::string includesDir = "includes";
     std::string libsDir = "libs";
-    std::string generatedCodeDir = "orm";
+    std::string generatedCodeDir = "src/orm/";
 
     dbcrudgen::orm::CppMYSQLProjectModel projectModel{projectName, workspaceDir, includesDir, libsDir,
                                                       generatedCodeDir};
@@ -101,7 +101,6 @@ void createCppProject() {
     dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel};
     projectCreator.setDatabaseModel(databaseModel);
     projectCreator.createProject();
-
 
 }
 

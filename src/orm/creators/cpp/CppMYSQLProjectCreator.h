@@ -1,39 +1,27 @@
 //
-// @author Victor Mwenda
-// @author vmwenda.vm@gmail.com
+// Created by victor on 3/16/20.
 //
-// Created by victor on 8/5/17.
-// C/C++ Laptop
-//
-
-
 
 #ifndef DBCRUDGEN_CPP_CPPMYSQLPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_CPPMYSQLPROJECTCREATOR_H
 
-
-#include <vector>
 #include "CppProjectCreator.h"
 #include "../../projects/CppMYSQLProjectModel.h"
-#include "../../codegen/cpp/CppMYSQLProjectCodeGen.h"
 #include "../../codegen/cpp/CppMYSQLDbTableModelCodeGen.h"
 #include "../../codegen/cpp/CppMYSQLDbConnectorCodeGen.h"
+#include "../../codegen/cpp/CppMYSQLSCRUDCodeGen.h"
 
 namespace dbcrudgen {
-
     namespace orm {
-
-        //
-        // CppMYSQLDatabaseModelCreator
-        // //
-        class CppMYSQLProjectCreator : public CppProjectCreator {
-
+        class CppMYSQLProjectCreator : CppProjectCreator {
         private:
+
             CppMYSQLProjectModel projectModel;
             mysql::MYSQLDatabaseModel databaseModel;
 
             CppMYSQLDbTableModelCodeGen tableModelCodeGen;
             CppMYSQLDbConnectorCodeGen connectorCodeGen;
+            CppMYSQLSCRUDCodeGen scrudCodeGen;
 
 
         public:
@@ -92,9 +80,13 @@ namespace dbcrudgen {
                 std::string tableModelDir = projectModel.getProjectDir().append("/").append(
                         projectModel.getGeneratedCodeDir());
                 tableModelCodeGen.createDatabaseTableModel(projectModel, databaseModel, tableModelDir);
+
+                //Create SCRUD files
+                std::string scrudDir = projectModel.getProjectDir().append("/").append(
+                        projectModel.getGeneratedCodeDir());
+                scrudCodeGen.createDatabaseSCRUD(projectModel, databaseModel, scrudDir);
             }
         };
     }
 }
-
 #endif //DBCRUDGEN_CPP_CPPMYSQLPROJECTCREATOR_H

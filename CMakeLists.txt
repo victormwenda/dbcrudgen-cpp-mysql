@@ -235,8 +235,12 @@ set(SOURCE_FILES
 
         src/orm/codegen/android/AndroidProjectCodeGen.h
 
-        src/orm/codegen/cpp/CppProjectCodeGen.h
+        src/orm/codegen/cpp/CppMYSQLDbConnectorCodeGen.h
+        src/orm/codegen/cpp/CppMYSQLDbTableModelCodeGen.h
         src/orm/codegen/cpp/CppMYSQLProjectCodeGen.h
+        src/orm/creators/cpp/CppMYSQLProjectCreator.h
+        src/orm/codegen/cpp/CppMYSQLSCRUDCodeGen.h
+        src/orm/codegen/cpp/CppProjectCodeGen.h
         src/orm/codegen/cpp/CppSQLiteProjectCodeGen.h
         src/orm/codegen/cpp/CppOracleProjectCodeGen.h
 
@@ -253,7 +257,6 @@ set(SOURCE_FILES
         src/orm/codegen/swift/SwiftProjectCodeGen.h
 
         src/orm/creators/ProjectCreator.h
-        src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/creators/cpp/CppOracleProjectCreator.h
         src/orm/creators/cpp/CppProjectCreator.h
         src/orm/creators/cpp/CppSQLiteProjectCreator.h
@@ -264,6 +267,7 @@ set(SOURCE_FILES
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
 
+        src/orm/parsers/SyntaxParser.h
         src/orm/parsers/cpp/CppMYSQLParser.h
 
         src/orm/projects/AndroidProjectModel.h
@@ -291,9 +295,14 @@ set(SOURCE_FILES
         src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.h
 
         src/orm/templates/cpp/CppClassTableModelTemplate.h
+        src/orm/templates/cpp/CppCtorInitializersTemplate.h
         src/orm/templates/cpp/CppClassTemplate.h
         src/orm/templates/cpp/CppMYSQLConnectorTemplate.h
         src/orm/templates/cpp/CppOracleConnectorTemplate.h
+        src/orm/templates/cpp/CppPropertyGetterTemplate.h
+        src/orm/templates/cpp/CppPropertySetterTemplate.h
+        src/orm/templates/cpp/CppPropertyGetterSetterTemplate.h
+        src/orm/templates/cpp/CppClassTableSCRUDTemplate.h
         src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
         src/orm/templates/cpp/CppStructTableColumnModelTemplate.h
         src/orm/templates/cpp/CppTemplateFiles.h
@@ -310,7 +319,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-        src/orm/templates/cpp/CppPropertyGetterTemplate.h src/orm/templates/cpp/CppPropertySetterTemplate.h src/orm/templates/cpp/CppPropertyGetterSetterTemplate.h src/orm/parsers/SyntaxParser.h src/orm/codegen/cpp/CppMYSQLDbTableModelCodeGen.h src/orm/codegen/cpp/CppMYSQLDbConnectorCodeGen.h src/orm/templates/cpp/CppCtorInitializersTemplate.h)
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

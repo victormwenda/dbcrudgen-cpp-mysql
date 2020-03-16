@@ -223,13 +223,9 @@ namespace dbcrudgen {
 
                 std::string columnNameProperty = toCppVariableName(columnName);
 
-                std::cout << source << std::endl;
-
                 source = StringUtils::replace(source, "${PROPERTY_NAME}", columnNameProperty);
                 source = StringUtils::replace(source, "${PROPERTY_NAME}", columnNameProperty);
                 source = StringUtils::replace(source, "${DELIMITER}", delimiter);
-
-                std::cout << source << std::endl;
 
                 return source;
             }
@@ -252,8 +248,6 @@ namespace dbcrudgen {
                 source = StringUtils::replace(source, "${COLUMN_NAME}", columnName);
                 source = StringUtils::replace(source, "${COLUMN_NAME}", columnName);
                 source = StringUtils::replace(source, "${COLUMN_INDEX}", std::to_string(index));
-
-                std::cout << source << std::endl;
 
                 return source;
             }

@@ -17,9 +17,9 @@
 namespace dbcrudgen {
 
     namespace orm {
-//
-// CppOracleProjectCreator
-// //
+        //
+        // CppOracleProjectCreator
+        // //
         class CppOracleProjectCreator : ProjectCreator {
 
         public:
