@@ -12,7 +12,7 @@
 namespace dbcrudgen {
     namespace orm {
 
-        class CppClassTableModelTemplate : FileSourceCodeTemplate {
+        class CppClassTableModelTemplate : public FileSourceCodeTemplate {
 
         public:
             std::string getSourceFile() override {

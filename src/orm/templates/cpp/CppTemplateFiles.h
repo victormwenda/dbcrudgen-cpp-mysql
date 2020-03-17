@@ -27,7 +27,26 @@ namespace dbcrudgen {
 
             struct MYSQL {
                 static constexpr const char *DATABASE_CONNECTOR = "templates/cpp/mysql/connector.mdl";
+
                 static constexpr const char *CLASS_SCRUD = "templates/cpp/mysql/scrud.mdl";
+
+                static constexpr const char *METHOD_SCRUD_QUERY_ALL_RECORDS = "templates/cpp/mysql/scrud_query_all_records.mdl";
+                static constexpr const char *METHOD_SCRUD_QUERY_RECORD_NATIVE = "templates/cpp/mysql/scrud_query_record_native.mdl";
+                static constexpr const char *METHOD_SCRUD_QUERY_RECORDS_NATIVE = "templates/cpp/mysql/scrud_query_records_native.mdl";
+                static constexpr const char *METHOD_SCRUD_QUERY_RECORD_WITH_ID = "templates/cpp/mysql/scrud_query_record_with_id.mdl";
+                static constexpr const char *METHOD_SCRUD_QUERY_RECORD_WITH_MODEL = "templates/cpp/mysql/scrud_query_record_with_model.mdl";
+
+                static constexpr const char *METHOD_SCRUD_DELETE_WITH_ID = "templates/cpp/mysql/scrud_delete_records_id.mdl";
+                static constexpr const char *METHOD_SCRUD_DELETE_WITH_MODEL = "templates/cpp/mysql/scrud_delete_records_model.mdl";
+                static constexpr const char *METHOD_SCRUD_DELETE_WITH_NATIVE = "templates/cpp/mysql/scrud_delete_records_native.mdl";
+
+                static constexpr const char *METHOD_SCRUD_INSERT_WITH_MODEL = "templates/cpp/mysql/scrud_insert_records_model.mdl";
+                static constexpr const char *METHOD_SCRUD_INSERT_WITH_NATIVE = "templates/cpp/mysql/scrud_insert_records_native.mdl";
+
+                static constexpr const char *METHOD_SCRUD_UPDATE_WITH_ID = "templates/cpp/mysql/scrud_update_records_id.mdl";
+                static constexpr const char *METHOD_SCRUD_UPDATE_WITH_MODEL = "templates/cpp/mysql/scrud_records_model.mdl";
+                static constexpr const char *METHOD_SCRUD_UPDATE_WITH_NATIVE = "templates/cpp/mysql/scrud_update_records_native.mdl";
+
             };
             struct ORACLE {
                 static constexpr const char *DATABASE_CONNECTOR = "templates/cpp/oracle/connector.mdl";

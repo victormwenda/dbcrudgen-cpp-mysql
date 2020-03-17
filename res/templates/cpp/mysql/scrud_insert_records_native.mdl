@@ -1,0 +1,14 @@
+bool insert(${METHOD_PARAMS}) {
+
+    std::string query = "INSERT INTO " + std::string{TABLE_NAME} + " (${COLUMN_NAMES}) VALUES (${COLUMN_VALUES});";
+
+    std::cout << query << std::endl;
+
+    sql::Statement *statement = connector.createStatement();
+
+    bool results = statement->execute(query);
+
+    statement->close();
+
+    return results;
+}

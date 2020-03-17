@@ -2,6 +2,7 @@
 #include <occi.h>
 #include <string>
 #include <vector>
+#include <regex>
 #include "databases/mysql/schema/Schemata.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"

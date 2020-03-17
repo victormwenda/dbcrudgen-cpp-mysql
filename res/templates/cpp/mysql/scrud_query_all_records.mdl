@@ -1,0 +1,15 @@
+bool insert () {
+    
+    std::string query = "";
+        
+     sql::Statement *statement = connector.createStatement();
+     sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
+    statement->execute()
+        while (resultSet->next()) {
+            
+        }
+    
+        resultSet->close();
+        statement->close();
+
+}

@@ -11,7 +11,7 @@
 
 namespace dbcrudgen {
     namespace orm {
-        class CppPropertyGetterSetterTemplate : FileSourceCodeTemplate {
+        class CppPropertyGetterSetterTemplate : public FileSourceCodeTemplate {
 
             std::string getSourceFile() override {
                 return std::string{CppTemplateFiles::PROPERTY_GETTER_SETTER};

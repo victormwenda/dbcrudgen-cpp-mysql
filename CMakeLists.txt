@@ -269,6 +269,7 @@ set(SOURCE_FILES
 
         src/orm/parsers/SyntaxParser.h
         src/orm/parsers/cpp/CppMYSQLParser.h
+        src/orm/parsers/cpp/CppMYSQLSCRUDParser.h
 
         src/orm/projects/AndroidProjectModel.h
         src/orm/projects/CppMYSQLProjectModel.h
@@ -305,8 +306,21 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppClassTableSCRUDTemplate.h
         src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
         src/orm/templates/cpp/CppStructTableColumnModelTemplate.h
-        src/orm/templates/cpp/CppTemplateFiles.h
+        src/orm/templates/cpp/CppMYSQLTableInsertWithModelTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableDeleteWithModelTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableUpdateWithIDTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableQueryRecordsNativeTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableQueryRecordNativeTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableQueryRecordWithIDTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableQueryRecordWithModelTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableDeleteWithIDTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableDeleteWithNativeTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableInsertNativeTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableUpdateWithModelTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableUpdateWithNativeTemplate.h
+        src/orm/templates/cpp/CppMYSQLTableQueryRecordsAllTemplate.h
         src/orm/templates/cpp/CppVariableTemplate.h
+        src/orm/templates/cpp/CppTemplateFiles.h
 
         src/orm/templates/java/JavaOracleConnectorTemplate.h
         src/orm/templates/java/JavaMYSQLConnectorTemplate.h
@@ -319,6 +333,8 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
+
+
         )
 
 #GoogleTest

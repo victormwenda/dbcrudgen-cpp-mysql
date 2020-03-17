@@ -12,7 +12,7 @@
 
 namespace dbcrudgen {
     namespace orm {
-        class CppSQLiteConnectorTemplate : FileSourceCodeTemplate {
+        class CppSQLiteConnectorTemplate : public FileSourceCodeTemplate {
 
             std::string getSourceFile() override {
                 return std::string{CppTemplateFiles::MYSQL::DATABASE_CONNECTOR};

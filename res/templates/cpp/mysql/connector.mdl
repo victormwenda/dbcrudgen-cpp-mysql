@@ -20,11 +20,13 @@ public:
      * @param hostname
      * @param username
      * @param password
+     * @param schemas
      * @return
      */
     sql::Connection *openConnection(const std::string &hostname, const std::string &username,
-                                    const std::string &password) {
+                                    const std::string &password, const std::string& schemas) {
         connection = driver->connect(hostname, username, password);
+        connection->setSchema(schemas);
     }
 
     /**

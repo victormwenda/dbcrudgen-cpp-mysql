@@ -2,6 +2,10 @@
 #define ${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
 
 #include <cppconn/driver.h>
+#include <cppconn/resultset.h>
+#include <cppconn/statement.h>
+#include <cppconn/prepared_statement.h>
+
 #include "MYSQLDatabaseConnector.h"
 
 class ${CLASS_NAME}Ops {
@@ -9,8 +13,11 @@ class ${CLASS_NAME}Ops {
 private:
     MYSQLDatabaseConnector connector;
 
+    static constexpr const char * TABLE_NAME = "${TABLE_NAME}";
+
 public:
-    ${CLASS_NAME}Ops (const MYSQLDatabaseConnector& connector) : connector {connector} {}
+
+    explicit ${CLASS_NAME}Ops (const MYSQLDatabaseConnector& connector) : connector {connector} {}
 
 
     /**
@@ -20,7 +27,28 @@ public:
         return connector;
      }
 
-    ~${CLASS_NAME}Ops() {}
+    /**
+     * Get the table name affected by the database operations
+     */
+     std::string getTableName() const {
+        return ${CLASS_NAME}Ops::TABLE_NAME;
+     }
+
+     ${INSERT_RECORDS_NATIVE}
+
+     ${INSERT_RECORDS_MODEL}
+
+     ${QUERY_ALL_RECORDS}
+
+     ${QUERY_ONE_RECORDS_WITH_ID}
+
+     ${QUERY_ONE_RECORDS_WITH_MODEL}
+
+     ${UPDATE_RECORDS}
+
+     ${DELETE_RECORDS}
+
+    ~${CLASS_NAME}Ops()  = default;
 };
 
 #endif //${PROJECT_NAME}_${CLASS_NAME_HEADER}_H
