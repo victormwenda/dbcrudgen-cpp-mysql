@@ -219,6 +219,40 @@ public:
         name = variable_name;
         return name;
     }
+
+    /**
+     * Convert text to upper
+     * @param text
+     * @return
+     */
+    static std::string to_upper(std::string text) {
+
+        int index = 0;
+
+        while (index < text.size()) {
+            text[index] = toupper(text[index]);
+            index++;
+        }
+
+        return text;
+    }
+
+    /**
+     * Convert text to lower
+     * @param text
+     * @return
+     */
+    static std::string to_lower(std::string text) {
+
+        int index = 0;
+
+        while (index < text.size()) {
+            text[index] = toupper(text[index]);
+            index++;
+        }
+
+        return text;
+    }
 };
 
 

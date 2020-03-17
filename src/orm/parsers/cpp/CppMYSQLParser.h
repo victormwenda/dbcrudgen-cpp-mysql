@@ -54,7 +54,7 @@ namespace dbcrudgen {
                     return std::string{"long"};
                 }
                 if (strcmp(mysqlDataType, "FLOAT") == 0 || strcmp(mysqlDataType, "float") == 0) {
-                    return std::string{"float"};
+                    return std::string{"long double"};
                 }
                 if (strcmp(mysqlDataType, "DOUBLE") == 0 || strcmp(mysqlDataType, "double") == 0) {
                     return std::string{"long double"};
@@ -66,7 +66,7 @@ namespace dbcrudgen {
                     return std::string{"bool"};
                 }
                 if (strcmp(mysqlDataType, "CHAR") == 0 || strcmp(mysqlDataType, "char") == 0) {
-                    return std::string{"char"};
+                    return std::string{"std::string"};
                 }
                 if (strcmp(mysqlDataType, "VARCHAR") == 0 || strcmp(mysqlDataType, "varchar") == 0) {
                     return std::string{"std::string"};
@@ -245,11 +245,48 @@ namespace dbcrudgen {
 
                 const std::string &columnName = column.getColumnName();
 
-                source = StringUtils::replace(source, "${COLUMN_NAME}", columnName);
+                source = StringUtils::replace(source, "${COLUMN__STRUCT}", StringUtils::to_upper(columnName));
                 source = StringUtils::replace(source, "${COLUMN_NAME}", columnName);
                 source = StringUtils::replace(source, "${COLUMN_INDEX}", std::to_string(index));
 
                 return source;
+            }
+
+            /**
+             * Get the resultSet Getter method for c++ data type
+             * @param dataType
+             * @return
+             */
+            static std::string getResultSetGetterSource(std::string cppDataType) {
+
+                if (cppDataType == "bool") {
+                    return std::string{"resultSet->getBoolean(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "char") {
+                    return std::string{"resultSet->getString(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "int") {
+                    return std::string{"resultSet->getInt(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "std::string") {
+                    return std::string{"resultSet->getString(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "long") {
+                    return std::string{"resultSet->getInt(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "float") {
+                    return std::string{"resultSet->getDouble(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "double") {
+                    return std::string{"resultSet->getDouble(${COLUMN_LABEL});"};
+                }
+                if (cppDataType == "long double") {
+                    return std::string{"resultSet->getDouble(${COLUMN_LABEL});"};
+                }
+
+                std::cout << "Data type : " << cppDataType << std::endl;
+
+                return std::string{"null"};
             }
         };
     }

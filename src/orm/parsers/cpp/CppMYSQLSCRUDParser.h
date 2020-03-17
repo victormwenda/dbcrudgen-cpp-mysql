@@ -11,11 +11,11 @@ namespace dbcrudgen {
         class CppMYSQLSCRUDParser : public CppMYSQLParser {
 
         public:
-            std::string createMethodParams(const mysql::Columns &columns, bool isBeforeLast) {
+            std::string createMethodParams(const mysql::Columns &column, bool isBeforeLast) {
 
-                const std::string datatype = toCppDataType(columns.getDataType().c_str());
+                const std::string datatype = toCppDataType(column.getDataType().c_str());
 
-                std::string name{datatype + " " + columns.getColumnName()};
+                std::string name{datatype + " " + column.getColumnName()};
 
                 name = toCppVariableName(name);
 
@@ -26,9 +26,9 @@ namespace dbcrudgen {
                 return name;
             }
 
-            std::string createColumnName(const mysql::Columns &columns, bool isBeforeLast) {
+            std::string createColumnName(const mysql::Columns &column, bool isBeforeLast) {
 
-                std::string name = {"`" + columns.getColumnName() + "`"};
+                std::string name = {"`" + column.getColumnName() + "`"};
 
                 if (isBeforeLast) {
                     name.append(",");
@@ -37,13 +37,13 @@ namespace dbcrudgen {
                 return name;
             }
 
-            std::string createColumnValue(const mysql::Columns &columns, bool isBeforeLast) {
+            std::string createColumnValue(const mysql::Columns &column, bool isBeforeLast) {
 
-                std::string name = columns.getColumnName();
+                std::string name = column.getColumnName();
 
                 name = toCppVariableName(name);
 
-                std::string dataType = columns.getDataType();
+                std::string dataType = column.getDataType();
 
                 if (toCppDataType(dataType.c_str()) == "std::string") {
                     name = "'\"+  " + name + " +\"'";
@@ -51,6 +51,44 @@ namespace dbcrudgen {
                     name = "'\"+ std::to_string(" + name + ")+\"'";
                 }
 
+
+                if (isBeforeLast) {
+                    name.append(",");
+                }
+
+                return name;
+            }
+
+            std::string
+            createQueriedColumnValues(std::string tableName, const mysql::Columns &column, bool isBeforeLast) {
+
+                std::string datatype = toCppDataType(column.getDataType().c_str());
+
+                std::string columnName = column.getColumnName();
+                std::string columnNameVariable = toCppVariableName(columnName);
+
+                std::string resultSetGetterSource = getResultSetGetterSource(datatype.c_str());
+
+                std::string qualifiedTableClassName = toCppClassName(tableName);
+                std::string qualifiedTableColumnName = StringUtils::to_upper(columnName);
+
+                std::string qualified_column_name_accessor = std::string{qualifiedTableClassName + "::Columns::"
+                                                                         + qualifiedTableColumnName +
+                                                                         "::INDEX"};
+
+                replace(resultSetGetterSource, "${COLUMN_LABEL}", qualified_column_name_accessor);
+
+                std::string name{datatype + " " + columnNameVariable + " = " + resultSetGetterSource};
+
+                return name;
+            }
+
+            std::string createQueriedColumns(const mysql::Columns &column, bool isBeforeLast) {
+                const std::string datatype = toCppDataType(column.getDataType().c_str());
+
+                std::string name = column.getColumnName();
+
+                name = toCppVariableName(name);
 
                 if (isBeforeLast) {
                     name.append(",");
