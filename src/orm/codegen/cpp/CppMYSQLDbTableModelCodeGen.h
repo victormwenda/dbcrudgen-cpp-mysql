@@ -107,8 +107,6 @@ namespace dbcrudgen {
 
                     std::string filename = generatedCodeDir + "/" + classname + ".h";
 
-                    std::cout << "Temp file name " << filename << std::endl;
-
                     FilesWriter::writeFile(filename, content);
                 }
 

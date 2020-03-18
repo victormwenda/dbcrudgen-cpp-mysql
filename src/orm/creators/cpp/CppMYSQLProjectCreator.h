@@ -59,6 +59,22 @@ namespace dbcrudgen {
                 createSourceFiles();
             }
 
+        private:
+            void createProjectDirs() override {
+                CppProjectCreator::createProjectDirs();
+
+
+                //create generated db ops dir
+                std::string dbOpsDir = projectModel.getGeneratedTableDbOpsFullCodeDir();
+                FilesWriter::createDirs(dbOpsDir);
+
+                //create generated model dir
+                std::string modelDir = projectModel.getGeneratedTableModelCodeFullDir();
+                FilesWriter::createDirs(modelDir);
+            }
+
+        public:
+
             void createSourceFiles() override {
 
                 // Create database connector file
@@ -68,14 +84,12 @@ namespace dbcrudgen {
                 connectorCodeGen.createDatabaseConnector(projectModel, connectorScriptDir);
 
                 // Create database table model files
-                std::string tableModelDir = projectModel.getProjectDir().append("/").append(
-                        projectModel.getGeneratedCodeDir());
+                std::string tableModelDir = projectModel.getGeneratedTableModelCodeFullDir();
                 tableModelCodeGen.createDatabaseTableModel(projectModel, databaseModel,
                                                            tableModelDir);
 
                 // Create SCRUD files
-                std::string scrudDir = projectModel.getProjectDir().append("/").append(
-                        projectModel.getGeneratedCodeDir());
+                std::string scrudDir = projectModel.getGeneratedTableDbOpsFullCodeDir();
                 scrudCodeGen.createDatabaseSCRUD(projectModel, databaseModel, scrudDir);
             }
         };

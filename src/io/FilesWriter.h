@@ -31,6 +31,8 @@ public:
 
         handle.close();
 
+        std::cout << "Write file : " << filename << std::endl;
+
         return true;
 
     }
@@ -73,8 +75,6 @@ public:
             parentDir = path.substr(0, currentPosition);
             currentPosition++;
 
-            std::cout << "Parent dir : " << parentDir << std::endl;
-
             //Skip root dir
             if (parentDir.empty()) continue;
 
@@ -87,7 +87,6 @@ public:
                 switch (status) {
                     case 0:
                         response = true;
-                        std::cout << "creating directory at " << parentDir << std::endl;
                         break;
                     case -1:
                         response = true;

@@ -43,12 +43,12 @@ namespace dbcrudgen {
                 //create libs dir
                 std::string libsDir = projectModel.getLibsDir();
                 std::string libsPath = projectDir + separator + libsDir;
-                FilesWriter::createDir(libsPath);
+                FilesWriter::createDirs(libsPath);
 
                 //create generated code dir
                 std::string genCodeDir = projectModel.getGeneratedCodeDir();
                 std::string codeGenPath = projectDir + separator + genCodeDir;
-                FilesWriter::createDir(codeGenPath);
+                FilesWriter::createDirs(codeGenPath);
             }
         };
     }

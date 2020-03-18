@@ -29,7 +29,6 @@ namespace dbcrudgen {
             void createDatabaseSCRUD(CppMYSQLProjectModel projectModel, mysql::MYSQLDatabaseModel databaseModel,
                                      const std::string generatedCodeDir) {
                 std::string projectName = projectModel.getProjectName();
-                std::cout << "the project name is " << projectName << std::endl;
 
                 CppClassTableSCRUDTemplate sourceTemplate;
 
@@ -141,7 +140,7 @@ namespace dbcrudgen {
 
 
                     std::string filename = generatedCodeDir + "/" + connectorFilename + ".h";
-                    std::cout << "file name is : " << filename << std::endl;
+
                     FilesWriter::writeFile(filename, source);
                 }
             }

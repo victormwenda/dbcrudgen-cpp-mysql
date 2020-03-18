@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <regex>
+#include <sys/types.h>
+#include <sys/stat.h>
 #include "databases/mysql/schema/Schemata.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
@@ -94,10 +96,12 @@ void createCppProject() {
     std::string workspaceDir = "/opt/victor/workspace/cpp";
     std::string includesDir = "includes";
     std::string libsDir = "libs";
-    std::string generatedCodeDir = "src/orm/";
+    std::string generatedCodeDir = "src/orm";
+    std::string generatedModelCodeDir = "model";
+    std::string generatedDbOpsCodeDir = "dao";
 
     dbcrudgen::orm::CppMYSQLProjectModel projectModel{projectName, workspaceDir, includesDir, libsDir,
-                                                      generatedCodeDir};
+                                                      generatedCodeDir, generatedModelCodeDir, generatedDbOpsCodeDir};
 
     dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel};
     projectCreator.setDatabaseModel(databaseModel);
@@ -109,6 +113,5 @@ void createCppProject() {
 int main(int argc, char **argv) {
 
     createCppProject();
-
     return EXIT_SUCCESS;
 }
