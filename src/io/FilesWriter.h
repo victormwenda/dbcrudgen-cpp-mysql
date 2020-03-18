@@ -53,7 +53,13 @@ public:
      * @param path
      * @return
      */
-    static bool createDirs(std::string &path) {
+    static bool createDirs(std::string path) {
+
+        //Add a trailing file separator to create all dirs in path
+        if (path[path.size() - 1] != '/') {
+            path += "/";
+        }
+
         bool response = false;
 
         std::string parentDir;
@@ -66,6 +72,8 @@ public:
 
             parentDir = path.substr(0, currentPosition);
             currentPosition++;
+
+            std::cout << "Parent dir : " << parentDir << std::endl;
 
             //Skip root dir
             if (parentDir.empty()) continue;
