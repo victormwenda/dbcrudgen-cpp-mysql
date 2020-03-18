@@ -1,4 +1,7 @@
-// Get the value of ${COLUMN_NAME_PROPERTY}
-const ${DATA_TYPE}& get${METHOD_NAME} () const {
+
+    // Get the value of ${COLUMN_NAME_PROPERTY}
+${DATA_TYPE} get${METHOD_NAME} () const {
     return ${COLUMN_NAME_PROPERTY};
 }
+
+

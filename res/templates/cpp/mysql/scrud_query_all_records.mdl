@@ -1,7 +1,7 @@
 /**
 * Get all the records in the table ${TABLE_NAME}
 */
-std::vector<${TABLE_CLASS}> getAll() {
+std::vector<${TABLE_CLASS}> get${TABLE_CLASS}All() {
 
     std::vector<${TABLE_CLASS}> ${TABLE_CLASS_VARIABLE};
 
@@ -20,5 +20,5 @@ std::vector<${TABLE_CLASS}> getAll() {
     resultSet->close();
     statement->close();
 
-return ${TABLE_CLASS_VARIABLE};
+    return ${TABLE_CLASS_VARIABLE};
 }

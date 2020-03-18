@@ -33,7 +33,7 @@ public:
     /**
      * Get the table name affected by the database operations
      */
-     std::string getTableName() const {
+     std::string getDatabaseTableName() const {
         return ${CLASS_NAME}Ops::TABLE_NAME;
      }
 

@@ -72,7 +72,7 @@ namespace dbcrudgen {
                 std::string qualifiedTableClassName = toCppClassName(tableName);
                 std::string qualifiedTableColumnName = StringUtils::to_upper(columnName);
 
-                std::string qualified_column_name_accessor = std::string{qualifiedTableClassName + "::Columns::"
+                std::string qualified_column_name_accessor = std::string{qualifiedTableClassName + "::COLUMNS::"
                                                                          + qualifiedTableColumnName +
                                                                          "::INDEX"};
 

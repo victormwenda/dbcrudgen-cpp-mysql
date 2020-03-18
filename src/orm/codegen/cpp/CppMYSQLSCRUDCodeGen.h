@@ -104,8 +104,8 @@ namespace dbcrudgen {
                         columnNames += scrudParser.createColumnName(column, isBeforeLast);
                         columnValues += scrudParser.createColumnValue(column, isBeforeLast);
 
-                        queryColumnValues += scrudParser.createQueriedColumnValues(tableName,column, isBeforeLast);
-                        queriedColumn += scrudParser.createQueriedColumns(  column, isBeforeLast);
+                        queryColumnValues += scrudParser.createQueriedColumnValues(tableName, column, isBeforeLast);
+                        queriedColumn += scrudParser.createQueriedColumns(column, isBeforeLast);
 
                         index++;
 
@@ -126,8 +126,6 @@ namespace dbcrudgen {
                     parser.replace(queryRecordsAllSource, " ${QUERY_COLUMN_VALUES}", queryColumnValues);
                     parser.replace(queryRecordsAllSource, "${QUERIED_COLUMNS}", queriedColumn);
                     parser.replace(source, "${QUERY_ALL_RECORDS}", queryRecordsAllSource);
-
-
 
                     //Add query one record with id
                     source = parser.replace(source, "${QUERY_ONE_RECORDS_WITH_ID}", "");

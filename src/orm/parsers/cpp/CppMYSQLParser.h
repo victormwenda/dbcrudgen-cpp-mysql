@@ -171,7 +171,14 @@ namespace dbcrudgen {
                 std::string columnNameProperty = toCppVariableName(columnName);
                 std::string methodName = toCppMethodName(columnName);
 
-                source = StringUtils::replace(source, "${DATA_TYPE}", toCppDataType(dataType.c_str()));
+                std::string cppDataType = toCppDataType(dataType.c_str());
+
+                if (cppDataType == "std::string") {
+                    source = StringUtils::replace(source, "${DATA_TYPE}", "const " + cppDataType + "&");
+                } else {
+                    source = StringUtils::replace(source, "${DATA_TYPE}", cppDataType);
+                }
+
                 source = StringUtils::replace(source, "${COLUMN_NAME}", className);
                 source = StringUtils::replace(source, "${COLUMN_NAME_PROPERTY}", columnNameProperty);
                 source = StringUtils::replace(source, "${METHOD_NAME}", methodName);

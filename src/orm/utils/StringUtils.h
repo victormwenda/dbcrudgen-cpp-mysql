@@ -107,14 +107,21 @@ public:
      */
     static std::string createClassNameCamelCase(std::string name) {
 
+        name = to_lower(name);
+        name[0] = toupper(name[0]);
+
         std::string class_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
 
         if (parts.size() == 0) {
+            name = to_lower(name);
+            name[0] = toupper(name[0]);
             return name;
         }
 
         for (std::string &part : parts) {
+
+            part = to_lower(part);
 
             char firstChar = part[0];
 
@@ -137,8 +144,11 @@ public:
      */
     static std::string createMethodNameCamelCase(std::string name) {
 
-        //convert all letters to small letters
-        int index = 0;
+        //Make the first letter upper case
+        name[0] = toupper(name[0]);
+
+        //convert all letters after first letter to small letters
+        int index = 1;
         while (index < name.length()) {
             name[index] = tolower(name[index]);
             index++;
@@ -171,9 +181,6 @@ public:
             partsIndex++;
             method_name += part;
         }
-
-        //Make the first letter upper case
-        method_name[0] = toupper(method_name[0]);
 
         name = method_name;
 
@@ -248,11 +255,10 @@ public:
      * @return
      */
     static std::string to_lower(std::string text) {
-
         int index = 0;
 
         while (index < text.size()) {
-            text[index] = toupper(text[index]);
+            text[index] = tolower(text[index]);
             index++;
         }
 

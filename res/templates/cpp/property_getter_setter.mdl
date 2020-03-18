@@ -3,6 +3,6 @@ void set${METHOD_NAME} (${DATA_TYPE}& ${COLUMN_NAME_VAR}) {
     ${CLASS_NAME}::${COLUMN_NAME_PROPERTY} = ${COLUMN_NAME_VAR};
 }
 // Get the value of ${COLUMN_NAME_PROPERTY}
-const ${DATA_TYPE}& get${METHOD_NAME} () const {
+${DATA_TYPE} get${METHOD_NAME} () const {
     return ${COLUMN_NAME_PROPERTY};
 }

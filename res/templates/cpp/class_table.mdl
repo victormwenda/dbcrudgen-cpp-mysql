@@ -12,7 +12,7 @@ public:
 
     static constexpr const char *TABLE_NAME = "${TABLE_NAME}";
 
-    struct Columns {
+    struct COLUMNS {
         ${COLUMNS_METADATA}
     };
 
@@ -23,7 +23,7 @@ public:
     /**
     * Returns the table name '${TABLE_NAME}';
     */
-    static const char * getTableName() {
+    static const char * getDatabaseTableName() {
         return TABLE_NAME;
     }
 };
