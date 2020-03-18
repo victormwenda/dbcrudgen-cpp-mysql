@@ -30,6 +30,7 @@
 
 #include "../scaffolding/queries/MysqlQueries.h"
 
+// Information schema tables
 #include "../scaffolding/entities/CharacterSets.h"
 #include "../scaffolding/entities/Collations.h"
 #include "../scaffolding/entities/CollationCharacterSetApplicability.h"
@@ -92,6 +93,39 @@
 #include "../scaffolding/entities/InnoDbSysForeign.h"
 #include "../scaffolding/entities/InnoDbSysTableStats.h"
 
+//mysql tables
+#include "../scaffolding/entities/ColumnsPriv.h"
+#include "../scaffolding/entities/Db.h"
+#include "../scaffolding/entities/EngineCost.h"
+#include "../scaffolding/entities/Event.h"
+#include "../scaffolding/entities/Func.h"
+#include "../scaffolding/entities/GeneralLog.h"
+#include "../scaffolding/entities/GtidExecuted.h"
+#include "../scaffolding/entities/HelpCategory.h"
+#include "../scaffolding/entities/HelpKeyword.h"
+#include "../scaffolding/entities/HelpRelation.h"
+#include "../scaffolding/entities/HelpTopic.h"
+#include "../scaffolding/entities/InnoDbIndexStats.h"
+#include "../scaffolding/entities/InnoDbTableStats.h"
+#include "../scaffolding/entities/NdbBinlogIndex.h"
+#include "../scaffolding/entities/Plugin.h"
+#include "../scaffolding/entities/Proc.h"
+#include "../scaffolding/entities/ProcsPriv.h"
+#include "../scaffolding/entities/ProxiesPriv.h"
+#include "../scaffolding/entities/ServerCost.h"
+#include "../scaffolding/entities/Servers.h"
+#include "../scaffolding/entities/SlaveMasterInfo.h"
+#include "../scaffolding/entities/SlaveRelayLogInfo.h"
+#include "../scaffolding/entities/SlaveWorkerInfo.h"
+#include "../scaffolding/entities/SlowLog.h"
+#include "../scaffolding/entities/TablesPriv.h"
+#include "../scaffolding/entities/TimeZone.h"
+#include "../scaffolding/entities/TimeZoneLeapSecond.h"
+#include "../scaffolding/entities/TimeZoneName.h"
+#include "../scaffolding/entities/TimeZoneTransition.h"
+#include "../scaffolding/entities/TimeZoneTransitionType.h"
+#include "../scaffolding/entities/User.h"
+
 //
 // MYSQLDatabaseDecomposer
 // //
@@ -138,9 +172,9 @@ namespace dbcrudgen {
                 return characterSets;
             }
 
-/**
-* Get all COLLATIONS
-*/
+            /**
+            * Get all COLLATIONS
+            */
             std::vector<Collations> getCollations() {
 
                 std::vector<Collations> collations;
@@ -169,9 +203,9 @@ namespace dbcrudgen {
                 return collations;
             }
 
-/**
-* Get all COLLATION_CHARACTER_SET_APPLICABILITY
-*/
+            /**
+            * Get all COLLATION_CHARACTER_SET_APPLICABILITY
+            */
             std::vector<CollationCharacterSetApplicability> getCollationCharacterSetApplicability() {
 
                 std::vector<CollationCharacterSetApplicability> collationCharacterSetApplicability;
@@ -198,9 +232,9 @@ namespace dbcrudgen {
                 return collationCharacterSetApplicability;
             }
 
-/**
-* Get all COLUMNS
-*/
+            /**
+            * Get all COLUMNS
+            */
             std::vector<Columns> getColumns() {
 
                 std::vector<Columns> columns;
@@ -248,9 +282,9 @@ namespace dbcrudgen {
                 return columns;
             }
 
-/**
-* Get all COLUMN_PRIVILEGES
-*/
+            /**
+            * Get all COLUMN_PRIVILEGES
+            */
             std::vector<ColumnPrivileges> getColumnPrivileges() {
 
                 std::vector<ColumnPrivileges> columnPrivileges;
@@ -281,9 +315,9 @@ namespace dbcrudgen {
                 return columnPrivileges;
             }
 
-/**
-* Get all ENGINES
-*/
+            /**
+            * Get all ENGINES
+            */
             std::vector<Engines> getEngines() {
 
                 std::vector<Engines> engines;
@@ -311,9 +345,9 @@ namespace dbcrudgen {
                 return engines;
             }
 
-/**
-* Get all EVENTS
-*/
+            /**
+            * Get all EVENTS
+            */
             std::vector<Events> getEvents() {
 
                 std::vector<Events> events;
@@ -364,9 +398,9 @@ namespace dbcrudgen {
                 return events;
             }
 
-/**
-* Get all FILES
-*/
+            /**
+            * Get all FILES
+            */
             std::vector<Files> getFiles() {
 
                 std::vector<Files> files;
@@ -432,9 +466,9 @@ namespace dbcrudgen {
                 return files;
             }
 
-/**
-* Get all GLOBAL_STATUS
-*/
+            /**
+            * Get all GLOBAL_STATUS
+            */
             std::vector<GlobalStatus> getGlobalStatus() {
 
                 std::vector<GlobalStatus> globalStatus;
@@ -458,9 +492,9 @@ namespace dbcrudgen {
                 return globalStatus;
             }
 
-/**
-* Get all GLOBAL_VARIABLES
-*/
+            /**
+            * Get all GLOBAL_VARIABLES
+            */
             std::vector<GlobalVariables> getGlobalVariables() {
 
                 std::vector<GlobalVariables> globalVariables;
@@ -484,9 +518,9 @@ namespace dbcrudgen {
                 return globalVariables;
             }
 
-/**
-* Get all KEY_COLUMN_USAGE
-*/
+            /**
+            * Get all KEY_COLUMN_USAGE
+            */
             std::vector<KeyColumnUsage> getKeyColumnUsage() {
 
                 std::vector<KeyColumnUsage> keyColumnUsage;
@@ -530,9 +564,9 @@ namespace dbcrudgen {
                 return keyColumnUsage;
             }
 
-/**
-* Get all OPTIMIZER_TRACE
-*/
+            /**
+            * Get all OPTIMIZER_TRACE
+            */
             std::vector<OptimizerTrace> getOptimizerTrace() {
 
                 std::vector<OptimizerTrace> optimizerTrace;
@@ -561,9 +595,9 @@ namespace dbcrudgen {
                 return optimizerTrace;
             }
 
-/**
-* Get all PARAMETERS
-*/
+            /**
+            * Get all PARAMETERS
+            */
             std::vector<Parameters> getParameters() {
 
                 std::vector<Parameters> parameters;
@@ -606,9 +640,9 @@ namespace dbcrudgen {
                 return parameters;
             }
 
-/**
-* Get all PARTITIONS
-*/
+            /**
+            * Get all PARTITIONS
+            */
             std::vector<Partitions> getPartitions() {
 
                 std::vector<Partitions> partitions;
@@ -667,9 +701,9 @@ namespace dbcrudgen {
                 return partitions;
             }
 
-/**
-* Get all PLUGINS
-*/
+            /**
+            * Get all PLUGINS
+            */
             std::vector<Plugins> getPlugins() {
 
                 std::vector<Plugins> plugins;
@@ -705,9 +739,9 @@ namespace dbcrudgen {
                 return plugins;
             }
 
-/**
-* Get all PROCESSLIST
-*/
+            /**
+            * Get all PROCESSLIST
+            */
             std::vector<ProcessList> getProcessList() {
 
                 std::vector<ProcessList> processlist;
@@ -782,9 +816,9 @@ namespace dbcrudgen {
                 return profiling;
             }
 
-/**
-* Get all REFERENTIAL_CONSTRAINTS
-*/
+            /**
+            * Get all REFERENTIAL_CONSTRAINTS
+            */
             std::vector<ReferentialConstraints> getReferentialConstraints() {
 
                 std::vector<ReferentialConstraints> referentialConstraints;
@@ -829,9 +863,9 @@ namespace dbcrudgen {
                 return referentialConstraints;
             }
 
-/**
-* Get all ROUTINES
-*/
+            /**
+            * Get all ROUTINES
+            */
             std::vector<Routines> getRoutines() {
 
                 std::vector<Routines> routines;
@@ -893,9 +927,9 @@ namespace dbcrudgen {
                 return routines;
             }
 
-/**
-* Get all SCHEMATA
-*/
+            /**
+            * Get all SCHEMATA
+            */
             std::vector<Schemata> getSchemata() {
 
                 std::vector<Schemata> schemata;
@@ -925,9 +959,9 @@ namespace dbcrudgen {
                 return schemata;
             }
 
-/**
-* Get all SCHEMA_PRIVILEGES
-*/
+            /**
+            * Get all SCHEMA_PRIVILEGES
+            */
             std::vector<SchemaPrivileges> getSchemaPrivileges() {
 
                 std::vector<SchemaPrivileges> schemaPrivileges;
@@ -955,9 +989,9 @@ namespace dbcrudgen {
                 return schemaPrivileges;
             }
 
-/**
-* Get all SESSION_STATUS
-*/
+            /**
+            * Get all SESSION_STATUS
+            */
             std::vector<SessionStatus> getSessionStatus() {
 
                 std::vector<SessionStatus> sessionStatus;
@@ -981,9 +1015,9 @@ namespace dbcrudgen {
                 return sessionStatus;
             }
 
-/**
-* Get all SESSION_VARIABLES
-*/
+            /**
+            * Get all SESSION_VARIABLES
+            */
             std::vector<SessionVariables> getSessionVariables() {
 
                 std::vector<SessionVariables> sessionVariables;
@@ -1007,9 +1041,9 @@ namespace dbcrudgen {
                 return sessionVariables;
             }
 
-/**
-* Get all STATISTICS
-*/
+            /**
+            * Get all STATISTICS
+            */
             std::vector<Statistics> getStatistics() {
 
                 std::vector<Statistics> statistics;
@@ -1050,9 +1084,9 @@ namespace dbcrudgen {
                 return statistics;
             }
 
-/**
-* Get all TABLES
-*/
+            /**
+            * Get all TABLES
+            */
             std::vector<Tables> getTables() {
 
                 std::vector<Tables> tables;
@@ -1099,9 +1133,9 @@ namespace dbcrudgen {
                 return tables;
             }
 
-/**
-* Get all TABLESPACES
-*/
+            /**
+            * Get all TABLESPACES
+            */
             std::vector<TableSpaces> getTableSpaces() {
 
                 std::vector<TableSpaces> tablespaces;
@@ -1136,9 +1170,9 @@ namespace dbcrudgen {
                 return tablespaces;
             }
 
-/**
-* Get all TABLE_CONSTRAINTS
-*/
+            /**
+            * Get all TABLE_CONSTRAINTS
+            */
             std::vector<TableConstraints> getTableConstraints() {
 
                 std::vector<TableConstraints> tableConstraints;
@@ -1172,9 +1206,9 @@ namespace dbcrudgen {
                 return tableConstraints;
             }
 
-/**
-* Get all TABLE_PRIVILEGES
-*/
+            /**
+            * Get all TABLE_PRIVILEGES
+            */
             std::vector<TablePrivileges> getTablePrivileges() {
 
                 std::vector<TablePrivileges> tablePrivileges;
@@ -1203,9 +1237,9 @@ namespace dbcrudgen {
                 return tablePrivileges;
             }
 
-/**
-* Get all TRIGGERS
-*/
+            /**
+            * Get all TRIGGERS
+            */
             std::vector<Triggers> getTriggers() {
 
                 std::vector<Triggers> triggers;
@@ -1261,9 +1295,9 @@ namespace dbcrudgen {
                 return triggers;
             }
 
-/**
-* Get all USER_PRIVILEGES
-*/
+            /**
+            * Get all USER_PRIVILEGES
+            */
             std::vector<UserPrivileges> getUserPrivileges() {
 
                 std::vector<UserPrivileges> userPrivileges;
@@ -1289,9 +1323,9 @@ namespace dbcrudgen {
                 return userPrivileges;
             }
 
-/**
-* Get all VIEWS
-*/
+            /**
+            * Get all VIEWS
+            */
             std::vector<Views> getViews() {
 
                 std::vector<Views> views;
@@ -1325,9 +1359,9 @@ namespace dbcrudgen {
                 return views;
             }
 
-/**
-* Get all INNODB_LOCKS
-*/
+            /**
+            * Get all INNODB_LOCKS
+            */
             std::vector<InnoDbLocks> getInnoDbLocks() {
 
                 std::vector<InnoDbLocks> innodbLocks;
@@ -1361,9 +1395,9 @@ namespace dbcrudgen {
                 return innodbLocks;
             }
 
-/**
-* Get all INNODB_TRX
-*/
+            /**
+            * Get all INNODB_TRX
+            */
             std::vector<InnoDbTrx> getInnoDbTrx() {
 
                 std::vector<InnoDbTrx> innodbTrx;
@@ -1422,9 +1456,9 @@ namespace dbcrudgen {
                 return innodbTrx;
             }
 
-/**
-* Get all INNODB_SYS_DATAFILES
-*/
+            /**
+            * Get all INNODB_SYS_DATAFILES
+            */
             std::vector<InnoDbSysDataFiles> getInnoDbSysDataFiles() {
 
                 std::vector<InnoDbSysDataFiles> innodbSysDataFiles;
@@ -1448,9 +1482,9 @@ namespace dbcrudgen {
                 return innodbSysDataFiles;
             }
 
-/**
-* Get all INNODB_FT_CONFIG
-*/
+            /**
+            * Get all INNODB_FT_CONFIG
+            */
             std::vector<InnoDbFtConfig> getInnoDbFtConfig() {
 
                 std::vector<InnoDbFtConfig> innodbFtConfig;
@@ -1474,9 +1508,9 @@ namespace dbcrudgen {
                 return innodbFtConfig;
             }
 
-/**
-* Get all INNODB_SYS_VIRTUAL
-*/
+            /**
+            * Get all INNODB_SYS_VIRTUAL
+            */
             std::vector<InnoDbSysVirtual> getInnoDbSysVirtual() {
 
                 std::vector<InnoDbSysVirtual> innodbSysVirtual;
@@ -1501,9 +1535,9 @@ namespace dbcrudgen {
                 return innodbSysVirtual;
             }
 
-/**
-* Get all INNODB_CMP
-*/
+            /**
+            * Get all INNODB_CMP
+            */
             std::vector<InnoDbCmp> getInnoDbCmp() {
 
                 std::vector<InnoDbCmp> innodbCmp;
@@ -1532,9 +1566,9 @@ namespace dbcrudgen {
                 return innodbCmp;
             }
 
-/**
-* Get all INNODB_FT_BEING_DELETED
-*/
+            /**
+            * Get all INNODB_FT_BEING_DELETED
+            */
             std::vector<InnoDbFtBeingDeleted> getInnoDbFtBeingDeleted() {
 
                 std::vector<InnoDbFtBeingDeleted> innodbFtBeingDeleted;
@@ -1557,9 +1591,9 @@ namespace dbcrudgen {
                 return innodbFtBeingDeleted;
             }
 
-/**
-* Get all INNODB_CMP_RESET
-*/
+            /**
+            * Get all INNODB_CMP_RESET
+            */
             std::vector<InnoDbCmpReset> getInnoDbCmpReset() {
 
                 std::vector<InnoDbCmpReset> innodbCmpReset;
@@ -1589,9 +1623,9 @@ namespace dbcrudgen {
                 return innodbCmpReset;
             }
 
-/**
-* Get all INNODB_CMP_PER_INDEX
-*/
+            /**
+            * Get all INNODB_CMP_PER_INDEX
+            */
             std::vector<InnoDbCmpPerIndex> getInnoDbCmpPerIndex() {
 
                 std::vector<InnoDbCmpPerIndex> innodbCmpPerIndex;
@@ -1623,9 +1657,9 @@ namespace dbcrudgen {
                 return innodbCmpPerIndex;
             }
 
-/**
-* Get all INNODB_CMPMEM_RESET
-*/
+            /**
+            * Get all INNODB_CMPMEM_RESET
+            */
             std::vector<InnoDbCmpMemReset> getInnoDbCmpMemReset() {
 
                 std::vector<InnoDbCmpMemReset> innodbCmpMemReset;
@@ -1655,9 +1689,9 @@ namespace dbcrudgen {
                 return innodbCmpMemReset;
             }
 
-/**
-* Get all INNODB_FT_DELETED
-*/
+            /**
+            * Get all INNODB_FT_DELETED
+            */
             std::vector<InnoDbFtDeleted> getInnoDbFtDeleted() {
 
                 std::vector<InnoDbFtDeleted> innodbFtDeleted;
@@ -1730,9 +1764,9 @@ namespace dbcrudgen {
                 return innodbBufferPageLRU;
             }
 
-/**
-* Get all INNODB_LOCK_WAITS
-*/
+            /**
+            * Get all INNODB_LOCK_WAITS
+            */
             std::vector<InnoDbLockWaits> getInnoDbLockWaits() {
 
                 std::vector<InnoDbLockWaits> innodbLockWaits;
@@ -1762,9 +1796,9 @@ namespace dbcrudgen {
                 return innodbLockWaits;
             }
 
-/**
-* Get all INNODB_TEMP_TABLE_INFO
-*/
+            /**
+            * Get all INNODB_TEMP_TABLE_INFO
+            */
             std::vector<InnoDbTempTableInfo> getInnoDbTempTableInfo() {
 
                 std::vector<InnoDbTempTableInfo> innodbTempTableInfo;
@@ -1794,9 +1828,9 @@ namespace dbcrudgen {
                 return innodbTempTableInfo;
             }
 
-/**
-* Get all INNODB_SYS_INDEXES
-*/
+            /**
+            * Get all INNODB_SYS_INDEXES
+            */
             std::vector<InnoDbSysIndexes> getInnoDbSysIndexes() {
 
                 std::vector<InnoDbSysIndexes> innodbSysIndexes;
@@ -1827,9 +1861,9 @@ namespace dbcrudgen {
                 return innodbSysIndexes;
             }
 
-/**
-* Get all INNODB_SYS_TABLES
-*/
+            /**
+            * Get all INNODB_SYS_TABLES
+            */
             std::vector<InnoDbSysTables> getInnoDbSysTables() {
 
                 std::vector<InnoDbSysTables> innodbSysTables;
@@ -1862,9 +1896,9 @@ namespace dbcrudgen {
                 return innodbSysTables;
             }
 
-/**
-* Get all INNODB_SYS_FIELDS
-*/
+            /**
+            * Get all INNODB_SYS_FIELDS
+            */
             std::vector<InnoDbSysFields> getInnoDbSysFields() {
 
                 std::vector<InnoDbSysFields> innodbSysFields;
@@ -1889,9 +1923,9 @@ namespace dbcrudgen {
                 return innodbSysFields;
             }
 
-/**
-* Get all INNODB_CMP_PER_INDEX_RESET
-*/
+            /**
+            * Get all INNODB_CMP_PER_INDEX_RESET
+            */
             std::vector<InnoDbCmpPerIndexReset> getInnoDbCmpPerIndexReset() {
 
                 std::vector<InnoDbCmpPerIndexReset> innodbCmpPerIndexReset;
@@ -1924,9 +1958,9 @@ namespace dbcrudgen {
                 return innodbCmpPerIndexReset;
             }
 
-/**
-* Get all INNODB_BUFFER_PAGE
-*/
+            /**
+            * Get all INNODB_BUFFER_PAGE
+            */
             std::vector<InnoDbBufferPage> getInnoDbBufferPage() {
 
                 std::vector<InnoDbBufferPage> innodbBufferPage;
@@ -1972,9 +2006,9 @@ namespace dbcrudgen {
                 return innodbBufferPage;
             }
 
-/**
-* Get all INNODB_FT_DEFAULT_STOPWORD
-*/
+            /**
+            * Get all INNODB_FT_DEFAULT_STOPWORD
+            */
             std::vector<InnoDbFtDefaultStopWord> getInnoDbFtDefaultStopWord() {
 
                 std::vector<InnoDbFtDefaultStopWord> innodbFtDefaultStopword;
@@ -2028,9 +2062,9 @@ namespace dbcrudgen {
                 return innodbFtIndexTable;
             }
 
-/**
-* Get all INNODB_FT_INDEX_CACHE
-*/
+            /**
+            * Get all INNODB_FT_INDEX_CACHE
+            */
             std::vector<InnoDbFtIndexCache> getInnoDbFtIndexCache() {
 
                 std::vector<InnoDbFtIndexCache> innodbFtIndexCache;
@@ -2059,9 +2093,9 @@ namespace dbcrudgen {
                 return innodbFtIndexCache;
             }
 
-/**
-* Get all INNODB_SYS_TABLESPACES
-*/
+            /**
+            * Get all INNODB_SYS_TABLESPACES
+            */
             std::vector<InnoDbSysTableSpaces> getInnoDbSysTableSpaces() {
 
                 std::vector<InnoDbSysTableSpaces> innodbSysTableSpaces;
@@ -2096,9 +2130,9 @@ namespace dbcrudgen {
                 return innodbSysTableSpaces;
             }
 
-/**
-* Get all INNODB_METRICS
-*/
+            /**
+            * Get all INNODB_METRICS
+            */
             std::vector<InnoDbMetrics> getInnoDbMetrics() {
 
                 std::vector<InnoDbMetrics> innodbMetrics;
@@ -2140,9 +2174,9 @@ namespace dbcrudgen {
                 return innodbMetrics;
             }
 
-/**
-* Get all INNODB_SYS_FOREIGN_COLS
-*/
+            /**
+            * Get all INNODB_SYS_FOREIGN_COLS
+            */
             std::vector<InnoDbSysForeignCols> getInnoDbSysForeignCols() {
 
                 std::vector<InnoDbSysForeignCols> innodbSysForeignCols;
@@ -2168,9 +2202,9 @@ namespace dbcrudgen {
                 return innodbSysForeignCols;
             }
 
-/**
-* Get all INNODB_CMPMEM
-*/
+            /**
+            * Get all INNODB_CMPMEM
+            */
             std::vector<InnoDbCmpMem> getInnoDbCmpMem() {
 
                 std::vector<InnoDbCmpMem> innodbCmpMem;
@@ -2200,9 +2234,9 @@ namespace dbcrudgen {
                 return innodbCmpMem;
             }
 
-/**
-* Get all INNODB_BUFFER_POOL_STATS
-*/
+            /**
+            * Get all INNODB_BUFFER_POOL_STATS
+            */
             std::vector<InnoDbBufferPoolStats> getInnoDbBufferPoolStats() {
 
                 std::vector<InnoDbBufferPoolStats> innodbBufferPoolStats;
@@ -2285,9 +2319,9 @@ namespace dbcrudgen {
                 return innodbBufferPoolStats;
             }
 
-/**
-* Get all INNODB_SYS_COLUMNS
-*/
+            /**
+            * Get all INNODB_SYS_COLUMNS
+            */
             std::vector<InnoDbSysColumns> getInnoDbSysColumns() {
 
                 std::vector<InnoDbSysColumns> innodbSysColumns;
@@ -2315,9 +2349,9 @@ namespace dbcrudgen {
                 return innodbSysColumns;
             }
 
-/**
-* Get all INNODB_SYS_FOREIGN
-*/
+            /**
+            * Get all INNODB_SYS_FOREIGN
+            */
             std::vector<InnoDbSysForeign> getInnoDbSysForeign() {
 
                 std::vector<InnoDbSysForeign> innodbSysForeign;
@@ -2344,9 +2378,9 @@ namespace dbcrudgen {
                 return innodbSysForeign;
             }
 
-/**
-* Get all INNODB_SYS_TABLESTATS
-*/
+            /**
+            * Get all INNODB_SYS_TABLESTATS
+            */
             std::vector<InnoDbSysTableStats> getInnoDbSysTableStats() {
 
                 std::vector<InnoDbSysTableStats> innodbSysTablestats;
@@ -2380,7 +2414,6 @@ namespace dbcrudgen {
                 return innodbSysTablestats;
             }
 
-
             /**
              * Returns the list of all schemas or databases in a MYSQL database server
              * @return
@@ -2413,6 +2446,1097 @@ namespace dbcrudgen {
 
                 return schematas;
             };
+
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            // MYSQL CORE TABLES
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+            /**
+            * Get all the records in the table columns_priv
+            */
+            std::vector<ColumnsPriv> getColumnsPrivAll() {
+
+                std::vector<ColumnsPriv> columnsPriv;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_COLUMNS_PRIV;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string host = resultSet->getString(ColumnsPriv::COLUMNS::HOST::INDEX);
+                    std::string db = resultSet->getString(ColumnsPriv::COLUMNS::DB::INDEX);
+                    std::string user = resultSet->getString(ColumnsPriv::COLUMNS::USER::INDEX);
+                    std::string tableName = resultSet->getString(ColumnsPriv::COLUMNS::TABLE_NAME::INDEX);
+                    std::string columnName = resultSet->getString(ColumnsPriv::COLUMNS::COLUMN_NAME::INDEX);
+                    std::string timestamp = resultSet->getString(ColumnsPriv::COLUMNS::TIMESTAMP::INDEX);
+                    std::string columnPriv = resultSet->getString(ColumnsPriv::COLUMNS::COLUMN_PRIV::INDEX);
+
+                    columnsPriv.emplace_back(ColumnsPriv{host, db, user, tableName, columnName, timestamp, columnPriv});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return columnsPriv;
+            }
+
+            /**
+            * Get all the records in the table db
+            */
+            std::vector<Db> getDbAll() {
+
+                std::vector<Db> dbs;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_DB;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string host = resultSet->getString(Db::COLUMNS::HOST::INDEX);
+                    std::string db = resultSet->getString(Db::COLUMNS::DB::INDEX);
+                    std::string user = resultSet->getString(Db::COLUMNS::USER::INDEX);
+                    std::string selectPriv = resultSet->getString(Db::COLUMNS::SELECT_PRIV::INDEX);
+                    std::string insertPriv = resultSet->getString(Db::COLUMNS::INSERT_PRIV::INDEX);
+                    std::string updatePriv = resultSet->getString(Db::COLUMNS::UPDATE_PRIV::INDEX);
+                    std::string deletePriv = resultSet->getString(Db::COLUMNS::DELETE_PRIV::INDEX);
+                    std::string createPriv = resultSet->getString(Db::COLUMNS::CREATE_PRIV::INDEX);
+                    std::string dropPriv = resultSet->getString(Db::COLUMNS::DROP_PRIV::INDEX);
+                    std::string grantPriv = resultSet->getString(Db::COLUMNS::GRANT_PRIV::INDEX);
+                    std::string referencesPriv = resultSet->getString(Db::COLUMNS::REFERENCES_PRIV::INDEX);
+                    std::string indexPriv = resultSet->getString(Db::COLUMNS::INDEX_PRIV::INDEX);
+                    std::string alterPriv = resultSet->getString(Db::COLUMNS::ALTER_PRIV::INDEX);
+                    std::string createTmpTablePriv = resultSet->getString(Db::COLUMNS::CREATE_TMP_TABLE_PRIV::INDEX);
+                    std::string lockTablesPriv = resultSet->getString(Db::COLUMNS::LOCK_TABLES_PRIV::INDEX);
+                    std::string createViewPriv = resultSet->getString(Db::COLUMNS::CREATE_VIEW_PRIV::INDEX);
+                    std::string showViewPriv = resultSet->getString(Db::COLUMNS::SHOW_VIEW_PRIV::INDEX);
+                    std::string createRoutinePriv = resultSet->getString(Db::COLUMNS::CREATE_ROUTINE_PRIV::INDEX);
+                    std::string alterRoutinePriv = resultSet->getString(Db::COLUMNS::ALTER_ROUTINE_PRIV::INDEX);
+                    std::string executePriv = resultSet->getString(Db::COLUMNS::EXECUTE_PRIV::INDEX);
+                    std::string eventPriv = resultSet->getString(Db::COLUMNS::EVENT_PRIV::INDEX);
+                    std::string triggerPriv = resultSet->getString(Db::COLUMNS::TRIGGER_PRIV::INDEX);
+
+                    dbs.emplace_back(
+                            Db{host, db, user, selectPriv, insertPriv, updatePriv, deletePriv, createPriv, dropPriv,
+                               grantPriv, referencesPriv, indexPriv, alterPriv, createTmpTablePriv, lockTablesPriv,
+                               createViewPriv, showViewPriv, createRoutinePriv, alterRoutinePriv, executePriv,
+                               eventPriv, triggerPriv});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return dbs;
+            }
+
+            /**
+            * Get all the records in the table engine_cost
+            */
+            std::vector<EngineCost> getEngineCostAll() {
+
+                std::vector<EngineCost> engineCost;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_ENGINE_COST;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string engineName = resultSet->getString(EngineCost::COLUMNS::ENGINE_NAME::INDEX);
+                    int deviceType = resultSet->getInt(EngineCost::COLUMNS::DEVICE_TYPE::INDEX);
+                    std::string costName = resultSet->getString(EngineCost::COLUMNS::COST_NAME::INDEX);
+                    long double costValue = resultSet->getDouble(EngineCost::COLUMNS::COST_VALUE::INDEX);
+                    std::string lastUpdate = resultSet->getString(EngineCost::COLUMNS::LAST_UPDATE::INDEX);
+                    std::string comment = resultSet->getString(EngineCost::COLUMNS::COMMENT::INDEX);
+
+                    engineCost.emplace_back(
+                            EngineCost{engineName, deviceType, costName, costValue, lastUpdate, comment});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return engineCost;
+            }
+
+            /**
+            * Get all the records in the table event
+            */
+            std::vector<Event> getEventAll() {
+
+                std::vector<Event> event;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_EVENT;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string db = resultSet->getString(Event::COLUMNS::DB::INDEX);
+                    std::string name = resultSet->getString(Event::COLUMNS::NAME::INDEX);
+                    std::string body = resultSet->getString(Event::COLUMNS::BODY::INDEX);
+                    std::string definer = resultSet->getString(Event::COLUMNS::DEFINER::INDEX);
+                    std::string executeAt = resultSet->getString(Event::COLUMNS::EXECUTE_AT::INDEX);
+                    int intervalValue = resultSet->getInt(Event::COLUMNS::INTERVAL_VALUE::INDEX);
+                    std::string intervalField = resultSet->getString(Event::COLUMNS::INTERVAL_FIELD::INDEX);
+                    std::string created = resultSet->getString(Event::COLUMNS::CREATED::INDEX);
+                    std::string modified = resultSet->getString(Event::COLUMNS::MODIFIED::INDEX);
+                    std::string lastExecuted = resultSet->getString(Event::COLUMNS::LAST_EXECUTED::INDEX);
+                    std::string starts = resultSet->getString(Event::COLUMNS::STARTS::INDEX);
+                    std::string ends = resultSet->getString(Event::COLUMNS::ENDS::INDEX);
+                    std::string status = resultSet->getString(Event::COLUMNS::STATUS::INDEX);
+                    std::string onCompletion = resultSet->getString(Event::COLUMNS::ON_COMPLETION::INDEX);
+                    std::string sqlMode = resultSet->getString(Event::COLUMNS::SQL_MODE::INDEX);
+                    std::string comment = resultSet->getString(Event::COLUMNS::COMMENT::INDEX);
+                    int originator = resultSet->getInt(Event::COLUMNS::ORIGINATOR::INDEX);
+                    std::string timeZone = resultSet->getString(Event::COLUMNS::TIME_ZONE::INDEX);
+                    std::string characterSetClient = resultSet->getString(Event::COLUMNS::CHARACTER_SET_CLIENT::INDEX);
+                    std::string collationConnection = resultSet->getString(Event::COLUMNS::COLLATION_CONNECTION::INDEX);
+                    std::string dbCollation = resultSet->getString(Event::COLUMNS::DB_COLLATION::INDEX);
+                    std::string bodyUtf8 = resultSet->getString(Event::COLUMNS::BODY_UTF8::INDEX);
+
+                    event.emplace_back(
+                            Event{db, name, body, definer, executeAt, intervalValue, intervalField, created, modified,
+                                  lastExecuted, starts, ends, status, onCompletion, sqlMode, comment, originator,
+                                  timeZone, characterSetClient, collationConnection, dbCollation, bodyUtf8});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return event;
+            }
+
+            /**
+            * Get all the records in the table func
+            */
+            std::vector<Func> getFuncAll() {
+
+                std::vector<Func> func;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_FUNC;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string name = resultSet->getString(Func::COLUMNS::NAME::INDEX);
+                    int ret = resultSet->getInt(Func::COLUMNS::RET::INDEX);
+                    std::string dl = resultSet->getString(Func::COLUMNS::DL::INDEX);
+                    std::string type = resultSet->getString(Func::COLUMNS::TYPE::INDEX);
+
+                    func.emplace_back(Func{name, ret, dl, type});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return func;
+            }
+
+            /**
+            * Get all the records in the table general_log
+            */
+            std::vector<GeneralLog> getGeneralLogAll() {
+
+                std::vector<GeneralLog> generalLog;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_GENERAL_LOG;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string eventTime = resultSet->getString(GeneralLog::COLUMNS::EVENT_TIME::INDEX);
+                    std::string userHost = resultSet->getString(GeneralLog::COLUMNS::USER_HOST::INDEX);
+                    long threadId = resultSet->getInt(GeneralLog::COLUMNS::THREAD_ID::INDEX);
+                    int serverId = resultSet->getInt(GeneralLog::COLUMNS::SERVER_ID::INDEX);
+                    std::string commandType = resultSet->getString(GeneralLog::COLUMNS::COMMAND_TYPE::INDEX);
+                    std::string argument = resultSet->getString(GeneralLog::COLUMNS::ARGUMENT::INDEX);
+
+                    generalLog.emplace_back(GeneralLog{eventTime, userHost, threadId, serverId, commandType, argument});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return generalLog;
+            }
+
+            /**
+            * Get all the records in the table gtid_executed
+            */
+            std::vector<GtidExecuted> getGtidExecutedAll() {
+
+                std::vector<GtidExecuted> gtidExecuted;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_GTID_EXECUTED;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string sourceUuid = resultSet->getString(GtidExecuted::COLUMNS::SOURCE_UUID::INDEX);
+                    long intervalStart = resultSet->getInt(GtidExecuted::COLUMNS::INTERVAL_START::INDEX);
+                    long intervalEnd = resultSet->getInt(GtidExecuted::COLUMNS::INTERVAL_END::INDEX);
+
+                    gtidExecuted.emplace_back(GtidExecuted{sourceUuid, intervalStart, intervalEnd});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return gtidExecuted;
+            }
+
+            /**
+            * Get all the records in the table help_category
+            */
+            std::vector<HelpCategory> getHelpCategoryAll() {
+
+                std::vector<HelpCategory> helpCategory;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_HELP_CATEGORY;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int helpCategoryId = resultSet->getInt(HelpCategory::COLUMNS::HELP_CATEGORY_ID::INDEX);
+                    std::string name = resultSet->getString(HelpCategory::COLUMNS::NAME::INDEX);
+                    int parentCategoryId = resultSet->getInt(HelpCategory::COLUMNS::PARENT_CATEGORY_ID::INDEX);
+                    std::string url = resultSet->getString(HelpCategory::COLUMNS::URL::INDEX);
+
+                    helpCategory.emplace_back(HelpCategory{helpCategoryId, name, parentCategoryId, url});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return helpCategory;
+            }
+
+            /**
+            * Get all the records in the table help_keyword
+            */
+            std::vector<HelpKeyword> getHelpKeywordAll() {
+
+                std::vector<HelpKeyword> helpKeyword;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_HELP_KEYWORD;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int helpKeywordId = resultSet->getInt(HelpKeyword::COLUMNS::HELP_KEYWORD_ID::INDEX);
+                    std::string name = resultSet->getString(HelpKeyword::COLUMNS::NAME::INDEX);
+
+                    helpKeyword.emplace_back(HelpKeyword{helpKeywordId, name});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return helpKeyword;
+            }
+
+            /**
+            * Get all the records in the table help_relation
+            */
+            std::vector<HelpRelation> getHelpRelationAll() {
+
+                std::vector<HelpRelation> helpRelation;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_HELP_RELATION;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int helpTopicId = resultSet->getInt(HelpRelation::COLUMNS::HELP_TOPIC_ID::INDEX);
+                    int helpKeywordId = resultSet->getInt(HelpRelation::COLUMNS::HELP_KEYWORD_ID::INDEX);
+
+                    helpRelation.emplace_back(HelpRelation{helpTopicId, helpKeywordId});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return helpRelation;
+            }
+
+            /**
+            * Get all the records in the table help_topic
+            */
+            std::vector<HelpTopic> getHelpTopicAll() {
+
+                std::vector<HelpTopic> helpTopic;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_HELP_TOPIC;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int helpTopicId = resultSet->getInt(HelpTopic::COLUMNS::HELP_TOPIC_ID::INDEX);
+                    std::string name = resultSet->getString(HelpTopic::COLUMNS::NAME::INDEX);
+                    int helpCategoryId = resultSet->getInt(HelpTopic::COLUMNS::HELP_CATEGORY_ID::INDEX);
+                    std::string description = resultSet->getString(HelpTopic::COLUMNS::DESCRIPTION::INDEX);
+                    std::string example = resultSet->getString(HelpTopic::COLUMNS::EXAMPLE::INDEX);
+                    std::string url = resultSet->getString(HelpTopic::COLUMNS::URL::INDEX);
+
+                    helpTopic.emplace_back(HelpTopic{helpTopicId, name, helpCategoryId, description, example, url});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return helpTopic;
+            }
+
+            /**
+            * Get all the records in the table innodb_index_stats
+            */
+            std::vector<InnoDbIndexStats> getInnodbIndexStatsAll() {
+
+                std::vector<InnoDbIndexStats> innodbIndexStats;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_INNODB_INDEX_STATS;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string databaseName = resultSet->getString(InnoDbIndexStats::COLUMNS::DATABASE_NAME::INDEX);
+                    std::string tableName = resultSet->getString(InnoDbIndexStats::COLUMNS::TABLE_NAME::INDEX);
+                    std::string indexName = resultSet->getString(InnoDbIndexStats::COLUMNS::INDEX_NAME::INDEX);
+                    std::string lastUpdate = resultSet->getString(InnoDbIndexStats::COLUMNS::LAST_UPDATE::INDEX);
+                    std::string statName = resultSet->getString(InnoDbIndexStats::COLUMNS::STAT_NAME::INDEX);
+                    long statValue = resultSet->getInt(InnoDbIndexStats::COLUMNS::STAT_VALUE::INDEX);
+                    long sampleSize = resultSet->getInt(InnoDbIndexStats::COLUMNS::SAMPLE_SIZE::INDEX);
+                    std::string statDescription = resultSet->getString(
+                            InnoDbIndexStats::COLUMNS::STAT_DESCRIPTION::INDEX);
+
+                    innodbIndexStats.emplace_back(
+                            InnoDbIndexStats{databaseName, tableName, indexName, lastUpdate, statName, statValue,
+                                             sampleSize, statDescription});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return innodbIndexStats;
+            }
+
+            /**
+            * Get all the records in the table innodb_table_stats
+            */
+            std::vector<InnoDbTableStats> getInnodbTableStatsAll() {
+
+                std::vector<InnoDbTableStats> innodbTableStats;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_INNODB_TABLE_STATS;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string databaseName = resultSet->getString(InnoDbTableStats::COLUMNS::DATABASE_NAME::INDEX);
+                    std::string tableName = resultSet->getString(InnoDbTableStats::COLUMNS::TABLE_NAME::INDEX);
+                    std::string lastUpdate = resultSet->getString(InnoDbTableStats::COLUMNS::LAST_UPDATE::INDEX);
+                    long nRows = resultSet->getInt(InnoDbTableStats::COLUMNS::N_ROWS::INDEX);
+                    long clusteredIndexSize = resultSet->getInt(InnoDbTableStats::COLUMNS::CLUSTERED_INDEX_SIZE::INDEX);
+                    long sumOfOtherIndexSizes = resultSet->getInt(
+                            InnoDbTableStats::COLUMNS::SUM_OF_OTHER_INDEX_SIZES::INDEX);
+
+                    innodbTableStats.emplace_back(
+                            InnoDbTableStats{databaseName, tableName, lastUpdate, nRows, clusteredIndexSize,
+                                             sumOfOtherIndexSizes});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return innodbTableStats;
+            }
+
+            /**
+            * Get all the records in the table ndb_binlog_index
+            */
+            std::vector<NdbBinlogIndex> getNdbBinlogIndexAll() {
+
+                std::vector<NdbBinlogIndex> ndbBinlogIndex;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_NDB_BINLOG_INDEX;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    long position = resultSet->getInt(NdbBinlogIndex::COLUMNS::POSITION::INDEX);
+                    std::string file = resultSet->getString(NdbBinlogIndex::COLUMNS::FILE::INDEX);
+                    long epoch = resultSet->getInt(NdbBinlogIndex::COLUMNS::EPOCH::INDEX);
+                    int inserts = resultSet->getInt(NdbBinlogIndex::COLUMNS::INSERTS::INDEX);
+                    int updates = resultSet->getInt(NdbBinlogIndex::COLUMNS::UPDATES::INDEX);
+                    int deletes = resultSet->getInt(NdbBinlogIndex::COLUMNS::DELETES::INDEX);
+                    int schemaops = resultSet->getInt(NdbBinlogIndex::COLUMNS::SCHEMAOPS::INDEX);
+                    int origServerId = resultSet->getInt(NdbBinlogIndex::COLUMNS::ORIG_SERVER_ID::INDEX);
+                    long origEpoch = resultSet->getInt(NdbBinlogIndex::COLUMNS::ORIG_EPOCH::INDEX);
+                    int gci = resultSet->getInt(NdbBinlogIndex::COLUMNS::GCI::INDEX);
+                    long nextPosition = resultSet->getInt(NdbBinlogIndex::COLUMNS::NEXT_POSITION::INDEX);
+                    std::string nextFile = resultSet->getString(NdbBinlogIndex::COLUMNS::NEXT_FILE::INDEX);
+
+                    ndbBinlogIndex.emplace_back(
+                            NdbBinlogIndex{position, file, epoch, inserts, updates, deletes, schemaops, origServerId,
+                                           origEpoch, gci, nextPosition, nextFile});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return ndbBinlogIndex;
+            }
+
+            /**
+            * Get all the records in the table plugin
+            */
+            std::vector<Plugin> getPluginAll() {
+
+                std::vector<Plugin> plugin;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_PLUGIN;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string name = resultSet->getString(Plugin::COLUMNS::NAME::INDEX);
+                    std::string dl = resultSet->getString(Plugin::COLUMNS::DL::INDEX);
+
+                    plugin.emplace_back(Plugin{name, dl});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return plugin;
+            }
+
+            /**
+            * Get all the records in the table proc
+            */
+            std::vector<Proc> getProcAll() {
+
+                std::vector<Proc> proc;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_PROC;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string db = resultSet->getString(Proc::COLUMNS::DB::INDEX);
+                    std::string name = resultSet->getString(Proc::COLUMNS::NAME::INDEX);
+                    std::string type = resultSet->getString(Proc::COLUMNS::TYPE::INDEX);
+                    std::string specificName = resultSet->getString(Proc::COLUMNS::SPECIFIC_NAME::INDEX);
+                    std::string language = resultSet->getString(Proc::COLUMNS::LANGUAGE::INDEX);
+                    std::string sqlDataAccess = resultSet->getString(Proc::COLUMNS::SQL_DATA_ACCESS::INDEX);
+                    std::string isDeterministic = resultSet->getString(Proc::COLUMNS::IS_DETERMINISTIC::INDEX);
+                    std::string securityType = resultSet->getString(Proc::COLUMNS::SECURITY_TYPE::INDEX);
+                    std::string paramList = resultSet->getString(Proc::COLUMNS::PARAM_LIST::INDEX);
+                    std::string returns = resultSet->getString(Proc::COLUMNS::RETURNS::INDEX);
+                    std::string body = resultSet->getString(Proc::COLUMNS::BODY::INDEX);
+                    std::string definer = resultSet->getString(Proc::COLUMNS::DEFINER::INDEX);
+                    std::string created = resultSet->getString(Proc::COLUMNS::CREATED::INDEX);
+                    std::string modified = resultSet->getString(Proc::COLUMNS::MODIFIED::INDEX);
+                    std::string sqlMode = resultSet->getString(Proc::COLUMNS::SQL_MODE::INDEX);
+                    std::string comment = resultSet->getString(Proc::COLUMNS::COMMENT::INDEX);
+                    std::string characterSetClient = resultSet->getString(Proc::COLUMNS::CHARACTER_SET_CLIENT::INDEX);
+                    std::string collationConnection = resultSet->getString(Proc::COLUMNS::COLLATION_CONNECTION::INDEX);
+                    std::string dbCollation = resultSet->getString(Proc::COLUMNS::DB_COLLATION::INDEX);
+                    std::string bodyUtf8 = resultSet->getString(Proc::COLUMNS::BODY_UTF8::INDEX);
+
+                    proc.emplace_back(
+                            Proc{db, name, type, specificName, language, sqlDataAccess, isDeterministic, securityType,
+                                 paramList, returns, body, definer, created, modified, sqlMode, comment,
+                                 characterSetClient, collationConnection, dbCollation, bodyUtf8});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return proc;
+            }
+
+            /**
+            * Get all the records in the table procs_priv
+            */
+            std::vector<ProcsPriv> getProcsPrivAll() {
+
+                std::vector<ProcsPriv> procsPriv;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_PROCS_PRIV;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string host = resultSet->getString(ProcsPriv::COLUMNS::HOST::INDEX);
+                    std::string db = resultSet->getString(ProcsPriv::COLUMNS::DB::INDEX);
+                    std::string user = resultSet->getString(ProcsPriv::COLUMNS::USER::INDEX);
+                    std::string routineName = resultSet->getString(ProcsPriv::COLUMNS::ROUTINE_NAME::INDEX);
+                    std::string routineType = resultSet->getString(ProcsPriv::COLUMNS::ROUTINE_TYPE::INDEX);
+                    std::string grantor = resultSet->getString(ProcsPriv::COLUMNS::GRANTOR::INDEX);
+                    std::string procPriv = resultSet->getString(ProcsPriv::COLUMNS::PROC_PRIV::INDEX);
+                    std::string timestamp = resultSet->getString(ProcsPriv::COLUMNS::TIMESTAMP::INDEX);
+
+                    procsPriv.emplace_back(
+                            ProcsPriv{host, db, user, routineName, routineType, grantor, procPriv, timestamp});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return procsPriv;
+            }
+
+            /**
+            * Get all the records in the table proxies_priv
+            */
+            std::vector<ProxiesPriv> getProxiesPrivAll() {
+
+                std::vector<ProxiesPriv> proxiesPriv;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_PROXIES_PRIV;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string host = resultSet->getString(ProxiesPriv::COLUMNS::HOST::INDEX);
+                    std::string user = resultSet->getString(ProxiesPriv::COLUMNS::USER::INDEX);
+                    std::string proxiedHost = resultSet->getString(ProxiesPriv::COLUMNS::PROXIED_HOST::INDEX);
+                    std::string proxiedUser = resultSet->getString(ProxiesPriv::COLUMNS::PROXIED_USER::INDEX);
+                    int withGrant = resultSet->getInt(ProxiesPriv::COLUMNS::WITH_GRANT::INDEX);
+                    std::string grantor = resultSet->getString(ProxiesPriv::COLUMNS::GRANTOR::INDEX);
+                    std::string timestamp = resultSet->getString(ProxiesPriv::COLUMNS::TIMESTAMP::INDEX);
+
+                    proxiesPriv.emplace_back(
+                            ProxiesPriv{host, user, proxiedHost, proxiedUser, withGrant, grantor, timestamp});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return proxiesPriv;
+            }
+
+            /**
+            * Get all the records in the table server_cost
+            */
+            std::vector<ServerCost> getServerCostAll() {
+
+                std::vector<ServerCost> serverCost;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SERVER_COST;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string costName = resultSet->getString(ServerCost::COLUMNS::COST_NAME::INDEX);
+                    long double costValue = resultSet->getDouble(ServerCost::COLUMNS::COST_VALUE::INDEX);
+                    std::string lastUpdate = resultSet->getString(ServerCost::COLUMNS::LAST_UPDATE::INDEX);
+                    std::string comment = resultSet->getString(ServerCost::COLUMNS::COMMENT::INDEX);
+
+                    serverCost.emplace_back(ServerCost{costName, costValue, lastUpdate, comment});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return serverCost;
+            }
+
+            /**
+            * Get all the records in the table servers
+            */
+            std::vector<Servers> getServersAll() {
+
+                std::vector<Servers> servers;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SERVERS;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string serverName = resultSet->getString(Servers::COLUMNS::SERVER_NAME::INDEX);
+                    std::string host = resultSet->getString(Servers::COLUMNS::HOST::INDEX);
+                    std::string db = resultSet->getString(Servers::COLUMNS::DB::INDEX);
+                    std::string username = resultSet->getString(Servers::COLUMNS::USERNAME::INDEX);
+                    std::string password = resultSet->getString(Servers::COLUMNS::PASSWORD::INDEX);
+                    int port = resultSet->getInt(Servers::COLUMNS::PORT::INDEX);
+                    std::string socket = resultSet->getString(Servers::COLUMNS::SOCKET::INDEX);
+                    std::string wrapper = resultSet->getString(Servers::COLUMNS::WRAPPER::INDEX);
+                    std::string owner = resultSet->getString(Servers::COLUMNS::OWNER::INDEX);
+
+                    servers.emplace_back(
+                            Servers{serverName, host, db, username, password, port, socket, wrapper, owner});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return servers;
+            }
+
+            /**
+            * Get all the records in the table slave_master_info
+            */
+            std::vector<SlaveMasterInfo> getSlaveMasterInfoAll() {
+
+                std::vector<SlaveMasterInfo> slaveMasterInfo;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SLAVE_MASTER_INFO;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int numberOfLines = resultSet->getInt(SlaveMasterInfo::COLUMNS::NUMBER_OF_LINES::INDEX);
+                    std::string masterLogName = resultSet->getString(SlaveMasterInfo::COLUMNS::MASTER_LOG_NAME::INDEX);
+                    long masterLogPos = resultSet->getInt(SlaveMasterInfo::COLUMNS::MASTER_LOG_POS::INDEX);
+                    std::string host = resultSet->getString(SlaveMasterInfo::COLUMNS::HOST::INDEX);
+                    std::string userName = resultSet->getString(SlaveMasterInfo::COLUMNS::USER_NAME::INDEX);
+                    std::string userPassword = resultSet->getString(SlaveMasterInfo::COLUMNS::USER_PASSWORD::INDEX);
+                    int port = resultSet->getInt(SlaveMasterInfo::COLUMNS::PORT::INDEX);
+                    int connectRetry = resultSet->getInt(SlaveMasterInfo::COLUMNS::CONNECT_RETRY::INDEX);
+                    int enabledSsl = resultSet->getInt(SlaveMasterInfo::COLUMNS::ENABLED_SSL::INDEX);
+                    std::string sslCa = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_CA::INDEX);
+                    std::string sslCapath = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_CAPATH::INDEX);
+                    std::string sslCert = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_CERT::INDEX);
+                    std::string sslCipher = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_CIPHER::INDEX);
+                    std::string sslKey = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_KEY::INDEX);
+                    int sslVerifyServerCert = resultSet->getInt(
+                            SlaveMasterInfo::COLUMNS::SSL_VERIFY_SERVER_CERT::INDEX);
+                    long double heartbeat = resultSet->getDouble(SlaveMasterInfo::COLUMNS::HEARTBEAT::INDEX);
+                    std::string bind = resultSet->getString(SlaveMasterInfo::COLUMNS::BIND::INDEX);
+                    std::string ignoredServerIds = resultSet->getString(
+                            SlaveMasterInfo::COLUMNS::IGNORED_SERVER_IDS::INDEX);
+                    std::string uuid = resultSet->getString(SlaveMasterInfo::COLUMNS::UUID::INDEX);
+                    long retryCount = resultSet->getInt(SlaveMasterInfo::COLUMNS::RETRY_COUNT::INDEX);
+                    std::string sslCrl = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_CRL::INDEX);
+                    std::string sslCrlpath = resultSet->getString(SlaveMasterInfo::COLUMNS::SSL_CRLPATH::INDEX);
+                    int enabledAutoPosition = resultSet->getInt(SlaveMasterInfo::COLUMNS::ENABLED_AUTO_POSITION::INDEX);
+                    std::string channelName = resultSet->getString(SlaveMasterInfo::COLUMNS::CHANNEL_NAME::INDEX);
+                    std::string tlsVersion = resultSet->getString(SlaveMasterInfo::COLUMNS::TLS_VERSION::INDEX);
+
+                    slaveMasterInfo.emplace_back(
+                            SlaveMasterInfo{numberOfLines, masterLogName, masterLogPos, host, userName, userPassword,
+                                            port, connectRetry, enabledSsl, sslCa, sslCapath, sslCert, sslCipher,
+                                            sslKey, sslVerifyServerCert, heartbeat, bind, ignoredServerIds, uuid,
+                                            retryCount, sslCrl, sslCrlpath, enabledAutoPosition, channelName,
+                                            tlsVersion});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return slaveMasterInfo;
+            }
+
+            /**
+            * Get all the records in the table slave_relay_log_info
+            */
+            std::vector<SlaveRelayLogInfo> getSlaveRelayLogInfoAll() {
+
+                std::vector<SlaveRelayLogInfo> slaveRelayLogInfo;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SLAVE_RELAY_LOG_INFO;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int numberOfLines = resultSet->getInt(SlaveRelayLogInfo::COLUMNS::NUMBER_OF_LINES::INDEX);
+                    std::string relayLogName = resultSet->getString(SlaveRelayLogInfo::COLUMNS::RELAY_LOG_NAME::INDEX);
+                    long relayLogPos = resultSet->getInt(SlaveRelayLogInfo::COLUMNS::RELAY_LOG_POS::INDEX);
+                    std::string masterLogName = resultSet->getString(
+                            SlaveRelayLogInfo::COLUMNS::MASTER_LOG_NAME::INDEX);
+                    long masterLogPos = resultSet->getInt(SlaveRelayLogInfo::COLUMNS::MASTER_LOG_POS::INDEX);
+                    int sqlDelay = resultSet->getInt(SlaveRelayLogInfo::COLUMNS::SQL_DELAY::INDEX);
+                    int numberOfWorkers = resultSet->getInt(SlaveRelayLogInfo::COLUMNS::NUMBER_OF_WORKERS::INDEX);
+                    int id = resultSet->getInt(SlaveRelayLogInfo::COLUMNS::ID::INDEX);
+                    std::string channelName = resultSet->getString(SlaveRelayLogInfo::COLUMNS::CHANNEL_NAME::INDEX);
+
+                    slaveRelayLogInfo.emplace_back(
+                            SlaveRelayLogInfo{numberOfLines, relayLogName, relayLogPos, masterLogName, masterLogPos,
+                                              sqlDelay, numberOfWorkers, id, channelName});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return slaveRelayLogInfo;
+            }
+
+            /**
+            * Get all the records in the table slave_worker_info
+            */
+            std::vector<SlaveWorkerInfo> getSlaveWorkerInfoAll() {
+
+                std::vector<SlaveWorkerInfo> slaveWorkerInfo;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SLAVE_WORKER_INFO;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int id = resultSet->getInt(SlaveWorkerInfo::COLUMNS::ID::INDEX);
+                    std::string relayLogName = resultSet->getString(SlaveWorkerInfo::COLUMNS::RELAY_LOG_NAME::INDEX);
+                    long relayLogPos = resultSet->getInt(SlaveWorkerInfo::COLUMNS::RELAY_LOG_POS::INDEX);
+                    std::string masterLogName = resultSet->getString(SlaveWorkerInfo::COLUMNS::MASTER_LOG_NAME::INDEX);
+                    long masterLogPos = resultSet->getInt(SlaveWorkerInfo::COLUMNS::MASTER_LOG_POS::INDEX);
+                    std::string checkpointRelayLogName = resultSet->getString(
+                            SlaveWorkerInfo::COLUMNS::CHECKPOINT_RELAY_LOG_NAME::INDEX);
+                    long checkpointRelayLogPos = resultSet->getInt(
+                            SlaveWorkerInfo::COLUMNS::CHECKPOINT_RELAY_LOG_POS::INDEX);
+                    std::string checkpointMasterLogName = resultSet->getString(
+                            SlaveWorkerInfo::COLUMNS::CHECKPOINT_MASTER_LOG_NAME::INDEX);
+                    long checkpointMasterLogPos = resultSet->getInt(
+                            SlaveWorkerInfo::COLUMNS::CHECKPOINT_MASTER_LOG_POS::INDEX);
+                    int checkpointSeqno = resultSet->getInt(SlaveWorkerInfo::COLUMNS::CHECKPOINT_SEQNO::INDEX);
+                    int checkpointGroupSize = resultSet->getInt(SlaveWorkerInfo::COLUMNS::CHECKPOINT_GROUP_SIZE::INDEX);
+                    std::string checkpointGroupBitmap = resultSet->getString(
+                            SlaveWorkerInfo::COLUMNS::CHECKPOINT_GROUP_BITMAP::INDEX);
+                    std::string channelName = resultSet->getString(SlaveWorkerInfo::COLUMNS::CHANNEL_NAME::INDEX);
+
+                    slaveWorkerInfo.emplace_back(
+                            SlaveWorkerInfo{id, relayLogName, relayLogPos, masterLogName, masterLogPos,
+                                            checkpointRelayLogName, checkpointRelayLogPos, checkpointMasterLogName,
+                                            checkpointMasterLogPos, checkpointSeqno, checkpointGroupSize,
+                                            checkpointGroupBitmap, channelName});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return slaveWorkerInfo;
+            }
+
+            /**
+            * Get all the records in the table slow_log
+            */
+            std::vector<SlowLog> getSlowLogAll() {
+
+                std::vector<SlowLog> slowLog;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_SLOW_LOG;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string startTime = resultSet->getString(SlowLog::COLUMNS::START_TIME::INDEX);
+                    std::string userHost = resultSet->getString(SlowLog::COLUMNS::USER_HOST::INDEX);
+                    std::string queryTime = resultSet->getString(SlowLog::COLUMNS::QUERY_TIME::INDEX);
+                    std::string lockTime = resultSet->getString(SlowLog::COLUMNS::LOCK_TIME::INDEX);
+                    int rowsSent = resultSet->getInt(SlowLog::COLUMNS::ROWS_SENT::INDEX);
+                    int rowsExamined = resultSet->getInt(SlowLog::COLUMNS::ROWS_EXAMINED::INDEX);
+                    std::string db = resultSet->getString(SlowLog::COLUMNS::DB::INDEX);
+                    int lastInsertId = resultSet->getInt(SlowLog::COLUMNS::LAST_INSERT_ID::INDEX);
+                    int insertId = resultSet->getInt(SlowLog::COLUMNS::INSERT_ID::INDEX);
+                    int serverId = resultSet->getInt(SlowLog::COLUMNS::SERVER_ID::INDEX);
+                    std::string sqlText = resultSet->getString(SlowLog::COLUMNS::SQL_TEXT::INDEX);
+                    long threadId = resultSet->getInt(SlowLog::COLUMNS::THREAD_ID::INDEX);
+
+                    slowLog.emplace_back(
+                            SlowLog{startTime, userHost, queryTime, lockTime, rowsSent, rowsExamined, db, lastInsertId,
+                                    insertId, serverId, sqlText, threadId});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return slowLog;
+            }
+
+            /**
+            * Get all the records in the table tables_priv
+            */
+            std::vector<TablesPriv> getTablesPrivAll() {
+
+                std::vector<TablesPriv> tablesPriv;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_TABLES_PRIV;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string host = resultSet->getString(TablesPriv::COLUMNS::HOST::INDEX);
+                    std::string db = resultSet->getString(TablesPriv::COLUMNS::DB::INDEX);
+                    std::string user = resultSet->getString(TablesPriv::COLUMNS::USER::INDEX);
+                    std::string tableName = resultSet->getString(TablesPriv::COLUMNS::TABLE_NAME::INDEX);
+                    std::string grantor = resultSet->getString(TablesPriv::COLUMNS::GRANTOR::INDEX);
+                    std::string timestamp = resultSet->getString(TablesPriv::COLUMNS::TIMESTAMP::INDEX);
+                    std::string tablePriv = resultSet->getString(TablesPriv::COLUMNS::TABLE_PRIV::INDEX);
+                    std::string columnPriv = resultSet->getString(TablesPriv::COLUMNS::COLUMN_PRIV::INDEX);
+
+                    tablesPriv.emplace_back(
+                            TablesPriv{host, db, user, tableName, grantor, timestamp, tablePriv, columnPriv});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return tablesPriv;
+            }
+
+            /**
+            * Get all the records in the table time_zone
+            */
+            std::vector<TimeZone> getTimeZoneAll() {
+
+                std::vector<TimeZone> timeZone;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_TIME_ZONE;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int timeZoneId = resultSet->getInt(TimeZone::COLUMNS::TIME_ZONE_ID::INDEX);
+                    std::string useLeapSeconds = resultSet->getString(TimeZone::COLUMNS::USE_LEAP_SECONDS::INDEX);
+
+                    timeZone.emplace_back(TimeZone{timeZoneId, useLeapSeconds});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return timeZone;
+            }
+
+            /**
+            * Get all the records in the table time_zone_leap_second
+            */
+            std::vector<TimeZoneLeapSecond> getTimeZoneLeapSecondAll() {
+
+                std::vector<TimeZoneLeapSecond> timeZoneLeapSecond;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_TIME_ZONE_LEAP_SECOND;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    long transitionTime = resultSet->getInt(TimeZoneLeapSecond::COLUMNS::TRANSITION_TIME::INDEX);
+                    int correction = resultSet->getInt(TimeZoneLeapSecond::COLUMNS::CORRECTION::INDEX);
+
+                    timeZoneLeapSecond.emplace_back(TimeZoneLeapSecond{transitionTime, correction});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return timeZoneLeapSecond;
+            }
+
+            /**
+            * Get all the records in the table time_zone_name
+            */
+            std::vector<TimeZoneName> getTimeZoneNameAll() {
+
+                std::vector<TimeZoneName> timeZoneName;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_TIME_ZONE_NAME;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string name = resultSet->getString(TimeZoneName::COLUMNS::NAME::INDEX);
+                    int timeZoneId = resultSet->getInt(TimeZoneName::COLUMNS::TIME_ZONE_ID::INDEX);
+
+                    timeZoneName.emplace_back(TimeZoneName{name, timeZoneId});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return timeZoneName;
+            }
+
+            /**
+            * Get all the records in the table time_zone_transition
+            */
+            std::vector<TimeZoneTransition> getTimeZoneTransitionAll() {
+
+                std::vector<TimeZoneTransition> timeZoneTransition;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_TIME_ZONE_TRANSITION;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int timeZoneId = resultSet->getInt(TimeZoneTransition::COLUMNS::TIME_ZONE_ID::INDEX);
+                    long transitionTime = resultSet->getInt(TimeZoneTransition::COLUMNS::TRANSITION_TIME::INDEX);
+                    int transitionTypeId = resultSet->getInt(TimeZoneTransition::COLUMNS::TRANSITION_TYPE_ID::INDEX);
+
+                    timeZoneTransition.emplace_back(TimeZoneTransition{timeZoneId, transitionTime, transitionTypeId});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return timeZoneTransition;
+            }
+
+            /**
+            * Get all the records in the table time_zone_transition_type
+            */
+            std::vector<TimeZoneTransitionType> getTimeZoneTransitionTypeAll() {
+
+                std::vector<TimeZoneTransitionType> timeZoneTransitionType;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_TIME_ZONE_TRANSITION_TYPE;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    int timeZoneId = resultSet->getInt(TimeZoneTransitionType::COLUMNS::TIME_ZONE_ID::INDEX);
+                    int transitionTypeId = resultSet->getInt(
+                            TimeZoneTransitionType::COLUMNS::TRANSITION_TYPE_ID::INDEX);
+                    int offset = resultSet->getInt(TimeZoneTransitionType::COLUMNS::OFFSET::INDEX);
+                    int isDst = resultSet->getInt(TimeZoneTransitionType::COLUMNS::IS_DST::INDEX);
+                    std::string abbreviation = resultSet->getString(
+                            TimeZoneTransitionType::COLUMNS::ABBREVIATION::INDEX);
+
+                    timeZoneTransitionType.emplace_back(
+                            TimeZoneTransitionType{timeZoneId, transitionTypeId, offset, isDst, abbreviation});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return timeZoneTransitionType;
+            }
+
+            /**
+            * Get all the records in the table user
+            */
+            std::vector<User> getUserAll() {
+
+                std::vector<User> users;
+
+                std::string query = dbcrudgen::mysql::MYSQLQueries::GET_USER;
+
+                sql::Statement *statement = &connector.createStatement();
+                sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                while (resultSet->next()) {
+
+                    std::string host = resultSet->getString(User::COLUMNS::HOST::INDEX);
+                    std::string user = resultSet->getString(User::COLUMNS::USER::INDEX);
+                    std::string selectPriv = resultSet->getString(User::COLUMNS::SELECT_PRIV::INDEX);
+                    std::string insertPriv = resultSet->getString(User::COLUMNS::INSERT_PRIV::INDEX);
+                    std::string updatePriv = resultSet->getString(User::COLUMNS::UPDATE_PRIV::INDEX);
+                    std::string deletePriv = resultSet->getString(User::COLUMNS::DELETE_PRIV::INDEX);
+                    std::string createPriv = resultSet->getString(User::COLUMNS::CREATE_PRIV::INDEX);
+                    std::string dropPriv = resultSet->getString(User::COLUMNS::DROP_PRIV::INDEX);
+                    std::string reloadPriv = resultSet->getString(User::COLUMNS::RELOAD_PRIV::INDEX);
+                    std::string shutdownPriv = resultSet->getString(User::COLUMNS::SHUTDOWN_PRIV::INDEX);
+                    std::string processPriv = resultSet->getString(User::COLUMNS::PROCESS_PRIV::INDEX);
+                    std::string filePriv = resultSet->getString(User::COLUMNS::FILE_PRIV::INDEX);
+                    std::string grantPriv = resultSet->getString(User::COLUMNS::GRANT_PRIV::INDEX);
+                    std::string referencesPriv = resultSet->getString(User::COLUMNS::REFERENCES_PRIV::INDEX);
+                    std::string indexPriv = resultSet->getString(User::COLUMNS::INDEX_PRIV::INDEX);
+                    std::string alterPriv = resultSet->getString(User::COLUMNS::ALTER_PRIV::INDEX);
+                    std::string showDbPriv = resultSet->getString(User::COLUMNS::SHOW_DB_PRIV::INDEX);
+                    std::string superPriv = resultSet->getString(User::COLUMNS::SUPER_PRIV::INDEX);
+                    std::string createTmpTablePriv = resultSet->getString(User::COLUMNS::CREATE_TMP_TABLE_PRIV::INDEX);
+                    std::string lockTablesPriv = resultSet->getString(User::COLUMNS::LOCK_TABLES_PRIV::INDEX);
+                    std::string executePriv = resultSet->getString(User::COLUMNS::EXECUTE_PRIV::INDEX);
+                    std::string replSlavePriv = resultSet->getString(User::COLUMNS::REPL_SLAVE_PRIV::INDEX);
+                    std::string replClientPriv = resultSet->getString(User::COLUMNS::REPL_CLIENT_PRIV::INDEX);
+                    std::string createViewPriv = resultSet->getString(User::COLUMNS::CREATE_VIEW_PRIV::INDEX);
+                    std::string showViewPriv = resultSet->getString(User::COLUMNS::SHOW_VIEW_PRIV::INDEX);
+                    std::string createRoutinePriv = resultSet->getString(User::COLUMNS::CREATE_ROUTINE_PRIV::INDEX);
+                    std::string alterRoutinePriv = resultSet->getString(User::COLUMNS::ALTER_ROUTINE_PRIV::INDEX);
+                    std::string createUserPriv = resultSet->getString(User::COLUMNS::CREATE_USER_PRIV::INDEX);
+                    std::string eventPriv = resultSet->getString(User::COLUMNS::EVENT_PRIV::INDEX);
+                    std::string triggerPriv = resultSet->getString(User::COLUMNS::TRIGGER_PRIV::INDEX);
+                    std::string createTablespacePriv = resultSet->getString(
+                            User::COLUMNS::CREATE_TABLESPACE_PRIV::INDEX);
+                    std::string sslType = resultSet->getString(User::COLUMNS::SSL_TYPE::INDEX);
+                    std::string sslCipher = resultSet->getString(User::COLUMNS::SSL_CIPHER::INDEX);
+                    std::string x509Issuer = resultSet->getString(User::COLUMNS::X509_ISSUER::INDEX);
+                    std::string x509Subject = resultSet->getString(User::COLUMNS::X509_SUBJECT::INDEX);
+                    int maxQuestions = resultSet->getInt(User::COLUMNS::MAX_QUESTIONS::INDEX);
+                    int maxUpdates = resultSet->getInt(User::COLUMNS::MAX_UPDATES::INDEX);
+                    int maxConnections = resultSet->getInt(User::COLUMNS::MAX_CONNECTIONS::INDEX);
+                    int maxUserConnections = resultSet->getInt(User::COLUMNS::MAX_USER_CONNECTIONS::INDEX);
+                    std::string plugin = resultSet->getString(User::COLUMNS::PLUGIN::INDEX);
+                    std::string authenticationString = resultSet->getString(
+                            User::COLUMNS::AUTHENTICATION_STRING::INDEX);
+                    std::string passwordExpired = resultSet->getString(User::COLUMNS::PASSWORD_EXPIRED::INDEX);
+                    std::string passwordLastChanged = resultSet->getString(User::COLUMNS::PASSWORD_LAST_CHANGED::INDEX);
+                    int passwordLifetime = resultSet->getInt(User::COLUMNS::PASSWORD_LIFETIME::INDEX);
+                    std::string accountLocked = resultSet->getString(User::COLUMNS::ACCOUNT_LOCKED::INDEX);
+
+                    users.emplace_back(
+                            User{host, user, selectPriv, insertPriv, updatePriv, deletePriv, createPriv, dropPriv,
+                                 reloadPriv, shutdownPriv, processPriv, filePriv, grantPriv, referencesPriv, indexPriv,
+                                 alterPriv, showDbPriv, superPriv, createTmpTablePriv, lockTablesPriv, executePriv,
+                                 replSlavePriv, replClientPriv, createViewPriv, showViewPriv, createRoutinePriv,
+                                 alterRoutinePriv, createUserPriv, eventPriv, triggerPriv, createTablespacePriv,
+                                 sslType, sslCipher, x509Issuer, x509Subject, maxQuestions, maxUpdates, maxConnections,
+                                 maxUserConnections, plugin, authenticationString, passwordExpired, passwordLastChanged,
+                                 passwordLifetime, accountLocked});
+                }
+
+                resultSet->close();
+                statement->close();
+
+                return users;
+            }
 
             /**
              * Get all the tables in a schema
@@ -2455,8 +3579,8 @@ namespace dbcrudgen {
 
                     Tables table{tableCatalog, tableSchema, tableName, tableType, engine, version, rowFormat, tableRows,
                                  avgRowLength, dataLength, maxDataLength, indexLength, dataFree, autoIncrement,
-                                 createTime,
-                                 updateTime, checkTime, tableCollation, checksum, createOptions, tableComment};
+                                 createTime, updateTime, checkTime, tableCollation, checksum, createOptions,
+                                 tableComment};
 
                     tables.emplace_back(table);
                 }

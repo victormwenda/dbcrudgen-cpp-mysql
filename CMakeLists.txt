@@ -136,7 +136,37 @@ set(SOURCE_FILES
         src/databases/mysql/scaffolding/entities/InnoDbSysForeignCols.h src/databases/mysql/scaffolding/entities/InnoDbCmpMem.h
         src/databases/mysql/scaffolding/entities/InnoDbBufferPoolStats.h src/databases/mysql/scaffolding/entities/InnoDbSysColumns.h
         src/databases/mysql/scaffolding/entities/InnoDbSysForeign.h src/databases/mysql/scaffolding/entities/InnoDbSysTableStats.h
-
+        src/databases/mysql/scaffolding/entities/ColumnsPriv.h
+        src/databases/mysql/scaffolding/entities/Db.h
+        src/databases/mysql/scaffolding/entities/EngineCost.h
+        src/databases/mysql/scaffolding/entities/Event.h
+        src/databases/mysql/scaffolding/entities/Func.h
+        src/databases/mysql/scaffolding/entities/GeneralLog.h
+        src/databases/mysql/scaffolding/entities/GtidExecuted.h
+        src/databases/mysql/scaffolding/entities/HelpCategory.h
+        src/databases/mysql/scaffolding/entities/HelpKeyword.h
+        src/databases/mysql/scaffolding/entities/HelpRelation.h
+        src/databases/mysql/scaffolding/entities/HelpTopic.h
+        src/databases/mysql/scaffolding/entities/InnoDbIndexStats.h
+        src/databases/mysql/scaffolding/entities/InnoDbTableStats.h
+        src/databases/mysql/scaffolding/entities/NdbBinlogIndex.h
+        src/databases/mysql/scaffolding/entities/Plugin.h
+        src/databases/mysql/scaffolding/entities/Proc.h
+        src/databases/mysql/scaffolding/entities/ProcsPriv.h
+        src/databases/mysql/scaffolding/entities/ProxiesPriv.h
+        src/databases/mysql/scaffolding/entities/ServerCost.h
+        src/databases/mysql/scaffolding/entities/Servers.h
+        src/databases/mysql/scaffolding/entities/SlaveMasterInfo.h
+        src/databases/mysql/scaffolding/entities/SlaveRelayLogInfo.h
+        src/databases/mysql/scaffolding/entities/SlaveWorkerInfo.h
+        src/databases/mysql/scaffolding/entities/SlowLog.h
+        src/databases/mysql/scaffolding/entities/TablesPriv.h
+        src/databases/mysql/scaffolding/entities/TimeZone.h
+        src/databases/mysql/scaffolding/entities/TimeZoneLeapSecond.h
+        src/databases/mysql/scaffolding/entities/TimeZoneName.h
+        src/databases/mysql/scaffolding/entities/TimeZoneTransition.h
+        src/databases/mysql/scaffolding/entities/TimeZoneTransitionType.h
+        src/databases/mysql/scaffolding/entities/User.h
 
         src/databases/mysql/symbols/MysqlTable.h
 

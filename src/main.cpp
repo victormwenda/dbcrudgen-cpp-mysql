@@ -82,6 +82,13 @@ void createCppProject() {
         std::string tableName = table.getTableName();
         std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
         tableColumns.insert({tableName, columns});
+
+        std::cout << "#include \"../scaffolding/entities/" << dbcrudgen::orm::SyntaxParser::toCppClassName(tableName)
+                  << ".h\"" << std::endl;
+    }
+
+    if (true) {
+        return;
     }
 
     dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
