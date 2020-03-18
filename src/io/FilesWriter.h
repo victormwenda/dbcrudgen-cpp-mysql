@@ -50,16 +50,68 @@ public:
 
     /**
      * Create multiple directories
-     * @param dir
+     * @param path
      * @return
      */
-    static bool createDirs(std::string &dir) {
+    static bool createDirs(std::string &path) {
+        bool response = false;
 
-        int status = mkdir(dir.c_str(), 0777);
+        std::string parentDir;
+        int currentPosition = 0;
+        std::string separator = "/";
 
-        return status == EEXIST;
+        struct stat *info = nullptr;
 
+        while ((currentPosition = path.find_first_of(separator, currentPosition)) != std::string::npos) {
+
+            parentDir = path.substr(0, currentPosition);
+            currentPosition++;
+
+            //Skip root dir
+            if (parentDir.empty()) continue;
+
+            int statRC = stat(parentDir.c_str(), info);
+
+            if (statRC != 0) {
+
+                int status = mkdir(parentDir.c_str(), 0777);
+
+                switch (status) {
+                    case 0:
+                        response = true;
+                        std::cout << "creating directory at " << parentDir << std::endl;
+                        break;
+                    case -1:
+                        response = true;
+                        break;
+                    case EEXIST:
+                        response = true;
+                        break;
+                    default:
+                        response = false;
+                        std::cout << "Failed with errno : [" << status << "] (" << parentDir << ")" << std::endl;
+                }
+
+            } else {
+                if (errno == ENOENT) {
+                    //something along the path does not exists
+                    std::cout << "something along the path does not exists" << std::endl;
+                    response = false;
+                } else if (errno == ENOTDIR) {
+                    //something along the path is not directory
+                    std::cout << "something along the path is not directory" << std::endl;
+                    response = false;
+                } else {
+                    std::cout << "unhandled error " << errno << std::endl;
+                    response = false;
+                }
+            }
+
+        }
+
+        return response;
     }
+
 
     ~FilesWriter() = default;
 
