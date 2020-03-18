@@ -67,7 +67,7 @@ void createCppProject() {
     std::string host = "tcp://127.0.0.1:3306";
     std::string username = "root";
     std::string password = "root3358";
-    std::string database = "dbcrudgen";
+    std::string database = "information_schema";
 
     MYSQLDatabaseConnectionParams params{host, username, password, database};
     MYSQLDatabaseConnector connector{params};

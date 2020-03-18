@@ -15,10 +15,10 @@ namespace dbcrudgen {
         public:
 
             /**
-                        * Create database table model
-                        * @param databaseModel
-                        * @param generatedCodeDir
-                        */
+            * Create database table model
+            * @param databaseModel
+            * @param generatedCodeDir
+            */
             void createDatabaseTableModel(CppMYSQLProjectModel projectModel, mysql::MYSQLDatabaseModel databaseModel,
                                           std::string generatedCodeDir) {
 
@@ -140,7 +140,7 @@ namespace dbcrudgen {
 
                 std::string delimiter = ";";
 
-                source += parser.parseTableColumnVariables(sourceTemplate, column, delimiter);
+                source += parseTableInstanceVariables(sourceTemplate, column, delimiter);
 
 
                 return source;
@@ -200,6 +200,35 @@ namespace dbcrudgen {
                 std::string source;
                 std::string srcTmp = sourceTemplate.getTemplate();
                 source += parser.parseTableColumnsMetaData(sourceTemplate, column, index);
+                return source;
+            }
+
+            /**
+             * Parse Table Column Properties. Or Variables
+             * @param codeTemplate
+             * @param column
+             * @param delimiter
+             * @return
+             */
+            static std::string
+            parseTableInstanceVariables(CppVariableTemplate &codeTemplate, mysql::Columns &column,
+                                        std::string &delimiter) {
+
+                std::string source = codeTemplate.getTemplate();
+
+                const std::string &dataType = column.getDataType();
+                const std::string &columnName = column.getColumnName();
+
+                std::string className = getParser().toCppClassName(columnName);
+                std::string columnNameProperty = getParser().toCppVariableName(columnName);
+
+
+                std::string cppDataType = getParser().toCppDataType(dataType.c_str());
+
+                source = StringUtils::replace(source, "${DATA_TYPE}", cppDataType);
+                source = StringUtils::replace(source, "${PROPERTY_NAME}", columnNameProperty);
+                source = StringUtils::replace(source, "${DELIMITER}", delimiter);
+
                 return source;
             }
         };

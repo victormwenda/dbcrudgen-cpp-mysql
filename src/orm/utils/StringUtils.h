@@ -151,6 +151,7 @@ public:
             return name;
         }
 
+
         int partsIndex = 0;
 
         for (std::string &part : parts) {
@@ -171,7 +172,11 @@ public:
             method_name += part;
         }
 
+        //Make the first letter upper case
+        method_name[0] = toupper(method_name[0]);
+
         name = method_name;
+
         return name;
     }
 

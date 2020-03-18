@@ -20,7 +20,10 @@ public:
 
     ${COLUMNS_GETTERS}
 
-    static const char *const getTableName() {
+    /**
+    * Returns the table name '${TABLE_NAME}';
+    */
+    static const char * getTableName() {
         return TABLE_NAME;
     }
 };

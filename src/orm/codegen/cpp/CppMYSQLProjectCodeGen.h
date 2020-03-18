@@ -21,11 +21,13 @@ namespace dbcrudgen {
         class CppMYSQLProjectCodeGen : public CppProjectCodeGen {
 
         protected:
-            CppMYSQLParser parser;
+            static CppMYSQLParser parser;
+
         public:
+
             CppMYSQLProjectCodeGen() = default;
 
-            const CppMYSQLParser &getParser() const {
+            static CppMYSQLParser getParser() {
                 return parser;
             }
 
