@@ -5,7 +5,7 @@
 #include <regex>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include "databases/mysql/schema/Schemata.h"
+#include "databases/mysql/scaffolding/entities/Schemata.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
@@ -67,7 +67,7 @@ void createCppProject() {
     std::string host = "tcp://127.0.0.1:3306";
     std::string username = "root";
     std::string password = "root3358";
-    std::string database = "information_schema";
+    std::string database = "mysql";
 
     MYSQLDatabaseConnectionParams params{host, username, password, database};
     MYSQLDatabaseConnector connector{params};

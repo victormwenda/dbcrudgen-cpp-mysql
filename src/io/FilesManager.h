@@ -14,7 +14,7 @@ public:
     FilesReader filesReader;
     FilesWriter filesWriter;
 
-    FilesManager() {}
+    FilesManager() = default;
 
     FilesReader *getReader() {
         return (&filesReader);
@@ -33,7 +33,7 @@ public:
         return getReader()->readFile(filename);
     }
 
-    ~FilesManager() {}
+    ~FilesManager() = default;
 };
 
 #endif //DBCRUDGEN_CPP_FILESMANAGER_H

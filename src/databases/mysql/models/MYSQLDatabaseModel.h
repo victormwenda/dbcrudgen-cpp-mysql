@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "../schema/Tables.h"
-#include "../schema/Columns.h"
+#include "../scaffolding/entities/Tables.h"
+#include "../scaffolding/entities/Columns.h"
 
 namespace dbcrudgen {
 
