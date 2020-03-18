@@ -2,18 +2,18 @@
 // Created by vrwanda on 3/6/20.
 //
 
-#ifndef DBCRUDGEN_CPP_INNODBBUFFERPAGE_H
-#define DBCRUDGEN_CPP_INNODBBUFFERPAGE_H
+#ifndef DBCRUDGEN_CPP_INNODBBUFFERPAGELRU_H
+#define DBCRUDGEN_CPP_INNODBBUFFERPAGELRU_H
 
 #include <string>
 
 namespace dbcrudgen {
     namespace mysql {
-        class InnoDbBufferPage {
+        class InnoDbBufferPageLRU {
 
         private:
             long poolId;
-            long blockId;
+            long lruPosition;
             long space;
             long pageNumber;
             std::string pageType;
@@ -28,22 +28,22 @@ namespace dbcrudgen {
             long numberRecords;
             long dataSize;
             long compressedSize;
-            std::string pageState;
+            std::string compressed;
             std::string ioFix;
             std::string isOld;
             long freePageClock;
 
         public:
 
-            static constexpr const char *TABLE_NAME = "INNODB_BUFFER_PAGE";
+            static constexpr const char *TABLE_NAME = "INNODB_BUFFER_PAGE_LRU";
 
             struct COLUMNS {
                 struct POOL_ID {
                     static constexpr const char *NAME = "POOL_ID";
                     static const int INDEX = 1;
                 };
-                struct BLOCK_ID {
-                    static constexpr const char *NAME = "BLOCK_ID";
+                struct LRU_POSITION {
+                    static constexpr const char *NAME = "LRU_POSITION";
                     static const int INDEX = 2;
                 };
                 struct SPACE {
@@ -102,8 +102,8 @@ namespace dbcrudgen {
                     static constexpr const char *NAME = "COMPRESSED_SIZE";
                     static const int INDEX = 16;
                 };
-                struct PAGE_STATE {
-                    static constexpr const char *NAME = "PAGE_STATE";
+                struct COMPRESSED {
+                    static constexpr const char *NAME = "COMPRESSED";
                     static const int INDEX = 17;
                 };
                 struct IO_FIX {
@@ -120,42 +120,26 @@ namespace dbcrudgen {
                 };
             };
 
-            InnoDbBufferPage(long poolId, long blockId, long space, long pageNumber, std::string &pageType,
-                             long flushType, long fixCount, std::string &isHashed, long newestModification,
-                             long oldestModification, long accessTime, std::string &tableName, std::string &indexName,
-                             long numberRecords, long dataSize, long compressedSize, std::string &pageState,
-                             std::string &ioFix, std::string &isOld, long freePageClock) : poolId{poolId},
-                                                                                           blockId{blockId},
-                                                                                           space{space},
-                                                                                           pageNumber{pageNumber},
-                                                                                           pageType{pageType},
-                                                                                           flushType{flushType},
-                                                                                           fixCount{fixCount},
-                                                                                           isHashed{isHashed},
-                                                                                           newestModification{
-                                                                                                   newestModification},
-                                                                                           oldestModification{
-                                                                                                   oldestModification},
-                                                                                           accessTime{accessTime},
-                                                                                           tableName{tableName},
-                                                                                           indexName{indexName},
-                                                                                           numberRecords{numberRecords},
-                                                                                           dataSize{dataSize},
-                                                                                           compressedSize{
-                                                                                                   compressedSize},
-                                                                                           pageState{pageState},
-                                                                                           ioFix{ioFix}, isOld{isOld},
-                                                                                           freePageClock{
-                                                                                                   freePageClock} {}
+            InnoDbBufferPageLRU(long poolId, long lruPosition, long space, long pageNumber, std::string &pageType,
+                                long flushType, long fixCount, std::string &isHashed, long newestModification,
+                                long oldestModification, long accessTime, std::string &tableName,
+                                std::string &indexName, long numberRecords, long dataSize, long compressedSize,
+                                std::string &compressed, std::string &ioFix, std::string &isOld, long freePageClock)
+                    : poolId{poolId}, lruPosition{lruPosition}, space{space}, pageNumber{pageNumber},
+                      pageType{pageType}, flushType{flushType}, fixCount{fixCount}, isHashed{isHashed},
+                      newestModification{newestModification}, oldestModification{oldestModification},
+                      accessTime{accessTime}, tableName{tableName}, indexName{indexName}, numberRecords{numberRecords},
+                      dataSize{dataSize}, compressedSize{compressedSize}, compressed{compressed}, ioFix{ioFix},
+                      isOld{isOld}, freePageClock{freePageClock} {}
 
             // Get the value of poolId
             long getPoolId() const {
                 return poolId;
             }
 
-            // Get the value of blockId
-            long getBlockId() const {
-                return blockId;
+            // Get the value of lruPosition
+            long getLruPosition() const {
+                return lruPosition;
             }
 
             // Get the value of space
@@ -228,9 +212,9 @@ namespace dbcrudgen {
                 return compressedSize;
             }
 
-            // Get the value of pageState
-            const std::string &getPageState() const {
-                return pageState;
+            // Get the value of compressed
+            const std::string &getCompressed() const {
+                return compressed;
             }
 
             // Get the value of ioFix
@@ -249,7 +233,7 @@ namespace dbcrudgen {
             }
 
             /**
-            * Returns the table name 'INNODB_BUFFER_PAGE';
+            * Returns the table name 'INNODB_BUFFER_PAGE_LRU';
             */
             static const char *getDatabaseTableName() {
                 return TABLE_NAME;
@@ -260,4 +244,4 @@ namespace dbcrudgen {
 }
 
 
-#endif //DBCRUDGEN_CPP_INNODBBUFFERPAGE_H
+#endif //DBCRUDGEN_CPP_INNODBBUFFERPAGELRU_H

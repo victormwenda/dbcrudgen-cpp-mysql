@@ -7,217 +7,250 @@
 
 #include <string>
 
+#include <string>
+
 namespace dbcrudgen {
     namespace mysql {
 
         class Tables {
 
         private:
-            std::string table_catalog;
-            std::string table_schema;
-            std::string table_name;
-            std::string table_type;
+            std::string tableCatalog;
+            std::string tableSchema;
+            std::string tableName;
+            std::string tableType;
             std::string engine;
             long version;
-            std::string row_format;
-            long table_rows;
-            std::string avg_row_length;
-            std::string data_length;
-            std::string max_data_length;
-            std::string index_length;
-            std::string data_free;
-            std::string auto_increment;
-            std::string create_time;
-            std::string update_time;
-            std::string check_time;
-            std::string table_collation;
+            std::string rowFormat;
+            long tableRows;
+            long avgRowLength;
+            long dataLength;
+            long maxDataLength;
+            long indexLength;
+            long dataFree;
+            long autoIncrement;
+            std::string createTime;
+            std::string updateTime;
+            std::string checkTime;
+            std::string tableCollation;
             long checksum;
-            std::string create_options;
-            std::string table_comment;
+            std::string createOptions;
+            std::string tableComment;
 
         public:
 
-            struct TABLE_CATALOG {
-                static constexpr const int INDEX = 1;
-                static constexpr const char *NAME = "TABLE_CATALOG";
-            };
-            struct TABLE_SCHEMA {
-                static constexpr const int INDEX = 2;
-                static constexpr const char *NAME = "TABLE_SCHEMA";
-            };
-            struct TABLE_NAME {
-                static constexpr const int INDEX = 3;
-                static constexpr const char *NAME = "TABLE_NAME";
-            };
-            struct TABLE_TYPE {
-                static constexpr const int INDEX = 4;
-                static constexpr const char *NAME = "TABLE_TYPE";
-            };
-            struct ENGINE {
-                static constexpr const int INDEX = 5;
-                static constexpr const char *NAME = "ENGINE";
-            };
-            struct VERSION {
-                static constexpr const int INDEX = 6;
-                static constexpr const char *NAME = "VERSION";
-            };
-            struct ROW_FORMAT {
-                static constexpr const int INDEX = 7;
-                static constexpr const char *NAME = "ROW_FORMAT";
-            };
-            struct TABLE_ROWS {
-                static constexpr const int INDEX = 8;
-                static constexpr const char *NAME = "TABLE_ROWS";
-            };
-            struct AVG_ROW_LENGTH {
-                static constexpr const int INDEX = 9;
-                static constexpr const char *NAME = "AVG_ROW_LENGTH";
-            };
-            struct DATA_LENGTH {
-                static constexpr const int INDEX = 10;
-                static constexpr const char *NAME = "DATA_LENGTH";
-            };
-            struct MAX_DATA_LENGTH {
-                static constexpr const int INDEX = 11;
-                static constexpr const char *NAME = "MAX_DATA_LENGTH";
-            };
-            struct INDEX_LENGTH {
-                static constexpr const int INDEX = 12;
-                static constexpr const char *NAME = "INDEX_LENGTH";
-            };
-            struct DATA_FREE {
-                static constexpr const int INDEX = 13;
-                static constexpr const char *NAME = "DATA_FREE";
-            };
-            struct AUTO_INCREMENT {
-                static constexpr const int INDEX = 14;
-                static constexpr const char *NAME = "AUTO_INCREMENT";
-            };
-            struct CREATE_TIME {
-                static constexpr const int INDEX = 15;
-                static constexpr const char *NAME = "CREATE_TIME";
-            };
-            struct UPDATE_TIME {
-                static constexpr const int INDEX = 16;
-                static constexpr const char *NAME = "UPDATE_TIME";
-            };
-            struct CHECK_TIME {
-                static constexpr const int INDEX = 17;
-                static constexpr const char *NAME = "CHECK_TIME";
-            };
-            struct TABLE_COLLATION {
-                static constexpr const int INDEX = 18;
-                static constexpr const char *NAME = "TABLE_COLLATION";
-            };
-            struct CHECKSUM {
-                static constexpr const int INDEX = 19;
-                static constexpr const char *NAME = "CHECKSUM";
-            };
-            struct CREATE_OPTIONS {
-                static constexpr const int INDEX = 1;
-                static constexpr const char *NAME = "CREATE_OPTIONS";
-            };
-            struct TABLE_COMMENT {
-                static constexpr const int INDEX = 20;
-                static constexpr const char *NAME = "TABLE_COMMENT";
+            static constexpr const char *TABLE_NAME = "TABLES";
+
+            struct COLUMNS {
+                struct TABLE_CATALOG {
+                    static constexpr const char *NAME = "TABLE_CATALOG";
+                    static const int INDEX = 1;
+                };
+                struct TABLE_SCHEMA {
+                    static constexpr const char *NAME = "TABLE_SCHEMA";
+                    static const int INDEX = 2;
+                };
+                struct TABLE_NAME {
+                    static constexpr const char *NAME = "TABLE_NAME";
+                    static const int INDEX = 3;
+                };
+                struct TABLE_TYPE {
+                    static constexpr const char *NAME = "TABLE_TYPE";
+                    static const int INDEX = 4;
+                };
+                struct ENGINE {
+                    static constexpr const char *NAME = "ENGINE";
+                    static const int INDEX = 5;
+                };
+                struct VERSION {
+                    static constexpr const char *NAME = "VERSION";
+                    static const int INDEX = 6;
+                };
+                struct ROW_FORMAT {
+                    static constexpr const char *NAME = "ROW_FORMAT";
+                    static const int INDEX = 7;
+                };
+                struct TABLE_ROWS {
+                    static constexpr const char *NAME = "TABLE_ROWS";
+                    static const int INDEX = 8;
+                };
+                struct AVG_ROW_LENGTH {
+                    static constexpr const char *NAME = "AVG_ROW_LENGTH";
+                    static const int INDEX = 9;
+                };
+                struct DATA_LENGTH {
+                    static constexpr const char *NAME = "DATA_LENGTH";
+                    static const int INDEX = 10;
+                };
+                struct MAX_DATA_LENGTH {
+                    static constexpr const char *NAME = "MAX_DATA_LENGTH";
+                    static const int INDEX = 11;
+                };
+                struct INDEX_LENGTH {
+                    static constexpr const char *NAME = "INDEX_LENGTH";
+                    static const int INDEX = 12;
+                };
+                struct DATA_FREE {
+                    static constexpr const char *NAME = "DATA_FREE";
+                    static const int INDEX = 13;
+                };
+                struct AUTO_INCREMENT {
+                    static constexpr const char *NAME = "AUTO_INCREMENT";
+                    static const int INDEX = 14;
+                };
+                struct CREATE_TIME {
+                    static constexpr const char *NAME = "CREATE_TIME";
+                    static const int INDEX = 15;
+                };
+                struct UPDATE_TIME {
+                    static constexpr const char *NAME = "UPDATE_TIME";
+                    static const int INDEX = 16;
+                };
+                struct CHECK_TIME {
+                    static constexpr const char *NAME = "CHECK_TIME";
+                    static const int INDEX = 17;
+                };
+                struct TABLE_COLLATION {
+                    static constexpr const char *NAME = "TABLE_COLLATION";
+                    static const int INDEX = 18;
+                };
+                struct CHECKSUM {
+                    static constexpr const char *NAME = "CHECKSUM";
+                    static const int INDEX = 19;
+                };
+                struct CREATE_OPTIONS {
+                    static constexpr const char *NAME = "CREATE_OPTIONS";
+                    static const int INDEX = 20;
+                };
+                struct TABLE_COMMENT {
+                    static constexpr const char *NAME = "TABLE_COMMENT";
+                    static const int INDEX = 21;
+                };
             };
 
             Tables(std::string &tableCatalog, std::string &tableSchema, std::string &tableName, std::string &tableType,
-                   std::string &engine, long &version, std::string &rowFormat, long &tableRows,
-                   std::string &avgRowLength, std::string &dataLength, std::string &maxDataLength,
-                   std::string &indexLength, std::string &dataFree, std::string &autoIncrement, std::string &createTime,
-                   std::string &updateTime, std::string &checkTime, std::string &tableCollation, long &checksum,
-                   std::string &createOptions, std::string &tableComment)
-                    : table_catalog(tableCatalog), table_schema(tableSchema), table_name(tableName),
-                      table_type(tableType), engine(engine), version(version), row_format(rowFormat),
-                      table_rows(tableRows), avg_row_length(avgRowLength), data_length(dataLength),
-                      max_data_length(maxDataLength), index_length(indexLength), data_free(dataFree),
-                      auto_increment(autoIncrement), create_time(createTime), update_time(updateTime),
-                      check_time(checkTime), table_collation(tableCollation), checksum(checksum),
-                      create_options(createOptions), table_comment(tableComment) {}
+                   std::string &engine, long version, std::string &rowFormat, long tableRows, long avgRowLength,
+                   long dataLength, long maxDataLength, long indexLength, long dataFree, long autoIncrement,
+                   std::string &createTime, std::string &updateTime, std::string &checkTime,
+                   std::string &tableCollation, long checksum, std::string &createOptions, std::string &tableComment)
+                    : tableCatalog{tableCatalog}, tableSchema{tableSchema}, tableName{tableName}, tableType{tableType},
+                      engine{engine}, version{version}, rowFormat{rowFormat}, tableRows{tableRows},
+                      avgRowLength{avgRowLength}, dataLength{dataLength}, maxDataLength{maxDataLength},
+                      indexLength{indexLength}, dataFree{dataFree}, autoIncrement{autoIncrement},
+                      createTime{createTime}, updateTime{updateTime}, checkTime{checkTime},
+                      tableCollation{tableCollation}, checksum{checksum}, createOptions{createOptions},
+                      tableComment{tableComment} {}
 
+            // Get the value of tableCatalog
             const std::string &getTableCatalog() const {
-                return table_catalog;
+                return tableCatalog;
             }
 
+            // Get the value of tableSchema
             const std::string &getTableSchema() const {
-                return table_schema;
+                return tableSchema;
             }
 
+            // Get the value of tableName
             const std::string &getTableName() const {
-                return table_name;
+                return tableName;
             }
 
+            // Get the value of tableType
             const std::string &getTableType() const {
-                return table_type;
+                return tableType;
             }
 
+            // Get the value of engine
             const std::string &getEngine() const {
                 return engine;
             }
 
-            const long &getVersion() const {
+            // Get the value of version
+            long getVersion() const {
                 return version;
             }
 
+            // Get the value of rowFormat
             const std::string &getRowFormat() const {
-                return row_format;
+                return rowFormat;
             }
 
-            const long &getTableRows() const {
-                return table_rows;
+            // Get the value of tableRows
+            long getTableRows() const {
+                return tableRows;
             }
 
-            const std::string &getAvgRowLength() const {
-                return avg_row_length;
+            // Get the value of avgRowLength
+            long getAvgRowLength() const {
+                return avgRowLength;
             }
 
-            const std::string &getDataLength() const {
-                return data_length;
+            // Get the value of dataLength
+            long getDataLength() const {
+                return dataLength;
             }
 
-            const std::string &getMaxDataLength() const {
-                return max_data_length;
+            // Get the value of maxDataLength
+            long getMaxDataLength() const {
+                return maxDataLength;
             }
 
-            const std::string &getIndexLength() const {
-                return index_length;
+            // Get the value of indexLength
+            long getIndexLength() const {
+                return indexLength;
             }
 
-            const std::string &getDataFree() const {
-                return data_free;
+            // Get the value of dataFree
+            long getDataFree() const {
+                return dataFree;
             }
 
-            const std::string &getAutoIncrement() const {
-                return auto_increment;
+            // Get the value of autoIncrement
+            long getAutoIncrement() const {
+                return autoIncrement;
             }
 
+            // Get the value of createTime
             const std::string &getCreateTime() const {
-                return create_time;
+                return createTime;
             }
 
+            // Get the value of updateTime
             const std::string &getUpdateTime() const {
-                return update_time;
+                return updateTime;
             }
 
+            // Get the value of checkTime
             const std::string &getCheckTime() const {
-                return check_time;
+                return checkTime;
             }
 
+            // Get the value of tableCollation
             const std::string &getTableCollation() const {
-                return table_collation;
+                return tableCollation;
             }
 
-            const long &getChecksum() const {
+            // Get the value of checksum
+            long getChecksum() const {
                 return checksum;
             }
 
+            // Get the value of createOptions
             const std::string &getCreateOptions() const {
-                return create_options;
+                return createOptions;
             }
 
+            // Get the value of tableComment
             const std::string &getTableComment() const {
-                return table_comment;
+                return tableComment;
+            }
+
+            /**
+            * Returns the table name 'TABLES';
+            */
+            static const char *getDatabaseTableName() {
+                return TABLE_NAME;
             }
         };
 

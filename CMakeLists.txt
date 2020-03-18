@@ -126,7 +126,7 @@ set(SOURCE_FILES
         src/databases/mysql/schema/InnoDbSysVirtual.h src/databases/mysql/schema/InnoDbCmp.h
         src/databases/mysql/schema/InnoDbFtBeingDeleted.h src/databases/mysql/schema/InnoDbCmpReset.h
         src/databases/mysql/schema/InnoDbCmpPerIndex.h src/databases/mysql/schema/InnoDbCmpMemReset.h
-        src/databases/mysql/schema/InnoDbFtDeleted.h src/databases/mysql/schema/InnoDbBufferPageLru.h
+        src/databases/mysql/schema/InnoDbFtDeleted.h src/databases/mysql/schema/InnoDbBufferPageLRU.h
         src/databases/mysql/schema/InnoDbLockWaits.h src/databases/mysql/schema/InnoDbTempTableInfo.h
         src/databases/mysql/schema/InnoDbSysIndexes.h src/databases/mysql/schema/InnoDbSysTables.h
         src/databases/mysql/schema/InnoDbSysFields.h src/databases/mysql/schema/InnoDbCmpPerIndexReset.h

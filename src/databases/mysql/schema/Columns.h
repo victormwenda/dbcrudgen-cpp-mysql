@@ -7,217 +7,259 @@
 
 #include <string>
 
+#include <string>
+
 namespace dbcrudgen {
     namespace mysql {
         class Columns {
 
         private:
-            std::string table_catalog;
-            std::string table_schema;
-            std::string table_name;
-            std::string column_name;
-            long ordinal_position;
-            std::string column_default;
-            std::string is_nullable;
-            std::string data_type;
-            long character_maximum_length;
-            long character_octet_length;
-            long numeric_precision;
-            long numeric_scale;
-            long datetime_precision;
-            std::string character_set_name;
-            std::string collation_name;
-            std::string column_type;
-            std::string column_key;
+            std::string tableCatalog;
+            std::string tableSchema;
+            std::string tableName;
+            std::string columnName;
+            long ordinalPosition;
+            std::string columnDefault;
+            std::string isNullable;
+            std::string dataType;
+            long characterMaximumLength;
+            long characterOctetLength;
+            long numericPrecision;
+            long numericScale;
+            long datetimePrecision;
+            std::string characterSetName;
+            std::string collationName;
+            std::string columnType;
+            std::string columnKey;
             std::string extra;
             std::string privileges;
-            std::string column_comment;
-            std::string generation_expression;
+            std::string columnComment;
+            std::string generationExpression;
 
         public:
+
+            static constexpr const char *TABLE_NAME = "COLUMNS";
+
+            struct COLUMNS {
+                struct TABLE_CATALOG {
+                    static constexpr const char *NAME = "TABLE_CATALOG";
+                    static const int INDEX = 1;
+                };
+                struct TABLE_SCHEMA {
+                    static constexpr const char *NAME = "TABLE_SCHEMA";
+                    static const int INDEX = 2;
+                };
+                struct TABLE_NAME {
+                    static constexpr const char *NAME = "TABLE_NAME";
+                    static const int INDEX = 3;
+                };
+                struct COLUMN_NAME {
+                    static constexpr const char *NAME = "COLUMN_NAME";
+                    static const int INDEX = 4;
+                };
+                struct ORDINAL_POSITION {
+                    static constexpr const char *NAME = "ORDINAL_POSITION";
+                    static const int INDEX = 5;
+                };
+                struct COLUMN_DEFAULT {
+                    static constexpr const char *NAME = "COLUMN_DEFAULT";
+                    static const int INDEX = 6;
+                };
+                struct IS_NULLABLE {
+                    static constexpr const char *NAME = "IS_NULLABLE";
+                    static const int INDEX = 7;
+                };
+                struct DATA_TYPE {
+                    static constexpr const char *NAME = "DATA_TYPE";
+                    static const int INDEX = 8;
+                };
+                struct CHARACTER_MAXIMUM_LENGTH {
+                    static constexpr const char *NAME = "CHARACTER_MAXIMUM_LENGTH";
+                    static const int INDEX = 9;
+                };
+                struct CHARACTER_OCTET_LENGTH {
+                    static constexpr const char *NAME = "CHARACTER_OCTET_LENGTH";
+                    static const int INDEX = 10;
+                };
+                struct NUMERIC_PRECISION {
+                    static constexpr const char *NAME = "NUMERIC_PRECISION";
+                    static const int INDEX = 11;
+                };
+                struct NUMERIC_SCALE {
+                    static constexpr const char *NAME = "NUMERIC_SCALE";
+                    static const int INDEX = 12;
+                };
+                struct DATETIME_PRECISION {
+                    static constexpr const char *NAME = "DATETIME_PRECISION";
+                    static const int INDEX = 13;
+                };
+                struct CHARACTER_SET_NAME {
+                    static constexpr const char *NAME = "CHARACTER_SET_NAME";
+                    static const int INDEX = 14;
+                };
+                struct COLLATION_NAME {
+                    static constexpr const char *NAME = "COLLATION_NAME";
+                    static const int INDEX = 15;
+                };
+                struct COLUMN_TYPE {
+                    static constexpr const char *NAME = "COLUMN_TYPE";
+                    static const int INDEX = 16;
+                };
+                struct COLUMN_KEY {
+                    static constexpr const char *NAME = "COLUMN_KEY";
+                    static const int INDEX = 17;
+                };
+                struct EXTRA {
+                    static constexpr const char *NAME = "EXTRA";
+                    static const int INDEX = 18;
+                };
+                struct PRIVILEGES {
+                    static constexpr const char *NAME = "PRIVILEGES";
+                    static const int INDEX = 19;
+                };
+                struct COLUMN_COMMENT {
+                    static constexpr const char *NAME = "COLUMN_COMMENT";
+                    static const int INDEX = 20;
+                };
+                struct GENERATION_EXPRESSION {
+                    static constexpr const char *NAME = "GENERATION_EXPRESSION";
+                    static const int INDEX = 21;
+                };
+            };
+
             Columns(std::string &tableCatalog, std::string &tableSchema, std::string &tableName,
-                    std::string &columnName, long ordinalPosition, std::string &columnDefault, std::string &isNullable,
-                    std::string &dataType, long characterMaximumLength, long characterOctetLength,
-                    long numericPrecision, long numericScale, long datetimePrecision, std::string &characterSetName,
-                    std::string &collationName, std::string &columnType, std::string &columnKey, std::string &extra,
-                    std::string &privileges, std::string &columnComment, std::string &generationExpression)
-                    : table_catalog(tableCatalog), table_schema(tableSchema), table_name(tableName),
-                      column_name(columnName), ordinal_position(ordinalPosition), column_default(columnDefault),
-                      is_nullable(isNullable), data_type(dataType), character_maximum_length(characterMaximumLength),
-                      character_octet_length(characterOctetLength), numeric_precision(numericPrecision),
-                      numeric_scale(numericScale), datetime_precision(datetimePrecision),
-                      character_set_name(characterSetName), collation_name(collationName), column_type(columnType),
-                      column_key(columnKey), extra(extra), privileges(privileges), column_comment(columnComment),
-                      generation_expression(generationExpression) {}
+                    std::string &columnName,
+                    long ordinalPosition, std::string &columnDefault, std::string &isNullable, std::string &dataType,
+                    long characterMaximumLength, long characterOctetLength, long numericPrecision, long numericScale,
+                    long datetimePrecision, std::string &characterSetName, std::string &collationName,
+                    std::string &columnType,
+                    std::string &columnKey, std::string &extra, std::string &privileges, std::string &columnComment,
+                    std::string &generationExpression) : tableCatalog{tableCatalog}, tableSchema{tableSchema},
+                                                         tableName{tableName}, columnName{columnName},
+                                                         ordinalPosition{ordinalPosition}, columnDefault{columnDefault},
+                                                         isNullable{isNullable}, dataType{dataType},
+                                                         characterMaximumLength{characterMaximumLength},
+                                                         characterOctetLength{characterOctetLength},
+                                                         numericPrecision{numericPrecision}, numericScale{numericScale},
+                                                         datetimePrecision{datetimePrecision},
+                                                         characterSetName{characterSetName},
+                                                         collationName{collationName},
+                                                         columnType{columnType}, columnKey{columnKey}, extra{extra},
+                                                         privileges{privileges}, columnComment{columnComment},
+                                                         generationExpression{generationExpression} {}
 
+            // Get the value of tableCatalog
             const std::string &getTableCatalog() const {
-                return table_catalog;
+                return tableCatalog;
             }
 
+            // Get the value of tableSchema
             const std::string &getTableSchema() const {
-                return table_schema;
+                return tableSchema;
             }
 
+            // Get the value of tableName
             const std::string &getTableName() const {
-                return table_name;
+                return tableName;
             }
 
+            // Get the value of columnName
             const std::string &getColumnName() const {
-                return column_name;
+                return columnName;
             }
 
+            // Get the value of ordinalPosition
             long getOrdinalPosition() const {
-                return ordinal_position;
+                return ordinalPosition;
             }
 
+            // Get the value of columnDefault
             const std::string &getColumnDefault() const {
-                return column_default;
+                return columnDefault;
             }
 
+            // Get the value of isNullable
             const std::string &getIsNullable() const {
-                return is_nullable;
+                return isNullable;
             }
 
+            // Get the value of dataType
             const std::string &getDataType() const {
-                return data_type;
+                return dataType;
             }
 
+            // Get the value of characterMaximumLength
             long getCharacterMaximumLength() const {
-                return character_maximum_length;
+                return characterMaximumLength;
             }
 
+            // Get the value of characterOctetLength
             long getCharacterOctetLength() const {
-                return character_octet_length;
+                return characterOctetLength;
             }
 
+            // Get the value of numericPrecision
             long getNumericPrecision() const {
-                return numeric_precision;
+                return numericPrecision;
             }
 
+            // Get the value of numericScale
             long getNumericScale() const {
-                return numeric_scale;
+                return numericScale;
             }
 
+            // Get the value of datetimePrecision
             long getDatetimePrecision() const {
-                return datetime_precision;
+                return datetimePrecision;
             }
 
+            // Get the value of characterSetName
             const std::string &getCharacterSetName() const {
-                return character_set_name;
+                return characterSetName;
             }
 
+            // Get the value of collationName
             const std::string &getCollationName() const {
-                return collation_name;
+                return collationName;
             }
 
+            // Get the value of columnType
             const std::string &getColumnType() const {
-                return column_type;
+                return columnType;
             }
 
+            // Get the value of columnKey
             const std::string &getColumnKey() const {
-                return column_key;
+                return columnKey;
             }
 
+            // Get the value of extra
             const std::string &getExtra() const {
                 return extra;
             }
 
+            // Get the value of privileges
             const std::string &getPrivileges() const {
                 return privileges;
             }
 
+            // Get the value of columnComment
             const std::string &getColumnComment() const {
-                return column_comment;
+                return columnComment;
             }
 
+            // Get the value of generationExpression
             const std::string &getGenerationExpression() const {
-                return generation_expression;
+                return generationExpression;
             }
 
-            struct TABLE_CATALOG {
-                static constexpr const int INDEX = 1;
-                static constexpr const char *NAME = "TABLE_CATALOG";
-            };
-            struct TABLE_SCHEMA {
-                static constexpr const int INDEX = 2;
-                static constexpr const char *NAME = "TABLE_SCHEMA";
-            };
-            struct TABLE_NAME {
-                static constexpr const int INDEX = 3;
-                static constexpr const char *NAME = "TABLE_NAME";
-            };
-            struct COLUMN_NAME {
-                static constexpr const int INDEX = 4;
-                static constexpr const char *NAME = "COLUMN_NAME";
-            };
-            struct ORDINAL_POSITION {
-                static constexpr const int INDEX = 5;
-                static constexpr const char *NAME = "ORDINAL_POSITION";
-            };
-            struct COLUMN_DEFAULT {
-                static constexpr const int INDEX = 6;
-                static constexpr const char *NAME = "COLUMN_DEFAULT";
-            };
-            struct IS_NULLABLE {
-                static constexpr const int INDEX = 7;
-                static constexpr const char *NAME = "IS_NULLABLE";
-            };
-            struct DATA_TYPE {
-                static constexpr const int INDEX = 8;
-                static constexpr const char *NAME = "DATA_TYPE";
-            };
-            struct CHARACTER_MAXIMUM_LENGTH {
-                static constexpr const int INDEX = 9;
-                static constexpr const char *NAME = "CHARACTER_MAXIMUM_LENGTH";
-            };
-            struct CHARACTER_OCTET_LENGTH {
-                static constexpr const int INDEX = 10;
-                static constexpr const char *NAME = "CHARACTER_OCTET_LENGTH";
-            };
-            struct NUMERIC_PRECISION {
-                static constexpr const int INDEX = 11;
-                static constexpr const char *NAME = "NUMERIC_PRECISION";
-            };
-            struct NUMERIC_SCALE {
-                static constexpr const int INDEX = 12;
-                static constexpr const char *NAME = "NUMERIC_SCALE";
-            };
-            struct DATETIME_PRECISION {
-                static constexpr const int INDEX = 13;
-                static constexpr const char *NAME = "DATETIME_PRECISION";
-            };
-            struct CHARACTER_SET_NAME {
-                static constexpr const int INDEX = 14;
-                static constexpr const char *NAME = "CHARACTER_SET_NAME";
-            };
-            struct COLLATION_NAME {
-                static constexpr const int INDEX = 15;
-                static constexpr const char *NAME = "COLLATION_NAME";
-            };
-            struct COLUMN_TYPE {
-                static constexpr const int INDEX = 16;
-                static constexpr const char *NAME = "COLUMN_TYPE";
-            };
-            struct COLUMN_KEY {
-                static constexpr const int INDEX = 17;
-                static constexpr const char *NAME = "COLUMN_KEY";
-            };
-            struct EXTRA {
-                static constexpr const int INDEX = 18;
-                static constexpr const char *NAME = "EXTRA";
-            };
-            struct PRIVILEGES {
-                static constexpr const int INDEX = 19;
-                static constexpr const char *NAME = "PRIVILEGES";
-            };
-            struct COLUMN_COMMENT {
-                static constexpr const int INDEX = 20;
-                static constexpr const char *NAME = "COLUMN_COMMENT";
-            };
-            struct GENERATION_EXPRESSION {
-                static constexpr const int INDEX = 21;
-                static constexpr const char *NAME = "GENERATION_EXPRESSION";
-            };
+
+            /**
+            * Returns the table name 'COLUMNS';
+            */
+            static const char *getDatabaseTableName() {
+                return TABLE_NAME;
+            }
         };
     }
 }

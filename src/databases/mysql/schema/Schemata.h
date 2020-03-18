@@ -8,6 +8,7 @@
 #include <string>
 
 class Schemata {
+
 private:
     std::string catalogName;
     std::string schemaName;
@@ -16,9 +17,10 @@ private:
     std::string sqlPath;
 
 public:
+
     static constexpr const char *TABLE_NAME = "SCHEMATA";
 
-    struct Columns {
+    struct COLUMNS {
         struct CATALOG_NAME {
             static constexpr const char *NAME = "CATALOG_NAME";
             static const int INDEX = 1;
@@ -42,53 +44,39 @@ public:
     };
 
     Schemata(std::string &catalogName, std::string &schemaName, std::string &defaultCharacterSetName,
-             std::string &defaultCollationName,
-             std::string &sqlPath) :
+             std::string &defaultCollationName, std::string &sqlPath)
+            : catalogName{catalogName}, schemaName{schemaName}, defaultCharacterSetName{defaultCharacterSetName},
+              defaultCollationName{defaultCollationName}, sqlPath{sqlPath} {}
 
-            catalogName(catalogName), schemaName(schemaName), defaultCharacterSetName(defaultCharacterSetName),
-            defaultCollationName(defaultCollationName), sqlPath(sqlPath) {}
-
+    // Get the value of catalogName
     const std::string &getCatalogName() const {
         return catalogName;
     }
 
-    void setCatalogName(const std::string &catalogName) {
-        Schemata::catalogName = catalogName;
-    }
-
+    // Get the value of schemaName
     const std::string &getSchemaName() const {
         return schemaName;
     }
 
-    void setSchemaName(const std::string &schemaName) {
-        Schemata::schemaName = schemaName;
-    }
-
+    // Get the value of defaultCharacterSetName
     const std::string &getDefaultCharacterSetName() const {
         return defaultCharacterSetName;
     }
 
-    void setDefaultCharacterSetName(const std::string &defaultCharacterSetName) {
-        Schemata::defaultCharacterSetName = defaultCharacterSetName;
-    }
-
+    // Get the value of defaultCollationName
     const std::string &getDefaultCollationName() const {
         return defaultCollationName;
     }
 
-    void setDefaultCollationName(const std::string &defaultCollationName) {
-        Schemata::defaultCollationName = defaultCollationName;
-    }
-
+    // Get the value of sqlPath
     const std::string &getSqlPath() const {
         return sqlPath;
     }
 
-    void setSqlPath(const std::string &sqlPath) {
-        Schemata::sqlPath = sqlPath;
-    }
-
-    static const char *const getTableName() {
+    /**
+    * Returns the table name 'SCHEMATA';
+    */
+    static const char *getDatabaseTableName() {
         return TABLE_NAME;
     }
 };
