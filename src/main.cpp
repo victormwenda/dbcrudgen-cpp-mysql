@@ -12,6 +12,8 @@
 #include "databases/mysql/models/MYSQLDatabaseModel.h"
 #include "orm/projects/CppMYSQLProjectModel.h"
 #include "orm/creators/cpp/CppMYSQLProjectCreator.h"
+#include "orm/projects/LaravelPHPMYSQLProjectModel.h"
+#include "orm/creators/php/LaravelPHPMYSQLProjectCreator.h"
 
 std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model) {
     return model.getSchemas();
@@ -82,14 +84,8 @@ void createCppProject() {
         std::string tableName = table.getTableName();
         std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
         tableColumns.insert({tableName, columns});
-
-        std::cout << "#include \"../scaffolding/entities/" << dbcrudgen::orm::SyntaxParser::toCppClassName(tableName)
-                  << ".h\"" << std::endl;
     }
 
-    if (true) {
-        return;
-    }
 
     dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
     databaseModel.setDatabaseName(database);
@@ -114,9 +110,54 @@ void createCppProject() {
 
 }
 
+void createPhpProject() {
+
+    std::string host = "tcp://127.0.0.1:3306";
+    std::string username = "root";
+    std::string password = "root3358";
+    std::string database = "pesarika";
+
+    MYSQLDatabaseConnectionParams params{host, username, password, database};
+    MYSQLDatabaseConnector connector{params};
+    connector.open();
+    dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer{connector};
+
+    /*std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
+
+    auto tables = decomposer.getSchemaTables(database);
+
+    for (dbcrudgen::mysql::Tables &table : tables) {
+        std::string tableName = table.getTableName();
+        std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
+        tableColumns.insert({tableName, columns});
+    }*/
+
+
+    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
+    databaseModel.setDatabaseName(database);
+    //databaseModel.setTables(tables);
+    //databaseModel.setTableColumns(tableColumns);
+
+
+    std::string apiDir = "app/routes";
+    std::string apiFile = "pesarika.api";
+    std::string controllersDir = "app/Http/Controllers";
+    std::string modelsDir = "app/Http/Models";
+    std::string viewsDir = "resources/views";
+    std::string projectName = "pesarika-web";
+    std::string workspaceDir = "/var/www/html/";
+
+    dbcrudgen::orm::LaravelPHPMYSQLProjectModel projectModel{projectName, workspaceDir, controllersDir, modelsDir,
+                                                             viewsDir, apiDir, apiFile};
+
+    dbcrudgen::orm::LaravelPHPMYSQLProjectCreator projectCreator{projectModel, databaseModel};
+    projectCreator.createProject();
+
+}
+
 
 int main(int argc, char **argv) {
 
-    createCppProject();
+    createPhpProject();
     return EXIT_SUCCESS;
 }
