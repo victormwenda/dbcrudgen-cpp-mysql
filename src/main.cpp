@@ -5,6 +5,7 @@
 #include <regex>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <unistd.h>
 #include "databases/mysql/scaffolding/entities/Schemata.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
@@ -122,7 +123,7 @@ void createPhpProject() {
     connector.open();
     dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer{connector};
 
-    /*std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
+    std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
 
     auto tables = decomposer.getSchemaTables(database);
 
@@ -130,25 +131,26 @@ void createPhpProject() {
         std::string tableName = table.getTableName();
         std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
         tableColumns.insert({tableName, columns});
-    }*/
+    }
 
 
     dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
     databaseModel.setDatabaseName(database);
-    //databaseModel.setTables(tables);
-    //databaseModel.setTableColumns(tableColumns);
+    databaseModel.setTables(tables);
+    databaseModel.setTableColumns(tableColumns);
 
 
-    std::string apiDir = "app/routes";
-    std::string apiFile = "pesarika.api";
+    std::string projectName = "pesarika-web";
+    std::string workspaceDir = "/var/www/html";
     std::string controllersDir = "app/Http/Controllers";
     std::string modelsDir = "app/Http/Models";
     std::string viewsDir = "resources/views";
-    std::string projectName = "pesarika-web";
-    std::string workspaceDir = "/var/www/html/";
+    std::string routesDir = "routes";
+    std::string webRouteFile = "pesarika.web.php";
+    std::string apiRouteFile = "pesarika.api.php";
 
     dbcrudgen::orm::LaravelPHPMYSQLProjectModel projectModel{projectName, workspaceDir, controllersDir, modelsDir,
-                                                             viewsDir, apiDir, apiFile};
+                                                             viewsDir, routesDir, webRouteFile, apiRouteFile};
 
     dbcrudgen::orm::LaravelPHPMYSQLProjectCreator projectCreator{projectModel, databaseModel};
     projectCreator.createProject();
@@ -159,5 +161,6 @@ void createPhpProject() {
 int main(int argc, char **argv) {
 
     createPhpProject();
+
     return EXIT_SUCCESS;
 }

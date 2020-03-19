@@ -303,6 +303,10 @@ set(SOURCE_FILES
         src/orm/parsers/cpp/CppMYSQLParser.h
         src/orm/parsers/cpp/CppMYSQLSCRUDParser.h
 
+        src/orm/parsers/php/PHPParser.h
+        src/orm/parsers/php/PHPMYSQLParser.h
+        src/orm/parsers/php/LaravelParser.h
+
         src/orm/projects/AndroidProjectModel.h
         src/orm/projects/CppMYSQLProjectModel.h
         src/orm/projects/CppOracleProjectModel.h
@@ -359,13 +363,37 @@ set(SOURCE_FILES
         src/orm/templates/java/JavaMYSQLConnectorTemplate.h
         src/orm/templates/java/JavaSQLiteConnectorTemplate.h
 
+        src/orm/templates/php/laravel/LaravelControllerTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodCreateTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodEditTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodDestoryTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodIndexTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodStoreTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodShowTemplate.h
+        src/orm/templates/php/laravel/LaravelControllerMethodUpdateTemplate.h
+        src/orm/templates/php/laravel/LaravelPHPTemplateFiles.h
+        src/orm/templates/php/laravel/LaravelModelTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteApiTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteApiGetTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteApiDeleteTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteApiPutTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteApiPostTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteWebDeleteTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteWebGetTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteWebPostTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteWebPutTemplate.h
+        src/orm/templates/php/laravel/LaravelRouteWebTemplate.h
         src/orm/templates/php/PHPOracleConnectorTemplate.h
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
         src/orm/templates/php/PHPSQLiteConnectorTemplate.h
 
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
-        src/orm/utils/StringUtils.h)
+        src/orm/utils/StringUtils.h
+
+
+
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

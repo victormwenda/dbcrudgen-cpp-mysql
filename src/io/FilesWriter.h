@@ -19,7 +19,7 @@ public:
      * @param content
      * @return
      */
-    static bool writeFile(std::string &filename, std::string &content) {
+    static bool writeFile(const std::string &filename, const std::string &content) {
 
         std::ofstream handle(filename.c_str());
 
@@ -42,7 +42,7 @@ public:
      * @param dir
      * @return
      */
-    static bool createDir(std::string &dir) {
+    static bool createDir(const std::string &dir) {
 
         int status = mkdir(dir.c_str(), 0777);
 

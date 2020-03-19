@@ -53,10 +53,10 @@ namespace dbcrudgen {
             }
 
             /**
-             * Get PHP Framework used to develop the project
-             * @return
-             */
-            std::string getFramework() { return std::string{}; };
+            * Get PHP Framework used to develop the project
+            * @return
+            */
+            virtual std::string getFramework() { return std::string{}; };
         };
 
     }

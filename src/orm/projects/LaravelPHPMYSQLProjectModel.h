@@ -16,8 +16,9 @@ namespace dbcrudgen {
             std::string controllersDir;
             std::string modelsDir;
             std::string viewsDir;
-            std::string apiDir;
-            std::string apiFile;
+            std::string routesDir;
+            std::string webRouteFile;
+            std::string apiRoutesFile;
 
         public:
 
@@ -30,12 +31,13 @@ namespace dbcrudgen {
             */
             LaravelPHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir,
                                         std::string &controllersDir, std::string &modelsDir, std::string &viewsDir,
-                                        std::string &apiDir, std::string &apiFile)
+                                        std::string &routesDir, std::string &webRoutesFile, std::string &apiRoutesFile)
                     : PHPMYSQLProjectModel{projectName, workspaceDir},
                       controllersDir{controllersDir}, modelsDir{modelsDir}, viewsDir{viewsDir},
-                      apiDir{apiDir}, apiFile{apiFile} {}
+                      routesDir{routesDir}, webRouteFile{webRoutesFile}, apiRoutesFile{apiRoutesFile} {}
 
-            std::string getFramework()   {
+
+            std::string getFramework() override {
                 return std::string{Frameworks::LARAVEL};
             }
 
@@ -51,12 +53,16 @@ namespace dbcrudgen {
                 return viewsDir;
             }
 
-            const std::string &getApiDir() const {
-                return apiDir;
+            const std::string &getRoutesDir() const {
+                return routesDir;
             }
 
-            const std::string &getApiFile() const {
-                return apiFile;
+            const std::string &getWebRoutesFile() const {
+                return webRouteFile;
+            }
+
+            const std::string &getApiRoutesFile() const {
+                return apiRoutesFile;
             }
 
             /**
@@ -87,8 +93,24 @@ namespace dbcrudgen {
              * Get the full path to API's directory
              * @return
              */
-            std::string getAPIsFullDir() {
-                return getProjectDir() + "/" + getApiDir();
+            std::string getRoutesFullDir() {
+                return getProjectDir() + "/" + getRoutesDir();
+            }
+
+            /**
+             * Get the full path to API's directory
+             * @return
+             */
+            std::string getWebRouteFilePath() {
+                return getRoutesFullDir() + "/" + getWebRoutesFile();
+            }
+
+            /**
+             * Get the full path to API's directory
+             * @return
+             */
+            std::string getApiRouteFilePath() {
+                return getRoutesFullDir() + "/" + getApiRoutesFile();
             }
 
         };

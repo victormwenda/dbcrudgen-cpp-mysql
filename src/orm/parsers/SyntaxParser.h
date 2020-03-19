@@ -103,6 +103,36 @@ namespace dbcrudgen {
                 return StringUtils::createVariableNameCamelCase(name);
             }
 
+            /**
+             * Create C++ Class name
+             * @param name
+             * @return
+             */
+            static std::string toPHPClassName(std::string name) {
+                //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
+                return StringUtils::createClassNameCamelCase(name);
+            }
+
+            /**
+             * Create C++ method name
+             * @param name
+             * @return
+             */
+            static std::string toPHPMethodName(std::string name) {
+                //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
+                return StringUtils::createMethodNameCamelCase(name);
+            }
+
+            /**
+            * Create C++ Variable name
+            * @param name
+            * @return
+            */
+            static std::string toPHPVariableName(std::string name) {
+                //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
+                return StringUtils::createVariableNameCamelCase(name);
+            }
+
         };
     }
 }

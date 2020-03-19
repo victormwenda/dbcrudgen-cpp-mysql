@@ -9,6 +9,7 @@
 #include <string>
 #include "../../io/FilesReader.h"
 #include "SourceCodeTemplate.h"
+#include "../codegen/Languages.h"
 
 namespace dbcrudgen {
     namespace orm {
