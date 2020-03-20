@@ -1,0 +1,192 @@
+<?php
+
+namespace ${CONTROLLER_NAMESPACE};
+
+use ${MODEL_NAMESPACE}\${MODEL_CLASS};
+use Illuminate\Support\Facades\Validator;
+
+class ${CLASS_NAME}Controller extends Controller
+{
+    /*
+    |--------------------------------------------------------------------------
+    | ${CLASS_NAME} Controller
+    |--------------------------------------------------------------------------
+    |
+    | This controller handles the SCRUD functions of the table '${TABLE_NAME}'
+    |
+    */
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::all();
+        
+        return view('${MODEL_VARIABLE}')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        ${DESERIALIZE_FORM_DATA};
+
+        $formData = [${UNPACK_FORM_DATA}];
+
+        $validator = $this->insertValidator($formData);
+
+        if ($validator->fails()) {
+            
+            $errors = $validator->errors();
+
+            $content =  "Sorry! You provided incorrect data";
+
+            return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $attributes = array(${PACK_TABLE_ATTRIBUTES});
+        $${MODEL_VARIABLE} = new ${MODEL_CLASS}($attributes);
+
+        if ($${MODEL_VARIABLE}->save()) {
+            $content = "${MODEL_CLASS} created";
+            return response($content, Response::HTTP_CREATED);
+        }
+
+        $content = "${MODEL_CLASS} not created";
+
+        return response($content, Response::HTTP_I_AM_A_TEAPOT);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\${MODEL_CLASS} $${MODEL_VARIABLE}
+     * @return \Illuminate\Http\Response
+     */
+    public function show(${MODEL_CLASS} $${MODEL_VARIABLE})
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $${MODEL_VARIABLE}Id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($${MODEL_VARIABLE}Id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @param int $${MODEL_VARIABLE}Id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $${MODEL_VARIABLE}Id)
+    {
+        ${DESERIALIZE_FORM_DATA};
+
+        $formData = [${UNPACK_FORM_DATA}];
+
+        $validator = $this->updateValidator($formData);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+
+            $content = "Sorry! You provided incorrect data";
+
+            return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($${MODEL_VARIABLE}Id);
+
+        if ($${MODEL_VARIABLE} == null) {
+            $content = "${MODEL_CLASS} not found ";
+            return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $attributes = array(${PACK_TABLE_ATTRIBUTES});
+
+        $${MODEL_VARIABLE}->update($attributes);
+
+        return response($${MODEL_VARIABLE}, Response::HTTP_ACCEPTED);
+    }
+
+    /**
+     * Remove the specified resource from the records.
+     *
+     * @param int $${MODEL_VARIABLE}Id
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function destroy($${MODEL_VARIABLE}Id)
+    {
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($${MODEL_VARIABLE}Id);
+
+        if ($${MODEL_VARIABLE} != null) {
+            $${MODEL_VARIABLE}->delete();
+            return response($${MODEL_VARIABLE}, Response::HTTP_OK);
+        }
+
+        $content = "${MODEL_CLASS} not found";
+        return response($content, Response::HTTP_GONE);
+    }
+
+    /**
+     * Refreshes the list of records
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function refresh()
+    {
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::all();
+        return view('${MODEL_VARIABLE}_table')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
+    }
+
+    /**
+     * Get a validator for an incoming insert request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function insertValidator(array $data)
+    {
+        return Validator::make($data, [
+             ${INSERT_VALIDATION_RULES}
+        ]);
+    }
+
+    /**
+     * Get a validator for an incoming update request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function updateValidator(array $data)
+    {
+        return Validator::make($data, [
+             ${UPDATE_VALIDATION_RULES}
+        ]);
+    }
+}

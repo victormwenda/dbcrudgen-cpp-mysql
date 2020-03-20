@@ -1,0 +1,16 @@
+<?php
+
+namespace ${MODEL_NAMESPACE};
+
+${MODEL_RELATIONSHIPS_INCLUDES}
+
+use Illuminate\Database\Eloquent\Model;
+
+class ${CLASS_NAME} extends Model
+{
+    protected $table = "${TABLE_NAME}";
+
+    protected $fillable = [${FILLABLE_COLUMN_NAMES}];
+
+    ${MODEL_RELATIONSHIPS}
+}
