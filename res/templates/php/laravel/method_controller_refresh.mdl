@@ -1,0 +1,9 @@
+    /**
+     * Refreshes the list of records
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function refresh()
+    {
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::all();
+        return view('${MODEL_VARIABLE}_table')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
+    }

@@ -373,7 +373,7 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelControllerMethodUpdateTemplate.h
         src/orm/templates/php/laravel/LaravelPHPTemplateFiles.h
         src/orm/templates/php/laravel/LaravelModelTemplate.h
-        src/orm/templates/php/laravel/LaravelRouteApiTemplate.h
+        src/orm/templates/php/laravel/LaravelTableRoutesApiTemplate.h
         src/orm/templates/php/laravel/LaravelRouteApiGetTemplate.h
         src/orm/templates/php/laravel/LaravelRouteApiDeleteTemplate.h
         src/orm/templates/php/laravel/LaravelRouteApiPutTemplate.h
@@ -382,7 +382,10 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelRouteWebGetTemplate.h
         src/orm/templates/php/laravel/LaravelRouteWebPostTemplate.h
         src/orm/templates/php/laravel/LaravelRouteWebPutTemplate.h
-        src/orm/templates/php/laravel/LaravelRouteWebTemplate.h
+        src/orm/templates/php/laravel/LaravelTableWebRoutesTemplate.h
+        src/orm/templates/php/laravel/LaravelRoutesWebTemplate.h
+        src/orm/templates/php/laravel/LaravelRoutesApiTemplate.h
+
         src/orm/templates/php/PHPOracleConnectorTemplate.h
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
         src/orm/templates/php/PHPSQLiteConnectorTemplate.h
@@ -390,9 +393,6 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-
-
-
         )
 
 #GoogleTest

@@ -1,19 +1,19 @@
 //
-// Created by victor on 3/19/20.
+// Created by victor on 3/20/20.
 //
 
-#ifndef DBCRUDGEN_CPP_LARAVELROUTEAPITEMPLATE_H
-#define DBCRUDGEN_CPP_LARAVELROUTEAPITEMPLATE_H
+#ifndef DBCRUDGEN_CPP_LARAVELROUTESAPITEMPLATE_H
+#define DBCRUDGEN_CPP_LARAVELROUTESAPITEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
 #include "LaravelPHPTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class LaravelRouteApiTemplate : public FileSourceCodeTemplate {
+        class LaravelRoutesApiTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::SCRIPT_ROUTE_API};
+                return std::string{LaravelPHPTemplateFiles::SCRIPT_ROUTES_API};
             }
 
         private:
@@ -23,4 +23,4 @@ namespace dbcrudgen {
         };
     }
 }
-#endif //DBCRUDGEN_CPP_LARAVELROUTEAPITEMPLATE_H
+#endif //DBCRUDGEN_CPP_LARAVELROUTESAPITEMPLATE_H

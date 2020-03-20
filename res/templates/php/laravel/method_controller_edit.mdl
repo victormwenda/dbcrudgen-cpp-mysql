@@ -1,0 +1,10 @@
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $${MODEL_VARIABLE}Id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($${MODEL_VARIABLE}Id)
+    {
+        //
+    }

@@ -17,8 +17,9 @@ namespace dbcrudgen {
             std::string modelsDir;
             std::string viewsDir;
             std::string routesDir;
-            std::string webRouteFile;
+            std::string webRoutesFile;
             std::string apiRoutesFile;
+            std::string apiVersion;
 
         public:
 
@@ -30,11 +31,12 @@ namespace dbcrudgen {
             * @param generatedCodeDir
             */
             LaravelPHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir,
-                                        std::string &controllersDir, std::string &modelsDir, std::string &viewsDir,
-                                        std::string &routesDir, std::string &webRoutesFile, std::string &apiRoutesFile)
+                                        std::string &controllersDir,
+                                        std::string &modelsDir, std::string &viewsDir, std::string &routesDir,
+                                        std::string &webRoutesFile, std::string &apiRoutesFile, std::string &apiVersion)
                     : PHPMYSQLProjectModel{projectName, workspaceDir},
-                      controllersDir{controllersDir}, modelsDir{modelsDir}, viewsDir{viewsDir},
-                      routesDir{routesDir}, webRouteFile{webRoutesFile}, apiRoutesFile{apiRoutesFile} {}
+                      controllersDir{controllersDir}, modelsDir{modelsDir}, viewsDir{viewsDir}, routesDir{routesDir},
+                      webRoutesFile{webRoutesFile}, apiRoutesFile{apiRoutesFile}, apiVersion{apiVersion} {}
 
 
             std::string getFramework() override {
@@ -58,11 +60,15 @@ namespace dbcrudgen {
             }
 
             const std::string &getWebRoutesFile() const {
-                return webRouteFile;
+                return webRoutesFile;
             }
 
             const std::string &getApiRoutesFile() const {
                 return apiRoutesFile;
+            }
+
+            const std::string &getApiVersion() const {
+                return apiVersion;
             }
 
             /**

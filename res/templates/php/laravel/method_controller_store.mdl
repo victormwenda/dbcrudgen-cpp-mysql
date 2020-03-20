@@ -1,0 +1,35 @@
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        ${DESERIALIZE_FORM_DATA}
+
+        $formData = [${UNPACK_FORM_DATA}];
+
+        $validator = $this->insertValidator($formData);
+
+        if ($validator->fails()) {
+
+            $errors = $validator->errors();
+
+            $content =  "Sorry! You provided incorrect data";
+
+            return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+        }
+
+        $attributes = array(${PACK_TABLE_ATTRIBUTES});
+        $${MODEL_VARIABLE} = new ${MODEL_CLASS}($attributes);
+
+        if ($${MODEL_VARIABLE}->save()) {
+            $content = "${MODEL_CLASS} created";
+            return response($content, Response::HTTP_CREATED);
+        }
+
+        $content = "${MODEL_CLASS} not created";
+
+        return response($content, Response::HTTP_I_AM_A_TEAPOT);
+    }

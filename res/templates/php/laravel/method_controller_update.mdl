@@ -1,0 +1,41 @@
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - UPDATES TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::put('${API_VERSION}/${API_NAME}/update/{id}', function (Request $request, $id) {
+
+    ${DESERIALIZE_FORM_DATA}
+
+    $formData = [${UNPACK_FORM_DATA}];
+
+    $validator = Validator::make($formData, [
+        ${INSERT_VALIDATION_RULES}
+    ]);
+
+    if ($validator->fails()) {
+
+        $errors = $validator->errors();
+
+        $content =  "Sorry! You provided incorrect data";
+
+        return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => $errors, 'data' => null);
+    }
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($id);
+
+    if ($${MODEL_VARIABLE} == null) {
+        $content = "${MODEL_CLASS} not found ";
+        return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    $attributes = array(${PACK_TABLE_ATTRIBUTES});
+
+    if ($${MODEL_VARIABLE}->update($attributes)) {
+        $content = "${MODEL_CLASS} created";
+        return array ('status_code' => Response::HTTP_CREATED, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+    }
+
+    return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => null, 'data' => null);
+
+});

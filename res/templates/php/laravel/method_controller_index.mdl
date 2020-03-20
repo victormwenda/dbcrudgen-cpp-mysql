@@ -1,0 +1,11 @@
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::all();
+
+        return view('${MODEL_VARIABLE}')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
+    }

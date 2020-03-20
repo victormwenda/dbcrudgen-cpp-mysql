@@ -1,0 +1,1 @@
+Route::delete('${API_NAME}/destroy/{id}', '${CONTROLLER_CLASS}@destroy');

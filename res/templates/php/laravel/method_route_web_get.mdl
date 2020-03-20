@@ -1,0 +1,6 @@
+Route::get('${API_NAME}', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/index', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/create', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/show', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/refresh', '${CONTROLLER_CLASS}@refresh');
+Route::get('${API_NAME}/edit/{id}', '${CONTROLLER_CLASS}@edit');

@@ -1,0 +1,14 @@
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - EXPOSES THE WEB ROUTES TO MANIPULATE THE TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::get('${API_NAME}', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/index', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/create', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/show', '${CONTROLLER_CLASS}@index');
+Route::get('${API_NAME}/refresh', '${CONTROLLER_CLASS}@refresh');
+Route::get('${API_NAME}/edit/{id}', '${CONTROLLER_CLASS}@edit');
+Route::put('${API_NAME}/update/{id}', '${CONTROLLER_CLASS}@update');
+Route::post('${API_NAME}/store', '${CONTROLLER_CLASS}@store');
+Route::delete('${API_NAME}/destroy/{id}', '${CONTROLLER_CLASS}@destroy');

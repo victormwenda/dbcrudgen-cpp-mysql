@@ -10,6 +10,10 @@
 #include "../../parsers/php/LaravelParser.h"
 #include "../../templates/php/laravel/LaravelControllerTemplate.h"
 #include "../../templates/php/laravel/LaravelModelTemplate.h"
+#include "../../templates/php/laravel/LaravelTableWebRoutesTemplate.h"
+#include "../../templates/php/laravel/LaravelTableRoutesApiTemplate.h"
+#include "../../templates/php/laravel/LaravelRoutesApiTemplate.h"
+#include "../../templates/php/laravel/LaravelRoutesWebTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -43,13 +47,14 @@ namespace dbcrudgen {
             void createSourceFiles() override {
                 PHPMYSQLProjectCreator::createSourceFiles();
 
-                //Create web routes
-                const std::string webRouteFilePath = projectModel.getWebRouteFilePath();
-                FilesWriter::writeFile(webRouteFilePath, "");
+                //Create web routes source
+                std::string webRoutesSource;
 
-                //Create api routes
-                const std::string apiRouteFilePath = projectModel.getApiRouteFilePath();
-                FilesWriter::writeFile(apiRouteFilePath, "");
+                //Create api routes source
+                std::string apiRoutesSource;
+
+                //Create models includes for routes
+                std::string modelsIncludes;
 
                 auto databaseModel = getDatabaseModel();
                 auto tables = databaseModel.getTables();
@@ -63,6 +68,14 @@ namespace dbcrudgen {
                     std::string controllerSource = createControllerSource(table);
                     std::string modelSource = createModelSource(table);
 
+
+                    //Create routes source
+                    std::string webRoutes = createWebRouteSource(table);
+                    std::string apiRoutes = createApiRouteSource(table);
+
+                    //Append models include for routes
+                    modelsIncludes += createModelsInclude(table);
+
                     auto tableColumnsIterator = databaseTableColumns.find(tableName);
                     auto columns = tableColumnsIterator->second;
 
@@ -75,6 +88,7 @@ namespace dbcrudgen {
                     std::string updateValidationRules;
 
                     int index = 0;
+
                     for (const auto &column : columns) {
                         bool isBeforeLast = index < columns.size() - 1;
 
@@ -102,6 +116,17 @@ namespace dbcrudgen {
                     LaravelParser::replace(controllerSource, "${INSERT_VALIDATION_RULES}", insertValidationRules);
                     LaravelParser::replace(controllerSource, "${UPDATE_VALIDATION_RULES}", updateValidationRules);
 
+                    //Replace on routes files
+                    LaravelParser::replace(apiRoutes, "${DESERIALIZE_FORM_DATA}", deserializedFormData);
+                    LaravelParser::replace(apiRoutes, "${UNPACK_FORM_DATA}", formDataValidationCandidates);
+                    LaravelParser::replace(apiRoutes, "${INSERT_VALIDATION_RULES}", insertValidationRules);
+                    LaravelParser::replace(apiRoutes, "${UPDATE_VALIDATION_RULES}", updateValidationRules);
+                    LaravelParser::replace(apiRoutes, "${PACK_TABLE_ATTRIBUTES}", packInsertTableAttribs);
+
+                    webRoutesSource += webRoutes;
+                    apiRoutesSource += apiRoutes;
+
+
 
                     //Create model file
                     const std::string modelFilename = LaravelParser::toPHPClassName(tableName);
@@ -113,10 +138,37 @@ namespace dbcrudgen {
                     const std::string controllerFilePath =
                             projectModel.getControllersFullDir() + "/" + controllerFilename + "Controller.php";
                     FilesWriter::writeFile(controllerFilePath, controllerSource);
+
+
                 }
 
+                //Add models includes
+
+
+
+
+                //Create web routes
+                const std::string webRouteFilePath = projectModel.getWebRouteFilePath();
+                LaravelRoutesWebTemplate webTemplate;
+                std::string webFullSource = webTemplate.getTemplate();
+                LaravelParser::replace(webFullSource, "${WEB_ROUTES}", webRoutesSource);
+                LaravelParser::replace(webFullSource, "${MODELS_INCLUDES}", modelsIncludes);
+                FilesWriter::writeFile(webRouteFilePath, webFullSource);
+
+                //Create api routes
+                const std::string apiRouteFilePath = projectModel.getApiRouteFilePath();
+                LaravelRoutesApiTemplate apiTemplate;
+                std::string apiFullSource = apiTemplate.getTemplate();
+                LaravelParser::replace(apiFullSource, "${API_ROUTES}", apiRoutesSource);
+                LaravelParser::replace(apiFullSource, "${MODELS_INCLUDES}", modelsIncludes);
+                FilesWriter::writeFile(apiRouteFilePath, apiFullSource);
             }
 
+            /**
+             * Creates the controller source code
+             * @param table
+             * @return
+             */
             std::string createControllerSource(const mysql::Tables &table) {
 
                 const std::string &tableName = table.getTableName();
@@ -146,6 +198,11 @@ namespace dbcrudgen {
                 return controllerSource;
             }
 
+            /**
+             * Creates the model source code
+             * @param table
+             * @return
+             */
             std::string createModelSource(const mysql::Tables &table) {
 
                 const std::string &tableName = table.getTableName();
@@ -170,6 +227,54 @@ namespace dbcrudgen {
                 LaravelParser::replace(modelSource, "${MODEL_RELATIONSHIPS_INCLUDES}", "");
 
                 return modelSource;
+            }
+
+            /**
+             * Create Table Web Routes source code
+             * @param table
+             * @return
+             */
+            std::string createWebRouteSource(const mysql::Tables &table) {
+                LaravelTableWebRoutesTemplate routeWebTemplate;
+                std::string source = routeWebTemplate.getTemplate();
+
+                std::string className = LaravelParser::toPHPClassName(table.getTableName());
+                std::string apiName = StringUtils::toSnakeCase(className);
+
+                LaravelParser::replace(source, "${CONTROLLER_CLASS}", className.append("Controller"));
+                LaravelParser::replace(source, "${API_NAME}", apiName);
+                LaravelParser::replace(source, "${TABLE NAME}", table.getTableName());
+
+                return source;
+            }
+
+            /**
+             * Create Table API Routes Source code
+             * @param table
+             * @return
+             */
+            std::string createApiRouteSource(const mysql::Tables &table) {
+                LaravelTableRoutesApiTemplate routeApiTemplate;
+                std::string source = routeApiTemplate.getTemplate();
+
+                std::string className = LaravelParser::toPHPClassName(table.getTableName());
+                std::string classVariable = LaravelParser::toPHPVariableName(table.getTableName());
+                std::string apiName = StringUtils::toSnakeCase(className);
+
+                LaravelParser::replace(source, "${API_VERSION}", projectModel.getApiVersion());
+                LaravelParser::replace(source, "${API_NAME}", apiName);
+                LaravelParser::replace(source, "${TABLE NAME}", table.getTableName());
+                LaravelParser::replace(source, "${MODEL_CLASS}", className);
+                LaravelParser::replace(source, "${MODEL_VARIABLE}", classVariable);
+                return source;
+            }
+
+            std::string createModelsInclude(const mysql::Tables &table) {
+
+                std::string modelNamespace = LaravelParser::toNamespace(projectModel.getModelsDir());
+                std::string modelClassName = LaravelParser::toCppClassName(table.getTableName());
+
+                return std::string{"use " + modelNamespace + "\\" + modelClassName + ";\n"};
             }
         };
     }

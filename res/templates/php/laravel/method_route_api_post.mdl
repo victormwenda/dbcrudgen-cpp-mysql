@@ -1,0 +1,35 @@
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - INSERTS DATA INTO TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::post('${API_VERSION}/${API_NAME}/store', function (Request $request) {
+    
+    ${DESERIALIZE_FORM_DATA}
+    
+    $formData = [${UNPACK_FORM_DATA}];
+    
+    $validator = Validator::make($data, [
+                ${INSERT_VALIDATION_RULES}
+        ]);
+    
+    if ($validator->fails()) {
+
+        $errors = $validator->errors();
+    
+        $content =  "Sorry! You provided incorrect data";
+    
+        return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => $errors, 'data' => null);
+    }
+    
+    $attributes = array(${PACK_TABLE_ATTRIBUTES});
+    $${MODEL_VARIABLE} = new ${MODEL_CLASS}($attributes);
+    
+    if ($${MODEL_VARIABLE}->save()) {
+        $content = "${MODEL_CLASS} created";
+        return array ('status_code' => Response::HTTP_CREATED, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+    }
+    
+    return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => null, 'data' => null);
+
+});

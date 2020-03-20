@@ -31,8 +31,11 @@ namespace dbcrudgen {
             static constexpr const char *METHOD_ROUTE_WEB_POST = "templates/php/laravel/method_route_web_post.mdl";
             static constexpr const char *METHOD_ROUTE_WEB_PUT = "templates/php/laravel/method_route_web_put.mdl";
 
-            static constexpr const char *SCRIPT_ROUTE_WEB = "templates/php/laravel/";
-            static constexpr const char *SCRIPT_ROUTE_API = "templates/php/laravel/";
+            static constexpr const char *METHODS_ROUTES_WEB_TABLE = "templates/php/laravel/methods_routes_web_table.mdl";
+            static constexpr const char *METHODS_ROUTES_API_TABLE = "templates/php/laravel/methods_routes_api_table.mdl";
+
+            static constexpr const char *SCRIPT_ROUTES_WEB = "templates/php/laravel/script_routes_web.mdl";
+            static constexpr const char *SCRIPT_ROUTES_API = "templates/php/laravel/script_routes_api.mdl";
         };
     }
 }

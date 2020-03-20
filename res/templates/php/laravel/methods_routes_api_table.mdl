@@ -1,0 +1,131 @@
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - INSERTS DATA INTO TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::post('${API_VERSION}/${API_NAME}/store', function (Request $request) {
+
+    ${DESERIALIZE_FORM_DATA}
+
+    $formData = [${UNPACK_FORM_DATA}];
+
+    $validator = Validator::make($formData, [
+                ${INSERT_VALIDATION_RULES}
+        ]);
+
+    if ($validator->fails()) {
+
+        $errors = $validator->errors();
+
+        $content =  "Sorry! You provided incorrect data";
+
+        return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => $errors, 'data' => null);
+    }
+
+    $attributes = array(${PACK_TABLE_ATTRIBUTES});
+    $${MODEL_VARIABLE} = new ${MODEL_CLASS}($attributes);
+
+    if ($${MODEL_VARIABLE}->save()) {
+        $content = "${MODEL_CLASS} created";
+        return array ('status_code' => Response::HTTP_CREATED, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+    }
+
+    return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => null, 'data' => null);
+
+});
+
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - RETURNS ALL RECORDS IN TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::get('${API_VERSION}/${API_NAME}/list', function (Request $request) {
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::get();
+
+    if ($${MODEL_VARIABLE} == null) {
+        $content = "${MODEL_CLASS} not found ";
+        return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    return array ('status_code' => Response::HTTP_OK, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+});
+
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - RETURNS ONE ITEM FROM '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::get('${API_VERSION}/${API_NAME}/get/{id}', function (Request $request, $id) {
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($id);
+
+    if ($${MODEL_VARIABLE} == null) {
+        $content = "${MODEL_CLASS} not found ";
+        return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    return array ('status_code' => Response::HTTP_OK, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+});
+
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - UPDATES TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::put('${API_VERSION}/${API_NAME}/update/{id}', function (Request $request, $id) {
+
+    ${DESERIALIZE_FORM_DATA}
+
+    $formData = [${UNPACK_FORM_DATA}];
+
+    $validator = Validator::make($formData, [
+        ${INSERT_VALIDATION_RULES}
+    ]);
+
+    if ($validator->fails()) {
+
+        $errors = $validator->errors();
+
+        $content =  "Sorry! You provided incorrect data";
+
+        return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => $errors, 'data' => null);
+    }
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($id);
+
+    if ($${MODEL_VARIABLE} == null) {
+        $content = "${MODEL_CLASS} not found ";
+        return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    $attributes = array(${PACK_TABLE_ATTRIBUTES});
+
+    if ($${MODEL_VARIABLE}->update($attributes)) {
+        $content = "${MODEL_CLASS} created";
+        return array ('status_code' => Response::HTTP_CREATED, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+    }
+
+    return array ('status_code' => Response::HTTP_UNPROCESSABLE_ENTITY, 'errors' => null, 'data' => null);
+
+});
+
+
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - DELETES ITEM FROM TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::delete('${API_VERSION}/${API_NAME}/delete/{id}', function (Request $request, $id) {
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($id);
+
+    if ($${MODEL_VARIABLE} == null) {
+        return array("status_code" => 404, 'item' => $id);
+    }
+
+    $${MODEL_VARIABLE}->delete();
+
+    return array("status_code" => 202, "deleted" => $${MODEL_VARIABLE});
+
+})->middleware('auth.agent', 'auth:api');

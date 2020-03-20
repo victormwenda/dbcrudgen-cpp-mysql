@@ -146,11 +146,13 @@ void createPhpProject() {
     std::string modelsDir = "app/Http/Models";
     std::string viewsDir = "resources/views";
     std::string routesDir = "routes";
+    std::string apiVersion = "v1";
     std::string webRouteFile = "pesarika.web.php";
     std::string apiRouteFile = "pesarika.api.php";
 
     dbcrudgen::orm::LaravelPHPMYSQLProjectModel projectModel{projectName, workspaceDir, controllersDir, modelsDir,
-                                                             viewsDir, routesDir, webRouteFile, apiRouteFile};
+                                                             viewsDir, routesDir, webRouteFile, apiRouteFile,
+                                                             apiVersion};
 
     dbcrudgen::orm::LaravelPHPMYSQLProjectCreator projectCreator{projectModel, databaseModel};
     projectCreator.createProject();

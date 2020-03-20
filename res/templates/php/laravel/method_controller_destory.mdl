@@ -1,0 +1,19 @@
+    /**
+     * Remove the specified resource from the records.
+     *
+     * @param int $${MODEL_VARIABLE}Id
+     * @return \Illuminate\Http\Response
+     * @throws \Exception
+     */
+    public function destroy($${MODEL_VARIABLE}Id)
+    {
+        $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($${MODEL_VARIABLE}Id);
+
+        if ($${MODEL_VARIABLE} != null) {
+            $${MODEL_VARIABLE}->delete();
+            return response($${MODEL_VARIABLE}, Response::HTTP_OK);
+        }
+
+        $content = "${MODEL_CLASS} not found";
+        return response($content, Response::HTTP_GONE);
+    }

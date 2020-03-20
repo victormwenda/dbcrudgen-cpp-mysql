@@ -1,11 +1,11 @@
 /**
 |-----------------------------------------------------------------------------------------------------------------------
-| - RETURNS ONE ITEM FROM '${TABLE NAME}'
+| - RETURNS ALL RECORDS IN TABLE '${TABLE NAME}'
 |-----------------------------------------------------------------------------------------------------------------------
 */
-Route::get('${API_VERSION}/${API_NAME}/get/{id}', function (Request $request, $id) {
+Route::get('${API_VERSION}/${API_NAME}/list', function (Request $request) {
 
-    $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($id);
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::get();
 
     if ($${MODEL_VARIABLE} == null) {
         $content = "${MODEL_CLASS} not found ";

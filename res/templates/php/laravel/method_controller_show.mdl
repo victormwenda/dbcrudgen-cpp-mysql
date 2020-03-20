@@ -1,0 +1,10 @@
+    /**
+     * Display the specified resource.
+     *
+     * @param \App\${MODEL_CLASS} $${MODEL_VARIABLE}
+     * @return \Illuminate\Http\Response
+     */
+    public function show(${MODEL_CLASS} $${MODEL_VARIABLE})
+    {
+        //
+    }

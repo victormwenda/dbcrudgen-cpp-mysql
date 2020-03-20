@@ -264,6 +264,34 @@ public:
 
         return text;
     }
+
+    /**
+     * Convert text to snake case
+     * @param name
+     * @return
+     */
+    static std::string toSnakeCase(std::string name) {
+        std::string snake_case;
+        int index = 0;
+
+        while (index < name.size()) {
+
+            if (isupper(name[index])) {
+
+                if (snake_case.empty()) {
+                    snake_case.append(1, tolower(name[index]));
+                } else {
+                    snake_case.append("_").append(1, tolower(name[index]));
+                }
+            } else {
+                snake_case.append(1, name[index]);
+            }
+
+            index++;
+        }
+
+        return snake_case;
+    }
 };
 
 

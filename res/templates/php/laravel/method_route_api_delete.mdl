@@ -1,0 +1,18 @@
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - DELETES ITEM FROM TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::delete('${API_VERSION}/${API_NAME}/delete/{id}', function (Request $request, $id) {
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::find($id);
+
+    if ($${MODEL_VARIABLE} == null) {
+        return array("status_code" => 404, 'item' => $id);
+    }
+
+    $${MODEL_VARIABLE}->delete();
+
+    return array("status_code" => 202, "deleted" => ${MODEL_VARIABLE});
+
+})->middleware('auth.agent', 'auth:api');
