@@ -128,4 +128,4 @@ Route::delete('${API_VERSION}/${API_NAME}/delete/{id}', function (Request $reque
 
     return array("status_code" => 202, "deleted" => $${MODEL_VARIABLE});
 
-})->middleware('auth.agent', 'auth:api');
+});
