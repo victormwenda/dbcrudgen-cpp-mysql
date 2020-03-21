@@ -284,7 +284,6 @@ set(SOURCE_FILES
         src/orm/codegen/cpp/CppMYSQLDbConnectorCodeGen.h
         src/orm/codegen/cpp/CppMYSQLDbTableModelCodeGen.h
         src/orm/codegen/cpp/CppMYSQLProjectCodeGen.h
-        src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/codegen/cpp/CppMYSQLSCRUDCodeGen.h
         src/orm/codegen/cpp/CppProjectCodeGen.h
         src/orm/codegen/cpp/CppSQLiteProjectCodeGen.h
@@ -295,6 +294,8 @@ set(SOURCE_FILES
         src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JavaOracleProjectCodeGen.h
 
+        src/orm/codegen/PostmanProjectCodeGen.h
+
         src/orm/codegen/php/PHPProjectCodeGen.h
         src/orm/codegen/php/PHPOracleProjectCodeGen.h
         src/orm/codegen/php/PHPMYSQLProjectCodeGen.h
@@ -303,6 +304,7 @@ set(SOURCE_FILES
         src/orm/codegen/swift/SwiftProjectCodeGen.h
 
         src/orm/creators/ProjectCreator.h
+        src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/creators/cpp/CppOracleProjectCreator.h
         src/orm/creators/cpp/CppProjectCreator.h
         src/orm/creators/cpp/CppSQLiteProjectCreator.h
@@ -337,6 +339,7 @@ set(SOURCE_FILES
         src/orm/projects/PHPOracleProjectModel.h
         src/orm/projects/PHPProjectModel.h
         src/orm/projects/PHPSQLiteProjectModel.h
+        src/orm/projects/PostmanProjectModel.h
         src/orm/projects/ProjectModel.h
         src/orm/projects/SwiftProjectModel.h
 
@@ -414,7 +417,6 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-
         )
 
 #GoogleTest

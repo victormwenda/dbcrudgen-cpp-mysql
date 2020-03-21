@@ -35,14 +35,17 @@ namespace dbcrudgen {
             virtual std::string getDatabase() = 0;
 
             /**
-             * Creates a project
-             */
-            virtual void createProject() = 0;
+            * Create project dirs
+            */
+            virtual void createProjectDirs() = 0;
 
             /**
-             * Create project dirs
+             * Creates a project
              */
-            virtual void createProjectDirs() = 0;
+            virtual void createProject() {
+                createProjectDirs();
+                createSourceFiles();
+            }
 
             /**
              * Create the source files for the project

@@ -18,6 +18,8 @@
 #include "orm/projects/LaravelPHPMYSQLProjectModel.h"
 #include "orm/creators/php/LaravelPHPMYSQLProjectCreator.h"
 #include "databases/mysql/parsers/MYSQLDatabaseFlattener.h"
+#include "orm/creators/postman/PostmanProjectCreator.h"
+#include "orm/projects/PostmanProjectModel.h"
 
 std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model) {
     return model.getSchemas();
@@ -150,8 +152,8 @@ void createPhpProject() {
     std::string viewsDir = "resources/views";
     std::string routesDir = "routes";
     std::string apiVersion = "v1";
-    std::string webRouteFile = "pesarika.web.php";
-    std::string apiRouteFile = "pesarika.api.php";
+    std::string webRouteFile = "web.php";
+    std::string apiRouteFile = "api.php";
 
     dbcrudgen::orm::LaravelPHPMYSQLProjectModel projectModel{projectName, workspaceDir, controllersDir, modelsDir,
                                                              viewsDir, routesDir, webRouteFile, apiRouteFile,
@@ -208,9 +210,56 @@ void flattenMYSQLDatabase() {
 
 }
 
+void createPostmanProject() {
+
+    std::string host = "tcp://127.0.0.1:3306";
+    std::string username = "root";
+    std::string password = "root3358";
+    std::string database = "pesarika";
+
+    MYSQLDatabaseConnectionParams params{host, username, password, database};
+    MYSQLDatabaseConnector connector{params};
+    connector.open();
+    dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer{connector};
+
+    std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
+
+    auto tables = decomposer.getSchemaTables(database);
+
+    for (dbcrudgen::mysql::Tables &table : tables) {
+        std::string tableName = table.getTableName();
+        std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
+        tableColumns.insert({tableName, columns});
+    }
+
+    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
+    databaseModel.setDatabaseName(database);
+    databaseModel.setTables(tables);
+    databaseModel.setTableColumns(tableColumns);
+
+    auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
+
+    std::string projectName = "Test";
+    std::string storeDirectory = "/home/victor/Desktop";
+    std::string protocol = "http";
+    std::string apiHost = "localhost";
+    int port = 8000;
+    std::string pathSegments{"api/v1"};
+    std::map<std::string, std::string> headers;
+    std::string databaseType{"mysql"};
+
+    headers.insert(std::pair<std::string, std::string>(std::string{"Content-Type"}, std::string{"application/json"}));
+    headers.insert(std::pair<std::string, std::string>(std::string{"Accept"}, std::string{"application/json"}));
+
+    dbcrudgen::orm::PostmanProjectModel projectModel{projectName, storeDirectory, protocol, apiHost, port,
+                                                     pathSegments, headers, databaseType};
+    dbcrudgen::orm::PostmanProjectCreator projectCreator{projectModel, genericDatabase};
+    projectCreator.createProject();
+}
+
 int main(int argc, char **argv) {
 
-    flattenMYSQLDatabase();
-    int generic = 1;
+    createPostmanProject();
+
     return EXIT_SUCCESS;
 }
