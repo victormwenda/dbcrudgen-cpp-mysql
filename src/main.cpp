@@ -10,11 +10,14 @@
 #include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
+#include "databases/mysql/parsers/MYSQLDatabaseFlattener.h"
+#include "databases/generic/Database.h"
 #include "databases/mysql/models/MYSQLDatabaseModel.h"
 #include "orm/projects/CppMYSQLProjectModel.h"
 #include "orm/creators/cpp/CppMYSQLProjectCreator.h"
 #include "orm/projects/LaravelPHPMYSQLProjectModel.h"
 #include "orm/creators/php/LaravelPHPMYSQLProjectCreator.h"
+#include "databases/mysql/parsers/MYSQLDatabaseFlattener.h"
 
 std::vector<Schemata> getSchemas(dbcrudgen::mysql::MYSQLDatabaseDecomposer &model) {
     return model.getSchemas();
@@ -159,7 +162,7 @@ void createPhpProject() {
 
 }
 
-void createPostmanCollection () {
+void flattenMYSQLDatabase() {
 
     std::string host = "tcp://127.0.0.1:3306";
     std::string username = "root";
@@ -169,7 +172,7 @@ void createPostmanCollection () {
     MYSQLDatabaseConnectionParams params{host, username, password, database};
     MYSQLDatabaseConnector connector{params};
     connector.open();
-    dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer {connector};
+    dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer{connector};
 
     std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
 
@@ -186,28 +189,28 @@ void createPostmanCollection () {
     databaseModel.setTables(tables);
     databaseModel.setTableColumns(tableColumns);
 
+    auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "pesarika-web";
-    std::string workspaceDir = "/var/www/html";
-    std::string controllersDir = "app/Http/Controllers";
-    std::string modelsDir = "app/Http/Models";
-    std::string viewsDir = "resources/views";
-    std::string routesDir = "routes";
-    std::string apiVersion = "v1";
-    std::string webRouteFile = "pesarika.web.php";
-    std::string apiRouteFile = "pesarika.api.php";
+    std::cout << "Generic db name: " << genericDatabase.getDatabaseName() << std::endl;
 
-    dbcrudgen::orm::LaravelPHPMYSQLProjectModel projectModel{projectName, workspaceDir, controllersDir, modelsDir,
-                                                             viewsDir, routesDir, webRouteFile, apiRouteFile,
-                                                             apiVersion};
+    auto genericTables = genericDatabase.getTables();
 
-    dbcrudgen::orm::LaravelPHPMYSQLProjectCreator projectCreator{projectModel, databaseModel};
-    projectCreator.createProject();
+    for (const auto &genericTable : genericTables) {
+        std::cout << " ================== " << genericTable.getTableName() << " ================== " << std::endl;
+
+        auto genericColumns = genericTable.getTableColumns();
+
+        for (const auto &genericColumn : genericColumns) {
+            std::cout << "Column name : " << genericColumn.getColumnName() << " Data type :: "
+                      << genericColumn.getDataType() << std::endl;
+        }
+    }
+
 }
 
 int main(int argc, char **argv) {
 
-    createPhpProject();
-
+    flattenMYSQLDatabase();
+    int generic = 1;
     return EXIT_SUCCESS;
 }

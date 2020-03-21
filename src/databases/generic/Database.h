@@ -8,25 +8,28 @@
 #include <string>
 #include <vector>
 
+#include "Table.h"
+
 namespace dbcrudgen {
     namespace db {
         namespace generic {
-
             /**
              * A generic database table
              */
-            class Table {
+            class Database {
+
             private:
                 std::string databaseName;
                 std::vector<dbcrudgen::db::generic::Table> tables;
+
             public:
 
                 /**
-                 * Create database table
+                 * Create a generic database
                  * @param databaseName
                  * @param tables
                  */
-                Table(std::string &databaseName, std::vector<dbcrudgen::db::generic::Table> &tables)
+                Database(std::string &databaseName, std::vector<dbcrudgen::db::generic::Table> &tables)
                         : databaseName(databaseName), tables(tables) {}
 
                 const std::string &getDatabaseName() const {
@@ -34,7 +37,7 @@ namespace dbcrudgen {
                 }
 
                 void setDatabaseName(const std::string &databaseName) {
-                    Table::databaseName = databaseName;
+                    Database::databaseName = databaseName;
                 }
 
                 const std::vector<dbcrudgen::db::generic::Table> &getTables() const {
@@ -42,7 +45,7 @@ namespace dbcrudgen {
                 }
 
                 void setTables(const std::vector<dbcrudgen::db::generic::Table> &tables) {
-                    Table::tables = tables;
+                    Database::tables = tables;
                 }
             };
         }
