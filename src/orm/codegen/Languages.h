@@ -16,6 +16,8 @@ namespace dbcrudgen {
             static constexpr const char *PYTHON = "Python";
             static constexpr const char *SWIFT = "Swift";
             static constexpr const char *CPP = "C++";
+            static constexpr const char *JSON = "JSON";
+            static constexpr const char *XML = "XML";
         };
     }
 }

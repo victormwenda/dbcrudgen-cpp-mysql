@@ -50,18 +50,30 @@ set(SOURCE_FILES
 
         src/main.cpp
 
-        src/databases/mssql/models/MSSQLDatabaseSchemas.h
+        src/databases/generic/Database.h
+        src/databases/generic/Table.h
+        src/databases/generic/Column.h
+        src/databases/generic/User.h
 
         ##############################################################################################################
-        # MYSQL DATABASE SOURCE FILES
+        # MSSQL DATABASE SOURCE FILES
         ##############################################################################################################
+
+        src/databases/mssql/models/MSSQLDatabaseSchemas.h
         src/databases/mssql/connectors/MSSQLDatabaseConnectionParams.h
+        src/databases/mssql/parsers/MSSQLDatabaseFlattener.h
+
+        ##############################################################################################################
+        # MySQL DATABASE SOURCE FILES
+        ##############################################################################################################
+
         src/databases/mysql/core/MYSQLIdentifierLengthLimits.h
         src/databases/mysql/core/MYSQLObjects.h
         src/databases/mysql/core/MYSQLKeyWords.h
         src/databases/mysql/core/MYSQLReservedWords.h
         src/databases/mysql/core/RowFormats.h
         src/databases/mysql/core/MYSQLDataType.h
+
 
         src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
         src/databases/mysql/columns/MysqlTableColumnColumns.h
@@ -96,6 +108,7 @@ set(SOURCE_FILES
         src/databases/mysql/queries/MYSQLStatements.h
 
         src/databases/mysql/parsers/MYSQLLangParser.h
+        src/databases/mysql/parsers/MYSQLDatabaseFlattener.h
 
         src/databases/mysql/scaffolding/entities/CharacterSets.h
         src/databases/mysql/scaffolding/entities/Collations.h
@@ -194,6 +207,8 @@ set(SOURCE_FILES
 
         src/databases/oracle/parsers/MysqlTags.h
         src/databases/oracle/parsers/OracleTags.h
+        src/databases/oracle/parsers/OracleDatabaseFlattener.h
+
 
         src/databases/oracle/queries/OracleStatements.h
 
@@ -231,6 +246,7 @@ set(SOURCE_FILES
         src/databases/sqlite/connectors/SQLiteDatabaseConnector.h
         src/databases/sqlite/connectors/SQLiteQueryExecutor.h
         src/databases/sqlite/models/SQLiteDatabaseModel.h
+        src/databases/sqlite/parsers/SQLiteDatabaseFlattener.h
 
         ##############################################################################################################
         # IO
@@ -363,6 +379,11 @@ set(SOURCE_FILES
         src/orm/templates/java/JavaMYSQLConnectorTemplate.h
         src/orm/templates/java/JavaSQLiteConnectorTemplate.h
 
+        src/orm/templates/postman/PostmanCollectionTemplate.h
+        src/orm/templates/postman/PostmanRequestTemplate.h
+        src/orm/templates/postman/PostmanTemplateFiles.h
+        src/orm/creators/postman/PostmanProjectCreator.h
+
         src/orm/templates/php/laravel/LaravelControllerTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodCreateTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodEditTemplate.h
@@ -393,6 +414,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
+
         )
 
 #GoogleTest
