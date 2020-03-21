@@ -28,7 +28,7 @@ namespace dbcrudgen {
             static std::string
             parseProjectDetails(std::string &collectionSourceCode, dbcrudgen::orm::PostmanProjectModel model) {
                 StringUtils::replace(collectionSourceCode, "${COLLECTION_NAME}", model.getProjectName());
-                StringUtils::replace(collectionSourceCode, "${POSTMAN_ID}", "a413c81e-f299-425e-9765-0220b0830eec");
+                StringUtils::replace(collectionSourceCode, "${POSTMAN_ID}", "");
                 return collectionSourceCode;
             }
 
