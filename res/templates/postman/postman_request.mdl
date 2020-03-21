@@ -1,0 +1,38 @@
+"name": "${REQUEST_NAME}",
+"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{authorization-agent}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "${REQUEST_METHOD}",
+				"header": [
+					{
+						${HEADERS}
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						 ${FORM_DATA}
+					]
+				},
+				"url": {
+					"raw": "${RAW_URL}",
+					"protocol": "${PROTOCOL}",
+					"host": [
+						"${HOST}"
+					],
+					"path": [
+						"${PATH_SEGMENTS}"
+					],
+					"query": [
+						${QUERY_PARAMS}
+					]
+				}
+			},
