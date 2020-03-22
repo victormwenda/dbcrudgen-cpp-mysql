@@ -1,0 +1,6 @@
+"body": {
+    "mode": "${DATA_MODE}",
+    "${DATA_MODE}": [
+        ${REQUEST_DATA}
+    ]
+},

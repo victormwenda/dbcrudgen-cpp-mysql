@@ -294,7 +294,7 @@ set(SOURCE_FILES
         src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JavaOracleProjectCodeGen.h
 
-        src/orm/codegen/PostmanProjectCodeGen.h
+        src/orm/codegen/postman/PostmanProjectCodeGen.h
 
         src/orm/codegen/php/PHPProjectCodeGen.h
         src/orm/codegen/php/PHPOracleProjectCodeGen.h
@@ -386,6 +386,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestTemplate.h
         src/orm/templates/postman/PostmanTemplateFiles.h
         src/orm/creators/postman/PostmanProjectCreator.h
+        src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
         src/orm/templates/php/laravel/LaravelControllerTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodCreateTemplate.h
@@ -417,6 +418,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
+
         )
 
 #GoogleTest

@@ -292,6 +292,88 @@ public:
 
         return snake_case;
     }
+
+    /**
+     * Convert text to kebab case
+     * Kebab case contains lower case words separated with hyphens.
+     * Also called caterpillar case
+     * @param name
+     * @return
+     */
+    static std::string toKebabCase(std::string name) {
+        std::string snake_case;
+        int index = 0;
+
+        while (index < name.size()) {
+
+            if (name[index] == '_') {
+                snake_case.append("-");
+                index++;
+                continue;
+            }
+
+            if (isupper(name[index])) {
+
+                if (snake_case.empty()) {
+                    snake_case.append(1, tolower(name[index]));
+                } else {
+                    snake_case.append("-").append(1, tolower(name[index]));
+                }
+            } else {
+                snake_case.append(1, name[index]);
+            }
+
+
+            index++;
+        }
+
+        return snake_case;
+    }
+
+    /**
+     * Create a camel case name
+     * @param name
+     * @return
+     */
+    static std::string toCamelCase(std::string name) {
+
+        //convert all letters to small letters
+        int index = 0;
+        while (index < name.length()) {
+            name[index] = tolower(name[index]);
+            index++;
+        }
+
+        std::string variable_name;
+        std::vector<std::string> parts = split(name.c_str(), "_");
+
+        if (parts.size() == 0) {
+            return name;
+        }
+
+        int partsIndex = 0;
+
+        for (std::string &part : parts) {
+
+            if (partsIndex == 0) {
+                variable_name += part;
+                partsIndex++;
+                continue;
+            }
+
+            char partsFirstChar = part[0];
+
+            if (isalpha(partsFirstChar) && islower(partsFirstChar)) {
+                part[0] = toupper(partsFirstChar);
+            }
+
+            partsIndex++;
+            variable_name += part;
+        }
+
+        name = variable_name;
+        return name;
+    }
 };
 
 

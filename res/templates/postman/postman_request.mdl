@@ -15,18 +15,14 @@
         "header": [
             ${HEADERS}
         ],
-        "body": {
-            "mode": "formdata",
-            "formdata": [
-                ${FORM_DATA}
-            ]
-        },
+        ${REQUEST_BODY}
         "url": {
             "raw": "${RAW_URL}",
             "protocol": "${PROTOCOL}",
             "host": [
                 "${HOST}"
             ],
+            "port": "${PORT}",
             "path": [
                 ${PATH_SEGMENTS}
             ],

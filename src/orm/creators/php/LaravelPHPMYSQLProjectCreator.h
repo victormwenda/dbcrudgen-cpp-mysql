@@ -239,7 +239,7 @@ namespace dbcrudgen {
                 std::string source = routeWebTemplate.getTemplate();
 
                 std::string className = LaravelParser::toPHPClassName(table.getTableName());
-                std::string apiName = StringUtils::toSnakeCase(className);
+                std::string apiName = StringUtils::toKebabCase(className);
 
                 LaravelParser::replace(source, "${CONTROLLER_CLASS}", className.append("Controller"));
                 LaravelParser::replace(source, "${API_NAME}", apiName);
@@ -259,7 +259,7 @@ namespace dbcrudgen {
 
                 std::string className = LaravelParser::toPHPClassName(table.getTableName());
                 std::string classVariable = LaravelParser::toPHPVariableName(table.getTableName());
-                std::string apiName = StringUtils::toSnakeCase(className);
+                std::string apiName = StringUtils::toKebabCase(className);
 
                 LaravelParser::replace(source, "${API_VERSION}", projectModel.getApiVersion());
                 LaravelParser::replace(source, "${API_NAME}", apiName);

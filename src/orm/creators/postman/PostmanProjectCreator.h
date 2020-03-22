@@ -12,7 +12,7 @@
 #include "../../projects/PostmanProjectModel.h"
 #include "../../templates/postman/PostmanCollectionTemplate.h"
 #include "../../templates/postman/PostmanRequestTemplate.h"
-#include "../../codegen/PostmanProjectCodeGen.h"
+#include "../../codegen/postman/PostmanProjectCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -29,8 +29,7 @@ namespace dbcrudgen {
 
         public:
 
-            explicit PostmanProjectCreator(PostmanProjectModel &projectModel,
-                                           dbcrudgen::db::generic::Database &database)
+            PostmanProjectCreator(PostmanProjectModel &projectModel, dbcrudgen::db::generic::Database &database)
                     : projectModel{projectModel}, database{database} {}
 
             const PostmanProjectModel &getProjectModel() const {
@@ -69,47 +68,59 @@ namespace dbcrudgen {
                     std::string source = PostmanProjectCodeGen::createSource(projectModel, table, requestTemplate);
 
                     std::string getSource = source;
+                    std::string searchSource = source;
+                    std::string listSource = source;
                     std::string postSource = source;
                     std::string putSource = source;
                     std::string deleteSource = source;
 
-                    getSource = PostmanProjectCodeGen::createGetSource(table, getSource);
-                    postSource = PostmanProjectCodeGen::createPostSource(table, postSource);
-                    putSource = PostmanProjectCodeGen::createPutSource(table, putSource);
-                    deleteSource = PostmanProjectCodeGen::createDeleteSource(table, deleteSource);
+                    getSource = PostmanProjectCodeGen::createGetSource(projectModel, table, getSource);
+                    searchSource = PostmanProjectCodeGen::createGetSourceSearch(projectModel, table, searchSource);
+                    listSource = PostmanProjectCodeGen::createGetSourceList(projectModel, table, listSource);
+                    postSource = PostmanProjectCodeGen::createPostSource(projectModel, table, postSource);
+                    putSource = PostmanProjectCodeGen::createPutSource(projectModel, table, putSource);
+                    deleteSource = PostmanProjectCodeGen::createDeleteSource(projectModel, table, deleteSource);
 
 
                     auto tableColumns = table.getTableColumns();
 
-                    std::string formParams;
+                    std::string requestParams;
                     std::string queryParams;
 
                     int columnsIndex = 0;
                     for (const auto &tableColumn : tableColumns) {
-                        formParams += PostmanProjectCodeGen::createFormParams(tableColumn);
+                        requestParams += PostmanProjectCodeGen::createRequestParams(tableColumn);
                         queryParams += PostmanProjectCodeGen::createQueryParams(tableColumn);
 
                         if (columnsIndex < tableColumns.size() - 1) {
-                            formParams.append(",");
+                            requestParams.append(",");
                             queryParams.append(",");
                         }
 
                         columnsIndex++;
                     }
 
-                    StringUtils::replace(getSource, "${FORM_DATA}", "");
-                    StringUtils::replace(getSource, "${QUERY_PARAMS}", queryParams);
+                    StringUtils::replace(getSource, "${REQUEST_DATA}", "");
+                    StringUtils::replace(getSource, "${QUERY_PARAMS}", "");
 
-                    StringUtils::replace(postSource, "${FORM_DATA}", formParams);
+                    StringUtils::replace(listSource, "${REQUEST_DATA}", "");
+                    StringUtils::replace(listSource, "${QUERY_PARAMS}", "");
+
+                    StringUtils::replace(searchSource, "${REQUEST_DATA}", "");
+                    StringUtils::replace(searchSource, "${QUERY_PARAMS}", queryParams);
+
+                    StringUtils::replace(postSource, "${REQUEST_DATA}", requestParams);
                     StringUtils::replace(postSource, "${QUERY_PARAMS}", "");
 
-                    StringUtils::replace(putSource, "${FORM_DATA}", formParams);
+                    StringUtils::replace(putSource, "${REQUEST_DATA}", requestParams);
                     StringUtils::replace(putSource, "${QUERY_PARAMS}", "");
 
-                    StringUtils::replace(deleteSource, "${FORM_DATA}", "");
+                    StringUtils::replace(deleteSource, "${REQUEST_DATA}", "");
                     StringUtils::replace(deleteSource, "${QUERY_PARAMS}", "");
 
                     requestsSource += getSource.append(",");
+                    requestsSource += listSource.append(",");
+                    requestsSource += searchSource.append(",");
                     requestsSource += postSource.append(",");
                     requestsSource += putSource.append(",");
                     requestsSource += deleteSource;
@@ -119,6 +130,7 @@ namespace dbcrudgen {
                     }
 
                     tablesIndex++;
+                    break;
                 }
 
                 PostmanProjectCodeGen::parseProjectDetails(collectionSource, projectModel);

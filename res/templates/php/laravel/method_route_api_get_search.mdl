@@ -1,0 +1,16 @@
+/**
+|-----------------------------------------------------------------------------------------------------------------------
+| - RETURNS ALL RECORDS IN TABLE '${TABLE NAME}'
+|-----------------------------------------------------------------------------------------------------------------------
+*/
+Route::get('${API_VERSION}/${API_NAME}/list', function (Request $request) {
+
+    $${MODEL_VARIABLE} = ${MODEL_CLASS}::get();
+
+    if ($${MODEL_VARIABLE} == null) {
+        $content = "${MODEL_CLASS} not found ";
+        return response($content, Response::HTTP_UNPROCESSABLE_ENTITY);
+    }
+
+    return array ('status_code' => Response::HTTP_OK, 'errors' => null, 'data' => $${MODEL_VARIABLE});
+});
