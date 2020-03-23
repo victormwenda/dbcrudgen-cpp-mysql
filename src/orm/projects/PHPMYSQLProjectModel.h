@@ -12,10 +12,11 @@
 
 #include "ProjectModel.h"
 #include "../codegen/Languages.h"
+#include "PHPProjectModel.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class PHPMYSQLProjectModel : public ProjectModel {
+        class PHPMYSQLProjectModel : public PHPProjectModel {
 
         private:
             std::string projectName;
@@ -31,8 +32,9 @@ namespace dbcrudgen {
              * @param workspaceDir
              * @param generatedCodeDir
              */
-            PHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir)
-                    : projectName(projectName), workspaceDir(workspaceDir) {
+            [[deprecated]] PHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir)
+                    : PHPProjectModel(projectName, workspaceDir), projectName(projectName),
+                      workspaceDir(workspaceDir) {
                 generatedCodeDir = getProjectDir();
             }
 

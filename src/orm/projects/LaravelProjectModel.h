@@ -1,16 +1,16 @@
 //
-// Created by victor on 3/19/20.
+// Created by victor on 3/23/20.
 //
 
-#ifndef DBCRUDGEN_CPP_LARAVELPHPMYSQLPROJECTMODEL_H
-#define DBCRUDGEN_CPP_LARAVELPHPMYSQLPROJECTMODEL_H
+#ifndef DBCRUDGEN_CPP_LARAVELPROJECTMODEL_H
+#define DBCRUDGEN_CPP_LARAVELPROJECTMODEL_H
 
 #include "PHPMYSQLProjectModel.h"
 #include "../codegen/Frameworks.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class LaravelPHPMYSQLProjectModel : public PHPMYSQLProjectModel {
+        class LaravelProjectModel : public PHPProjectModel {
 
         private:
             std::string controllersDir;
@@ -30,11 +30,11 @@ namespace dbcrudgen {
             * @param workspaceDir
             * @param generatedCodeDir
             */
-            LaravelPHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir,
-                                        std::string &controllersDir,
-                                        std::string &modelsDir, std::string &viewsDir, std::string &routesDir,
-                                        std::string &webRoutesFile, std::string &apiRoutesFile, std::string &apiVersion)
-                    : PHPMYSQLProjectModel{projectName, workspaceDir},
+            LaravelProjectModel(std::string &projectName, std::string &workspaceDir,
+                                std::string &controllersDir,
+                                std::string &modelsDir, std::string &viewsDir, std::string &routesDir,
+                                std::string &webRoutesFile, std::string &apiRoutesFile, std::string &apiVersion)
+                    : PHPProjectModel{projectName, workspaceDir},
                       controllersDir{controllersDir}, modelsDir{modelsDir}, viewsDir{viewsDir}, routesDir{routesDir},
                       webRoutesFile{webRoutesFile}, apiRoutesFile{apiRoutesFile}, apiVersion{apiVersion} {}
 
@@ -123,5 +123,4 @@ namespace dbcrudgen {
     }
 }
 
-
-#endif //DBCRUDGEN_CPP_LARAVELPHPMYSQLPROJECTMODEL_H
+#endif //DBCRUDGEN_CPP_LARAVELPROJECTMODEL_H

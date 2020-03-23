@@ -1,12 +1,10 @@
 //
-// Created by victor on 3/19/20.
+// Created by victor on 3/23/20.
 //
 
-#ifndef DBCRUDGEN_CPP_LARAVELPHPMYSQLPROJECTCREATOR_H
-#define DBCRUDGEN_CPP_LARAVELPHPMYSQLPROJECTCREATOR_H
+#ifndef DBCRUDGEN_CPP_LARAVELPROJECTCREATOR_H
+#define DBCRUDGEN_CPP_LARAVELPROJECTCREATOR_H
 
-#include "PHPMYSQLProjectCreator.h"
-#include "../../projects/LaravelPHPMYSQLProjectModel.h"
 #include "../../parsers/php/LaravelParser.h"
 #include "../../templates/php/laravel/LaravelControllerTemplate.h"
 #include "../../templates/php/laravel/LaravelModelTemplate.h"
@@ -14,29 +12,31 @@
 #include "../../templates/php/laravel/LaravelTableRoutesApiTemplate.h"
 #include "../../templates/php/laravel/LaravelRoutesApiTemplate.h"
 #include "../../templates/php/laravel/LaravelRoutesWebTemplate.h"
+#include "../../projects/LaravelProjectModel.h"
+#include "PHPProjectCreator.h"
 
 namespace dbcrudgen {
     namespace orm {
 
-        class LaravelPHPMYSQLProjectCreator : public PHPMYSQLProjectCreator {
+        class LaravelProjectCreator : public PHPProjectCreator {
 
         private:
-            LaravelPHPMYSQLProjectModel projectModel;
+            LaravelProjectModel projectModel;
 
         public:
-            explicit LaravelPHPMYSQLProjectCreator(LaravelPHPMYSQLProjectModel &projectModel,
-                                                   dbcrudgen::mysql::MYSQLDatabaseModel databaseModel)
-                    : PHPMYSQLProjectCreator{projectModel, databaseModel}, projectModel{projectModel} {}
+            explicit LaravelProjectCreator(LaravelProjectModel &projectModel,
+                                           dbcrudgen::db::generic::Database databaseModel)
+                    : PHPProjectCreator{projectModel, databaseModel}, projectModel{projectModel} {}
 
 
             void createProject() override {
-                PHPMYSQLProjectCreator::createProject();
+                PHPProjectCreator::createProject();
                 createProjectDirs();
                 createSourceFiles();
             }
 
             void createProjectDirs() override {
-                PHPMYSQLProjectCreator::createProjectDirs();
+                PHPProjectCreator::createProjectDirs();
 
                 FilesWriter::createDirs(projectModel.getControllersFullDir());
                 FilesWriter::createDirs(projectModel.getModelsFullDir());
@@ -45,7 +45,7 @@ namespace dbcrudgen {
             }
 
             void createSourceFiles() override {
-                PHPMYSQLProjectCreator::createSourceFiles();
+                PHPProjectCreator::createSourceFiles();
 
                 //Create web routes source
                 std::string webRoutesSource;
@@ -59,7 +59,6 @@ namespace dbcrudgen {
                 auto databaseModel = getDatabaseModel();
                 auto tables = databaseModel.getTables();
 
-                auto databaseTableColumns = databaseModel.getTableColumns();
 
                 for (const auto &table : tables) {
 
@@ -76,9 +75,7 @@ namespace dbcrudgen {
                     //Append models include for routes
                     modelsIncludes += createModelsInclude(table);
 
-                    auto tableColumnsIterator = databaseTableColumns.find(tableName);
-                    auto columns = tableColumnsIterator->second;
-
+                    auto columns = table.getTableColumns();
 
                     std::string modelFillables;
                     std::string deserializedFormData;
@@ -181,7 +178,7 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            std::string createControllerSource(const mysql::Tables &table) {
+            std::string createControllerSource(const dbcrudgen::db::generic::Table &table) {
 
                 const std::string &tableName = table.getTableName();
 
@@ -221,7 +218,7 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            std::string createModelSource(const mysql::Tables &table) {
+            std::string createModelSource(const dbcrudgen::db::generic::Table &table) {
 
                 const std::string &tableName = table.getTableName();
 
@@ -252,7 +249,7 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            static std::string createWebRouteSource(const mysql::Tables &table) {
+            static std::string createWebRouteSource(const dbcrudgen::db::generic::Table &table) {
                 LaravelTableWebRoutesTemplate routeWebTemplate;
                 std::string source = routeWebTemplate.getTemplate();
 
@@ -271,7 +268,7 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            std::string createApiRouteSource(const mysql::Tables &table) {
+            std::string createApiRouteSource(const dbcrudgen::db::generic::Table &table) {
                 LaravelTableRoutesApiTemplate routeApiTemplate;
                 std::string source = routeApiTemplate.getTemplate();
 
@@ -287,7 +284,7 @@ namespace dbcrudgen {
                 return source;
             }
 
-            std::string createModelsInclude(const mysql::Tables &table) {
+            std::string createModelsInclude(const dbcrudgen::db::generic::Table &table) {
 
                 std::string modelNamespace = LaravelParser::toNamespace(projectModel.getModelsDir());
                 std::string modelClassName = LaravelParser::toCppClassName(table.getTableName());
@@ -297,4 +294,4 @@ namespace dbcrudgen {
         };
     }
 }
-#endif //DBCRUDGEN_CPP_LARAVELPHPMYSQLPROJECTCREATOR_H
+#endif //DBCRUDGEN_CPP_LARAVELPROJECTCREATOR_H

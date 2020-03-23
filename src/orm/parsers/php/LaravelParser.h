@@ -49,7 +49,7 @@ namespace dbcrudgen {
              * @param isBeforeLast
              * @return
              */
-            static std::string createModelFillableColumns(const mysql::Columns &column, bool isBeforeLast) {
+            static std::string createModelFillableColumns(const dbcrudgen::db::generic::Column &column, bool isBeforeLast) {
                 if (isBeforeLast) {
                     return std::string{"'" + column.getColumnName() + "', "};
                 }
@@ -61,7 +61,7 @@ namespace dbcrudgen {
              * @param column
              * @return
              */
-            static std::string deserializeSubmittedFormData(const mysql::Columns &column) {
+            static std::string deserializeSubmittedFormData(const dbcrudgen::db::generic::Column &column) {
 
                 std::string sourceTemplate = "$${OBJECT} = $request->get('${OBJECT}');";
 
@@ -76,7 +76,7 @@ namespace dbcrudgen {
              * @param isBeforeLast
              * @return
              */
-            static std::string createValidationCandidates(const mysql::Columns &column, bool isBeforeLast) {
+            static std::string createValidationCandidates(const dbcrudgen::db::generic::Column &column, bool isBeforeLast) {
                 std::string sourceTemplate = "'${COLUMN_NAME}' => $${OBJECT}${DELIMETER} ";
 
                 replace(sourceTemplate, "${COLUMN_NAME}", column.getColumnName());
@@ -94,7 +94,7 @@ namespace dbcrudgen {
              * @param isBeforeLast
              * @return
              */
-            static std::string packTableAttributesForInsert(const mysql::Columns &column, bool isBeforeLast) {
+            static std::string packTableAttributesForInsert(const dbcrudgen::db::generic::Column &column, bool isBeforeLast) {
                 std::string sourceTemplate = "'${COLUMN_NAME}' => $${OBJECT}${DELIMETER} ";
 
                 replace(sourceTemplate, "${COLUMN_NAME}", column.getColumnName());
@@ -112,14 +112,14 @@ namespace dbcrudgen {
              * @param isBeforeLast
              * @return
              */
-            static std::string createInsertValidationRules(const mysql::Columns &column, bool isBeforeLast) {
+            static std::string createInsertValidationRules(const dbcrudgen::db::generic::Column &column, bool isBeforeLast) {
                 std::string sourceTemplate = "'${COLUMN_NAME}' => [${RULES}] ${DELIMETER}";
                 replace(sourceTemplate, "${COLUMN_NAME}", column.getColumnName());
 
                 std::string rules;
 
                 //Add nullable
-                if (column.getIsNullable() == "YES") {
+                if (column.isNullable()) {
                     rules.append("'nullable',");
                 } else {
                     rules.append("'required',");
@@ -131,7 +131,7 @@ namespace dbcrudgen {
                 rules.append("'").append(dataType).append("',");
 
                 //Add max value
-                long maxLength = column.getCharacterMaximumLength();
+                long maxLength = column.getLength();
                 if (maxLength > 0) {
                     rules.append("'max:").append(std::to_string(maxLength)).append("',");
                 }
@@ -151,14 +151,14 @@ namespace dbcrudgen {
              * @param isBeforeLast
              * @return
              */
-            static std::string createUpdateValidationRules(const mysql::Columns &column, bool isBeforeLast) {
+            static std::string createUpdateValidationRules(const dbcrudgen::db::generic::Column &column, bool isBeforeLast) {
                 std::string sourceTemplate = "'${COLUMN_NAME}' => [${RULES}] ${DELIMETER}";
                 replace(sourceTemplate, "${COLUMN_NAME}", column.getColumnName());
 
                 std::string rules;
 
                 //Add nullable
-                if (column.getIsNullable() == "YES") {
+                if (column.isNullable() ) {
                     rules.append("'nullable',");
                 } else {
                     rules.append("'required',");
@@ -170,7 +170,7 @@ namespace dbcrudgen {
                 rules.append("'").append(dataType).append("',");
 
                 //Add max value
-                long maxLength = column.getCharacterMaximumLength();
+                long maxLength = column.getLength();
                 if (maxLength > 0) {
                     rules.append("'max:").append(std::to_string(maxLength)).append("',");
                 }

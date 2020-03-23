@@ -6,11 +6,11 @@
 
 #ifndef DBCRUDGEN_CPP_PROJECTMODEL_H
 #define DBCRUDGEN_CPP_PROJECTMODEL_H
-namespace dbcrudgen {
-    namespace orm {
 
 #include<string>
 
+namespace dbcrudgen {
+    namespace orm {
         /**
          * A project Model
          */

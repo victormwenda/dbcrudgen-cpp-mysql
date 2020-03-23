@@ -314,8 +314,8 @@ set(SOURCE_FILES
         src/orm/creators/swift/SwiftSQLiteProjectCreator.h
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
-        src/orm/creators/php/LaravelPHPMYSQLProjectCreator.h
         src/orm/creators/php/PHPMYSQLProjectCreator.h
+        src/orm/creators/php/PHPProjectCreator.h
 
         src/orm/parsers/SyntaxParser.h
         src/orm/parsers/cpp/CppMYSQLParser.h
@@ -334,7 +334,8 @@ set(SOURCE_FILES
         src/orm/projects/JavaOracleProjectModel.h
         src/orm/projects/JavaProjectModel.h
         src/orm/projects/JavaSQLiteProjectModel.h
-        src/orm/projects/LaravelPHPMYSQLProjectModel.h
+        src/orm/projects/LaravelProjectModel.h
+        src/orm/creators/php/LaravelProjectCreator.h
         src/orm/projects/PHPMYSQLProjectModel.h
         src/orm/projects/PHPOracleProjectModel.h
         src/orm/projects/PHPProjectModel.h
@@ -418,6 +419,7 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
+
 
         )
 
