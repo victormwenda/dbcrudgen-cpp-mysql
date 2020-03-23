@@ -25,7 +25,7 @@ class ${CLASS_NAME}Controller extends Controller
     {
         $${MODEL_VARIABLE} = ${MODEL_CLASS}::all();
         
-        return view('${MODEL_VARIABLE}')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
+        return view('${VIEW_DIR}/${INDEX_VIEW_NAME}')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
     }
 
     /**
@@ -161,7 +161,7 @@ class ${CLASS_NAME}Controller extends Controller
     public function refresh()
     {
         $${MODEL_VARIABLE} = ${MODEL_CLASS}::all();
-        return view('${MODEL_VARIABLE}_table')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
+        return view('${VIEW_DIR}/${REFRESH_VIEW_NAME}')->with('${MODEL_VARIABLE}', $${MODEL_VARIABLE});
     }
 
     /**

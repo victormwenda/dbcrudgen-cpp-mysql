@@ -133,6 +133,23 @@ namespace dbcrudgen {
                 return StringUtils::createVariableNameCamelCase(name);
             }
 
+            /**
+             * Convert name to snake case
+             * @param name
+             * @return
+             */
+            static std::string toSnakeCase(std::string name) {
+                return StringUtils::toSnakeCase(name);
+            }
+
+            /**
+             * Convert name to kebab case
+             * @param name
+             * @return
+             */
+            static std::string toKebabCase(std::string name) {
+                return StringUtils::toKebabCase(name);
+            }
         };
     }
 }

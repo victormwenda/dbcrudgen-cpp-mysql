@@ -130,7 +130,6 @@ namespace dbcrudgen {
                     }
 
                     tablesIndex++;
-                    break;
                 }
 
                 PostmanProjectCodeGen::parseProjectDetails(collectionSource, projectModel);

@@ -139,6 +139,18 @@ namespace dbcrudgen {
                             projectModel.getControllersFullDir() + "/" + controllerFilename + "Controller.php";
                     FilesWriter::writeFile(controllerFilePath, controllerSource);
 
+                    //create view file
+                    const std::string viewFilename = LaravelParser::toSnakeCase(tableName);
+                    LaravelParser::replace(controllerSource, "${VIEW_NAME}", "index");
+
+                    const std::string controllerViewsDir = LaravelParser::toKebabCase(tableName);
+                    const std::string controllerViewsDirPath = projectModel.getViewsFullDir().append("/")
+                            .append(controllerViewsDir);
+                    FilesWriter::createDirs(controllerViewsDirPath);
+
+                    std::string viewsFilePath = controllerViewsDirPath + "/index.php";
+                    FilesWriter::writeFile(viewsFilePath, "");
+
 
                 }
 
@@ -187,6 +199,7 @@ namespace dbcrudgen {
                 //Add class names
                 std::string className = LaravelParser::toPHPClassName(tableName);
                 std::string classNameVariable = LaravelParser::toPHPVariableName(tableName);
+                std::string viewName = StringUtils::toKebabCase(tableName);
 
 
                 LaravelParser::replace(controllerSource, "${CLASS_NAME}", className);
@@ -194,6 +207,11 @@ namespace dbcrudgen {
 
                 //Controller
                 LaravelParser::replace(controllerSource, "${MODEL_VARIABLE}", classNameVariable);
+                LaravelParser::replace(controllerSource, "${VIEW_DIR}", viewName);
+
+                std::string viewFilename = LaravelParser::toKebabCase(tableName);
+                LaravelParser::replace(controllerSource, "${INDEX_VIEW_NAME}", "index");
+                LaravelParser::replace(controllerSource, "${REFRESH_VIEW_NAME}", "refresh");
 
                 return controllerSource;
             }
@@ -234,7 +252,7 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            std::string createWebRouteSource(const mysql::Tables &table) {
+            static std::string createWebRouteSource(const mysql::Tables &table) {
                 LaravelTableWebRoutesTemplate routeWebTemplate;
                 std::string source = routeWebTemplate.getTemplate();
 
