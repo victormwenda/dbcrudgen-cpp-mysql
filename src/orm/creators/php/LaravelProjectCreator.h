@@ -14,6 +14,7 @@
 #include "../../templates/php/laravel/LaravelRoutesWebTemplate.h"
 #include "../../projects/LaravelProjectModel.h"
 #include "PHPProjectCreator.h"
+#include "../../templates/php/laravel/LaravelViewTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -66,6 +67,7 @@ namespace dbcrudgen {
 
                     std::string controllerSource = createControllerSource(table);
                     std::string modelSource = createModelSource(table);
+                    std::string viewSource = createViewSource(table);
 
 
                     //Create routes source
@@ -145,8 +147,8 @@ namespace dbcrudgen {
                             .append(controllerViewsDir);
                     FilesWriter::createDirs(controllerViewsDirPath);
 
-                    std::string viewsFilePath = controllerViewsDirPath + "/index.php";
-                    FilesWriter::writeFile(viewsFilePath, "");
+                    std::string viewsFilePath = controllerViewsDirPath + "/index.blade.php";
+                    FilesWriter::writeFile(viewsFilePath, viewSource);
 
 
                 }
@@ -242,6 +244,40 @@ namespace dbcrudgen {
                 LaravelParser::replace(modelSource, "${MODEL_RELATIONSHIPS_INCLUDES}", "");
 
                 return modelSource;
+            }
+
+            /**
+             * Creates the model source code
+             * @param table
+             * @return
+             */
+            std::string createViewSource(const dbcrudgen::db::generic::Table &table) {
+
+                const std::string &tableName = table.getTableName();
+
+                LaravelViewTemplate viewTemplate;
+
+                std::string viewSource = viewTemplate.getTemplate();
+
+                //create namespaces
+                std::string modelNamespace = LaravelParser::toNamespace(projectModel.getModelsDir());
+                LaravelParser::replace(viewSource, "${MODEL_NAMESPACE}", modelNamespace);
+
+                //Add class name
+                std::string className = LaravelParser::toPHPClassName(tableName);
+                LaravelParser::replace(viewSource, "${CLASS_NAME}", className);
+
+                //Add table name
+                LaravelParser::replace(viewSource, "${TABLE_NAME}", tableName);
+
+                //Add model relation ships
+                LaravelParser::replace(viewSource, "${MODEL_RELATIONSHIPS}", "");
+                LaravelParser::replace(viewSource, "${MODEL_RELATIONSHIPS_INCLUDES}", "");
+
+                //Add basic project info
+                LaravelParser::replace(viewSource, "${PAGE_TITLE}", projectModel.getProjectName() + " | " + className);
+
+                return viewSource;
             }
 
             /**

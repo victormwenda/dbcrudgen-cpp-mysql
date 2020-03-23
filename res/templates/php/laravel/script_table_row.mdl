@@ -1,0 +1,10 @@
+@foreach($items as $item)
+    <tr>
+        <th scope="row">1</th>
+        ${TABLE_ROW_DATA}
+        <td>
+            <a type="button"><i class="material-icons edit-item" data-id="1">edit</i></a>
+            <a type="button"><i class="material-icons delete-item" data-id="2">delete</i></a>
+        </td>
+    </tr>
+@endforeach

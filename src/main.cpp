@@ -49,8 +49,6 @@ void createPostmanProject();
 
 int main(int argc, char **argv) {
 
-    createCppProject();
-    createPostmanProject();
     createPhpProject();
 
     return EXIT_SUCCESS;

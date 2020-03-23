@@ -1,0 +1,70 @@
+<script>
+
+    $('.delete-item').click(onClickDelete);
+    $('.edit-item').click(onClickEdit);
+
+    function onClickDelete() {
+        var tr = $(this).closest("tr");
+        var id = $(this).attr('data-id');
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+        $.ajax({
+            url: 'destroy/',
+            type: "DELETE",
+            headers: {"X-CSRF-TOKEN": csrfToken},
+            data: {"_token": ""},
+            success: function (data, textStatus, jqXHR) {
+                console.log(jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            }
+        });
+
+        console.log("clicked delete " + id);
+    }
+
+    function onClickEdit() {
+        var tr = $(this).closest("tr");
+        var id = $(this).attr('data-id');
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+        console.log("clicked edit " + id);
+
+        $.ajax({
+            url: 'edit/',
+            type: "GET",
+            headers: {"X-CSRF-TOKEN": csrfToken},
+            data: {"_token": ""},
+            success: function (data, textStatus, jqXHR) {
+                console.log(jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            }
+        });
+
+    }
+
+    function onClickSave() {
+        var tr = $(this).closest("tr");
+        var id = $(this).attr('data-id');
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+        console.log("clicked edit " + id);
+
+        $.ajax({
+            url: 'edit/',
+            type: "GET",
+            headers: {"X-CSRF-TOKEN": csrfToken},
+            data: {"_token": ""},
+            success: function (data, textStatus, jqXHR) {
+                console.log(jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            }
+        });
+
+    }
+</script>

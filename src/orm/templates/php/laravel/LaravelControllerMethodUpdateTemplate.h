@@ -6,14 +6,14 @@
 #define DBCRUDGEN_CPP_LARAVELCONTROLLERMETHODUPDATETEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
-#include "LaravelPHPTemplateFiles.h"
+#include "LaravelTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
         class LaravelControllerMethodUpdateTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::METHOD_CONTROLLER_UPDATE};
+                return std::string{LaravelTemplateFiles::METHOD_CONTROLLER_UPDATE};
             }
 
         private:

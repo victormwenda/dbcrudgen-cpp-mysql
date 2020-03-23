@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Page Title-->
+    <title>${PAGE_TITLE}</title>
+
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet"
+          type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+
+    <!-- Bootstrap Core Css -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+<nav class="navbar"></nav>
+
+<section></section>
+
+<section class="content">
+    <div class="clear row">
+        <div class="col-lg-8">
+
+            <!-- Button trigger modal -->
+            <div class="mx-my-5 px-lg-5">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#${MODAL-ID}">Create New
+                    Item
+                </button>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="#${MODAL-ID}" tabindex="-1" role="dialog" aria-labelledby="#${MODAL-ID}-label"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">${MODAL_TITLE}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="create-item-form" class="form">
+                                ${FORM_ITEMS}
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="clear row mt-5">
+
+        <div class="mx-my-5 px-5 col-lg-8">
+
+
+            <div class="col-md-offset-1 mt-3" id="container-table-contents">
+                <table id="table-contents" class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        ${TABLE_HEADERS}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($items as $item)
+                        <tr>
+                            <th scope="row">{{$loop->iteration}}</th>
+                            ${TABLE_ROW_DATA}
+                            <td>
+                                <a type="button"><i class="material-icons edit-item" data-id="{{$item->id}}">edit</i></a>
+                                <a type="button"><i class="material-icons delete-item" data-id="{{$item->id}}">delete</i></a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<script>
+
+    $('.delete-item').click(onClickDelete);
+    $('.edit-item').click(onClickEdit);
+
+    function onClickDelete() {
+        var tr = $(this).closest("tr");
+        var id = $(this).attr('data-id');
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+        $.ajax({
+            url: 'destroy/',
+            type: "DELETE",
+            headers: {"X-CSRF-TOKEN": csrfToken},
+            data: {"_token": ""},
+            success: function (data, textStatus, jqXHR) {
+                console.log(jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            }
+        });
+
+        console.log("clicked delete " + id);
+    }
+
+    function onClickEdit() {
+        var tr = $(this).closest("tr");
+        var id = $(this).attr('data-id');
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+        console.log("clicked edit " + id);
+
+        $.ajax({
+            url: 'edit/',
+            type: "GET",
+            headers: {"X-CSRF-TOKEN": csrfToken},
+            data: {"_token": ""},
+            success: function (data, textStatus, jqXHR) {
+                console.log(jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            }
+        });
+
+    }
+
+    function onClickSave() {
+        var tr = $(this).closest("tr");
+        var id = $(this).attr('data-id');
+        var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+        console.log("clicked edit " + id);
+
+        $.ajax({
+            url: 'edit/',
+            type: "GET",
+            headers: {"X-CSRF-TOKEN": csrfToken},
+            data: {"_token": ""},
+            success: function (data, textStatus, jqXHR) {
+                console.log(jqXHR);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(jqXHR);
+            }
+        });
+
+    }
+</script>
+</body>
+
+</html>

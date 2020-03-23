@@ -2,14 +2,14 @@
 // Created by victor on 3/19/20.
 //
 
-#ifndef DBCRUDGEN_CPP_LARAVELPHPTEMPLATEFILES_H
-#define DBCRUDGEN_CPP_LARAVELPHPTEMPLATEFILES_H
+#ifndef DBCRUDGEN_CPP_LARAVELTEMPLATEFILES_H
+#define DBCRUDGEN_CPP_LARAVELTEMPLATEFILES_H
 
 #include "../../TemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class LaravelPHPTemplateFiles : TemplateFiles {
+        class LaravelTemplateFiles : TemplateFiles {
         public:
             static constexpr const char *CLASS_CONTROLLER_TEMPLATE = "templates/php/laravel/class_controller.php.mdl";
             static constexpr const char *CLASS_MODEL_TEMPLATE = "templates/php/laravel/class_model.php.mdl";
@@ -36,7 +36,8 @@ namespace dbcrudgen {
 
             static constexpr const char *SCRIPT_ROUTES_WEB = "templates/php/laravel/script_routes_web.mdl";
             static constexpr const char *SCRIPT_ROUTES_API = "templates/php/laravel/script_routes_api.mdl";
+            static constexpr const char *SCRIPT_VIEW = "templates/php/laravel/script_view.mdl";
         };
     }
 }
-#endif //DBCRUDGEN_CPP_LARAVELPHPTEMPLATEFILES_H
+#endif //DBCRUDGEN_CPP_LARAVELTEMPLATEFILES_H

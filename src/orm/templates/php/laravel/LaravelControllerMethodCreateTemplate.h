@@ -6,7 +6,7 @@
 #define DBCRUDGEN_CPP_LARAVELCONTROLLERMETHODCREATETEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
-#include "LaravelPHPTemplateFiles.h"
+#include "LaravelTemplateFiles.h"
 #include "../../../codegen/Languages.h"
 
 namespace dbcrudgen {
@@ -14,7 +14,7 @@ namespace dbcrudgen {
         class LaravelControllerMethodCreateTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::METHOD_CONTROLLER_CREATE};
+                return std::string{LaravelTemplateFiles::METHOD_CONTROLLER_CREATE};
             }
 
         private:

@@ -6,14 +6,14 @@
 #define DBCRUDGEN_CPP_LARAVELCONTROLLERTEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
-#include "LaravelPHPTemplateFiles.h"
+#include "LaravelTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
         class LaravelControllerTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::CLASS_CONTROLLER_TEMPLATE};
+                return std::string{LaravelTemplateFiles::CLASS_CONTROLLER_TEMPLATE};
             }
 
         private:

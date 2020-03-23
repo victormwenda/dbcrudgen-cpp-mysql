@@ -7,14 +7,14 @@
 
 #include "../../FileSourceCodeTemplate.h"
 #include "../../../codegen/Languages.h"
-#include "LaravelPHPTemplateFiles.h"
+#include "LaravelTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
         class LaravelControllerMethodShowTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::METHOD_CONTROLLER_SHOW};
+                return std::string{LaravelTemplateFiles::METHOD_CONTROLLER_SHOW};
             }
 
         private:

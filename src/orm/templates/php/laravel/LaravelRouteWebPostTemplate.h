@@ -6,14 +6,14 @@
 #define DBCRUDGEN_CPP_LARAVELROUTEWEBPOSTTEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
-#include "LaravelPHPTemplateFiles.h"
+#include "LaravelTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
         class LaravelRouteWebPostTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::METHOD_ROUTE_WEB_POST};
+                return std::string{LaravelTemplateFiles::METHOD_ROUTE_WEB_POST};
             }
 
         private:

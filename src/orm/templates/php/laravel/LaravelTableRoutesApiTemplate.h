@@ -6,14 +6,14 @@
 #define DBCRUDGEN_CPP_LARAVELTABLEROUTESAPITEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
-#include "LaravelPHPTemplateFiles.h"
+#include "LaravelTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
         class LaravelTableRoutesApiTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{LaravelPHPTemplateFiles::METHODS_ROUTES_API_TABLE};
+                return std::string{LaravelTemplateFiles::METHODS_ROUTES_API_TABLE};
             }
 
         private:
