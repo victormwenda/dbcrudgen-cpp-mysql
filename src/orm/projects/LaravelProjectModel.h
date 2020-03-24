@@ -17,6 +17,9 @@ namespace dbcrudgen {
             std::string modelsDir;
             std::string viewsDir;
             std::string routesDir;
+            std::string assetsDir;
+            std::string jsDir;
+            std::string cssDir;
             std::string webRoutesFile;
             std::string apiRoutesFile;
             std::string apiVersion;
@@ -30,12 +33,13 @@ namespace dbcrudgen {
             * @param workspaceDir
             * @param generatedCodeDir
             */
-            LaravelProjectModel(std::string &projectName, std::string &workspaceDir,
-                                std::string &controllersDir,
+            LaravelProjectModel(std::string &projectName, std::string &workspaceDir, std::string &controllersDir,
                                 std::string &modelsDir, std::string &viewsDir, std::string &routesDir,
+                                std::string assetsDir, std::string jsDir, std::string cssDir,
                                 std::string &webRoutesFile, std::string &apiRoutesFile, std::string &apiVersion)
-                    : PHPProjectModel{projectName, workspaceDir},
+                    : PHPProjectModel{projectName, workspaceDir, assetsDir, jsDir, cssDir},
                       controllersDir{controllersDir}, modelsDir{modelsDir}, viewsDir{viewsDir}, routesDir{routesDir},
+                      assetsDir{assetsDir}, jsDir{jsDir}, cssDir{cssDir},
                       webRoutesFile{webRoutesFile}, apiRoutesFile{apiRoutesFile}, apiVersion{apiVersion} {}
 
 
@@ -118,7 +122,6 @@ namespace dbcrudgen {
             std::string getApiRouteFilePath() {
                 return getRoutesFullDir() + "/" + getApiRoutesFile();
             }
-
         };
     }
 }

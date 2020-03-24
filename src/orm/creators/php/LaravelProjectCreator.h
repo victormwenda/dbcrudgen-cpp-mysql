@@ -15,6 +15,8 @@
 #include "../../projects/LaravelProjectModel.h"
 #include "PHPProjectCreator.h"
 #include "../../templates/php/laravel/LaravelViewTemplate.h"
+#include "../../templates/php/laravel/LaravelTableScrudJSTemplate.h"
+#include "../../templates/php/laravel/LaravelDataTableTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -68,6 +70,8 @@ namespace dbcrudgen {
                     std::string controllerSource = createControllerSource(table);
                     std::string modelSource = createModelSource(table);
                     std::string viewSource = createViewSource(table);
+                    std::string dataTableSource = createDataTableSource(table);
+                    std::string jsSource = createJSource(table);
 
 
                     //Create routes source
@@ -79,12 +83,24 @@ namespace dbcrudgen {
 
                     auto columns = table.getTableColumns();
 
+                    //Controller items
                     std::string modelFillables;
                     std::string deserializedFormData;
                     std::string formDataValidationCandidates;
                     std::string packInsertTableAttribs;
                     std::string insertValidationRules;
                     std::string updateValidationRules;
+
+                    //Views items
+                    std::string htmlTableHeaderCols;
+                    std::string htmlTableRowsCols;
+                    std::string formItems;
+
+                    //Views items
+                    std::string jsPackFormItems;
+                    std::string jsRequestParams;
+                    std::string jsUnPackItemData;
+                    std::string jsBindItemDataDOM;
 
                     int index = 0;
 
@@ -101,6 +117,17 @@ namespace dbcrudgen {
 
                         insertValidationRules += LaravelParser::createInsertValidationRules(column, isBeforeLast);
                         updateValidationRules += LaravelParser::createUpdateValidationRules(column, isBeforeLast);
+
+                        //Unpack table cols
+                        htmlTableHeaderCols += LaravelParser::createTableHeaderColumns(table, column);
+                        htmlTableRowsCols += LaravelParser::createTableRowsColumns(table, column);
+                        formItems += LaravelParser::createFormItems(column);
+
+                        //Pack form items
+                        jsPackFormItems += LaravelParser::packJSFormItems(column);
+                        jsRequestParams += LaravelParser::packRequestParams(column, isBeforeLast);
+                        jsUnPackItemData += LaravelParser::unpackItemData(column);
+                        jsBindItemDataDOM += LaravelParser::bindItemDataToDocument(column);
 
                         index++;
                     }
@@ -125,7 +152,20 @@ namespace dbcrudgen {
                     webRoutesSource += webRoutes;
                     apiRoutesSource += apiRoutes;
 
+                    //Add views data items
+                    LaravelParser::replace(dataTableSource, "${TABLE_HEADERS}", htmlTableHeaderCols);
+                    LaravelParser::replace(dataTableSource, "${TABLE_ROW_DATA}", htmlTableRowsCols);
 
+                    LaravelParser::replace(viewSource, "${FORM_ITEMS}", formItems);
+                    LaravelParser::replace(viewSource, "${DATA_TABLE}", dataTableSource);
+
+
+
+                    //Add JS data
+                    LaravelParser::replace(jsSource, "${PACK_FORM_ITEMS}", jsPackFormItems);
+                    LaravelParser::replace(jsSource, "${PACK_REQUEST_PARAMS}", jsRequestParams);
+                    LaravelParser::replace(jsSource, "${UNPACK_ITEM_DATA}", jsUnPackItemData);
+                    LaravelParser::replace(jsSource, "${BIND_DATA_TO_DOCUMENT}", jsBindItemDataDOM);
 
                     //Create model file
                     const std::string modelFilename = LaravelParser::toPHPClassName(tableName);
@@ -150,20 +190,20 @@ namespace dbcrudgen {
                     std::string viewsFilePath = controllerViewsDirPath + "/index.blade.php";
                     FilesWriter::writeFile(viewsFilePath, viewSource);
 
+                    std::string dataTableFilePath = controllerViewsDirPath + "/table.blade.php";
+                    FilesWriter::writeFile(dataTableFilePath, dataTableSource);
 
+                    std::string jsFile = LaravelParser::toKebabCase(tableName);
+                    std::string jsFilePath = projectModel.getJSFullDir() + "/" + jsFile + ".js";
+                    FilesWriter::writeFile(jsFilePath, jsSource);
                 }
-
-                //Add models includes
-
-
-
 
                 //Create web routes
                 const std::string webRouteFilePath = projectModel.getWebRouteFilePath();
                 LaravelRoutesWebTemplate webTemplate;
                 std::string webFullSource = webTemplate.getTemplate();
                 LaravelParser::replace(webFullSource, "${WEB_ROUTES}", webRoutesSource);
-                LaravelParser::replace(webFullSource, "${MODELS_INCLUDES}", modelsIncludes);
+                LaravelParser::replace(webFullSource, "${MODELS_INCLUDES}", modelsIncludes); //Add models includes
                 FilesWriter::writeFile(webRouteFilePath, webFullSource);
 
                 //Create api routes
@@ -171,7 +211,7 @@ namespace dbcrudgen {
                 LaravelRoutesApiTemplate apiTemplate;
                 std::string apiFullSource = apiTemplate.getTemplate();
                 LaravelParser::replace(apiFullSource, "${API_ROUTES}", apiRoutesSource);
-                LaravelParser::replace(apiFullSource, "${MODELS_INCLUDES}", modelsIncludes);
+                LaravelParser::replace(apiFullSource, "${MODELS_INCLUDES}", modelsIncludes); //Add models includes
                 FilesWriter::writeFile(apiRouteFilePath, apiFullSource);
             }
 
@@ -210,7 +250,7 @@ namespace dbcrudgen {
 
                 std::string viewFilename = LaravelParser::toKebabCase(tableName);
                 LaravelParser::replace(controllerSource, "${INDEX_VIEW_NAME}", "index");
-                LaravelParser::replace(controllerSource, "${REFRESH_VIEW_NAME}", "refresh");
+                LaravelParser::replace(controllerSource, "${REFRESH_VIEW_NAME}", "table");
 
                 return controllerSource;
             }
@@ -259,12 +299,17 @@ namespace dbcrudgen {
 
                 std::string viewSource = viewTemplate.getTemplate();
 
+                std::string tableTitle = StringUtils::toTitle(tableName);
+                std::string projectTitle = StringUtils::toTitle(projectModel.getProjectName());
+                std::string className = LaravelParser::toPHPClassName(tableName);
+                std::string classVariable = LaravelParser::toPHPVariableName(tableName);
+                std::string classId = LaravelParser::toSnakeCase(tableName);
+
                 //create namespaces
                 std::string modelNamespace = LaravelParser::toNamespace(projectModel.getModelsDir());
                 LaravelParser::replace(viewSource, "${MODEL_NAMESPACE}", modelNamespace);
 
                 //Add class name
-                std::string className = LaravelParser::toPHPClassName(tableName);
                 LaravelParser::replace(viewSource, "${CLASS_NAME}", className);
 
                 //Add table name
@@ -275,7 +320,76 @@ namespace dbcrudgen {
                 LaravelParser::replace(viewSource, "${MODEL_RELATIONSHIPS_INCLUDES}", "");
 
                 //Add basic project info
-                LaravelParser::replace(viewSource, "${PAGE_TITLE}", projectModel.getProjectName() + " | " + className);
+                LaravelParser::replace(viewSource, "${PAGE_TITLE}", projectTitle + " | " + tableTitle);
+                LaravelParser::replace(viewSource, "${ITEMS_HANDLE}", classVariable);
+                LaravelParser::replace(viewSource, "${MODAL_ID}", classId);
+                LaravelParser::replace(viewSource, "${MODAL_TITLE}", tableTitle);
+
+                //Add JS details
+                LaravelParser::replace(viewSource, "${JS-ASSET-DIR}", projectModel.getJsDir());
+                LaravelParser::replace(viewSource, "${VIEW-JS-FILE}", StringUtils::toKebabCase(tableName));
+
+                return viewSource;
+            }
+
+            /**
+            * Creates the data table source code
+            * @param table
+            * @return
+            */
+            static std::string createDataTableSource(const dbcrudgen::db::generic::Table &table) {
+
+                const std::string &tableName = table.getTableName();
+
+                LaravelDataTableTemplate dataTableTemplate;
+
+                std::string tableSource = dataTableTemplate.getTemplate();
+
+                std::string classVariable = LaravelParser::toPHPVariableName(tableName);
+                LaravelParser::replace(tableSource, "${ITEMS_HANDLE}", classVariable);
+
+                return tableSource;
+            }
+
+            /**
+             * Creates the java script source code
+             * @param table
+             * @return
+             */
+            std::string createJSource(const dbcrudgen::db::generic::Table &table) {
+
+                const std::string &tableName = table.getTableName();
+
+                LaravelTableScrudJSTemplate jsTemplate;
+
+                std::string viewSource = jsTemplate.getTemplate();
+
+                std::string tableTitle = StringUtils::toTitle(tableName);
+                std::string projectTitle = StringUtils::toTitle(projectModel.getProjectName());
+                std::string className = LaravelParser::toPHPClassName(tableName);
+                std::string classVariable = LaravelParser::toPHPVariableName(tableName);
+                std::string classId = LaravelParser::toSnakeCase(tableName);
+
+                //create namespaces
+                std::string modelNamespace = LaravelParser::toNamespace(projectModel.getModelsDir());
+                LaravelParser::replace(viewSource, "${MODEL_NAMESPACE}", modelNamespace);
+
+                //Add class name
+                LaravelParser::replace(viewSource, "${CLASS_NAME}", className);
+
+                //Add table name
+                LaravelParser::replace(viewSource, "${TABLE_NAME}", tableName);
+
+                //Add model relation ships
+                LaravelParser::replace(viewSource, "${MODEL_RELATIONSHIPS}", "");
+                LaravelParser::replace(viewSource, "${MODEL_RELATIONSHIPS_INCLUDES}", "");
+
+                //Add basic project info
+                LaravelParser::replace(viewSource, "${PAGE_TITLE}", projectTitle + " | " + tableTitle);
+                LaravelParser::replace(viewSource, "${ITEMS_HANDLE}", classVariable);
+                LaravelParser::replace(viewSource, "${MODAL_ID}", classId);
+                LaravelParser::replace(viewSource, "${MODAL_TITLE}", tableTitle);
+                LaravelParser::replace(viewSource, "${API_NAME}", StringUtils::toKebabCase(tableName));
 
                 return viewSource;
             }
@@ -323,7 +437,7 @@ namespace dbcrudgen {
             std::string createModelsInclude(const dbcrudgen::db::generic::Table &table) {
 
                 std::string modelNamespace = LaravelParser::toNamespace(projectModel.getModelsDir());
-                std::string modelClassName = LaravelParser::toCppClassName(table.getTableName());
+                std::string modelClassName = LaravelParser::toPHPClassName(table.getTableName());
 
                 return std::string{"use " + modelNamespace + "\\" + modelClassName + ";\n"};
             }

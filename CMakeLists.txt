@@ -397,6 +397,7 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelControllerMethodStoreTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodShowTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodUpdateTemplate.h
+        src/orm/templates/php/laravel/LaravelDataTableTemplate.h
         src/orm/templates/php/laravel/LaravelTemplateFiles.h
         src/orm/templates/php/laravel/LaravelModelTemplate.h
         src/orm/templates/php/laravel/LaravelTableRoutesApiTemplate.h
@@ -408,9 +409,11 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelRouteWebGetTemplate.h
         src/orm/templates/php/laravel/LaravelRouteWebPostTemplate.h
         src/orm/templates/php/laravel/LaravelRouteWebPutTemplate.h
-        src/orm/templates/php/laravel/LaravelTableWebRoutesTemplate.h
         src/orm/templates/php/laravel/LaravelRoutesWebTemplate.h
         src/orm/templates/php/laravel/LaravelRoutesApiTemplate.h
+        src/orm/templates/php/laravel/LaravelTableScrudJSTemplate.h
+        src/orm/templates/php/laravel/LaravelTableWebRoutesTemplate.h
+        src/orm/templates/php/laravel/LaravelViewTemplate.h
 
         src/orm/templates/php/PHPOracleConnectorTemplate.h
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
@@ -421,7 +424,8 @@ set(SOURCE_FILES
         src/orm/utils/StringUtils.h
 
 
-        src/orm/templates/php/laravel/LaravelViewTemplate.h)
+
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

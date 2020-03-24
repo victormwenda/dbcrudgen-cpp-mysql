@@ -1,70 +1,145 @@
-<script>
+$(function () {
+    localStorage.clear();
+});
 
-    $('.delete-item').click(onClickDelete);
-    $('.edit-item').click(onClickEdit);
 
-    function onClickDelete() {
-        var tr = $(this).closest("tr");
-        var id = $(this).attr('data-id');
-        var csrfToken = $("meta[name='csrf-token']").attr("content");
+$('.delete-item').click(onClickDelete);
+$('.edit-item').click(onClickEdit);
+$('.save-item').click(onClickSave);
+$('.update-item').click(onClickUpdate);
 
-        $.ajax({
-            url: 'destroy/',
-            type: "DELETE",
-            headers: {"X-CSRF-TOKEN": csrfToken},
-            data: {"_token": ""},
-            success: function (data, textStatus, jqXHR) {
-                console.log(jqXHR);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-            }
-        });
+/**
+* ---------------------------------------------------------------------------------
+* --------------------- SAVE ITEM -----------------------------------------------
+* ---------------------------------------------------------------------------------
+*/
+function onClickSave() {
+    var tr = $(this).closest("tr");
+    var data_id = $(this).attr('data-id');
+    var csrfToken = $("meta[name='csrf-token']").attr("content");
 
-        console.log("clicked delete " + id);
+    ${PACK_FORM_ITEMS}
+
+    console.log("clicked edit " + id);
+
+    $.ajax({
+        url: '${API_NAME}/store/',
+        type: "POST",
+        headers: {"X-CSRF-TOKEN": csrfToken},
+        data: {${PACK_REQUEST_PARAMS}},
+        success: function (data, textStatus, jqXHR) {
+            console.log(jqXHR);
+            $('#${MODAL_ID}').modal('hide');
+             refreshTableItems();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+        }
+    });
+
+}
+
+/**
+* ---------------------------------------------------------------------------------
+* --------------------- QUERY ITEM -----------------------------------------------
+* ---------------------------------------------------------------------------------
+*/
+function onClickEdit() {
+    var tr = $(this).closest("tr");
+    var data_id = $(this).attr('data-id');
+    var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+    localStorage.setItem('data-id', data_id);
+
+    console.log("clicked edit " + data_id);
+
+    $.ajax({
+        url: '${API_NAME}/edit/' +data_id,
+        type: "GET",
+        headers: {"X-CSRF-TOKEN": csrfToken},
+        data: null,
+        success: function (data, textStatus, jqXHR) {
+            console.log(jqXHR);
+
+            let jqXHRData = JSON.parse(jqXHR.responseText);
+
+            ${UNPACK_ITEM_DATA}
+
+            ${BIND_DATA_TO_DOCUMENT}
+
+            $("#${MODAL_ID}").modal()
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
     }
+});
 
-    function onClickEdit() {
-        var tr = $(this).closest("tr");
-        var id = $(this).attr('data-id');
-        var csrfToken = $("meta[name='csrf-token']").attr("content");
+}
 
-        console.log("clicked edit " + id);
 
-        $.ajax({
-            url: 'edit/',
-            type: "GET",
-            headers: {"X-CSRF-TOKEN": csrfToken},
-            data: {"_token": ""},
+/**
+* ---------------------------------------------------------------------------------
+* --------------------- UPDATE ITEM -----------------------------------------------
+* ---------------------------------------------------------------------------------
+*/
+function onClickUpdate() {
+    var tr = $(this).closest("tr");
+    var data_id = localStorage.getItem('data-id');
+    var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+    ${PACK_FORM_ITEMS}
+
+    console.log("clicked edit " + data_id);
+
+    $.ajax({
+        url: '${API_NAME}/update/' +data_id,
+        type: "PUT",
+        headers: {"X-CSRF-TOKEN": csrfToken},
+        data: {${PACK_REQUEST_PARAMS}},
+        success: function (data, textStatus, jqXHR) {
+            console.log(jqXHR);
+            $('#${MODAL_ID}').modal('hide');
+            refreshTableItems();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR);
+        }
+    });
+
+}
+
+/**
+* ---------------------------------------------------------------------------------
+* --------------------- DELETE ITEM -----------------------------------------------
+* ---------------------------------------------------------------------------------
+*/
+function onClickDelete() {
+    var tr = $(this).closest("tr");
+    var data_id = $(this).attr('data-id');
+    var csrfToken = $("meta[name='csrf-token']").attr("content");
+
+    $.ajax({
+        url: '${API_NAME}/destroy/' +data_id,
+        type: "DELETE",
+        headers: {"X-CSRF-TOKEN": csrfToken},
+        data: null,
             success: function (data, textStatus, jqXHR) {
-                console.log(jqXHR);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-            }
-        });
+            console.log(jqXHR);
+            tr.remove();
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        }
+    });
 
-    }
+    console.log("clicked delete " + id);
+}
 
-    function onClickSave() {
-        var tr = $(this).closest("tr");
-        var id = $(this).attr('data-id');
-        var csrfToken = $("meta[name='csrf-token']").attr("content");
 
-        console.log("clicked edit " + id);
+function refreshTableItems() {
 
-        $.ajax({
-            url: 'edit/',
-            type: "GET",
-            headers: {"X-CSRF-TOKEN": csrfToken},
-            data: {"_token": ""},
-            success: function (data, textStatus, jqXHR) {
-                console.log(jqXHR);
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.log(jqXHR);
-            }
-        });
-
-    }
-</script>
+    $(".table-container").load('${API_NAME}/refresh', function () {
+        $('.delete-item').click(onClickDelete);
+        $('.edit-item').click(onClickEdit);
+    });
+}

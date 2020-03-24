@@ -33,7 +33,7 @@ namespace dbcrudgen {
              * Return database model
              * @return
              */
-            const dbcrudgen::db::generic::Database&getDatabaseModel() {
+            const dbcrudgen::db::generic::Database &getDatabaseModel() {
                 return databaseModel;
             }
 
@@ -48,12 +48,15 @@ namespace dbcrudgen {
             void createProject() override {
                 createProjectDirs();
 
-                FilesWriter::createDirs(projectModel.getWorkspaceDir());
-                FilesWriter::createDirs(projectModel.getProjectDir());
+
             }
 
             void createProjectDirs() override {
-
+                FilesWriter::createDirs(projectModel.getWorkspaceDir());
+                FilesWriter::createDirs(projectModel.getProjectDir());
+                FilesWriter::createDirs(projectModel.getAssetsFullDir());
+                FilesWriter::createDirs(projectModel.getCSSFullDir());
+                FilesWriter::createDirs(projectModel.getJSFullDir());
             }
 
             void createSourceFiles() override {

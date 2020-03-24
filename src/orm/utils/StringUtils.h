@@ -374,6 +374,36 @@ public:
         name = variable_name;
         return name;
     }
+
+    /**
+     * Convert text to space separated title case
+     * @param name
+     * @return
+     */
+    static std::string toTitle(std::string name) {
+        std::string title;
+        int index = 0;
+
+        while (index < name.size()) {
+
+            if (index == 0) {
+                title.append(1, toupper(name[index]));
+            } else {
+                if (name[index] == '_' || name[index] == '-') {
+                    title.append(1, toupper(' '));
+
+                    if (index - name.length() - 1) {
+                        title.append(1, toupper(name[++index]));
+                    }
+                } else {
+                    title.append(1, name[index]);
+                }
+            }
+            index++;
+        }
+
+        return title;
+    }
 };
 
 

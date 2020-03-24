@@ -129,6 +129,9 @@ void createPhpProject() {
 
     std::string projectName = "pesarika-web";
     std::string workspaceDir = "/var/www/html";
+    std::string assetsDir = "public";
+    std::string jsDir = "js";
+    std::string cssDir = "css";
     std::string controllersDir = "app/Http/Controllers";
     std::string modelsDir = "app/Http/Models";
     std::string viewsDir = "resources/views";
@@ -138,7 +141,8 @@ void createPhpProject() {
     std::string apiRouteFile = "api.php";
 
     dbcrudgen::orm::LaravelProjectModel projectModel{projectName, workspaceDir, controllersDir, modelsDir,
-                                                     viewsDir, routesDir, webRouteFile, apiRouteFile,
+                                                     viewsDir, routesDir, assetsDir, jsDir, cssDir, webRouteFile,
+                                                     apiRouteFile,
                                                      apiVersion};
 
     dbcrudgen::orm::LaravelProjectCreator projectCreator{projectModel, database};

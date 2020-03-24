@@ -12,6 +12,7 @@ namespace dbcrudgen {
         public:
             static constexpr const char *C = "C";
             static constexpr const char *JAVA = "Java";
+            static constexpr const char *JAVASCRIPT = "JavaScript";
             static constexpr const char *PHP = "PHP";
             static constexpr const char *PYTHON = "Python";
             static constexpr const char *SWIFT = "Swift";

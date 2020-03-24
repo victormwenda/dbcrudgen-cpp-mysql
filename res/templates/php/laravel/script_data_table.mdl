@@ -1,0 +1,21 @@
+<table id="table-contents" class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+            ${TABLE_HEADERS}
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($${ITEMS_HANDLE} as $item)
+        <tr>
+            <th scope="row">{{$loop->iteration}}</th>
+                ${TABLE_ROW_DATA}
+            <td>
+                <a type="button"><i class="material-icons edit-item" data-id="{{$item->id}}">edit</i></a>
+                <a type="button"><i class="material-icons delete-item" data-id="{{$item->id}}">delete</i></a>
+            </td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
