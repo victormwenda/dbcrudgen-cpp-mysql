@@ -13,10 +13,9 @@ Supported databases
   1. Android
   2. CPP
   3. Java(J2SE)
-  4. PHP
-  5. Python
-  6. PHP
-  7. Swift
+  4. Python
+  5. PHP
+  6. Swift
   
   DbCrudGen helps to improve the whole developer workflow of embedding a database in your application.
   
