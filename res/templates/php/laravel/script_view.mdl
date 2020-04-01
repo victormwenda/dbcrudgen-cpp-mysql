@@ -75,7 +75,7 @@
 
         <div class="mx-my-5 px-5 col-lg-12">
             <div class="col-md-offset-1 mt-3 table-container" id="container-table-contents">
-                ${DATA_TABLE}
+                @include('${VIEW_DIR}.table')
             </div>
 
         </div>
@@ -92,7 +92,7 @@
         integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
         crossorigin="anonymous"></script>
 
-<script src="${JS-ASSET-DIR}/${VIEW-JS-FILE}.js"></script>
+<script src="/${JS-ASSET-DIR}/${VIEW-JS-FILE}.js"></script>
 
 </body>
 

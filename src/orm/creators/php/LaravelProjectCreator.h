@@ -157,7 +157,9 @@ namespace dbcrudgen {
                     LaravelParser::replace(dataTableSource, "${TABLE_ROW_DATA}", htmlTableRowsCols);
 
                     LaravelParser::replace(viewSource, "${FORM_ITEMS}", formItems);
-                    LaravelParser::replace(viewSource, "${DATA_TABLE}", dataTableSource);
+
+                    std::string tableViewDir = StringUtils::toKebabCase(tableName);
+                    LaravelParser::replace(viewSource, "${VIEW_DIR}", tableViewDir);
 
 
 
