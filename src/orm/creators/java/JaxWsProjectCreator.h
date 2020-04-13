@@ -9,6 +9,7 @@
 #include "JavaProjectCreator.h"
 #include "../../projects/JaxWsProjectModel.h"
 #include "../../../databases/generic/Database.h"
+#include "../../parsers/java/JavaParser.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -44,6 +45,7 @@ namespace dbcrudgen {
                 FilesWriter::createDirs(projectModel.getAbsoluteWebDirPath());
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
+                FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
             }
 
             /**
@@ -51,6 +53,34 @@ namespace dbcrudgen {
              */
             void createSourceFiles() override {
                 JavaProjectCreator::createSourceFiles();
+
+                std::vector<dbcrudgen::db::generic::Table> tables = database.getTables();
+
+                for (const dbcrudgen::db::generic::Table &table : tables) {
+
+                    std::string tableName = table.getTableName();
+
+                    std::string apiSuffix = projectModel.getApiClassSuffix();
+                    std::string entitySuffix = projectModel.getEntityClassSuffix();
+                    std::string trxSuffix = projectModel.getTransactionsClassSuffix();
+
+                    std::string apiClass = JavaParser::toJavaClassName(tableName);
+                    std::string entityClass = JavaParser::toJavaClassName(tableName);
+                    std::string trxClass = JavaParser::toJavaClassName(tableName);
+
+                    std::string apiFile =
+                            projectModel.getApisAbsolutePath() + "/" + apiClass.append(apiSuffix) + ".java";
+
+                    std::string entityFile =
+                            projectModel.getEntitiesAbsolutePath() + "/" + entityClass.append(entitySuffix) + ".java";
+
+                    std::string trxFile =
+                            projectModel.getTransactionsAbsolutePath() + "/" + trxClass.append(trxSuffix) + ".java";
+
+                    FilesWriter::writeFile(apiFile, "");
+                    FilesWriter::writeFile(entityFile, "");
+                    FilesWriter::writeFile(trxFile, "");
+                }
             }
 
             /**

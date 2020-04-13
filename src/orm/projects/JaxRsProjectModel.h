@@ -12,15 +12,21 @@ namespace dbcrudgen {
     namespace orm {
         class JaxRsProjectModel : public JavaProjectModel {
 
+            std::string webDir;
+
             std::string apisPkg;
             std::string entitiesPkg;
-            std::string webDir;
+            std::string transactionsPkg;
+
+            std::string apiClassSuffix;
+            std::string entityClassSuffix;
+            std::string trxClassSuffix;
 
 
         public:
 
             /**
-             * JAX Rs project Model
+             * Jax-Rs Project Model
              * @param projectName
              * @param workspaceDir
              * @param srcDir
@@ -29,17 +35,33 @@ namespace dbcrudgen {
              * @param libsDir
              * @param resourcesDir
              * @param packageName
+             * @param webDir
              * @param apisPkg
              * @param entitiesPkg
-             * @param webDir
+             * @param transactionsPkg
+             * @param apiClassSuffix
+             * @param entityClassSuffix
+             * @param trxClassSuffix
              */
             JaxRsProjectModel(std::string &projectName, std::string &workspaceDir, std::string &srcDir,
                               std::string &moduleDir, std::string &javaDir, std::string &libsDir,
                               std::string &resourcesDir, std::string &packageName,
-                              std::string &apisPkg, std::string &entitiesPkg, std::string &webDir)
+
+                              std::string &webDir,
+                              std::string &apisPkg, std::string &entitiesPkg, std::string transactionsPkg,
+                              std::string &apiClassSuffix, std::string &entityClassSuffix, std::string &trxClassSuffix)
+
                     : JavaProjectModel{projectName, workspaceDir, srcDir, moduleDir, javaDir,
                                        libsDir, resourcesDir, packageName},
-                      apisPkg{apisPkg}, entitiesPkg{entitiesPkg}, webDir{webDir} {}
+                      webDir{webDir},
+                      apisPkg{apisPkg}, entitiesPkg{entitiesPkg}, transactionsPkg{transactionsPkg},
+                      apiClassSuffix{apiClassSuffix}, entityClassSuffix{entityClassSuffix},
+                      trxClassSuffix{trxClassSuffix} {}
+
+
+            const std::string &getWebDir() const {
+                return webDir;
+            }
 
             const std::string &getApisPkg() const {
                 return apisPkg;
@@ -49,8 +71,20 @@ namespace dbcrudgen {
                 return entitiesPkg;
             }
 
-            const std::string &getWebDir() const {
-                return webDir;
+            const std::string &getTransactionsPkg() const {
+                return transactionsPkg;
+            }
+
+            const std::string &getApiClassSuffix() const {
+                return apiClassSuffix;
+            }
+
+            const std::string &getEntityClassSuffix() const {
+                return entityClassSuffix;
+            }
+
+            const std::string &getTransactionsClassSuffix() const {
+                return trxClassSuffix;
             }
 
             /**
@@ -79,6 +113,16 @@ namespace dbcrudgen {
                 std::string pkgName = getEntitiesPkg();
                 std::string entitiesPackage = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteJavaPath() + "/" + entitiesPackage;
+            }
+
+            /**
+            * Get absolute path to transactions dir
+            * @return
+            */
+            std::string getTransactionsAbsolutePath() {
+                std::string pkgName = getEntitiesPkg();
+                std::string entitiesPackage = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteJavaPath() + "/" + transactionsPkg;
             }
         };
 

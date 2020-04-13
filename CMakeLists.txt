@@ -296,13 +296,20 @@ set(SOURCE_FILES
         src/orm/codegen/swift/SwiftProjectCodeGen.h
 
         src/orm/creators/ProjectCreator.h
+
         src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/creators/cpp/CppOracleProjectCreator.h
         src/orm/creators/cpp/CppProjectCreator.h
         src/orm/creators/cpp/CppSQLiteProjectCreator.h
+
         src/orm/creators/java/JavaMYSQLProjectCreator.h
         src/orm/creators/java/JavaOracleProjectCreator.h
+        src/orm/creators/java/JavaProjectCreator.h
         src/orm/creators/java/JavaSQLiteProjectCreator.h
+
+        src/orm/creators/java/JaxRsProjectCreator.h
+        src/orm/creators/java/JaxWsProjectCreator.h
+
         src/orm/creators/swift/SwiftSQLiteProjectCreator.h
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
@@ -313,20 +320,29 @@ set(SOURCE_FILES
         src/orm/parsers/cpp/CppMYSQLParser.h
         src/orm/parsers/cpp/CppMYSQLSCRUDParser.h
 
+        src/orm/parsers/java/JavaParser.h
+
         src/orm/parsers/php/PHPParser.h
         src/orm/parsers/php/PHPMYSQLParser.h
         src/orm/parsers/php/LaravelParser.h
 
         src/orm/projects/AndroidProjectModel.h
+
         src/orm/projects/CppMYSQLProjectModel.h
         src/orm/projects/CppOracleProjectModel.h
         src/orm/projects/CppSQLiteProjectModel.h
         src/orm/projects/CppProjectModel.h
+
         src/orm/projects/JavaMYSQLProjectModel.h
         src/orm/projects/JavaOracleProjectModel.h
         src/orm/projects/JavaProjectModel.h
         src/orm/projects/JavaSQLiteProjectModel.h
+
+        src/orm/projects/JaxRsProjectModel.h
+        src/orm/projects/JaxWsProjectModel.h
+
         src/orm/projects/LaravelProjectModel.h
+
         src/orm/creators/php/LaravelProjectCreator.h
         src/orm/projects/PHPMYSQLProjectModel.h
         src/orm/projects/PHPOracleProjectModel.h
@@ -414,7 +430,6 @@ set(SOURCE_FILES
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
-
 
 
         )

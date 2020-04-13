@@ -200,17 +200,25 @@ void createJavaProject() {
     std::string webDir = "webapp";
     std::string apisPkg = "web.apis";
     std::string entitiesPkg = "db.entities";
+    std::string transactionsPkg = "db.transactions";
+
+    std::string apiClassSuffix = "Resource";
+    std::string entityClassSuffix = "Entity";
+    std::string trxClassSuffix = "Transactions";
+
 
     dbcrudgen::orm::JaxWsProjectModel jaxWsModel{projectName, workspaceDir,
                                                  srcDir, moduleDir, javaDir, libsDir,
-                                                 resourcesDir, packageName, apisPkg, entitiesPkg, webDir};
+                                                 resourcesDir, packageName, webDir, apisPkg, entitiesPkg,
+                                                 transactionsPkg, apiClassSuffix, entityClassSuffix, trxClassSuffix};
     dbcrudgen::orm::JaxWsProjectCreator jaxWsCreator{jaxWsModel, genericDatabase};
-    jaxWsCreator.createProject();
+    //jaxWsCreator.createProject();
 
 
     dbcrudgen::orm::JaxRsProjectModel jaxRsModel{projectName, workspaceDir,
                                                  srcDir, moduleDir, javaDir, libsDir,
-                                                 resourcesDir, packageName, apisPkg, entitiesPkg, webDir};
+                                                 resourcesDir, packageName, webDir, apisPkg, entitiesPkg,
+                                                 transactionsPkg, apiClassSuffix, entityClassSuffix, trxClassSuffix};
     dbcrudgen::orm::JaxRsProjectCreator jaxRsCreator{jaxRsModel, genericDatabase};
     jaxRsCreator.createProject();
 
