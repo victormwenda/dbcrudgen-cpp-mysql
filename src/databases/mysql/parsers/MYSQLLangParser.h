@@ -15,18 +15,24 @@
 #include <sstream>
 #include "../../../lang/parser/LangTemplateParser.h"
 
-//
-// MYSQLLangParser
-// //
-class MYSQLLangParser : public LangTemplateParser {
+namespace dbcrudgen {
+    namespace db {
+        namespace mysql {
+            //
+            // MYSQLLangParser
+            // //
+            class MYSQLLangParser : public LangTemplateParser {
 
-public:
-    static std::string toAbsolutePath(const std::string &schemas, const std::string tableName) {
-        std::stringstream stream;
-        stream << schemas << "." << tableName;
-        return std::string{stream.str()};
+            public:
+                static std::string toAbsolutePath(const std::string &schemas, const std::string tableName) {
+                    std::stringstream stream;
+                    stream << schemas << "." << tableName;
+                    return std::string{stream.str()};
+                }
+            };
+        }
     }
-};
+}
 
 
 #endif //DBCRUDGEN_CPP_MYSQLLANGPARSER_H

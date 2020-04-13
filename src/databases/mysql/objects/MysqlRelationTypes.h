@@ -11,27 +11,32 @@
 #ifndef DBCRUDGEN_CPP_MYSQLRELATIONTYPES_H
 #define DBCRUDGEN_CPP_MYSQLRELATIONTYPES_H
 
+namespace dbcrudgen {
+    namespace db {
+        namespace mysql {
+            //
+            // MysqlRelationTypes
+            // //
+            class MysqlRelationTypes {
 
-//
-// MysqlRelationTypes
-// //
-class MysqlRelationTypes {
+            public:
+                /**
+                 * MYSQL Relation types
+                 */
+                constexpr static char const *TABLE_TYPE = "TABLE_TYPE";
+                /**
+                 * MYSQL default table relation type
+                 */
+                constexpr static char const *TABLE_TYPE_BASE_TABLE = "BASE TABLE";
+                /**
+                 * MYSQL view relation type
+                 */
+                constexpr static char const *TABLE_TYPE_VIEW = "VIEW";
 
-public:
-    /**
-     * MYSQL Relation types
-     */
-    constexpr static char const *TABLE_TYPE = "TABLE_TYPE";
-    /**
-     * MYSQL default table relation type
-     */
-    constexpr static char const * TABLE_TYPE_BASE_TABLE = "BASE TABLE";
-    /**
-     * MYSQL view relation type
-     */
-    constexpr static char const * TABLE_TYPE_VIEW = "VIEW";
-
-};
+            };
+        }
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_MYSQLRELATIONTYPES_H

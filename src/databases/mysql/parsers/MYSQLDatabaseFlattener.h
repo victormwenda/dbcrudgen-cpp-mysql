@@ -19,7 +19,7 @@ namespace dbcrudgen {
 
             public:
                 static dbcrudgen::db::generic::Database
-                flatten(const dbcrudgen::mysql::MYSQLDatabaseModel &mysqlDatabase) {
+                flatten(const dbcrudgen::db::mysql::MYSQLDatabaseModel &mysqlDatabase) {
 
                     std::vector<dbcrudgen::db::generic::Table> genericTables{};
                     std::map<std::string, std::vector<dbcrudgen::db::generic::Column>> genericColumns;

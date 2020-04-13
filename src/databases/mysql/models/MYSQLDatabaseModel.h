@@ -12,46 +12,48 @@
 #include "../scaffolding/entities/Columns.h"
 
 namespace dbcrudgen {
+    namespace db {
+        namespace mysql {
 
-    namespace mysql {
+            //MYSQL Database Model
+            class MYSQLDatabaseModel {
 
-        //MYSQL Database Model
-        class MYSQLDatabaseModel {
+            private:
+                std::string databaseName;
+                std::vector<Tables> tables;
+                std::map<std::string, std::vector<Columns>> tableColumns;
 
-        private:
-            std::string databaseName;
-            std::vector<Tables> tables;
-            std::map<std::string, std::vector<Columns>> tableColumns;
+            public:
 
-        public:
+                MYSQLDatabaseModel() = default;
 
-            MYSQLDatabaseModel() = default;
+                const std::string &getDatabaseName() const {
+                    return databaseName;
+                }
 
-            const std::string &getDatabaseName() const {
-                return databaseName;
-            }
+                void setDatabaseName(std::string &schemas) {
+                    MYSQLDatabaseModel::databaseName = schemas;
+                }
 
-            void setDatabaseName(std::string &schemas) {
-                MYSQLDatabaseModel::databaseName = schemas;
-            }
+                const std::vector<Tables> &getTables() const {
+                    return tables;
+                }
 
-            const std::vector<Tables> &getTables() const {
-                return tables;
-            }
+                void setTables(std::vector<Tables> &databaseTables) {
+                    MYSQLDatabaseModel::tables = databaseTables;
+                }
 
-            void setTables(std::vector<Tables> &databaseTables) {
-                MYSQLDatabaseModel::tables = databaseTables;
-            }
+                const std::map<std::string, std::vector<Columns>> &getTableColumns() const {
+                    return tableColumns;
+                }
 
-            const std::map<std::string, std::vector<Columns>> &getTableColumns() const {
-                return tableColumns;
-            }
-
-            void setTableColumns(std::map<std::string, std::vector<Columns>> &databaseTableColumns) {
-                MYSQLDatabaseModel::tableColumns = databaseTableColumns;
-            }
-        };
+                void setTableColumns(std::map<std::string, std::vector<Columns>> &databaseTableColumns) {
+                    MYSQLDatabaseModel::tableColumns = databaseTableColumns;
+                }
+            };
+        }
     }
+
 }
 
 

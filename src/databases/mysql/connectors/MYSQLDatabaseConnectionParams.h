@@ -13,32 +13,39 @@
 
 #include <iostream>
 
-class MYSQLDatabaseConnectionParams {
+namespace dbcrudgen {
+    namespace db {
+        namespace mysql {
+            class MYSQLDatabaseConnectionParams {
 
-private:
-    std::string host;
-    std::string username;
-    std::string password;
-    std::string schemas;
-public:
-    MYSQLDatabaseConnectionParams(std::string &host, std::string &username,
-                                  std::string &password, std::string &schemas) : host(
-            host), username(username), password(password), schemas(schemas) {}
+            private:
+                std::string host;
+                std::string username;
+                std::string password;
+                std::string schemas;
+            public:
+                MYSQLDatabaseConnectionParams(std::string &host, std::string &username,
+                                              std::string &password, std::string &schemas) : host(
+                        host), username(username), password(password), schemas(schemas) {}
 
-    const std::string &getHost() const {
-        return host;
+                const std::string &getHost() const {
+                    return host;
+                }
+
+                const std::string &getUsername() const {
+                    return username;
+                }
+
+                const std::string &getPassword() const {
+                    return password;
+                }
+
+                const std::string &getSchemas() const { return schemas; }
+            };
+
+        }
     }
-
-    const std::string &getUsername() const {
-        return username;
-    }
-
-    const std::string &getPassword() const {
-        return password;
-    }
-
-    const std::string &getSchemas() const { return schemas; }
-};
+}
 
 
 #endif //DBCRUDGEN_CPP_MYSQLDATABASECONNECTION_H

@@ -9,9 +9,14 @@
 
 #ifndef DBCRUDGEN_CPP_ROWFORMATS_H
 #define DBCRUDGEN_CPP_ROWFORMATS_H
-
-enum MYSQLRowFormats {
-    FIXED, DYNAMIC, COMPRESSED, REDUNDANT, COMPACT
+namespace dbcrudgen {
+    namespace db {
+        namespace mysql {
+            enum class MYSQLRowFormats {
+                FIXED, DYNAMIC, COMPRESSED, REDUNDANT, COMPACT
+            };
+        }
+    }
 };
 
 #endif //DBCRUDGEN_CPP_ROWFORMATS_H

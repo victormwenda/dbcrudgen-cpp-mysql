@@ -11,7 +11,7 @@ namespace dbcrudgen {
         class CppMYSQLSCRUDParser : public CppMYSQLParser {
 
         public:
-            std::string createMethodParams(const mysql::Columns &column, bool isBeforeLast) {
+            std::string createMethodParams(const dbcrudgen::db::mysql::Columns &column, bool isBeforeLast) {
 
                 const std::string datatype = toCppDataType(column.getDataType().c_str());
 
@@ -26,7 +26,7 @@ namespace dbcrudgen {
                 return name;
             }
 
-            std::string createColumnName(const mysql::Columns &column, bool isBeforeLast) {
+            std::string createColumnName(const dbcrudgen::db::mysql::Columns &column, bool isBeforeLast) {
 
                 std::string name = {"`" + column.getColumnName() + "`"};
 
@@ -37,7 +37,7 @@ namespace dbcrudgen {
                 return name;
             }
 
-            std::string createColumnValue(const mysql::Columns &column, bool isBeforeLast) {
+            std::string createColumnValue(const dbcrudgen::db::mysql::Columns &column, bool isBeforeLast) {
 
                 std::string name = column.getColumnName();
 
@@ -60,7 +60,7 @@ namespace dbcrudgen {
             }
 
             std::string
-            createQueriedColumnValues(std::string tableName, const mysql::Columns &column, bool isBeforeLast) {
+            createQueriedColumnValues(std::string tableName, const dbcrudgen::db::mysql::Columns &column, bool isBeforeLast) {
 
                 std::string datatype = toCppDataType(column.getDataType().c_str());
 
@@ -83,7 +83,7 @@ namespace dbcrudgen {
                 return name;
             }
 
-            std::string createQueriedColumns(const mysql::Columns &column, bool isBeforeLast) {
+            std::string createQueriedColumns(const dbcrudgen::db::mysql::Columns &column, bool isBeforeLast) {
                 const std::string datatype = toCppDataType(column.getDataType().c_str());
 
                 std::string name = column.getColumnName();

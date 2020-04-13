@@ -8,49 +8,52 @@
 #include <string>
 
 namespace dbcrudgen {
-    namespace mysql {
-        class GlobalStatus {
+    namespace db {
+        namespace mysql {
+            class GlobalStatus {
 
-        private:
-            std::string variableName;
-            std::string variableValue;
+            private:
+                std::string variableName;
+                std::string variableValue;
 
-        public:
+            public:
 
-            static constexpr const char *TABLE_NAME = "GLOBAL_STATUS";
+                static constexpr const char *TABLE_NAME = "GLOBAL_STATUS";
 
-            struct COLUMNS {
-                struct VARIABLE_NAME {
-                    static constexpr const char *NAME = "VARIABLE_NAME";
-                    static const int INDEX = 1;
+                struct COLUMNS {
+                    struct VARIABLE_NAME {
+                        static constexpr const char *NAME = "VARIABLE_NAME";
+                        static const int INDEX = 1;
+                    };
+                    struct VARIABLE_VALUE {
+                        static constexpr const char *NAME = "VARIABLE_VALUE";
+                        static const int INDEX = 2;
+                    };
                 };
-                struct VARIABLE_VALUE {
-                    static constexpr const char *NAME = "VARIABLE_VALUE";
-                    static const int INDEX = 2;
-                };
+
+                GlobalStatus(std::string &variableName, std::string &variableValue) : variableName{variableName},
+                                                                                      variableValue{variableValue} {}
+
+                // Get the value of variableName
+                const std::string &getVariableName() const {
+                    return variableName;
+                }
+
+                // Get the value of variableValue
+                const std::string &getVariableValue() const {
+                    return variableValue;
+                }
+
+                /**
+                * Returns the table name 'GLOBAL_STATUS';
+                */
+                static const char *getDatabaseTableName() {
+                    return TABLE_NAME;
+                }
             };
-
-            GlobalStatus(std::string &variableName, std::string &variableValue) : variableName{variableName},
-                                                                                  variableValue{variableValue} {}
-
-            // Get the value of variableName
-            const std::string &getVariableName() const {
-                return variableName;
-            }
-
-            // Get the value of variableValue
-            const std::string &getVariableValue() const {
-                return variableValue;
-            }
-
-            /**
-            * Returns the table name 'GLOBAL_STATUS';
-            */
-            static const char *getDatabaseTableName() {
-                return TABLE_NAME;
-            }
-        };
+        }
     }
+
 }
 
 

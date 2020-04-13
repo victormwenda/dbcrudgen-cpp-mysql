@@ -19,12 +19,12 @@ namespace dbcrudgen {
             * @param databaseModel
             * @param generatedCodeDir
             */
-            void createDatabaseTableModel(CppMYSQLProjectModel projectModel, mysql::MYSQLDatabaseModel databaseModel,
+            void createDatabaseTableModel(CppMYSQLProjectModel projectModel, dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel,
                                           std::string generatedCodeDir) {
 
                 CppClassTableModelTemplate sourceTemplate;
 
-                std::vector<dbcrudgen::mysql::Tables> tables = databaseModel.getTables();
+                std::vector<dbcrudgen::db::mysql::Tables> tables = databaseModel.getTables();
 
                 for (const auto &table : tables) {
 
@@ -56,7 +56,7 @@ namespace dbcrudgen {
 
                     if (tableColumnsIterator != tableColumnsMap.end()) {
 
-                        std::vector<mysql::Columns> tableColumns = tableColumnsIterator->second;
+                        std::vector<dbcrudgen::db::mysql::Columns> tableColumns = tableColumnsIterator->second;
 
                         std::string ctorParams{};
                         std::string ctorVars{};
@@ -118,7 +118,7 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            std::string createColumnGetters(CppPropertyGetterTemplate getterTemplate, mysql::Columns column) {
+            std::string createColumnGetters(CppPropertyGetterTemplate getterTemplate, dbcrudgen::db::mysql::Columns column) {
 
                 std::string getterTmp = getterTemplate.getTemplate();
 
@@ -131,7 +131,7 @@ namespace dbcrudgen {
             }
 
 
-            std::string createClassProperties(CppVariableTemplate sourceTemplate, mysql::Columns column) {
+            std::string createClassProperties(CppVariableTemplate sourceTemplate, dbcrudgen::db::mysql::Columns column) {
 
                 std::string source;
 
@@ -147,7 +147,7 @@ namespace dbcrudgen {
             }
 
             std::string
-            createConstructorParams(CppVariableTemplate sourceTemplate, mysql::Columns column, bool isBeforeLast) {
+            createConstructorParams(CppVariableTemplate sourceTemplate, dbcrudgen::db::mysql::Columns column, bool isBeforeLast) {
 
                 std::string source;
 
@@ -171,7 +171,7 @@ namespace dbcrudgen {
              * @return
              */
             std::string
-            createConstructorParamInitializers(CppCtorInitializersTemplate sourceTemplate, mysql::Columns column,
+            createConstructorParamInitializers(CppCtorInitializersTemplate sourceTemplate, dbcrudgen::db::mysql::Columns column,
                                                bool isBeforeLast) {
 
                 std::string source;
@@ -196,7 +196,7 @@ namespace dbcrudgen {
                  * @return
                  */
             std::string
-            createColumnsMetaData(CppStructTableColumnModelTemplate sourceTemplate, mysql::Columns column, int index) {
+            createColumnsMetaData(CppStructTableColumnModelTemplate sourceTemplate, dbcrudgen::db::mysql::Columns column, int index) {
                 std::string source;
                 std::string srcTmp = sourceTemplate.getTemplate();
                 source += parser.parseTableColumnsMetaData(sourceTemplate, column, index);
@@ -211,7 +211,7 @@ namespace dbcrudgen {
              * @return
              */
             static std::string
-            parseTableInstanceVariables(CppVariableTemplate &codeTemplate, mysql::Columns &column,
+            parseTableInstanceVariables(CppVariableTemplate &codeTemplate, dbcrudgen::db::mysql::Columns &column,
                                         std::string &delimiter) {
 
                 std::string source = codeTemplate.getTemplate();

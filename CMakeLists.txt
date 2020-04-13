@@ -75,11 +75,6 @@ set(SOURCE_FILES
         src/databases/mysql/core/MYSQLDataType.h
 
 
-        src/databases/mysql/columns/MysqlKeyColumnUsageTableColumns.h
-        src/databases/mysql/columns/MysqlTableColumnColumns.h
-        src/databases/mysql/columns/MYSQLTableColumn.h
-        src/databases/mysql/columns/MysqlUserColumn.h
-
         src/databases/mysql/connectors/MYSQLDatabaseConnectionParams.h
         src/databases/mysql/connectors/MYSQLDatabaseConnector.h
         src/databases/mysql/connectors/MYSQLQueryExecutor.h
@@ -91,9 +86,6 @@ set(SOURCE_FILES
         src/databases/mysql/models/DataType.h
         src/databases/mysql/models/MYSQLDatabaseModel.h
 
-        src/databases/mysql/objects/constraints/ColumnConstraints.h
-        src/databases/mysql/objects/MYSQLTable.h
-        src/databases/mysql/objects/MYSQLDatabase.h
         src/databases/mysql/objects/stored/MYSQLProcedure.h
         src/databases/mysql/objects/stored/MYSQLFunction.h
         src/databases/mysql/objects/stored/MYSQLTrigger.h

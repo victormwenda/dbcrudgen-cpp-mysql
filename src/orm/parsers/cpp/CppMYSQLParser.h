@@ -25,7 +25,7 @@ namespace dbcrudgen {
              * @param dataType
              * @return
              */
-            static std::string toCppDataType(const dbcrudgen::mysql::MYSQLDataType dataType) {
+            static std::string toCppDataType(const dbcrudgen::db::mysql::MYSQLDataType dataType) {
                 return toCppDataType(dataType.getName());
             }
 
@@ -161,7 +161,7 @@ namespace dbcrudgen {
              * @return
              */
             static std::string
-            parseTableColumnsGetters(CppPropertyGetterTemplate &codeTemplate, mysql::Columns &column) {
+            parseTableColumnsGetters(CppPropertyGetterTemplate &codeTemplate, dbcrudgen::db::mysql::Columns &column) {
 
                 std::string source = codeTemplate.getTemplate();
                 const std::string &dataType = column.getDataType();
@@ -195,7 +195,7 @@ namespace dbcrudgen {
              * @return
              */
             static std::string
-            parseTableColumnVariables(CppVariableTemplate &codeTemplate, mysql::Columns &column,
+            parseTableColumnVariables(CppVariableTemplate &codeTemplate, dbcrudgen::db::mysql::Columns &column,
                                       std::string &delimiter) {
 
                 std::string source = codeTemplate.getTemplate();
@@ -230,7 +230,7 @@ namespace dbcrudgen {
              */
             static std::string
             parseClassConstructorInitializerProperties(CppCtorInitializersTemplate &codeTemplate,
-                                                       mysql::Columns &column, std::string &delimiter) {
+                                                       dbcrudgen::db::mysql::Columns &column, std::string &delimiter) {
 
                 std::string source = codeTemplate.getTemplate();
 
@@ -254,7 +254,7 @@ namespace dbcrudgen {
              */
             static std::string
             parseTableColumnsMetaData(CppStructTableColumnModelTemplate &codeTemplate,
-                                      mysql::Columns &column, int index) {
+                                      dbcrudgen::db::mysql::Columns &column, int index) {
 
                 std::string source = codeTemplate.getTemplate();
 

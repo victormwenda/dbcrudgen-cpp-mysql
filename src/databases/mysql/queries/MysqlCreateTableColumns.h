@@ -10,13 +10,19 @@
 #define DBCRUDGEN_CPP_MYSQLCREATETABLECOLUMNS_H
 
 
-class MysqlCreateTableColumns {
+namespace dbcrudgen {
+    namespace db {
+        namespace mysql {
+            class MysqlCreateTableColumns {
 
-public:
-    constexpr  static const char * CREATE_TABLE = "Create Table";
-    constexpr  static const char * TABLE = "Table";
+            public:
+                constexpr static const char *CREATE_TABLE = "Create Table";
+                constexpr static const char *TABLE = "Table";
 
-};
+            };
+        }
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_MYSQLCREATETABLECOLUMNS_H

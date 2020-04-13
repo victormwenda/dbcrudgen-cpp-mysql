@@ -6,10 +6,12 @@
 #define DBCRUDGEN_CPP_DATATYPE_H
 
 namespace dbcrudgen {
-    namespace mysql {
-        enum class DataType : char {
-            BOOLEAN, DATE_TIME, JSON, NUMERICAL, SPATIAL, STRING
-        };
+    namespace db {
+        namespace mysql {
+            enum class DataType : char {
+                BOOLEAN, DATE_TIME, JSON, NUMERICAL, SPATIAL, STRING
+            };
+        }
     }
 }
 

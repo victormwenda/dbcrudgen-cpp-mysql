@@ -22,7 +22,7 @@
  * @param host
  * @return
  */
-dbcrudgen::mysql::MYSQLDatabaseModel
+dbcrudgen::db::mysql::MYSQLDatabaseModel
 getMYSQLDatabaseModel(std::string database, std::string username, std::string password, std::string host);
 
 /**
@@ -30,7 +30,7 @@ getMYSQLDatabaseModel(std::string database, std::string username, std::string pa
  * @param databaseModel
  * @return
  */
-dbcrudgen::db::generic::Database getGenericDatabase(dbcrudgen::mysql::MYSQLDatabaseModel &databaseModel);
+dbcrudgen::db::generic::Database getGenericDatabase(dbcrudgen::db::mysql::MYSQLDatabaseModel &databaseModel);
 
 /**
  * Create CPP Project
@@ -47,9 +47,13 @@ void createPhpProject();
  */
 void createPostmanProject();
 
+void createJavaProject();
+
+void createJaxRsHibernateProject();
+
 int main(int argc, char **argv) {
 
-    createPhpProject();
+    createJaxRsHibernateProject();
 
     return EXIT_SUCCESS;
 }
@@ -63,28 +67,28 @@ int main(int argc, char **argv) {
  * @param host
  * @return
  */
-dbcrudgen::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database = "dbcrudgen",
+dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database = "dbcrudgen",
                                                            std::string username = "root",
                                                            std::string password = "root3358",
                                                            std::string host = "tcp://127.0.0.1:3306") {
 
-    MYSQLDatabaseConnectionParams params{host, username, password, database};
-    MYSQLDatabaseConnector connector{params};
+    dbcrudgen::db::mysql::MYSQLDatabaseConnectionParams params{host, username, password, database};
+    dbcrudgen::db::mysql::MYSQLDatabaseConnector connector{params};
     connector.open();
 
-    dbcrudgen::mysql::MYSQLDatabaseDecomposer decomposer{connector};
+    dbcrudgen::db::mysql::MYSQLDatabaseDecomposer decomposer{connector};
 
-    std::map<std::string, std::vector<dbcrudgen::mysql::Columns>> tableColumns;
+    std::map<std::string, std::vector<dbcrudgen::db::mysql::Columns>> tableColumns;
 
     auto tables = decomposer.getSchemaTables(database);
 
-    for (dbcrudgen::mysql::Tables &table  : tables) {
+    for (dbcrudgen::db::mysql::Tables &table  : tables) {
         std::string tableName = table.getTableName();
-        std::vector<dbcrudgen::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
+        std::vector<dbcrudgen::db::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
         tableColumns.insert({tableName, columns});
     }
 
-    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel;
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel;
     databaseModel.setDatabaseName(database);
     databaseModel.setTables(tables);
     databaseModel.setTableColumns(tableColumns);
@@ -97,13 +101,13 @@ dbcrudgen::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database 
  * @param databaseModel
  * @return
  */
-dbcrudgen::db::generic::Database getGenericDatabase(dbcrudgen::mysql::MYSQLDatabaseModel &databaseModel) {
+dbcrudgen::db::generic::Database getGenericDatabase(dbcrudgen::db::mysql::MYSQLDatabaseModel &databaseModel) {
     return dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 }
 
 void createCppProject() {
 
-    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
 
     std::string projectName = "pesarika-cpp";
     std::string workspaceDir = "/opt/victor/workspace/cpp";
@@ -124,10 +128,10 @@ void createCppProject() {
 
 void createPhpProject() {
 
-    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("givewatts");
     dbcrudgen::db::generic::Database database = getGenericDatabase(databaseModel);
 
-    std::string projectName = "pesarika-web";
+    std::string projectName = "givewatts-laravel";
     std::string workspaceDir = "/var/www/html";
     std::string assetsDir = "public";
     std::string jsDir = "js";
@@ -153,7 +157,7 @@ void createPhpProject() {
 
 void createPostmanProject() {
 
-    dbcrudgen::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
 
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
@@ -173,4 +177,14 @@ void createPostmanProject() {
                                                      pathSegments, headers, databaseType};
     dbcrudgen::orm::PostmanProjectCreator projectCreator{projectModel, genericDatabase};
     projectCreator.createProject();
+}
+
+void createJavaProject() {
+
+
+}
+
+void createJaxRsHibernateProject() {
+    createJavaProject();
+    createPhpProject();
 }
