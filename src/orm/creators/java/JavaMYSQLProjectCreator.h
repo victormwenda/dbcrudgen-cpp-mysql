@@ -11,24 +11,18 @@
 #ifndef DBCRUDGEN_CPP_JAVAMYSQLPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_JAVAMYSQLPROJECTCREATOR_H
 
-
-#include <vector>
-#include "../../../databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
-#include "../../../databases/mysql/connectors/MYSQLDatabaseConnector.h"
-#include "../../../databases/mysql/models/MYSQLDatabaseTable.h"
-#include "../../utils/TransactionUtils.h"
-#include "../ProjectCreator.h"
 #include "../../codegen/Languages.h"
 #include "../../codegen/Databases.h"
+#include "JavaProjectCreator.h"
 
 namespace dbcrudgen {
     namespace orm {
 
-        class JavaMYSQLProjectCreator : ProjectCreator {
+        class JavaMYSQLProjectCreator : public JavaProjectCreator {
 
         public:
 
-            JavaMYSQLProjectCreator() = default;
+            JavaMYSQLProjectCreator() : JavaProjectCreator{} {}
 
         private:
             std::string getLanguage() override {

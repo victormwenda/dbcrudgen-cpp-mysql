@@ -6,13 +6,16 @@
 #define DBCRUDGEN_CPP_JAVAORACLEPROJECTCREATOR_H
 
 #include <string>
-#include "../ProjectCreator.h"
 #include "../../codegen/Languages.h"
 #include "../../codegen/Databases.h"
+#include "JavaProjectCreator.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class JavaOracleProjectCreator : ProjectCreator {
+        class JavaOracleProjectCreator : public JavaProjectCreator {
+
+            JavaOracleProjectCreator() : JavaProjectCreator{} {}
+
             std::string getLanguage() override {
                 return std::string{Languages::JAVA};
             }

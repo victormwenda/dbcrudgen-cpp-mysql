@@ -12,6 +12,7 @@ namespace dbcrudgen {
             static constexpr const char *ORACLE = "Oracle";
             static constexpr const char *SQLite = "SQLite";
             static constexpr const char *MsSQL = "MsSQL";
+            static constexpr const char *GENERIC = "generic";
         };
     }
 }

@@ -13,6 +13,9 @@
 #include "orm/creators/postman/PostmanProjectCreator.h"
 #include "orm/creators/php/LaravelProjectCreator.h"
 #include "orm/projects/LaravelProjectModel.h"
+#include "orm/projects/JaxWsProjectModel.h"
+#include "orm/creators/java/JaxWsProjectCreator.h"
+#include "orm/creators/java/JaxRsProjectCreator.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -68,9 +71,9 @@ int main(int argc, char **argv) {
  * @return
  */
 dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database = "dbcrudgen",
-                                                           std::string username = "root",
-                                                           std::string password = "root3358",
-                                                           std::string host = "tcp://127.0.0.1:3306") {
+                                                               std::string username = "root",
+                                                               std::string password = "root3358",
+                                                               std::string host = "tcp://127.0.0.1:3306") {
 
     dbcrudgen::db::mysql::MYSQLDatabaseConnectionParams params{host, username, password, database};
     dbcrudgen::db::mysql::MYSQLDatabaseConnector connector{params};
@@ -181,10 +184,38 @@ void createPostmanProject() {
 
 void createJavaProject() {
 
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
+    auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
+
+    std::string projectName = "pesarika-rs";
+    std::string workspaceDir = "/opt/victor/workspace/java";
+    std::string packageName = "com.pesarika";
+
+    std::string srcDir = "src";
+    std::string moduleDir = "main";
+    std::string javaDir = "java";
+    std::string libsDir = "libs";
+    std::string resourcesDir = "resources";
+
+    std::string webDir = "webapp";
+    std::string apisPkg = "web.apis";
+    std::string entitiesPkg = "db.entities";
+
+    dbcrudgen::orm::JaxWsProjectModel jaxWsModel{projectName, workspaceDir,
+                                                 srcDir, moduleDir, javaDir, libsDir,
+                                                 resourcesDir, packageName, apisPkg, entitiesPkg, webDir};
+    dbcrudgen::orm::JaxWsProjectCreator jaxWsCreator{jaxWsModel, genericDatabase};
+    jaxWsCreator.createProject();
+
+
+    dbcrudgen::orm::JaxRsProjectModel jaxRsModel{projectName, workspaceDir,
+                                                 srcDir, moduleDir, javaDir, libsDir,
+                                                 resourcesDir, packageName, apisPkg, entitiesPkg, webDir};
+    dbcrudgen::orm::JaxRsProjectCreator jaxRsCreator{jaxRsModel, genericDatabase};
+    jaxRsCreator.createProject();
 
 }
 
 void createJaxRsHibernateProject() {
     createJavaProject();
-    createPhpProject();
 }

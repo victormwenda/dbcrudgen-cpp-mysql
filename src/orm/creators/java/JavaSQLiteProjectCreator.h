@@ -11,19 +11,19 @@
 #ifndef DBCRUDGEN_CPP_JAVASQLITEPROJECTCREATOR_H
 #define DBCRUDGEN_CPP_JAVASQLITEPROJECTCREATOR_H
 
-#include "../ProjectCreator.h"
 #include "../../codegen/Languages.h"
 #include "../../codegen/Databases.h"
+#include "JavaProjectCreator.h"
 
 namespace dbcrudgen {
 
     namespace orm {
 
-        class JavaSQLiteProjectCreator : ProjectCreator {
+        class JavaSQLiteProjectCreator : public JavaProjectCreator {
 
         public:
 
-            JavaSQLiteProjectCreator() = default;
+            JavaSQLiteProjectCreator() : JavaProjectCreator{} {}
 
             /**
              *
