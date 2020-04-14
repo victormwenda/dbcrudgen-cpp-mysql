@@ -1,0 +1,7 @@
+package ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE};
+
+${VISIBILITY} class ${CLASS_NAME} {
+
+    ${STUB}
+
+}

@@ -102,7 +102,7 @@ namespace dbcrudgen {
             std::string getApisAbsolutePath() {
                 std::string pkgName = getApisPkg();
                 std::string apisPackage = StringUtils::replace(pkgName, ".", "/");
-                return getAbsoluteJavaPath() + "/" + apisPackage;
+                return getAbsoluteBaseCodePath() + "/" + apisPackage;
             }
 
             /**
@@ -112,7 +112,7 @@ namespace dbcrudgen {
             std::string getEntitiesAbsolutePath() {
                 std::string pkgName = getEntitiesPkg();
                 std::string entitiesPackage = StringUtils::replace(pkgName, ".", "/");
-                return getAbsoluteJavaPath() + "/" + entitiesPackage;
+                return getAbsoluteBaseCodePath() + "/" + entitiesPackage;
             }
 
             /**
@@ -120,9 +120,9 @@ namespace dbcrudgen {
             * @return
             */
             std::string getTransactionsAbsolutePath() {
-                std::string pkgName = getEntitiesPkg();
-                std::string entitiesPackage = StringUtils::replace(pkgName, ".", "/");
-                return getAbsoluteJavaPath() + "/" + transactionsPkg;
+                std::string pkgName = getTransactionsPkg();
+                std::string trxPackage = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + trxPackage;
             }
         };
 

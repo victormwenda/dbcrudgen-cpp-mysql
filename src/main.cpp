@@ -116,7 +116,7 @@ void createCppProject() {
     std::string workspaceDir = "/opt/victor/workspace/cpp";
     std::string includesDir = "includes";
     std::string libsDir = "libs";
-    std::string generatedCodeDir = "src/orm";
+    std::string generatedCodeDir = "src/crud";
     std::string generatedModelCodeDir = "model";
     std::string generatedDbOpsCodeDir = "dao";
 

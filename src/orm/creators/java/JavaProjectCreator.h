@@ -50,6 +50,7 @@ namespace dbcrudgen {
                 FilesWriter::createDirs(projectModel.getAbsoluteJavaPath());
                 FilesWriter::createDirs(projectModel.getAbsoluteLibsPath());
                 FilesWriter::createDirs(projectModel.getAbsoluteResourcesPath());
+                FilesWriter::createDirs(projectModel.getAbsoluteBaseCodePath());
 
             }
 

@@ -1,0 +1,13 @@
+package ${PROJECT_PACKAGE}.${ENTITIES_PACKAGE};
+
+import javax.persistence.*;
+
+@Entity(name = "${TABLE_NAME}")
+@Table(name = "${TABLE_NAME}")
+${VISIBILITY} class ${CLASS_NAME} {
+
+    ${TABLE_COLUMN_INSTANCE_VARIABLES}
+
+    ${TABLE_COLUMN_GETTER_SETTERS}
+
+}

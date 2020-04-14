@@ -104,6 +104,16 @@ namespace dbcrudgen {
             std::string getAbsoluteResourcesPath() {
                 return getAbsoluteModulePath() + "/" + getResourcesDir();
             }
+
+            /**
+            * Get the absolute path to the project java files
+            * @return
+            */
+            std::string getAbsoluteBaseCodePath() {
+                std::string pkgName = getPackageName();
+                std::string baseCode = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteJavaPath() + "/" + baseCode;
+            }
         };
 
     }

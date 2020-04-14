@@ -173,8 +173,6 @@ set(SOURCE_FILES
         src/databases/mysql/scaffolding/entities/TimeZoneTransitionType.h
         src/databases/mysql/scaffolding/entities/User.h
 
-        src/databases/mysql/symbols/MysqlTable.h
-
         ##############################################################################################################
         # ORACLE DATABASE SOURCE FILES
         ##############################################################################################################
@@ -387,9 +385,9 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppVariableTemplate.h
         src/orm/templates/cpp/CppTemplateFiles.h
 
-        src/orm/templates/java/JavaOracleConnectorTemplate.h
-        src/orm/templates/java/JavaMYSQLConnectorTemplate.h
-        src/orm/templates/java/JavaSQLiteConnectorTemplate.h
+        src/orm/templates/java/crud/classic/JavaOracleConnectorTemplate.h
+        src/orm/templates/java/crud/classic/JavaMYSQLConnectorTemplate.h
+        src/orm/templates/java/crud/classic/JavaSQLiteConnectorTemplate.h
 
         src/orm/templates/postman/PostmanCollectionTemplate.h
         src/orm/templates/postman/PostmanRequestTemplate.h
@@ -432,7 +430,7 @@ set(SOURCE_FILES
         src/orm/utils/StringUtils.h
 
 
-        )
+        src/orm/templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h src/orm/templates/java/crud/hibernate/HibernateClassEntityTemplate.h src/orm/templates/java/crud/hibernate/HibernateClassTransactionsTemplate.h src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h src/orm/templates/java/jax-rs/JaxRsClassResourcesTemplate.h src/orm/templates/java/JavaTemplateFiles.h src/orm/templates/java/JavaClassTemplate.h src/orm/templates/java/JavaMethodTemplate.h src/orm/templates/java/JavaVariableInstanceTemplate.h src/orm/templates/java/JavaVariableLocalTemplate.h src/orm/templates/java/JavaVariableStaticTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodGetTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodDeleteTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodPostTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h src/orm/parsers/java/HibernateConfigurationParser.h src/orm/parsers/java/HibernateTransactionsParser.h src/orm/parsers/java/HibernateEntitiesParser.h src/orm/parsers/java/JaxRsResourcesParser.h)
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

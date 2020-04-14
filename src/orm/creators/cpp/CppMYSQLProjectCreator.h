@@ -93,6 +93,6 @@ namespace dbcrudgen {
                 scrudCodeGen.createDatabaseSCRUD(projectModel, databaseModel, scrudDir);
             }
         };
-    } // namespace orm
+    } // namespace crud
 } // namespace dbcrudgen
 #endif //DBCRUDGEN_CPP_CPPMYSQLPROJECTCREATOR_H

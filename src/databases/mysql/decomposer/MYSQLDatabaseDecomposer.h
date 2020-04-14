@@ -15,7 +15,6 @@
 #include <string>
 #include <vector>
 #include "../connectors/MYSQLDatabaseConnector.h"
-#include "../symbols/MysqlTable.h"
 #include "../queries/MysqlFullTablesColumns.h"
 #include "../queries/MysqlCreateTableColumns.h"
 #include "../queries/MYSQLStatements.h"
