@@ -73,7 +73,7 @@ namespace dbcrudgen {
                     std::string entitySource = hEntityTemplate.getTemplate();
                     std::string trxSource = hTrxTemplate.getTemplate();
 
-                    std::string tableName = table.getTableName();
+                    const std::string& tableName = table.getTableName();
 
                     std::string apiSuffix = projectModel.getApiClassSuffix();
                     std::string entitySuffix = projectModel.getEntityClassSuffix();
@@ -88,7 +88,7 @@ namespace dbcrudgen {
                     trxClass.append(trxSuffix);
 
 
-                    JaxRsResourcesParser::parseClassDetails(projectModel, apiSource, apiClass);
+                    JaxRsResourcesParser::parseClassDetails(projectModel, apiSource, tableName, apiClass);
                     HibernateEntitiesParser::parseClassDetails(projectModel, entitySource, tableName, entityClass);
                     HibernateTransactionsParser::parseClassDetails(projectModel, trxSource, trxClass);
 

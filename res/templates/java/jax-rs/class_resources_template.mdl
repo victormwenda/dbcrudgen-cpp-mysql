@@ -1,7 +1,56 @@
 package ${PROJECT_PACKAGE}.${RESOURCES_PACKAGE};
 
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+@Path("/${RESOURCE-NAME}")
 ${VISIBILITY} class ${CLASS_NAME} {
 
-    ${STUB}
+    @GET
+    @Path("/get")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getOne() {
+        return Response.ok().build();
+    }
+
+
+    @GET
+    @Path("/list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getAll() {
+        return Response.ok().build();
+    }
+
+    @GET
+    @Path("/search")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response search() {
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("/create")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response create() throws URISyntaxException {
+        URI uri = new URI("");
+        return Response.created(uri).build();
+    }
+
+    @PUT
+    @Path("/update")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response update() {
+        return Response.noContent().build();
+    }
+
+    @DELETE
+    @Path("/delete")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response delete() {
+        return Response.noContent().build();
+    }
 
 }

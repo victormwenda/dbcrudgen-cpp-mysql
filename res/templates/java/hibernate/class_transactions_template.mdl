@@ -1,7 +1,121 @@
 package ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE};
 
+import ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE}.DatabaseConnection;
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
+
+import java.util.List;
+
 ${VISIBILITY} class ${CLASS_NAME} {
 
-    ${STUB}
+    /**
+     * Insert object
+     *
+     * @param object
+     */
+    public void insert(Object object) {
+        Session session = DatabaseConnection.getSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+
+        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.persist(object);
+
+        transaction.commit();
+
+
+    }
+
+    /**
+     * Update object
+     *
+     * @param connection
+     * @param object
+     */
+    public void update(DatabaseConnection connection, Object object) {
+        Session session = DatabaseConnection.getSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+
+        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.merge(object);
+
+        transaction.commit();
+    }
+
+    /**
+     * Delete object
+     *
+     * @param connection
+     * @param object
+     */
+    public void delete(DatabaseConnection connection, Object object) {
+        Session session = DatabaseConnection.getSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+
+        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        entityManager.remove(object);
+
+        transaction.commit();
+    }
+
+    /**
+     * Get object
+     *
+     * @param connection
+     * @param hql
+     * @param aClass
+     * @return
+     */
+    public Object queryOne(DatabaseConnection connection, String hql, Class aClass) {
+        Session session = DatabaseConnection.getSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+
+        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        Query query = entityManager.createQuery(hql, aClass);
+        Object singleResult = query.getSingleResult();
+
+        transaction.commit();
+
+        return singleResult;
+    }
+
+    /**
+     * Get objects
+     *
+     * @param connection
+     * @param hql
+     * @return
+     */
+    public List queryMany(DatabaseConnection connection, String hql) {
+        Session session = DatabaseConnection.getSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+
+        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        Query query = entityManager.createQuery(hql);
+        List resultList = query.getResultList();
+
+        transaction.commit();
+
+        return resultList;
+    }
 
 }

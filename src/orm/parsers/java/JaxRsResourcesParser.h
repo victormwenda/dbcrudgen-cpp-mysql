@@ -21,11 +21,12 @@ namespace dbcrudgen {
              * @param className
              */
             static void parseClassDetails(dbcrudgen::orm::JaxRsProjectModel &model, std::string &sourceTemplate,
-                                          const std::string &className) {
+                                          const std::string &tableName, const std::string &className) {
                 StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
                 StringUtils::replace(sourceTemplate, "${RESOURCES_PACKAGE}", model.getApisPkg());
                 StringUtils::replace(sourceTemplate, "${CLASS_NAME}", className);
                 StringUtils::replace(sourceTemplate, "${VISIBILITY}", "public");
+                StringUtils::replace(sourceTemplate, "${RESOURCE-NAME}", toKebabCase(tableName));
             }
         };
     }
