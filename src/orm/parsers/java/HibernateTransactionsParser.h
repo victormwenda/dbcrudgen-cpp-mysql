@@ -5,12 +5,12 @@
 #ifndef DBCRUDGEN_CPP_HIBERNATETRANSACTIONSPARSER_H
 #define DBCRUDGEN_CPP_HIBERNATETRANSACTIONSPARSER_H
 
-#include "JavaParser.h"
+#include "HibernateParser.h"
 #include "../../projects/JaxRsProjectModel.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class HibernateTransactionsParser : public JavaParser {
+        class HibernateTransactionsParser : public HibernateParser {
         public:
 
             /**

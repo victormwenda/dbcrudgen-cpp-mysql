@@ -1,0 +1,1 @@
+jdbc:sqlite:${SQLITE_DATABASE_FILE_PATH}

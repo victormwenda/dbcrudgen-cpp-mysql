@@ -11,7 +11,7 @@
 
 namespace dbcrudgen {
     namespace orm {
-        class HibernateEntitiesParser : public JavaParser {
+        class HibernateEntitiesParser : public HibernateParser {
 
         public:
 

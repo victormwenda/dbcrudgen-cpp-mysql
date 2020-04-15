@@ -9,35 +9,52 @@
 #include <vector>
 
 #include "Table.h"
+#include "Connection.h"
+#include "Flavor.h"
 
 namespace dbcrudgen {
     namespace db {
         namespace generic {
+
             /**
              * A generic database table
              */
             class Database {
 
             private:
-                std::string databaseName;
+                Connection connection;
+                Flavor flavor;
                 std::vector<dbcrudgen::db::generic::Table> tables;
-
             public:
+
 
                 /**
                  * Create a generic database
-                 * @param databaseName
+                 * @param connection
+                 * @param flavor
                  * @param tables
                  */
-                Database(std::string &databaseName, std::vector<dbcrudgen::db::generic::Table> &tables)
-                        : databaseName(databaseName), tables(tables) {}
+                Database(Connection connection, Flavor flavor, std::vector<dbcrudgen::db::generic::Table> &tables)
+                        : connection{connection}, flavor{flavor}, tables(tables) {}
+
+                Connection getConnection() const {
+                    return connection;
+                }
+
+                void setConnection(const Connection &connection) {
+                    Database::connection = connection;
+                }
+
+                const Flavor getFlavor() const {
+                    return flavor;
+                }
 
                 const std::string &getDatabaseName() const {
-                    return databaseName;
+                    return getConnection().getDatabase();
                 }
 
                 void setDatabaseName(const std::string &databaseName) {
-                    Database::databaseName = databaseName;
+                    getConnection().setDatabase(databaseName);
                 }
 
                 const std::vector<dbcrudgen::db::generic::Table> &getTables() const {

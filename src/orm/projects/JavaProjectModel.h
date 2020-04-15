@@ -69,15 +69,15 @@ namespace dbcrudgen {
                 return packageName;
             }
 
-            std::string getAbsoluteProjectPath() {
+            std::string getAbsoluteProjectPath() const {
                 return getWorkspaceDir() + "/" + getProjectName();
             }
 
-            std::string getAbsoluteSrcPath() {
+            std::string getAbsoluteSrcPath() const {
                 return getAbsoluteProjectPath() + "/" + getSrcDir();
             }
 
-            std::string getAbsoluteModulePath() {
+            std::string getAbsoluteModulePath() const {
                 return getAbsoluteSrcPath() + "/" + getModuleDir();
             }
 
@@ -85,7 +85,7 @@ namespace dbcrudgen {
             * Get the absolute path to the project java files
             * @return
             */
-            std::string getAbsoluteJavaPath() {
+            const std::string getAbsoluteJavaPath() const {
                 return getAbsoluteModulePath() + "/" + getJavaDir();
             }
 
@@ -109,10 +109,11 @@ namespace dbcrudgen {
             * Get the absolute path to the project java files
             * @return
             */
-            std::string getAbsoluteBaseCodePath() {
+           const std::string getAbsoluteBaseCodePath() const {
                 std::string pkgName = getPackageName();
                 std::string baseCode = StringUtils::replace(pkgName, ".", "/");
-                return getAbsoluteJavaPath() + "/" + baseCode;
+                const std::string &javaPath = getAbsoluteJavaPath();
+                return javaPath + "/" + baseCode;
             }
         };
 

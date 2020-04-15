@@ -7,6 +7,16 @@
 
 #include "../SyntaxParser.h"
 
+#include "../../templates/java/crud/connections/JavaMYSQLConnectionStringTemplate.h"
+#include "../../templates/java/crud/connections/JavaMSSQLConnectionStringTemplate.h"
+#include "../../templates/java/crud/connections/JavaSQLiteConnectionStringTemplate.h"
+#include "../../templates/java/crud/connections/JavaOracleSIDConnectionStringTemplate.h"
+
+#include "../../templates/java/crud/drivers/JavaOracleConnectionDriverTemplate.h"
+#include "../../templates/java/crud/drivers/JavaMYSQLConnectionDriverTemplate.h"
+#include "../../templates/java/crud/drivers/JavaMSSQLConnectionDriverTemplate.h"
+#include "../../templates/java/crud/drivers/JavaSQLiteConnectionDriverTemplate.h"
+
 namespace dbcrudgen {
     namespace orm {
         class JavaParser : public SyntaxParser {
@@ -146,9 +156,87 @@ namespace dbcrudgen {
                 return std::string{"null"};
             }
 
+            /**
+             * Convert a name to a java instance name
+             * @param name
+             * @return
+             */
             static std::string toJavaVariableInstance(std::string name) {
                 std::string variableName = "m" + toJavaClassName(name);
                 return variableName;
+            }
+
+            /**
+             * Convert a name to a java static name
+             * @param name
+             * @return
+             */
+            static std::string toJavaVariableStatic(std::string name) {
+                std::string variableName = "s" + toJavaClassName(name);
+                return variableName;
+            }
+
+            /**
+             * Convert a name to a java local variable name
+             * @param name
+             * @return
+             */
+            static std::string toJavaVariableLocal(std::string name) {
+                std::string variableName = toCamelCase(name);
+                return variableName;
+            }
+
+            /**
+             * Get database connection string
+             * @param flavor
+             * @return
+             */
+            static std::string getDatabaseDriverManager(db::generic::Flavor &flavor) {
+                switch (flavor) {
+                    case db::generic::Flavor::MYSQL: {
+                        JavaMYSQLConnectionDriverTemplate drivTpl;
+                        return drivTpl.getTemplate();
+                    }
+                    case db::generic::Flavor::MSSQL: {
+                        JavaMSSQLConnectionDriverTemplate drivTpl;
+                        return drivTpl.getTemplate();
+                    }
+                    case db::generic::Flavor::ORACLE: {
+                        JavaOracleConnectionDriverTemplate drivTpl;
+                        return drivTpl.getTemplate();
+                    }
+                    case db::generic::Flavor::SQLITE: {
+                        JavaSQLiteConnectionDriverTemplate drivTpl;
+                        return drivTpl.getTemplate();
+                    }
+                }
+            }
+
+            /**
+             * Get Database Driver Manager class
+             * @param flavor
+             * @return
+             */
+            static std::string getDatabaseConnectionString(db::generic::Flavor &flavor) {
+
+                switch (flavor) {
+                    case db::generic::Flavor::MYSQL: {
+                        JavaMYSQLConnectionStringTemplate connStrTpl;
+                        return connStrTpl.getTemplate();
+                    }
+                    case db::generic::Flavor::MSSQL: {
+                        JavaMSSQLConnectionStringTemplate connStrTpl;
+                        return connStrTpl.getTemplate();
+                    }
+                    case db::generic::Flavor::ORACLE: {
+                        JavaOracleSIDConnectionStringTemplate connStrTpl;
+                        return connStrTpl.getTemplate();
+                    }
+                    case db::generic::Flavor::SQLITE: {
+                        JavaSQLiteConnectionStringTemplate connStrTpl;
+                        return connStrTpl.getTemplate();
+                    }
+                }
             }
         };
     }

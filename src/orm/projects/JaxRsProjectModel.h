@@ -91,7 +91,7 @@ namespace dbcrudgen {
            * Get the absolute path to the project webdir files
            * @return
            */
-            std::string getAbsoluteWebDirPath() {
+            const std::string getAbsoluteWebDirPath() {
                 return getAbsoluteModulePath() + "/" + getWebDir();
             }
 
@@ -99,7 +99,7 @@ namespace dbcrudgen {
              * Get absolute path to apis dir
              * @return
              */
-            std::string getApisAbsolutePath() {
+            const std::string getApisAbsolutePath() {
                 std::string pkgName = getApisPkg();
                 std::string apisPackage = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + apisPackage;
@@ -109,7 +109,7 @@ namespace dbcrudgen {
              * Get absolute path to entities dir
              * @return
              */
-            std::string getEntitiesAbsolutePath() {
+            const std::string getEntitiesAbsolutePath() {
                 std::string pkgName = getEntitiesPkg();
                 std::string entitiesPackage = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + entitiesPackage;
@@ -119,10 +119,11 @@ namespace dbcrudgen {
             * Get absolute path to transactions dir
             * @return
             */
-            std::string getTransactionsAbsolutePath() {
+            const std::string getTransactionsAbsolutePath() {
                 std::string pkgName = getTransactionsPkg();
                 std::string trxPackage = StringUtils::replace(pkgName, ".", "/");
-                return getAbsoluteBaseCodePath() + "/" + trxPackage;
+                const std::string &baseCodePath = getAbsoluteBaseCodePath();
+                return baseCodePath + "/" + trxPackage;
             }
         };
 

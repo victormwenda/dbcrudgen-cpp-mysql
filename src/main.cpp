@@ -26,7 +26,7 @@
  * @return
  */
 dbcrudgen::db::mysql::MYSQLDatabaseModel
-getMYSQLDatabaseModel(std::string database, std::string username, std::string password, std::string host);
+getMYSQLDatabaseModel(std::string database, std::string username, std::string password, std::string host, int port);
 
 /**
  * Create a Generic database from a MYSQL Database Model
@@ -68,14 +68,18 @@ int main(int argc, char **argv) {
  * @param username
  * @param password
  * @param host
+ * @param port
  * @return
  */
-dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database = "dbcrudgen",
+dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database,
                                                                std::string username = "root",
                                                                std::string password = "root3358",
-                                                               std::string host = "tcp://127.0.0.1:3306") {
+                                                               std::string host = "127.0.0.1", int port = 3306) {
 
-    dbcrudgen::db::mysql::MYSQLDatabaseConnectionParams params{host, username, password, database};
+    std::string connStr{"tcp://"};
+    connStr = connStr.append(host).append(":").append(std::to_string(port));
+
+    dbcrudgen::db::mysql::MYSQLDatabaseConnectionParams params{connStr, username, password, database};
     dbcrudgen::db::mysql::MYSQLDatabaseConnector connector{params};
     connector.open();
 
@@ -90,9 +94,8 @@ dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string datab
         std::vector<dbcrudgen::db::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
         tableColumns.insert({tableName, columns});
     }
-
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel;
-    databaseModel.setDatabaseName(database);
+    dbcrudgen::db::mysql::MYSQLDatabaseConnectionModel connectionModel{host, port, username, password, database};
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel{connectionModel};
     databaseModel.setTables(tables);
     databaseModel.setTableColumns(tableColumns);
 
@@ -123,8 +126,7 @@ void createCppProject() {
     dbcrudgen::orm::CppMYSQLProjectModel projectModel{projectName, workspaceDir, includesDir, libsDir,
                                                       generatedCodeDir, generatedModelCodeDir, generatedDbOpsCodeDir};
 
-    dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel};
-    projectCreator.setDatabaseModel(databaseModel);
+    dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel, databaseModel};
     projectCreator.createProject();
 
 }

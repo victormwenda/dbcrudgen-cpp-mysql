@@ -54,13 +54,22 @@ namespace dbcrudgen {
 
                         }
 
-                        genericTableColumnsMap.insert(std::pair<std::string, std::vector<dbcrudgen::db::generic::Column>>(tableName, genericColumns));
+                        genericTableColumnsMap.insert(
+                                std::pair<std::string, std::vector<dbcrudgen::db::generic::Column>>(tableName,
+                                                                                                    genericColumns));
 
                         dbcrudgen::db::generic::Table genericTable{databaseName, tableName, genericColumns};
                         genericTables.emplace_back(genericTable);
                     }
 
-                    dbcrudgen::db::generic::Database database{databaseName, genericTables};
+                    const MYSQLDatabaseConnectionModel &mysqlConnModel = mysqlDatabase.getConnectionModel();
+                    std::string host = mysqlConnModel.getHost();
+                    int port = mysqlConnModel.getPort();
+                    std::string user = mysqlConnModel.getUser();
+                    std::string password = mysqlConnModel.getPassword();
+                    dbcrudgen::db::generic::Connection connection{host, port, user, password, databaseName};
+                    dbcrudgen::db::generic::Flavor flavor = dbcrudgen::db::generic::Flavor::MYSQL;
+                    dbcrudgen::db::generic::Database database{connection, flavor, genericTables};
 
                     return database;
                 }

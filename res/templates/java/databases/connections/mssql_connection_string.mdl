@@ -1,0 +1,1 @@
+jdbc:sqlserver://${HOST}:${PORT};databaseName=${DATABASE_NAME};user=${USER};password=${PASSWORD}

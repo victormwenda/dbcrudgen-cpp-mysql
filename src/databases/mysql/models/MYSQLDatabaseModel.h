@@ -10,6 +10,7 @@
 #include <map>
 #include "../scaffolding/entities/Tables.h"
 #include "../scaffolding/entities/Columns.h"
+#include "MYSQLDatabaseConnectionModel.h"
 
 namespace dbcrudgen {
     namespace db {
@@ -19,20 +20,29 @@ namespace dbcrudgen {
             class MYSQLDatabaseModel {
 
             private:
-                std::string databaseName;
+                MYSQLDatabaseConnectionModel connectionModel;
                 std::vector<Tables> tables;
                 std::map<std::string, std::vector<Columns>> tableColumns;
 
             public:
 
-                MYSQLDatabaseModel() = default;
+                /**
+                 * MYSQL Database Model
+                 * @param connectionModel
+                 */
+                explicit MYSQLDatabaseModel(MYSQLDatabaseConnectionModel connectionModel)
+                        : connectionModel{connectionModel} {}
 
-                const std::string &getDatabaseName() const {
-                    return databaseName;
+                const MYSQLDatabaseConnectionModel &getConnectionModel() const {
+                    return connectionModel;
                 }
 
-                void setDatabaseName(std::string &schemas) {
-                    MYSQLDatabaseModel::databaseName = schemas;
+                void setConnectionModel(MYSQLDatabaseConnectionModel &connectionModel) {
+                    MYSQLDatabaseModel::connectionModel = connectionModel;
+                }
+
+                const std::string &getDatabaseName() const {
+                    return getConnectionModel().getDatabase();
                 }
 
                 const std::vector<Tables> &getTables() const {

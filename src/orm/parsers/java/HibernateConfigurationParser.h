@@ -5,24 +5,24 @@
 #ifndef DBCRUDGEN_CPP_HIBERNATECONFIGURATIONPARSER_H
 #define DBCRUDGEN_CPP_HIBERNATECONFIGURATIONPARSER_H
 
-#include "JavaParser.h"
+#include "HibernateParser.h"
 #include "../../projects/JaxRsProjectModel.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class HibernateConfigurationParser : public JavaParser {
+        class HibernateConfigurationParser : public HibernateParser {
 
         public:
 
             /**
-             * Parse Configuration file
+             * Parse Database Connection Class Configuration file
              *  - Set the project package name
              *  - Set the transactions class package name
              * @param model
              * @param sourceTemplate
              */
             static void
-            parseConfigurationFile(const dbcrudgen::orm::JaxRsProjectModel &model, std::string &sourceTemplate) {
+            parseConfigurationClass(const dbcrudgen::orm::JaxRsProjectModel &model, std::string &sourceTemplate) {
                 StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
                 StringUtils::replace(sourceTemplate, "${TRANSACTIONS_PACKAGE}", model.getTransactionsPkg());
             }
@@ -38,6 +38,19 @@ namespace dbcrudgen {
                 StringUtils::replace(sourceTemplate, "${PACKAGE_NAME}", model.getPackageName());
                 StringUtils::replace(sourceTemplate, "${CLASS_NAME}", className);
                 StringUtils::replace(sourceTemplate, "${VISIBILITY}", "public");
+            }
+
+            /**
+            * Parse Database Configuration Script file
+            *  - Set the project package name
+            *  - Set the transactions class package name
+            * @param model
+            * @param sourceTemplate
+            */
+            static void
+            parseConfigurationScript(const dbcrudgen::orm::JaxRsProjectModel &model, std::string &sourceTemplate) {
+                StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
+                StringUtils::replace(sourceTemplate, "${TRANSACTIONS_PACKAGE}", model.getTransactionsPkg());
             }
         };
     }

@@ -150,6 +150,15 @@ namespace dbcrudgen {
             static std::string toKebabCase(std::string name) {
                 return StringUtils::toKebabCase(name);
             }
+
+            /**
+             * Convert name to camel case case
+             * @param name
+             * @return
+             */
+            static std::string toCamelCase(std::string name) {
+                return StringUtils::toCamelCase(name);
+            }
         };
     }
 }

@@ -26,8 +26,9 @@ namespace dbcrudgen {
             CppMYSQLSCRUDCodeGen scrudCodeGen{};
 
         public:
-            explicit CppMYSQLProjectCreator(CppMYSQLProjectModel &projectModel)
-                    : CppProjectCreator{projectModel}, projectModel{projectModel} {}
+            explicit CppMYSQLProjectCreator(CppMYSQLProjectModel &projectModel,
+                                            dbcrudgen::db::mysql::MYSQLDatabaseModel &databaseModel)
+                    : CppProjectCreator{projectModel}, projectModel{projectModel}, databaseModel(databaseModel) {}
 
             /**
              *
@@ -43,10 +44,6 @@ namespace dbcrudgen {
             std::string getDatabase() override { return std::string{"mysql"}; }
 
             const CppMYSQLProjectModel &getProjectModel() const { return projectModel; }
-
-            void setDatabaseModel(dbcrudgen::db::mysql::MYSQLDatabaseModel &databaseModel) {
-                CppMYSQLProjectCreator::databaseModel = databaseModel;
-            }
 
             const CppMYSQLProjectCodeGen &getCodeGen() const { return tableModelCodeGen; }
 

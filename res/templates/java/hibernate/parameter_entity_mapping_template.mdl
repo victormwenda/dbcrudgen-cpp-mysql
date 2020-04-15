@@ -1,0 +1,1 @@
+<mapping class="${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS}"/>

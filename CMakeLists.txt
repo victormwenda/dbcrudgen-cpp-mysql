@@ -50,9 +50,11 @@ set(SOURCE_FILES
 
         src/main.cpp
 
-        src/databases/generic/Database.h
-        src/databases/generic/Table.h
         src/databases/generic/Column.h
+        src/databases/generic/Connection.h
+        src/databases/generic/Database.h
+        src/databases/generic/Flavor.h
+        src/databases/generic/Table.h
         src/databases/generic/User.h
 
         ##############################################################################################################
@@ -85,6 +87,7 @@ set(SOURCE_FILES
 
         src/databases/mysql/models/DataType.h
         src/databases/mysql/models/MYSQLDatabaseModel.h
+        src/databases/mysql/models/MYSQLDatabaseConnectionModel.h
 
         src/databases/mysql/objects/stored/MYSQLProcedure.h
         src/databases/mysql/objects/stored/MYSQLFunction.h
@@ -318,7 +321,12 @@ set(SOURCE_FILES
         src/orm/parsers/cpp/CppMYSQLParser.h
         src/orm/parsers/cpp/CppMYSQLSCRUDParser.h
 
+        src/orm/parsers/java/HibernateConfigurationParser.h
+        src/orm/parsers/java/HibernateTransactionsParser.h
+        src/orm/parsers/java/HibernateEntitiesParser.h
+        src/orm/parsers/java/HibernateParser.h
         src/orm/parsers/java/JavaParser.h
+        src/orm/parsers/java/JaxRsResourcesParser.h
 
         src/orm/parsers/php/PHPParser.h
         src/orm/parsers/php/PHPMYSQLParser.h
@@ -385,15 +393,50 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppVariableTemplate.h
         src/orm/templates/cpp/CppTemplateFiles.h
 
+        src/orm/templates/java/JavaTemplateFiles.h
+        src/orm/templates/java/JavaClassTemplate.h
+        src/orm/templates/java/JavaMethodTemplate.h
+        src/orm/templates/java/JavaVariableInstanceTemplate.h
+        src/orm/templates/java/JavaVariableLocalTemplate.h
+        src/orm/templates/java/JavaVariableStaticTemplate.h
+
+
         src/orm/templates/java/crud/classic/JavaOracleConnectorTemplate.h
         src/orm/templates/java/crud/classic/JavaMYSQLConnectorTemplate.h
         src/orm/templates/java/crud/classic/JavaSQLiteConnectorTemplate.h
 
-        src/orm/templates/postman/PostmanCollectionTemplate.h
-        src/orm/templates/postman/PostmanRequestTemplate.h
-        src/orm/templates/postman/PostmanTemplateFiles.h
-        src/orm/creators/postman/PostmanProjectCreator.h
-        src/orm/templates/postman/PostmanRequestBodyTemplate.h
+        src/orm/templates/java/crud/connections/JavaMYSQLConnectionStringTemplate.h
+        src/orm/templates/java/crud/connections/JavaSQLiteConnectionStringTemplate.h
+        src/orm/templates/java/crud/connections/JavaOracleSIDConnectionStringTemplate.h
+        src/orm/templates/java/crud/connections/JavaOracleSNameConnectionStringTemplate.h
+
+        src/orm/templates/java/crud/drivers/JavaMYSQLConnectionDriverTemplate.h
+        src/orm/templates/java/crud/drivers/JavaOracleConnectionDriverTemplate.h
+        src/orm/templates/java/crud/drivers/JavaSQLiteConnectionDriverTemplate.h
+        src/orm/templates/java/crud/drivers/JavaMSSQLConnectionDriverTemplate.h
+
+        src/orm/templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h
+        src/orm/templates/java/crud/hibernate/HibernateClassEntityTemplate.h
+        src/orm/templates/java/crud/hibernate/HibernateClassTransactionsTemplate.h
+        src/orm/templates/java/crud/hibernate/HibernateScriptConfigurationTemplate.h
+        src/orm/templates/java/crud/hibernate/HibernateParameterEntityMappingTemplate.h
+        src/orm/templates/java/crud/connections/JavaMSSQLConnectionStringTemplate.h
+
+        src/orm/templates/java/JavaTemplateFiles.h
+        src/orm/templates/java/JavaClassTemplate.h
+        src/orm/templates/java/JavaMethodTemplate.h
+        src/orm/templates/java/JavaVariableInstanceTemplate.h
+        src/orm/templates/java/JavaVariableLocalTemplate.h
+        src/orm/templates/java/JavaVariableStaticTemplate.h
+
+        src/orm/templates/java/jax-rs/JaxRsClassResourcesTemplate.h
+        src/orm/templates/java/jax-rs/JaxRsMethodGetTemplate.h
+        src/orm/templates/java/jax-rs/JaxRsMethodDeleteTemplate.h
+        src/orm/templates/java/jax-rs/JaxRsMethodPostTemplate.h
+        src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h
+
+        src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h
+
 
         src/orm/templates/php/laravel/LaravelControllerTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodCreateTemplate.h
@@ -425,12 +468,20 @@ set(SOURCE_FILES
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
         src/orm/templates/php/PHPSQLiteConnectorTemplate.h
 
+
+        src/orm/templates/postman/PostmanCollectionTemplate.h
+        src/orm/templates/postman/PostmanRequestTemplate.h
+        src/orm/templates/postman/PostmanTemplateFiles.h
+        src/orm/creators/postman/PostmanProjectCreator.h
+        src/orm/templates/postman/PostmanRequestBodyTemplate.h
+
+
         src/orm/utils/ConnectorUtils.h
         src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
 
 
-        src/orm/templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h src/orm/templates/java/crud/hibernate/HibernateClassEntityTemplate.h src/orm/templates/java/crud/hibernate/HibernateClassTransactionsTemplate.h src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h src/orm/templates/java/jax-rs/JaxRsClassResourcesTemplate.h src/orm/templates/java/JavaTemplateFiles.h src/orm/templates/java/JavaClassTemplate.h src/orm/templates/java/JavaMethodTemplate.h src/orm/templates/java/JavaVariableInstanceTemplate.h src/orm/templates/java/JavaVariableLocalTemplate.h src/orm/templates/java/JavaVariableStaticTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodGetTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodDeleteTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodPostTemplate.h src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h src/orm/parsers/java/HibernateConfigurationParser.h src/orm/parsers/java/HibernateTransactionsParser.h src/orm/parsers/java/HibernateEntitiesParser.h src/orm/parsers/java/JaxRsResourcesParser.h)
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)
