@@ -43,6 +43,7 @@ namespace dbcrudgen {
                 JavaProjectCreator::createProjectDirs();
 
                 FilesWriter::createDirs(projectModel.getAbsoluteWebDirPath());
+                FilesWriter::createDirs(projectModel.getAbsoluteWebInfDirPath());
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());

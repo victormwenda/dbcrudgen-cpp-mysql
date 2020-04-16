@@ -286,6 +286,8 @@ set(SOURCE_FILES
         src/orm/codegen/java/JavaMYSQLProjectCodeGen.h
         src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JavaOracleProjectCodeGen.h
+        src/orm/codegen/java/JaxRsWebXMLCodeGen.h
+        src/orm/codegen/java/JaxRSWebApplicationCodeGen.h
 
         src/orm/codegen/postman/PostmanProjectCodeGen.h
 
@@ -327,6 +329,8 @@ set(SOURCE_FILES
         src/orm/parsers/java/HibernateParser.h
         src/orm/parsers/java/JavaParser.h
         src/orm/parsers/java/JaxRsResourcesParser.h
+        src/orm/parsers/java/JaxRsWebXMLParser.h
+        src/orm/parsers/java/JaxRsWebApplicationParser.h
 
         src/orm/parsers/php/PHPParser.h
         src/orm/parsers/php/PHPMYSQLParser.h
@@ -393,6 +397,7 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppVariableTemplate.h
         src/orm/templates/cpp/CppTemplateFiles.h
 
+
         src/orm/templates/java/JavaTemplateFiles.h
         src/orm/templates/java/JavaClassTemplate.h
         src/orm/templates/java/JavaMethodTemplate.h
@@ -400,6 +405,8 @@ set(SOURCE_FILES
         src/orm/templates/java/JavaVariableLocalTemplate.h
         src/orm/templates/java/JavaVariableStaticTemplate.h
 
+        src/orm/templates/java/jax-rs/JaxRsScriptWebXMLTemplate.h
+        src/orm/templates/java/jax-rs/JaxRsClassWebApplicationTemplate.h
 
         src/orm/templates/java/crud/classic/JavaOracleConnectorTemplate.h
         src/orm/templates/java/crud/classic/JavaMYSQLConnectorTemplate.h
@@ -478,8 +485,7 @@ set(SOURCE_FILES
 
         src/orm/utils/StringUtils.h
 
-
-        src/orm/codegen/java/JaxRsWebXMLCodeGen.h)
+        )
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

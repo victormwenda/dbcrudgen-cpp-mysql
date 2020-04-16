@@ -43,10 +43,12 @@ namespace dbcrudgen {
             };
             struct JaxRs {
                 static constexpr const char *CLASS_RESOURCES_TEMPLATE = "templates/java/jax-rs/class_resources_template.mdl";
+                static constexpr const char *CLASS_WEB_APPLICATION_TEMPLATE = "templates/java/jax-rs/class_web_application_template.mdl";
                 static constexpr const char *METHOD_RESOURCES_DELETE_TEMPLATE = "templates/java/jax-rs/method_resources_delete_template.mdl";
                 static constexpr const char *METHOD_RESOURCES_GET_TEMPLATE = "templates/java/jax-rs/method_resources_get_template.mdl";
                 static constexpr const char *METHOD_RESOURCES_POST_TEMPLATE = "templates/java/jax-rs/method_resources_post_template.mdl";
                 static constexpr const char *METHOD_RESOURCES_PUT_TEMPLATE = "templates/java/jax-rs/method_resources_put_template.mdl";
+                static constexpr const char *SCRIPT_WEB_XML_TEMPLATE = "templates/java/jax-rs/script_web_xml_template.mdl";
             };
             struct JaxWs {
                 static constexpr const char *CLASS_RESOURCES_TEMPLATE = "templates/java/jax-ws/class_resources_template.mdl";

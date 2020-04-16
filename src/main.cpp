@@ -189,9 +189,9 @@ void createJavaProject() {
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "pesarika-rs";
+    std::string projectName = "pesarika-rs-alpha";
     std::string workspaceDir = "/opt/victor/workspace/java";
-    std::string packageName = "com.database.mysql";
+    std::string packageName = "com.pesarika";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";
@@ -203,10 +203,12 @@ void createJavaProject() {
     std::string apisPkg = "web.apis";
     std::string entitiesPkg = "db.entities";
     std::string transactionsPkg = "db.transactions";
+    std::string webAppPkg = "web.application";
 
     std::string apiClassSuffix = "Resource";
     std::string entityClassSuffix = "Entity";
     std::string trxClassSuffix = "Transactions";
+    std::string webAppClass = "WebApplication";
 
 
     dbcrudgen::orm::JaxWsProjectModel jaxWsModel{projectName, workspaceDir,
@@ -220,7 +222,9 @@ void createJavaProject() {
     dbcrudgen::orm::JaxRsProjectModel jaxRsModel{projectName, workspaceDir,
                                                  srcDir, moduleDir, javaDir, libsDir,
                                                  resourcesDir, packageName, webDir, apisPkg, entitiesPkg,
-                                                 transactionsPkg, apiClassSuffix, entityClassSuffix, trxClassSuffix};
+                                                 transactionsPkg, webAppPkg, apiClassSuffix, entityClassSuffix,
+                                                 trxClassSuffix, webAppClass};
+
     dbcrudgen::orm::JaxRsProjectCreator jaxRsCreator{jaxRsModel, genericDatabase};
     jaxRsCreator.createProject();
 

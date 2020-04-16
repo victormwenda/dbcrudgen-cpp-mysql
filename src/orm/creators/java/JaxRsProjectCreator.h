@@ -18,6 +18,8 @@
 #include "../../parsers/java/JaxRsResourcesParser.h"
 #include "../../templates/java/crud/hibernate/HibernateScriptConfigurationTemplate.h"
 #include "../../templates/java/crud/hibernate/HibernateParameterEntityMappingTemplate.h"
+#include "../../codegen/java/JaxRsWebXMLCodeGen.h"
+#include "../../codegen/java/JaxRSWebApplicationCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -30,6 +32,7 @@ namespace dbcrudgen {
         private:
             JaxRsProjectModel projectModel;
             dbcrudgen::db::generic::Database database;
+
         public:
 
             JaxRsProjectCreator(JaxRsProjectModel &projectModel, dbcrudgen::db::generic::Database &database)
@@ -50,9 +53,17 @@ namespace dbcrudgen {
                 JavaProjectCreator::createProjectDirs();
 
                 FilesWriter::createDirs(projectModel.getAbsoluteWebDirPath());
+                FilesWriter::createDirs(projectModel.getAbsoluteWebInfDirPath());
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
+            }
+
+            /**
+             * Create a java jax-ws project
+             */
+            void createProject() override {
+                JavaProjectCreator::createProject();
             }
 
             /**
@@ -61,6 +72,9 @@ namespace dbcrudgen {
             void createSourceFiles() override {
                 JavaProjectCreator::createSourceFiles();
 
+                std::string webXMLSource = JaxRsWebXMLCodeGen::createWebXML(projectModel);
+                std::string webAppSource = JaxRsWebApplicationCodeGen::createWebApplication(projectModel);
+
                 std::vector<dbcrudgen::db::generic::Table> tables = database.getTables();
 
                 JaxRsClassResourcesTemplate rsClassResourcesTemplate;
@@ -68,9 +82,11 @@ namespace dbcrudgen {
                 HibernateClassTransactionsTemplate hTrxTemplate;
                 HibernateParameterEntityMappingTemplate hEntityParamTemplate;
 
-                //createHibernateConnectionClass();
+                createHibernateConnectionClass();
 
                 std::string entityMappings;
+                std::string webApiClassesImports;
+                std::string webApiClasses;
 
 
                 for (const dbcrudgen::db::generic::Table &table : tables) {
@@ -104,6 +120,11 @@ namespace dbcrudgen {
                                                                                projectModel.getEntitiesPkg(),
                                                                                entityClass);
 
+                    webApiClassesImports += JaxRsWebApplicationCodeGen::parseWebAPIResourceClassImport(
+                            projectModel.getPackageName(), projectModel.getApisPkg(), apiClass);
+
+                    webApiClasses += JaxRsWebApplicationCodeGen::parseWebAPIResourceClass(apiClass);
+
                     std::string entityInstanceVars;
                     std::string entityGetterSetters;
 
@@ -133,7 +154,13 @@ namespace dbcrudgen {
                 }
 
 
-                createHibernateConnectionScript(entityMappings);
+                //Add API classes to application class
+                JaxRsWebApplicationCodeGen::addApisResources(webAppSource, webApiClassesImports, webApiClasses);
+
+
+                createWebXMLFile(webXMLSource);
+                createWebApplicationClassFile(webAppSource);
+                //createHibernateConnectionScript(entityMappings);
 
             }
 
@@ -169,11 +196,23 @@ namespace dbcrudgen {
             }
 
             /**
-             * Create a java jax-ws project
+             * Writes the Web XML Source on disk
+             * @param webXmlSource
              */
-            void createProject() override {
-                JavaProjectCreator::createProject();
+            void createWebXMLFile(const std::string &webXmlSource) {
+                std::string filename = projectModel.getAbsoluteWebXMLFilePath();
+                FilesWriter::writeFile(filename, webXmlSource);
             }
+
+            /**
+            * Writes the Web XML Source on disk
+            * @param webAppSource
+            */
+            void createWebApplicationClassFile(const std::string &webAppSource) {
+                std::string filename = projectModel.getWebApplicationFileAbsolutePath();
+                FilesWriter::writeFile(filename, webAppSource);
+            }
+
         };
     }
 }

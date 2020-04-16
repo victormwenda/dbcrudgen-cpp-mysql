@@ -1,0 +1,24 @@
+package ${PROJECT_PACKAGE}.${WEB_APPLICATION_PACKAGE};
+
+${RESOURCES_IMPORTS}
+
+import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
+
+public class ${CLASS_NAME} extends Application {
+
+    @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> mClasses = new HashSet<>();
+        ${RESOURCES_BINDINGS}
+        return mClasses;
+    }
+
+    @Override
+    public Set<Object> getSingletons() {
+        Set<Object> mClasses = new HashSet<>();
+        ${RESOURCES_BINDINGS}
+        return mClasses;
+    }
+}

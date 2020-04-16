@@ -17,10 +17,12 @@ namespace dbcrudgen {
             std::string apisPkg;
             std::string entitiesPkg;
             std::string transactionsPkg;
+            std::string webAppPkg;
 
             std::string apiClassSuffix;
             std::string entityClassSuffix;
             std::string trxClassSuffix;
+            std::string webAppClassName;
 
 
         public:
@@ -49,14 +51,17 @@ namespace dbcrudgen {
 
                               std::string &webDir,
                               std::string &apisPkg, std::string &entitiesPkg, std::string transactionsPkg,
-                              std::string &apiClassSuffix, std::string &entityClassSuffix, std::string &trxClassSuffix)
+                              std::string &webAppPkg,
+                              std::string &apiClassSuffix, std::string &entityClassSuffix, std::string &trxClassSuffix,
+                              std::string &webAppClassName)
 
                     : JavaProjectModel{projectName, workspaceDir, srcDir, moduleDir, javaDir,
                                        libsDir, resourcesDir, packageName},
                       webDir{webDir},
                       apisPkg{apisPkg}, entitiesPkg{entitiesPkg}, transactionsPkg{transactionsPkg},
+                      webAppPkg{webAppPkg},
                       apiClassSuffix{apiClassSuffix}, entityClassSuffix{entityClassSuffix},
-                      trxClassSuffix{trxClassSuffix} {}
+                      trxClassSuffix{trxClassSuffix}, webAppClassName{webAppClassName} {}
 
 
             const std::string &getWebDir() const {
@@ -75,6 +80,10 @@ namespace dbcrudgen {
                 return transactionsPkg;
             }
 
+            const std::string &getWebAppPkg() const {
+                return webAppPkg;
+            }
+
             const std::string &getApiClassSuffix() const {
                 return apiClassSuffix;
             }
@@ -87,12 +96,33 @@ namespace dbcrudgen {
                 return trxClassSuffix;
             }
 
+            const std::string &getWebAppClassName() const {
+                return webAppClassName;
+            }
+
             /**
-           * Get the absolute path to the project webdir files
-           * @return
-           */
+            * Get the absolute path to the project webdir files
+            * @return
+            */
             const std::string getAbsoluteWebDirPath() {
                 return getAbsoluteModulePath() + "/" + getWebDir();
+            }
+
+            /**
+            * Get the absolute path to the project WEB-INF files
+            * @return
+            */
+            const std::string getAbsoluteWebInfDirPath() {
+                return getAbsoluteWebDirPath() + "/WEB-INF";
+            }
+
+            /**
+             * Get the absolute path to the web.xml file
+             * @param filename
+             * @return
+             */
+            const std::string getAbsoluteWebXMLFilePath(std::string filename = "web.xml") {
+                return getAbsoluteWebInfDirPath() + "/" + filename;
             }
 
             /**
@@ -124,6 +154,25 @@ namespace dbcrudgen {
                 std::string trxPackage = StringUtils::replace(pkgName, ".", "/");
                 const std::string &baseCodePath = getAbsoluteBaseCodePath();
                 return baseCodePath + "/" + trxPackage;
+            }
+
+            /**
+            * Get absolute path to transactions dir
+            * @return
+            */
+            const std::string getWebApplicationAbsolutePath() {
+                std::string pkgName = getWebAppPkg();
+                std::string webAppPkg = StringUtils::replace(pkgName, ".", "/");
+                const std::string &baseCodePath = getAbsoluteBaseCodePath();
+                return baseCodePath + "/" + webAppPkg;
+            }
+
+            /**
+            * Get absolute path to transactions dir
+            * @return
+            */
+            const std::string getWebApplicationFileAbsolutePath() {
+                return getWebApplicationAbsolutePath() + "/" + getWebAppClassName() + ".java";
             }
         };
 

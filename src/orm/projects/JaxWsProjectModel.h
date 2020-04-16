@@ -96,6 +96,14 @@ namespace dbcrudgen {
             }
 
             /**
+           * Get the absolute path to the project WEB-INF files
+           * @return
+           */
+            std::string getAbsoluteWebInfDirPath() {
+                return getAbsoluteWebDirPath() + "/WEB-INF";
+            }
+
+            /**
             * Get absolute path to apis dir
             * @return
             */
