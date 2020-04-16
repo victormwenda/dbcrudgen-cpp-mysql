@@ -6,9 +6,16 @@
 #ifndef DBCRUDGEN_CPP_PHPMYSQLPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_PHPMYSQLPROJECTCODEGEN_H
 
+#include "PHPProjectCodeGen.h"
 
-class PHPMYSQLProjectCodeGen {
+namespace dbcrudgen {
+    namespace orm {
+        class PHPMYSQLProjectCodeGen : public PHPProjectCodeGen{
 
-};
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_PHPMYSQLPROJECTCODEGEN_H

@@ -5,11 +5,19 @@
 #ifndef DBCRUDGEN_CPP_ANDROIDPROJECTMODEL_CPP
 #define DBCRUDGEN_CPP_ANDROIDPROJECTMODEL_CPP
 
-/**
- * Android project model
- */
-class AndroidProjectModel {
 
-};
+namespace dbcrudgen {
+
+    namespace orm {
+
+        /**
+         * Android project model
+         */
+        class AndroidProjectModel {
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_ANDROIDPROJECTMODEL_CPP

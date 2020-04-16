@@ -9,9 +9,15 @@
 #ifndef DBCRUDGEN_CPP_JAVAORACLEPROJECTMODEL_H
 #define DBCRUDGEN_CPP_JAVAORACLEPROJECTMODEL_H
 
-class JavaOracleProjectModel {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+
+        class JavaOracleProjectModel {
+
+        };
+    }
+}
 
 
 #endif //BCRUDGEN_CPP_JAVAORACLEPROJECTMODEL_H

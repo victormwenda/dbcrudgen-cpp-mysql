@@ -25,8 +25,6 @@ namespace dbcrudgen {
             PostmanProjectModel projectModel;
             dbcrudgen::db::generic::Database database;
 
-            PostmanProjectCodeGen codeGen;
-
         public:
 
             PostmanProjectCreator(PostmanProjectModel &projectModel, dbcrudgen::db::generic::Database &database)

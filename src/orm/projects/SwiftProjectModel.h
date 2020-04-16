@@ -9,9 +9,15 @@
 #ifndef DBCRUDGEN_CPP_SWIFTPROJECTMODEL_H
 #define DBCRUDGEN_CPP_SWIFTPROJECTMODEL_H
 
-class SwiftProjectModel {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+
+        class SwiftProjectModel {
+
+        };
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_SWIFTPROJECTMODEL_H

@@ -9,9 +9,15 @@
 #ifndef DBCRUDGEN_CPP_PHPSQLITEPROJECTMODEL_H
 #define DBCRUDGEN_CPP_PHPSQLITEPROJECTMODEL_H
 
-class PHPSQLiteProjectModel {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+
+        class PHPSQLiteProjectModel {
+
+        };
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_PHPSQLITEPROJECTMODEL_H

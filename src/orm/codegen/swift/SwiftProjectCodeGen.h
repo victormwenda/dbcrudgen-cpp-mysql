@@ -7,8 +7,15 @@
 #ifndef DBCRUDGEN_CPP_SWIFTPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_SWIFTPROJECTCODEGEN_H
 
-class SwiftProjectCodeGen {
+#include "../ProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+        class SwiftProjectCodeGen : public ProjectCodeGen {
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_SWIFTPROJECTCODEGEN_H

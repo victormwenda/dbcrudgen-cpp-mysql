@@ -9,8 +9,15 @@
 #ifndef DBCRUDGEN_CPP_JAVASQLITEPROJECTMODEL_H
 #define DBCRUDGEN_CPP_JAVASQLITEPROJECTMODEL_H
 
-class JavaSQLiteProjectModel {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+
+        class JavaSQLiteProjectModel {
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_JAVASQLITEPROJECTMODEL_H

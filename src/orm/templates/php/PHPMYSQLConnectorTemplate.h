@@ -6,9 +6,15 @@
 #ifndef DBCRUDGEN_CPP_PHPMYSQLCONNECTORTEMPLATE_H
 #define DBCRUDGEN_CPP_PHPMYSQLCONNECTORTEMPLATE_H
 
+namespace dbcrudgen {
 
-class PHPMYSQLConnectorTemplate {
+    namespace orm {
+        class PHPMYSQLConnectorTemplate {
 
-};
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_PHPMYSQLCONNECTORTEMPLATE_H

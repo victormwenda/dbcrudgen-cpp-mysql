@@ -23,7 +23,7 @@ namespace dbcrudgen {
 
         public:
 
-            JavaSQLiteProjectCreator() : JavaProjectCreator{} {}
+            explicit JavaSQLiteProjectCreator(JavaProjectModel& projectModel) : JavaProjectCreator{projectModel} {}
 
             /**
              *

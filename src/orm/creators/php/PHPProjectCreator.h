@@ -23,11 +23,8 @@ namespace dbcrudgen {
 
         public:
 
-            explicit PHPProjectCreator(PHPProjectModel &projectModel,
-                                       dbcrudgen::db::generic::Database &databaseModel)
-                    : projectModel{projectModel}, databaseModel{databaseModel} {
-
-            }
+            explicit PHPProjectCreator(PHPProjectModel &projectModel, dbcrudgen::db::generic::Database &databaseModel)
+                    : projectModel{projectModel}, databaseModel{databaseModel} {}
 
             /**
              * Return database model

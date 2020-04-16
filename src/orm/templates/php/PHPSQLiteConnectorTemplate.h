@@ -6,8 +6,15 @@
 #ifndef DBCRUDGEN_CPP_PHPSQLITECONNECTORTEMPLATE_H
 #define DBCRUDGEN_CPP_PHPSQLITECONNECTORTEMPLATE_H
 
-class PHPSQLiteConnectorTemplate {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+        class PHPSQLiteConnectorTemplate {
+
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP__H

@@ -7,8 +7,17 @@
 #ifndef DBCRUDGEN_CPP_JAVASQLITEPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_JAVASQLITEPROJECTCODEGEN_H
 
-class JavaSQLiteProjectCodeGen {
+#include "JavaProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+
+        class JavaSQLiteProjectCodeGen : public JavaProjectCodeGen {
+
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_JAVASQLITEPROJECTCODEGEN_H

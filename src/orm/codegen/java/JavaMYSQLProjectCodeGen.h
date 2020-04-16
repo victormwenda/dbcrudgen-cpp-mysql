@@ -6,9 +6,15 @@
 #ifndef DBCRUDGEN_CPP_JAVAMYSQLPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_JAVAMYSQLPROJECTCODEGEN_H
 
-class JavaMYSQLProjectCodeGen {
+#include "JavaProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
 
+        class JavaMYSQLProjectCodeGen : public JavaProjectCodeGen {
+
+        };
+    }
+}
 
 #endif //DBCRUDGEN_CPP_JAVAMYSQLPROJECTCODEGEN_H

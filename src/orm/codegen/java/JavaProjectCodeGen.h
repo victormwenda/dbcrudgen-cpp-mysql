@@ -7,8 +7,16 @@
 #ifndef DBCRUDGEN_CPP_JAVAPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_JAVAPROJECTCODEGEN_H
 
-class JavaProjectCodeGen {
+#include "../ProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+        class JavaProjectCodeGen : public ProjectCodeGen {
+
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_JAVAPROJECTCODEGEN_H

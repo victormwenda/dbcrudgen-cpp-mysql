@@ -6,8 +6,15 @@
 #ifndef DBCRUDGEN_CPP_ANDROIDCONTENTPROVIDERTEMPLATE_H
 #define DBCRUDGEN_CPP_ANDROIDCONTENTPROVIDERTEMPLATE_H
 
-class AndroidContentProviderTemplate {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+        class AndroidContentProviderTemplate {
+
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_ANDROIDCONTENTPROVIDERTEMPLATE_H

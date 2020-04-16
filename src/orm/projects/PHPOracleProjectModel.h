@@ -16,7 +16,6 @@
 namespace dbcrudgen {
     namespace orm {
 
-
         class PHPOracleProjectModel : public PHPProjectModel {
 
         private:

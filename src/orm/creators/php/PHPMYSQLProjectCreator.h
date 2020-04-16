@@ -18,12 +18,12 @@ namespace dbcrudgen {
 
         private:
             PHPMYSQLProjectModel projectModel;
-            mysql::MYSQLDatabaseModel databaseModel;
+            db::mysql::MYSQLDatabaseModel databaseModel;
 
         public:
 
             explicit PHPMYSQLProjectCreator(PHPMYSQLProjectModel &projectModel,
-                                            mysql::MYSQLDatabaseModel &databaseModel)
+                                            db::mysql::MYSQLDatabaseModel &databaseModel)
                     : projectModel{projectModel}, databaseModel{databaseModel} {
 
             }
@@ -32,7 +32,7 @@ namespace dbcrudgen {
              * Return database model
              * @return
              */
-            const mysql::MYSQLDatabaseModel &getDatabaseModel() {
+            const db::mysql::MYSQLDatabaseModel &getDatabaseModel() {
                 return databaseModel;
             }
 

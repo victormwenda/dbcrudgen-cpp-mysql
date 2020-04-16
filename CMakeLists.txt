@@ -476,12 +476,10 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
 
-        src/orm/utils/ConnectorUtils.h
-        src/orm/utils/DbCrudgenError.h
         src/orm/utils/StringUtils.h
 
 
-        )
+        src/orm/codegen/java/JaxRsWebXMLCodeGen.h)
 
 #GoogleTest
 add_subdirectory(lib/test/googletest)

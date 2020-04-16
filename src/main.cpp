@@ -191,7 +191,7 @@ void createJavaProject() {
 
     std::string projectName = "pesarika-rs";
     std::string workspaceDir = "/opt/victor/workspace/java";
-    std::string packageName = "com.pesarika";
+    std::string packageName = "com.database.mysql";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";

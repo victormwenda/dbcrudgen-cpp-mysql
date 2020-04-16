@@ -127,9 +127,9 @@ namespace dbcrudgen {
                     std::string trxFile =
                             projectModel.getTransactionsAbsolutePath() + "/" + trxClass + ".java";
 
-                    //FilesWriter::writeFile(apiFile, apiSource);
-                    //FilesWriter::writeFile(entityFile, entitySource);
-                    //FilesWriter::writeFile(trxFile, trxSource);
+                    FilesWriter::writeFile(apiFile, apiSource);
+                    FilesWriter::writeFile(entityFile, entitySource);
+                    FilesWriter::writeFile(trxFile, trxSource);
                 }
 
 

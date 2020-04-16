@@ -14,7 +14,7 @@ namespace dbcrudgen {
     namespace orm {
         class JavaOracleProjectCreator : public JavaProjectCreator {
 
-            JavaOracleProjectCreator() : JavaProjectCreator{} {}
+            explicit JavaOracleProjectCreator(JavaProjectModel& projectModel) : JavaProjectCreator{projectModel} {}
 
             std::string getLanguage() override {
                 return std::string{Languages::JAVA};

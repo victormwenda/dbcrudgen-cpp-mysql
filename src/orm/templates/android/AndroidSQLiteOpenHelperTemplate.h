@@ -7,8 +7,15 @@
 #ifndef DBCRUDGEN_CPP_ANDROIDSQLITEOPENHELPERTEMPLATE_H
 #define DBCRUDGEN_CPP_ANDROIDSQLITEOPENHELPERTEMPLATE_H
 
-class AndroidSQLiteOpenHelperTemplate {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+        class AndroidSQLiteOpenHelperTemplate {
+
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_ANDROIDSQLITEOPENHELPERTEMPLATE_H

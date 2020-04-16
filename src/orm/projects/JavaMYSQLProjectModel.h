@@ -9,8 +9,15 @@
 #ifndef DBCRUDGEN_CPP_JAVAMYSQLPROJECTMODEL_H
 #define DBCRUDGEN_CPP_JAVAMYSQLPROJECTMODEL_H
 
-class JavaMYSQLProjectModel {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+
+        class JavaMYSQLProjectModel {
+
+        };
+
+    }
+}
 
 #endif //DBCRUDGEN_CPP_JAVAMYSQLPROJECTMODEL_H

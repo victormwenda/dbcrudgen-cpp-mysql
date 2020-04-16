@@ -5,8 +5,15 @@
 #ifndef DBCRUDGEN_CPP_PHPORACLECONNECTORTEMPLATE_H
 #define DBCRUDGEN_CPP_PHPORACLECONNECTORTEMPLATE_H
 
-class PHPOracleConnectorTemplate {
+namespace dbcrudgen {
 
-};
+    namespace orm {
+        class PHPOracleConnectorTemplate {
+
+        };
+
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_PHPORACLECONNECTORTEMPLATE_H

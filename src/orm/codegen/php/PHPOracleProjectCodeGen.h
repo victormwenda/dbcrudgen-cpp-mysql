@@ -7,8 +7,16 @@
 #ifndef DBCRUDGEN_CPP_PHPORACLEPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_PHPORACLEPROJECTCODEGEN_H
 
-class PHPOracleProjectCodeGen {
+#include "PHPProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+
+        class PHPOracleProjectCodeGen : public PHPProjectCodeGen{
+
+        };
+    }
+}
+
 
 #endif //DBCRUDGEN_CPP_PHPORACLEPROJECTCODEGEN_H

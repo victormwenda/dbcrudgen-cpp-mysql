@@ -6,9 +6,15 @@
 #ifndef DBCRUDGEN_CPP_JAVAORACLEPROJECTCODEGEN_H
 #define DBCRUDGEN_CPP_JAVAORACLEPROJECTCODEGEN_H
 
-class JavaOracleProjectCodeGen {
+#include "JavaProjectCodeGen.h"
 
-};
+namespace dbcrudgen {
+    namespace orm {
+        class JavaOracleProjectCodeGen : public JavaProjectCodeGen {
+
+        };
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_JAVAORACLEPROJECTCODEGEN_H

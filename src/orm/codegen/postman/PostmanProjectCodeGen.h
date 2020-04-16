@@ -16,7 +16,7 @@
 
 namespace dbcrudgen {
     namespace orm {
-        class PostmanProjectCodeGen {
+        class PostmanProjectCodeGen : public ProjectCodeGen {
 
         public:
 

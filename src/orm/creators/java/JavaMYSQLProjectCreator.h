@@ -22,7 +22,7 @@ namespace dbcrudgen {
 
         public:
 
-            JavaMYSQLProjectCreator() : JavaProjectCreator{} {}
+            explicit JavaMYSQLProjectCreator(JavaProjectModel& projectModel) : JavaProjectCreator{projectModel} {}
 
         private:
             std::string getLanguage() override {
