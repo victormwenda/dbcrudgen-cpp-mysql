@@ -68,6 +68,7 @@ set(SOURCE_FILES
         ##############################################################################################################
         # MySQL DATABASE SOURCE FILES
         ##############################################################################################################
+        src/databases/mysql/builder/MYSQLDatabaseModelBuilder.h
 
         src/databases/mysql/core/MYSQLIdentifierLengthLimits.h
         src/databases/mysql/core/MYSQLObjects.h
@@ -81,6 +82,7 @@ set(SOURCE_FILES
         src/databases/mysql/connectors/MYSQLDatabaseConnector.h
         src/databases/mysql/connectors/MYSQLQueryExecutor.h
 
+        src/databases/mysql/decomposer/MYSQLDatabasePreparedDecomposer.h
         src/databases/mysql/decomposer/MYSQLDatabaseDecomposer.h
 
         src/databases/mysql/exceptions/MYSQLDatabaseException.h

@@ -121,8 +121,17 @@ namespace dbcrudgen {
              * @param filename
              * @return
              */
-            const std::string getAbsoluteWebXMLFilePath(std::string filename = "web.xml") {
+            const std::string getAbsoluteWebXMLFilePathSrc(std::string filename = "web.xml") {
                 return getAbsoluteWebInfDirPath() + "/" + filename;
+            }
+
+            /**
+             * Get the absolute path to the web.xml file
+             * @param filename
+             * @return
+             */
+            const std::string getAbsoluteWebXMLFilePathRes(std::string filename = "web.xml") {
+                return getAbsoluteResourcesPath() + "/" + filename;
             }
 
             /**

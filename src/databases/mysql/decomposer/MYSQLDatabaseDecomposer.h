@@ -231,51 +231,66 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all COLUMNS
+                * Get all the columns
+                * @return
                 */
-                std::vector<Columns> getColumns() {
+                std::vector<mysql::Columns>
+                getColumns() {
 
-                    std::vector<Columns> columns;
+                    std::vector<mysql::Columns> columns;
 
-                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_COLUMNS;
+                    std::string query = ::dbcrudgen::db::mysql::MYSQLQueries::GET_COLUMNS;
 
                     sql::Statement *statement = &connector.createStatement();
-                    sql::ResultSet *resultSet = statement->executeQuery(query);
+                    sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
 
                     while (resultSet->next()) {
+                        std::string table_catalog = resultSet->getString(
+                                mysql::Columns::COLUMNS::TABLE_CATALOG::INDEX);
+                        std::string table_schema = resultSet->getString(
+                                mysql::Columns::COLUMNS::TABLE_SCHEMA::INDEX);
+                        std::string table_name = resultSet->getString(mysql::Columns::COLUMNS::TABLE_NAME::INDEX);
+                        std::string column_name = resultSet->getString(
+                                mysql::Columns::COLUMNS::COLUMNS::COLUMN_NAME::INDEX);
+                        long ordinal_position = resultSet->getInt64(
+                                mysql::Columns::COLUMNS::ORDINAL_POSITION::INDEX);
+                        std::string column_default = resultSet->getString(
+                                mysql::Columns::COLUMNS::COLUMN_DEFAULT::INDEX);
+                        std::string is_nullable = resultSet->getString(
+                                mysql::Columns::COLUMNS::IS_NULLABLE::INDEX);
+                        std::string data_type = resultSet->getString(mysql::Columns::COLUMNS::DATA_TYPE::INDEX);
+                        long character_maximum_length = resultSet->getInt64(
+                                mysql::Columns::COLUMNS::CHARACTER_MAXIMUM_LENGTH::INDEX);
+                        long character_octet_length = resultSet->getInt64(
+                                mysql::Columns::COLUMNS::CHARACTER_OCTET_LENGTH::INDEX);
+                        long numeric_precision = resultSet->getInt64(
+                                mysql::Columns::COLUMNS::NUMERIC_PRECISION::INDEX);
+                        long numeric_scale = resultSet->getInt64(mysql::Columns::COLUMNS::NUMERIC_SCALE::INDEX);
+                        long datetime_precision = resultSet->getInt64(
+                                mysql::Columns::COLUMNS::DATETIME_PRECISION::INDEX);
+                        std::string character_set_name = resultSet->getString(
+                                mysql::Columns::COLUMNS::CHARACTER_SET_NAME::INDEX);
+                        std::string collation_name = resultSet->getString(
+                                mysql::Columns::COLUMNS::COLLATION_NAME::INDEX);
+                        std::string column_type = resultSet->getString(
+                                mysql::Columns::COLUMNS::COLUMN_TYPE::INDEX);
+                        std::string column_key = resultSet->getString(
+                                mysql::Columns::COLUMNS::COLUMN_KEY::INDEX);
+                        std::string extra = resultSet->getString(mysql::Columns::COLUMNS::EXTRA::INDEX);
+                        std::string privileges = resultSet->getString(
+                                mysql::Columns::COLUMNS::PRIVILEGES::INDEX);
+                        std::string column_comment = resultSet->getString(
+                                mysql::Columns::COLUMNS::COLUMN_COMMENT::INDEX);
+                        std::string generation_expression = resultSet->getString(
+                                mysql::Columns::COLUMNS::GENERATION_EXPRESSION::INDEX);
 
-                        std::string tableCatalog = resultSet->getString(Columns::COLUMNS::TABLE_CATALOG::INDEX);
-                        std::string tableSchema = resultSet->getString(Columns::COLUMNS::TABLE_SCHEMA::INDEX);
-                        std::string tableName = resultSet->getString(Columns::COLUMNS::TABLE_NAME::INDEX);
-                        std::string columnName = resultSet->getString(Columns::COLUMNS::COLUMN_NAME::INDEX);
-                        long ordinalPosition = resultSet->getInt(Columns::COLUMNS::ORDINAL_POSITION::INDEX);
-                        std::string columnDefault = resultSet->getString(Columns::COLUMNS::COLUMN_DEFAULT::INDEX);
-                        std::string isNullable = resultSet->getString(Columns::COLUMNS::IS_NULLABLE::INDEX);
-                        std::string dataType = resultSet->getString(Columns::COLUMNS::DATA_TYPE::INDEX);
-                        long characterMaximumLength = resultSet->getInt(
-                                Columns::COLUMNS::CHARACTER_MAXIMUM_LENGTH::INDEX);
-                        long characterOctetLength = resultSet->getInt(Columns::COLUMNS::CHARACTER_OCTET_LENGTH::INDEX);
-                        long numericPrecision = resultSet->getInt(Columns::COLUMNS::NUMERIC_PRECISION::INDEX);
-                        long numericScale = resultSet->getInt(Columns::COLUMNS::NUMERIC_SCALE::INDEX);
-                        long datetimePrecision = resultSet->getInt(Columns::COLUMNS::DATETIME_PRECISION::INDEX);
-                        std::string characterSetName = resultSet->getString(
-                                Columns::COLUMNS::CHARACTER_SET_NAME::INDEX);
-                        std::string collationName = resultSet->getString(Columns::COLUMNS::COLLATION_NAME::INDEX);
-                        std::string columnType = resultSet->getString(Columns::COLUMNS::COLUMN_TYPE::INDEX);
-                        std::string columnKey = resultSet->getString(Columns::COLUMNS::COLUMN_KEY::INDEX);
-                        std::string extra = resultSet->getString(Columns::COLUMNS::EXTRA::INDEX);
-                        std::string privileges = resultSet->getString(Columns::COLUMNS::PRIVILEGES::INDEX);
-                        std::string columnComment = resultSet->getString(Columns::COLUMNS::COLUMN_COMMENT::INDEX);
-                        std::string generationExpression = resultSet->getString(
-                                Columns::COLUMNS::GENERATION_EXPRESSION::INDEX);
+                        Columns column{table_catalog, table_schema, table_name, column_name, ordinal_position,
+                                       column_default, is_nullable, data_type, character_maximum_length,
+                                       character_octet_length, numeric_precision, numeric_scale, datetime_precision,
+                                       character_set_name, collation_name, column_type, column_key, extra, privileges,
+                                       column_comment, generation_expression};
 
-                        columns.emplace_back(
-                                Columns{tableCatalog, tableSchema, tableName, columnName, ordinalPosition,
-                                        columnDefault,
-                                        isNullable, dataType, characterMaximumLength, characterOctetLength,
-                                        numericPrecision, numericScale, datetimePrecision, characterSetName,
-                                        collationName,
-                                        columnType, columnKey, extra, privileges, columnComment, generationExpression});
+                        columns.emplace_back(column);
                     }
 
                     resultSet->close();
@@ -283,6 +298,7 @@ namespace dbcrudgen {
 
                     return columns;
                 }
+
 
                 /**
                 * Get all COLUMN_PRIVILEGES
@@ -533,7 +549,9 @@ namespace dbcrudgen {
                 /**
                 * Get all KEY_COLUMN_USAGE
                 */
-                std::vector<KeyColumnUsage> getKeyColumnUsage() {
+                std::vector<KeyColumnUsage>
+                getKeyColumnUsage(const std::string &tableSchema, const std::string &tableName,
+                                  const std::string &type) {
 
                     std::vector<KeyColumnUsage> keyColumnUsage;
 
@@ -1082,7 +1100,7 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all STATISTICS
+                * Get all the statistics
                 */
                 std::vector<Statistics> getStatistics() {
 
@@ -1213,7 +1231,45 @@ namespace dbcrudgen {
                 /**
                 * Get all TABLE_CONSTRAINTS
                 */
-                std::vector<TableConstraints> getTableConstraints() {
+                std::vector<TableConstraints>
+                getTableConstraints() {
+
+                    std::vector<TableConstraints> tableConstraints;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_TABLE_CONSTRAINTS;
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string constraintCatalog = resultSet->getString(
+                                TableConstraints::COLUMNS::CONSTRAINT_CATALOG::INDEX);
+                        std::string constraintSchema = resultSet->getString(
+                                TableConstraints::COLUMNS::CONSTRAINT_SCHEMA::INDEX);
+                        std::string constraintName = resultSet->getString(
+                                TableConstraints::COLUMNS::CONSTRAINT_NAME::INDEX);
+                        std::string tableSchema = resultSet->getString(TableConstraints::COLUMNS::TABLE_SCHEMA::INDEX);
+                        std::string tableName = resultSet->getString(TableConstraints::COLUMNS::TABLE_NAME::INDEX);
+                        std::string constraintType = resultSet->getString(
+                                TableConstraints::COLUMNS::CONSTRAINT_TYPE::INDEX);
+
+                        tableConstraints.emplace_back(
+                                TableConstraints{constraintCatalog, constraintSchema, constraintName, tableSchema,
+                                                 tableName, constraintType});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return tableConstraints;
+                }
+
+                /**
+                * Get all table constraints
+                */
+                std::vector<TableConstraints>
+                getTableConstraints(const std::string &schemas, const std::string &table_name) {
 
                     std::vector<TableConstraints> tableConstraints;
 
@@ -2500,7 +2556,7 @@ namespace dbcrudgen {
                 std::vector<Schemata> getSchemas() {
                     std::vector<Schemata> schematas;
 
-                    std::string query = ::dbcrudgen::db::mysql::MYSQLQueries::GET_SCHEMAS;
+                    std::string query = ::dbcrudgen::db::mysql::MYSQLQueries::GET_SCHEMATA;
 
                     sql::Statement *statement = &connector.createStatement();
                     sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
@@ -3643,162 +3699,6 @@ namespace dbcrudgen {
                     statement->close();
 
                     return users;
-                }
-
-                /**
-                 * Get all the tables in a schema
-                 * @param schema
-                 * @return
-                 */
-                std::vector<Tables> getSchemaTables(std::string &schema) {
-
-                    std::vector<Tables> tables;
-
-                    std::string query = mysql::MYSQLQueries::GET_SCHEMA_TABLES;
-                    query = StringUtils::replace(query, mysql::MYSQLQueries::Tags::TABLE_SCHEMA, schema);
-
-                    sql::Statement *statement = &connector.createStatement();
-                    sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
-
-                    while (resultSet->next()) {
-
-                        std::string tableCatalog = resultSet->getString(Tables::COLUMNS::TABLE_CATALOG::INDEX);
-                        std::string tableSchema = resultSet->getString(Tables::COLUMNS::TABLE_SCHEMA::INDEX);
-                        std::string tableName = resultSet->getString(Tables::COLUMNS::TABLE_NAME::INDEX);
-                        std::string tableType = resultSet->getString(Tables::COLUMNS::TABLE_TYPE::INDEX);
-                        std::string engine = resultSet->getString(Tables::COLUMNS::ENGINE::INDEX);
-                        long version = resultSet->getInt(Tables::COLUMNS::VERSION::INDEX);
-                        std::string rowFormat = resultSet->getString(Tables::COLUMNS::ROW_FORMAT::INDEX);
-                        long tableRows = resultSet->getInt(Tables::COLUMNS::TABLE_ROWS::INDEX);
-                        long avgRowLength = resultSet->getInt(Tables::COLUMNS::AVG_ROW_LENGTH::INDEX);
-                        long dataLength = resultSet->getInt(Tables::COLUMNS::DATA_LENGTH::INDEX);
-                        long maxDataLength = resultSet->getInt(Tables::COLUMNS::MAX_DATA_LENGTH::INDEX);
-                        long indexLength = resultSet->getInt(Tables::COLUMNS::INDEX_LENGTH::INDEX);
-                        long dataFree = resultSet->getInt(Tables::COLUMNS::DATA_FREE::INDEX);
-                        long autoIncrement = resultSet->getInt(Tables::COLUMNS::AUTO_INCREMENT::INDEX);
-                        std::string createTime = resultSet->getString(Tables::COLUMNS::CREATE_TIME::INDEX);
-                        std::string updateTime = resultSet->getString(Tables::COLUMNS::UPDATE_TIME::INDEX);
-                        std::string checkTime = resultSet->getString(Tables::COLUMNS::CHECK_TIME::INDEX);
-                        std::string tableCollation = resultSet->getString(Tables::COLUMNS::TABLE_COLLATION::INDEX);
-                        long checksum = resultSet->getInt(Tables::COLUMNS::CHECKSUM::INDEX);
-                        std::string createOptions = resultSet->getString(Tables::COLUMNS::CREATE_OPTIONS::INDEX);
-                        std::string tableComment = resultSet->getString(Tables::COLUMNS::TABLE_COMMENT::INDEX);
-
-                        Tables table{tableCatalog, tableSchema, tableName, tableType, engine, version, rowFormat,
-                                     tableRows,
-                                     avgRowLength, dataLength, maxDataLength, indexLength, dataFree, autoIncrement,
-                                     createTime, updateTime, checkTime, tableCollation, checksum, createOptions,
-                                     tableComment};
-
-                        tables.emplace_back(table);
-                    }
-
-                    resultSet->close();
-                    statement->close();
-
-                    return tables;
-                }
-
-                /**
-                 * Get all the table columns
-                 * @param schema_name
-                 * @param table_name
-                 * @return
-                 */
-                std::vector<mysql::Columns> getTableColumns(std::string &schema_name, std::string &table_name) {
-                    std::vector<mysql::Columns> columns;
-
-
-                    std::string query = ::dbcrudgen::db::mysql::MYSQLQueries::GET_SCHEMA_TABLE_COLUMNS;
-                    query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_SCHEMA, schema_name);
-                    query = StringUtils::replace(query, MYSQLQueries::Tags::TABLE_NAME, table_name);
-
-                    sql::Statement *statement = &connector.createStatement();
-                    sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
-
-                    while (resultSet->next()) {
-                        std::string table_catalog = resultSet->getString(
-                                mysql::Columns::COLUMNS::TABLE_CATALOG::INDEX);
-                        std::string table_schema = resultSet->getString(
-                                mysql::Columns::COLUMNS::TABLE_SCHEMA::INDEX);
-                        table_name = resultSet->getString(mysql::Columns::COLUMNS::TABLE_NAME::INDEX);
-                        std::string column_name = resultSet->getString(
-                                mysql::Columns::COLUMNS::COLUMNS::COLUMN_NAME::INDEX);
-                        long ordinal_position = resultSet->getInt64(
-                                mysql::Columns::COLUMNS::ORDINAL_POSITION::INDEX);
-                        std::string column_default = resultSet->getString(
-                                mysql::Columns::COLUMNS::COLUMN_DEFAULT::INDEX);
-                        std::string is_nullable = resultSet->getString(
-                                mysql::Columns::COLUMNS::IS_NULLABLE::INDEX);
-                        std::string data_type = resultSet->getString(mysql::Columns::COLUMNS::DATA_TYPE::INDEX);
-                        long character_maximum_length = resultSet->getInt64(
-                                mysql::Columns::COLUMNS::CHARACTER_MAXIMUM_LENGTH::INDEX);
-                        long character_octet_length = resultSet->getInt64(
-                                mysql::Columns::COLUMNS::CHARACTER_OCTET_LENGTH::INDEX);
-                        long numeric_precision = resultSet->getInt64(
-                                mysql::Columns::COLUMNS::NUMERIC_PRECISION::INDEX);
-                        long numeric_scale = resultSet->getInt64(mysql::Columns::COLUMNS::NUMERIC_SCALE::INDEX);
-                        long datetime_precision = resultSet->getInt64(
-                                mysql::Columns::COLUMNS::DATETIME_PRECISION::INDEX);
-                        std::string character_set_name = resultSet->getString(
-                                mysql::Columns::COLUMNS::CHARACTER_SET_NAME::INDEX);
-                        std::string collation_name = resultSet->getString(
-                                mysql::Columns::COLUMNS::COLLATION_NAME::INDEX);
-                        std::string column_type = resultSet->getString(
-                                mysql::Columns::COLUMNS::COLUMN_TYPE::INDEX);
-                        std::string column_key = resultSet->getString(
-                                mysql::Columns::COLUMNS::COLUMN_KEY::INDEX);
-                        std::string extra = resultSet->getString(mysql::Columns::COLUMNS::EXTRA::INDEX);
-                        std::string privileges = resultSet->getString(
-                                mysql::Columns::COLUMNS::PRIVILEGES::INDEX);
-                        std::string column_comment = resultSet->getString(
-                                mysql::Columns::COLUMNS::COLUMN_COMMENT::INDEX);
-                        std::string generation_expression = resultSet->getString(
-                                mysql::Columns::COLUMNS::GENERATION_EXPRESSION::INDEX);
-
-                        Columns column{table_catalog, table_schema, table_name, column_name, ordinal_position,
-                                       column_default, is_nullable, data_type, character_maximum_length,
-                                       character_octet_length, numeric_precision, numeric_scale, datetime_precision,
-                                       character_set_name, collation_name, column_type, column_key, extra, privileges,
-                                       column_comment, generation_expression};
-
-                        columns.emplace_back(column);
-                    }
-
-                    resultSet->close();
-                    statement->close();
-
-                    return columns;
-                }
-
-                /**
-                 * Get Table Create Statement
-                 * @param schema
-                 * @param table
-                 * @return
-                 */
-                std::string getTableCreateStatement(std::string &schema, std::string &table) {
-
-                    std::string create_table;
-
-                    const int table_index = 1;
-                    const int create_table_statement_index = 2;
-
-                    std::string query = mysql::MYSQLQueries::GET_TABLE_CREATE_STATEMENT;
-                    query = StringUtils::replace(query, mysql::MYSQLQueries::Tags::TABLE_SCHEMA, schema);
-                    query = StringUtils::replace(query, mysql::MYSQLQueries::Tags::TABLE_NAME, table);
-
-                    sql::Statement *statement = &connector.createStatement();
-                    sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
-
-                    if (resultSet->next()) {
-                        create_table = resultSet->getString(create_table_statement_index);
-                    }
-
-                    resultSet->close();
-                    statement->close();
-
-                    return create_table;
                 }
             };
         }

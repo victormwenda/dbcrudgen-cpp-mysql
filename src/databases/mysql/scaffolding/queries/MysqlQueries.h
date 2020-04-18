@@ -10,16 +10,36 @@ namespace dbcrudgen {
         namespace mysql {
             class MYSQLQueries {
             public:
+
                 struct Tags {
                     static constexpr const char *TABLE_SCHEMA = "${TABLE_SCHEMA}";
                     static constexpr const char *TABLE_NAME = "${TABLE_NAME}";
+                    static constexpr const char *COLUMN_NAME = "${COLUMN_NAME}";
                 };
 
-                static constexpr const char *GET_SCHEMAS = "SELECT * FROM information_schema.schemata";
-                static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}';";
-                static constexpr const char *GET_SCHEMA_TABLE_COLUMNS =
-                        "SELECT * FROM information_schema.columns WHERE table_schema = '${TABLE_SCHEMA}' AND table_name='${TABLE_NAME}';";
-                static constexpr const char *GET_TABLE_CREATE_STATEMENT = "SHOW CREATE TABLE ${TABLE_SCHEMA}.${TABLE_NAME}";
+
+                struct Prepared {
+                    static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}';";
+
+                    static constexpr const char *GET_TABLE_CREATE_STATEMENT = "SHOW CREATE TABLE ${TABLE_SCHEMA}.${TABLE_NAME}";
+
+                    static constexpr const char *GET_SCHEMA_TABLE_COLUMNS =
+                            "SELECT * FROM information_schema.columns WHERE table_schema = '${TABLE_SCHEMA}' AND table_name='${TABLE_NAME}';";
+
+                    static constexpr const char *GET_SCHEMA_TABLE_COLUMN =
+                            "SELECT * FROM information_schema.columns WHERE table_schema = '${TABLE_SCHEMA}' AND table_name='${TABLE_NAME}' and COLUMN_NAME = '${COLUMN_NAME}';";
+
+                    static constexpr const char *GET_TABLE_PRIMARY_KEY_COLUMNS =
+                            "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}' AND TABLE_NAME='${TABLE_NAME}' AND INDEX_NAME = 'PRIMARY'";
+
+                    static constexpr const char *GET_TABLE_KEY_COLUMNS =
+                            "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}' AND TABLE_NAME='${TABLE_NAME}'";
+
+                    static constexpr const char *GET_TABLE_CONSTRAINTS = "SELECT * FROM information_schema.TABLE_CONSTRAINTS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}' AND TABLE_NAME='${TABLE_NAME}'";
+
+                    static constexpr const char *GET_TABLE_FOREIGN_KEYS
+                            = "SELECT * FROM information_schema.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA='${TABLE_SCHEMA}' AND TABLE_NAME='${TABLE_NAME}' ";
+                };
 
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
                 // SELECT DATA FROM INFORMATION SCHEMAS
@@ -45,6 +65,7 @@ namespace dbcrudgen {
                 static constexpr const char *GET_ROUTINES = "SELECT * FROM information_schema.ROUTINES";
                 static constexpr const char *GET_SCHEMATA = "SELECT * FROM information_schema.SCHEMATA";
                 static constexpr const char *GET_SCHEMA_PRIVILEGES = "SELECT * FROM information_schema.SCHEMA_PRIVILEGES";
+                static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables";
                 static constexpr const char *GET_SESSION_STATUS = "SELECT * FROM information_schema.SESSION_STATUS";
                 static constexpr const char *GET_SESSION_VARIABLES = "SELECT * FROM information_schema.SESSION_VARIABLES";
                 static constexpr const char *GET_STATISTICS = "SELECT * FROM information_schema.STATISTICS";

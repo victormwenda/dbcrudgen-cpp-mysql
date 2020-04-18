@@ -46,9 +46,10 @@ namespace dbcrudgen {
                             std::string defaultValue = mysqlColumn.getColumnDefault();
                             bool nullable = mysqlColumn.getIsNullable() == "YES";
                             long length = mysqlColumn.getCharacterMaximumLength();
+                            bool primary = false;
 
                             dbcrudgen::db::generic::Column column{columnName, tableName, dataType, defaultValue,
-                                                                  nullable, length};
+                                                                  nullable, length, primary};
 
                             genericColumns.emplace_back(column);
 
@@ -62,11 +63,11 @@ namespace dbcrudgen {
                         genericTables.emplace_back(genericTable);
                     }
 
-                    const MYSQLDatabaseConnectionModel &mysqlConnModel = mysqlDatabase.getConnectionModel();
-                    std::string host = mysqlConnModel.getHost();
-                    int port = mysqlConnModel.getPort();
-                    std::string user = mysqlConnModel.getUser();
-                    std::string password = mysqlConnModel.getPassword();
+                    const MYSQLDatabaseModelBuilder &builder = mysqlDatabase.getModelBuilder();
+                    std::string host = builder.getHost();
+                    int port = builder.getPort();
+                    std::string user = builder.getUser();
+                    std::string password = builder.getPassword();
                     dbcrudgen::db::generic::Connection connection{host, port, user, password, databaseName};
                     dbcrudgen::db::generic::Flavor flavor = dbcrudgen::db::generic::Flavor::MYSQL;
                     dbcrudgen::db::generic::Database database{connection, flavor, genericTables};

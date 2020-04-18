@@ -2,7 +2,6 @@
 #include <string>
 #include <vector>
 #include "databases/mysql/scaffolding/entities/Schemata.h"
-#include "databases/mysql/connectors/MYSQLDatabaseConnectionParams.h"
 #include "databases/mysql/connectors/MYSQLDatabaseConnector.h"
 #include "databases/mysql/decomposer/MYSQLDatabaseDecomposer.h"
 #include "databases/mysql/parsers/MYSQLDatabaseFlattener.h"
@@ -16,6 +15,7 @@
 #include "orm/projects/JaxWsProjectModel.h"
 #include "orm/creators/java/JaxWsProjectCreator.h"
 #include "orm/creators/java/JaxRsProjectCreator.h"
+#include "databases/mysql/builder/MYSQLDatabaseModelBuilder.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -34,6 +34,8 @@ getMYSQLDatabaseModel(std::string database, std::string username, std::string pa
  * @return
  */
 dbcrudgen::db::generic::Database getGenericDatabase(dbcrudgen::db::mysql::MYSQLDatabaseModel &databaseModel);
+
+void createMYSQLProjectBuilder();
 
 /**
  * Create CPP Project
@@ -79,25 +81,12 @@ dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string datab
     std::string connStr{"tcp://"};
     connStr = connStr.append(host).append(":").append(std::to_string(port));
 
-    dbcrudgen::db::mysql::MYSQLDatabaseConnectionParams params{connStr, username, password, database};
-    dbcrudgen::db::mysql::MYSQLDatabaseConnector connector{params};
-    connector.open();
-
-    dbcrudgen::db::mysql::MYSQLDatabaseDecomposer decomposer{connector};
+    dbcrudgen::db::mysql::MYSQLDatabaseModelBuilder builder{connStr, host, port, username, password, database};
 
     std::map<std::string, std::vector<dbcrudgen::db::mysql::Columns>> tableColumns;
 
-    auto tables = decomposer.getSchemaTables(database);
-
-    for (dbcrudgen::db::mysql::Tables &table  : tables) {
-        std::string tableName = table.getTableName();
-        std::vector<dbcrudgen::db::mysql::Columns> columns = decomposer.getTableColumns(database, tableName);
-        tableColumns.insert({tableName, columns});
-    }
     dbcrudgen::db::mysql::MYSQLDatabaseConnectionModel connectionModel{host, port, username, password, database};
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel{connectionModel};
-    databaseModel.setTables(tables);
-    databaseModel.setTableColumns(tableColumns);
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel{builder};
 
     return databaseModel;
 }
@@ -189,7 +178,7 @@ void createJavaProject() {
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "pesarika-rs-alpha";
+    std::string projectName = "pesarika-rs-alpha-f";
     std::string workspaceDir = "/opt/victor/workspace/java";
     std::string packageName = "com.pesarika";
 
@@ -228,6 +217,41 @@ void createJavaProject() {
     dbcrudgen::orm::JaxRsProjectCreator jaxRsCreator{jaxRsModel, genericDatabase};
     jaxRsCreator.createProject();
 
+}
+
+void createMYSQLProjectBuilder() {
+    std::string database = "pesarika";
+    std::string user = "root";
+    std::string password = "root3358";
+    std::string host = "127.0.0.1";
+    int port = 3306;
+    std::string connStr{"tcp://"};
+    connStr = connStr.append(host).append(":").append(std::to_string(port));
+    dbcrudgen::db::mysql::MYSQLDatabaseModelBuilder builder{connStr, host, port, user, password, database};
+    const std::vector<dbcrudgen::db::mysql::Tables> &tables = builder.getSchemaTables();
+
+    std::cout << "--------------------------- TABLES ---------------------------------" << std::endl;
+    for (const auto &table : tables) {
+        std::cout << table.getTableName() << std::endl;
+    }
+
+    std::cout << "--------------------------- PRIMARY KEYS ---------------------------------" << std::endl;
+    const std::vector<dbcrudgen::db::mysql::Columns> &primaryKeys = builder.getTablePrimaryKeyColumns("child");
+    for (const auto &key : primaryKeys) {
+        std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+    }
+
+    std::cout << "--------------------------- TABLE KEYS ---------------------------------" << std::endl;
+    const std::vector<dbcrudgen::db::mysql::Columns> &keys = builder.getTableKeysColumns("child");
+    for (const auto &key : keys) {
+        std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+    }
+
+    std::cout << "--------------------------- FOREIGN KEYS ---------------------------------" << std::endl;
+    const std::vector<dbcrudgen::db::mysql::Columns> &foreign = builder.getTableForeignKeyColumns("child");
+    for (const auto &key : foreign) {
+        std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+    }
 }
 
 void createJaxRsHibernateProject() {

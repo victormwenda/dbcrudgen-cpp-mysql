@@ -200,8 +200,8 @@ namespace dbcrudgen {
              * @param webXmlSource
              */
             void createWebXMLFile(const std::string &webXmlSource) {
-                std::string filename = projectModel.getAbsoluteWebXMLFilePath();
-                FilesWriter::writeFile(filename, webXmlSource);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathSrc(), webXmlSource);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathRes(), webXmlSource);
             }
 
             /**

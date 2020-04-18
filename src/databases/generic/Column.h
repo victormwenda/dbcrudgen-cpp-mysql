@@ -23,22 +23,14 @@ namespace dbcrudgen {
                 std::string defaultValue;
                 bool nullable;
                 long length;
+                bool primary;
 
             public:
 
-                /**
-                 * A generic table column
-                 * @param columnName
-                 * @param tableName
-                 * @param dataType
-                 * @param defaultValue
-                 * @param nullable
-                 * @param length
-                 */
                 Column(std::string &columnName, std::string &tableName, std::string &dataType,
-                       std::string &defaultValue, bool nullable, long length)
+                       std::string &defaultValue, bool nullable, long length, bool primary)
                         : columnName(columnName), tableName(tableName), dataType(dataType), defaultValue(defaultValue),
-                          nullable(nullable), length(length) {}
+                          nullable(nullable), length(length), primary(primary) {}
 
                 const std::string &getColumnName() const {
                     return columnName;
@@ -86,6 +78,14 @@ namespace dbcrudgen {
 
                 void setLength(long length) {
                     Column::length = length;
+                }
+
+                bool isPrimary() const {
+                    return primary;
+                }
+
+                void setPrimary(bool primary) {
+                    Column::primary = primary;
                 }
             };
         }

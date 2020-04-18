@@ -119,7 +119,7 @@ namespace dbcrudgen {
                  * @return
                  */
                 bool close() override {
-                    connection->close();
+                    if (!connection->isClosed()) connection->close();
                     return connection->isClosed();
                 }
 
