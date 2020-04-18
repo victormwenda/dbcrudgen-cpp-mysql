@@ -76,7 +76,8 @@ namespace dbcrudgen {
              * @return
              */
             static std::string createGetterSetter(const db::generic::Column &column) {
-                std::string srcTemplate = R"(${VISIBILITY} ${DATA_TYPE} get${METHOD_NAME} () { return ${VARIABLE_NAME};} )";
+                std::string srcTemplate = R"(${VISIBILITY} ${DATA_TYPE} get${METHOD_NAME} () { return ${VARIABLE_NAME};}
+                    ${VISIBILITY} void set${METHOD_NAME} (${DATA_TYPE} ${VARIABLE_NAME}) { this.${VARIABLE_NAME} =  ${VARIABLE_NAME};})";
 
                 const std::string columnName = column.getColumnName();
 
