@@ -18,11 +18,16 @@ namespace dbcrudgen {
             class MYSQLDatabaseFlattener {
 
             public:
+
+                /**
+                 * Flatten a MYSQL Database to a Generic Database
+                 * @param mysqlDatabase
+                 * @return
+                 */
                 static dbcrudgen::db::generic::Database
                 flatten(const dbcrudgen::db::mysql::MYSQLDatabaseModel &mysqlDatabase) {
 
                     std::vector<dbcrudgen::db::generic::Table> genericTables{};
-                    std::map<std::string, std::vector<dbcrudgen::db::generic::Column>> genericColumns;
 
                     std::string databaseName = mysqlDatabase.getDatabaseName();
                     const auto &mysqlTables = mysqlDatabase.getTables();
@@ -46,7 +51,7 @@ namespace dbcrudgen {
                             std::string defaultValue = mysqlColumn.getColumnDefault();
                             bool nullable = mysqlColumn.getIsNullable() == "YES";
                             long length = mysqlColumn.getCharacterMaximumLength();
-                            bool primary = false;
+                            bool primary = isPrimaryKeyColumn(mysqlDatabase, mysqlTable, mysqlColumn);
 
                             dbcrudgen::db::generic::Column column{columnName, tableName, dataType, defaultValue,
                                                                   nullable, length, primary};
@@ -73,6 +78,38 @@ namespace dbcrudgen {
                     dbcrudgen::db::generic::Database database{connection, flavor, genericTables};
 
                     return database;
+                }
+
+                /**
+                 * Validates if a column is a primary key column
+                 * @param databaseModel
+                 * @param table
+                 * @param column
+                 * @return
+                 */
+                static bool isPrimaryKeyColumn(const dbcrudgen::db::mysql::MYSQLDatabaseModel &databaseModel,
+                                               const dbcrudgen::db::mysql::Tables &table,
+                                               const Columns &column) {
+
+                    const std::map<std::string, std::vector<Columns>> &tablePrimaryKeys
+                            = databaseModel.getPrimaryKeyColumns();
+
+                    const std::map<std::string, std::vector<Columns>>::const_iterator &iterator
+                            = tablePrimaryKeys.find(table.getTableName());
+
+                    if (iterator == tablePrimaryKeys.end()) {
+                        return false;
+                    }
+
+                    const std::vector<Columns> &columns = iterator->second;
+
+                    for (const Columns &col : columns) {
+                        if (col.getColumnName() == column.getColumnName()) {
+                            return true;
+                        }
+                    }
+
+                    return false;
                 }
             };
         }

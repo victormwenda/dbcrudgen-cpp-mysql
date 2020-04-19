@@ -65,6 +65,11 @@ namespace dbcrudgen {
 
                 std::string misc{};
 
+                //Inject Id for primary key cols
+                if (column.isPrimary()) {
+                    misc.append(" @Id ");
+                }
+
                 StringUtils::replace(srcTemplate, "${ANNOTATIONS}", misc);
 
                 return srcTemplate;
