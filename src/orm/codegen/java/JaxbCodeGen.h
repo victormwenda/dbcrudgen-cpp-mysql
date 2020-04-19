@@ -10,6 +10,7 @@
 #include "../../templates/java/jax-b/JaxbClassTemplate.h"
 #include "../../../databases/generic/Column.h"
 #include "../../templates/java/jax-b/JaxbAttributeTemplate.h"
+#include "../../templates/java/jax-b/JaxbElementTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -50,8 +51,8 @@ namespace dbcrudgen {
              * @return
              */
             static std::string createInstanceVariable(const dbcrudgen::db::generic::Column &column) {
-                JaxbAttributeTemplate jaxbAttributeTemplate;
-                std::string srcTemplate = jaxbAttributeTemplate.getTemplate();
+                JaxbElementTemplate jaxbElementTemplate;
+                std::string srcTemplate = jaxbElementTemplate.getTemplate();
 
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", "private");
                 StringUtils::replace(srcTemplate, "${DATA_TYPE}", JavaParser::toJavaDataType(column.getDataType()));
