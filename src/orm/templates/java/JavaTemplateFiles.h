@@ -54,6 +54,12 @@ namespace dbcrudgen {
                 static constexpr const char *CLASS_RESOURCES_TEMPLATE = "templates/java/jax-ws/class_resources_template.mdl";
             };
 
+            struct JaxB {
+                static constexpr const char *CLASS_BEAN_TEMPLATE = "templates/java/jax-b/class_bean_template.mdl";
+                static constexpr const char *VARIABLE_BEAN_ATTRIBUTE_TEMPLATE = "templates/java/jax-b/bean_attribute_template.mdl";
+                static constexpr const char *VARIABLE_BEAN_ELEMENT_TEMPLATE = "templates/java/jax-b/bean_element_template.mdl";
+            };
+
         };
     }
 }

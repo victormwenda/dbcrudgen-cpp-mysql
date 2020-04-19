@@ -1,0 +1,20 @@
+package ${PROJECT_PACKAGE}.${BEANS_PACKAGE};
+
+import javax.xml.bind.annotation.*;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
+public class ${CLASS_NAME} {
+
+     ${INSTANCE_VARIABLES}
+
+    public ${CLASS_NAME}(${CONSTRUCTOR_VARIABLES}) {
+        ${INSTANCE_VARIABLES_INITIALIZATION}
+    }
+
+    public ${CLASS_NAME}() {
+        ${DEFAULT_INSTANCE_VARIABLES_INITIALIZATION}
+    }
+
+    ${GETTER_SETTERS}
+}

@@ -178,7 +178,7 @@ void createJavaProject() {
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "pesarika-rs-alpha-f";
+    std::string projectName = "pesarika-rs-alpha";
     std::string workspaceDir = "/opt/victor/workspace/java";
     std::string packageName = "com.pesarika";
 
@@ -190,29 +190,39 @@ void createJavaProject() {
 
     std::string webDir = "webapp";
     std::string apisPkg = "web.apis";
+    std::string dbConnPkg = "db.conn";
     std::string entitiesPkg = "db.entities";
     std::string transactionsPkg = "db.transactions";
     std::string webAppPkg = "web.application";
+    std::string beansPkg = "web.beans";
 
     std::string apiClassSuffix = "Resource";
     std::string entityClassSuffix = "Entity";
     std::string trxClassSuffix = "Transactions";
-    std::string webAppClass = "WebApplication";
+    std::string beansClassSuffix = "Beans";
 
+    std::string webAppClass = "WebApplication";
+    std::string dbConnClass = "DatabaseConnectionHandler";
+    std::string urlPattern = "/api/v1/*";
 
     dbcrudgen::orm::JaxWsProjectModel jaxWsModel{projectName, workspaceDir,
                                                  srcDir, moduleDir, javaDir, libsDir,
-                                                 resourcesDir, packageName, webDir, apisPkg, entitiesPkg,
-                                                 transactionsPkg, apiClassSuffix, entityClassSuffix, trxClassSuffix};
+                                                 resourcesDir, packageName, webDir, apisPkg, dbConnPkg, entitiesPkg,
+                                                 transactionsPkg, webAppPkg, beansPkg, apiClassSuffix,
+                                                 entityClassSuffix,
+                                                 trxClassSuffix, beansClassSuffix, webAppClass, dbConnClass,
+                                                 urlPattern};
     dbcrudgen::orm::JaxWsProjectCreator jaxWsCreator{jaxWsModel, genericDatabase};
     //jaxWsCreator.createProject();
 
 
     dbcrudgen::orm::JaxRsProjectModel jaxRsModel{projectName, workspaceDir,
                                                  srcDir, moduleDir, javaDir, libsDir,
-                                                 resourcesDir, packageName, webDir, apisPkg, entitiesPkg,
-                                                 transactionsPkg, webAppPkg, apiClassSuffix, entityClassSuffix,
-                                                 trxClassSuffix, webAppClass};
+                                                 resourcesDir, packageName, webDir, apisPkg, dbConnPkg, entitiesPkg,
+                                                 transactionsPkg, webAppPkg, beansPkg, apiClassSuffix,
+                                                 entityClassSuffix,
+                                                 trxClassSuffix, beansClassSuffix, webAppClass, dbConnClass,
+                                                 urlPattern};
 
     dbcrudgen::orm::JaxRsProjectCreator jaxRsCreator{jaxRsModel, genericDatabase};
     jaxRsCreator.createProject();

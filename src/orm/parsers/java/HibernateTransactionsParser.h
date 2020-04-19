@@ -23,6 +23,8 @@ namespace dbcrudgen {
                                           const std::string &className) {
                 StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
                 StringUtils::replace(sourceTemplate, "${TRANSACTIONS_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(sourceTemplate, "${DB_CONN_PACKAGE}", model.getDbConnPkg());
+                StringUtils::replace(sourceTemplate, "${DB_CONN_CLASS}", model.getDbConnClassName());
                 StringUtils::replace(sourceTemplate, "${VISIBILITY}", "public");
                 StringUtils::replace(sourceTemplate, "${CLASS_NAME}", className);
             }

@@ -24,7 +24,8 @@ namespace dbcrudgen {
             static void
             parseConfigurationClass(const dbcrudgen::orm::JaxRsProjectModel &model, std::string &sourceTemplate) {
                 StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
-                StringUtils::replace(sourceTemplate, "${TRANSACTIONS_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(sourceTemplate, "${DB_CONN_PACKAGE}", model.getDbConnPkg());
+                StringUtils::replace(sourceTemplate, "${CLASS_NAME}", model.getDbConnClassName());
             }
 
             /**

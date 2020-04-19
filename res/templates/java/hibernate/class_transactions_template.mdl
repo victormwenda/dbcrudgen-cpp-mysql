@@ -1,6 +1,6 @@
 package ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE};
 
-import ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE}.DatabaseConnection;
+import ${PROJECT_PACKAGE}.${DB_CONN_PACKAGE}.${DB_CONN_CLASS};
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -19,7 +19,7 @@ ${VISIBILITY} class ${CLASS_NAME} {
      * @param object
      */
     public void insert(Object object) {
-        Session session = DatabaseConnection.getSession();
+        Session session = ${DB_CONN_CLASS}.getSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
 
@@ -39,8 +39,8 @@ ${VISIBILITY} class ${CLASS_NAME} {
      * @param connection
      * @param object
      */
-    public void update(DatabaseConnection connection, Object object) {
-        Session session = DatabaseConnection.getSession();
+    public void update(${DB_CONN_CLASS} connection, Object object) {
+        Session session = ${DB_CONN_CLASS}.getSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
 
@@ -58,8 +58,8 @@ ${VISIBILITY} class ${CLASS_NAME} {
      * @param connection
      * @param object
      */
-    public void delete(DatabaseConnection connection, Object object) {
-        Session session = DatabaseConnection.getSession();
+    public void delete(${DB_CONN_CLASS} connection, Object object) {
+        Session session = ${DB_CONN_CLASS}.getSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
 
@@ -79,8 +79,8 @@ ${VISIBILITY} class ${CLASS_NAME} {
      * @param aClass
      * @return
      */
-    public Object queryOne(DatabaseConnection connection, String hql, Class aClass) {
-        Session session = DatabaseConnection.getSession();
+    public Object queryOne(${DB_CONN_CLASS} connection, String hql, Class aClass) {
+        Session session = ${DB_CONN_CLASS}.getSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
 
@@ -102,8 +102,8 @@ ${VISIBILITY} class ${CLASS_NAME} {
      * @param hql
      * @return
      */
-    public List queryMany(DatabaseConnection connection, String hql) {
-        Session session = DatabaseConnection.getSession();
+    public List queryMany(${DB_CONN_CLASS} connection, String hql) {
+        Session session = ${DB_CONN_CLASS}.getSession();
         Transaction transaction = session.getTransaction();
         transaction.begin();
 

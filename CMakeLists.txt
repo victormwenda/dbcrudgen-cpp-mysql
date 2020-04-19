@@ -286,8 +286,9 @@ set(SOURCE_FILES
 
         src/orm/codegen/java/JavaProjectCodeGen.h
         src/orm/codegen/java/JavaMYSQLProjectCodeGen.h
-        src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JavaOracleProjectCodeGen.h
+        src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
+        src/orm/codegen/java/JaxbCodeGen.h
         src/orm/codegen/java/JaxRsWebXMLCodeGen.h
         src/orm/codegen/java/JaxRSWebApplicationCodeGen.h
 
@@ -330,6 +331,7 @@ set(SOURCE_FILES
         src/orm/parsers/java/HibernateEntitiesParser.h
         src/orm/parsers/java/HibernateParser.h
         src/orm/parsers/java/JavaParser.h
+        src/orm/parsers/java/JaxbParser.h
         src/orm/parsers/java/JaxRsResourcesParser.h
         src/orm/parsers/java/JaxRsWebXMLParser.h
         src/orm/parsers/java/JaxRsWebApplicationParser.h
@@ -406,6 +408,10 @@ set(SOURCE_FILES
         src/orm/templates/java/JavaVariableInstanceTemplate.h
         src/orm/templates/java/JavaVariableLocalTemplate.h
         src/orm/templates/java/JavaVariableStaticTemplate.h
+
+        src/orm/templates/java/jax-b/JaxbClassTemplate.h
+        src/orm/templates/java/jax-b/JaxbAttributeTemplate.h
+        src/orm/templates/java/jax-b/JaxbElementTemplate.h
 
         src/orm/templates/java/jax-rs/JaxRsScriptWebXMLTemplate.h
         src/orm/templates/java/jax-rs/JaxRsClassWebApplicationTemplate.h
@@ -486,6 +492,7 @@ set(SOURCE_FILES
 
 
         src/orm/utils/StringUtils.h
+
 
         )
 

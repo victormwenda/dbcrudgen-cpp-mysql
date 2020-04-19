@@ -1,11 +1,11 @@
-package ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE};
+package ${PROJECT_PACKAGE}.${DB_CONN_PACKAGE};
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-public class DatabaseConnection {
+public class ${CLASS_NAME} {
 
     private static final SessionFactory sessionFactory;
 

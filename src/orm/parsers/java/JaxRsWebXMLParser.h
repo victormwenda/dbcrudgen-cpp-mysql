@@ -35,7 +35,7 @@ namespace dbcrudgen {
 
                 StringUtils::replace(webXml, "${SERVLET_NAME}", toKebabCase(model.getProjectName()));
                 StringUtils::replace(webXml, "${VISIBILITY}", "public");
-                StringUtils::replace(webXml, "${URL_PATTERN}", "/*");
+                StringUtils::replace(webXml, "${URL_PATTERN}", model.getUrlPattern());
             }
         };
     }

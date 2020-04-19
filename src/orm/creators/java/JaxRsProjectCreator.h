@@ -20,6 +20,7 @@
 #include "../../templates/java/crud/hibernate/HibernateParameterEntityMappingTemplate.h"
 #include "../../codegen/java/JaxRsWebXMLCodeGen.h"
 #include "../../codegen/java/JaxRSWebApplicationCodeGen.h"
+#include "../../codegen/java/JaxbCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -57,6 +58,9 @@ namespace dbcrudgen {
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
+                FilesWriter::createDirs(projectModel.getWebApplicationAbsolutePath());
+                FilesWriter::createDirs(projectModel.getDatabaseConnectionAbsolutePath());
+                FilesWriter::createDirs(projectModel.getBeansAbsolutePath());
             }
 
             /**
@@ -91,24 +95,30 @@ namespace dbcrudgen {
 
                 for (const dbcrudgen::db::generic::Table &table : tables) {
 
-                    std::string apiSource = rsClassResourcesTemplate.getTemplate();
-                    std::string entitySource = hEntityTemplate.getTemplate();
-                    std::string trxSource = hTrxTemplate.getTemplate();
-                    std::string mappingSource = hEntityParamTemplate.getTemplate();
-
                     const std::string &tableName = table.getTableName();
 
                     std::string apiSuffix = projectModel.getApiClassSuffix();
                     std::string entitySuffix = projectModel.getEntityClassSuffix();
-                    std::string trxSuffix = projectModel.getTransactionsClassSuffix();
+                    std::string trxSuffix = projectModel.getTrxClassSuffix();
+                    std::string beansSuffix = projectModel.getBeansClassSuffix();
 
-                    std::string apiClass = JavaParser::toJavaClassName(tableName);
-                    std::string entityClass = JavaParser::toJavaClassName(tableName);
-                    std::string trxClass = JavaParser::toJavaClassName(tableName);
+                    std::string tmpClassName = JavaParser::toJavaClassName(tableName);
+
+                    std::string apiClass = tmpClassName;
+                    std::string entityClass = tmpClassName;
+                    std::string trxClass = tmpClassName;
+                    std::string beansClass = tmpClassName;
 
                     apiClass.append(apiSuffix);
                     entityClass.append(entitySuffix);
                     trxClass.append(trxSuffix);
+                    beansClass.append(beansSuffix);
+
+                    std::string apiSource = rsClassResourcesTemplate.getTemplate();
+                    std::string entitySource = hEntityTemplate.getTemplate();
+                    std::string trxSource = hTrxTemplate.getTemplate();
+                    std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
+                    std::string mappingSource = hEntityParamTemplate.getTemplate();
 
 
                     JaxRsResourcesParser::parseClassDetails(projectModel, apiSource, tableName, apiClass);
@@ -128,16 +138,39 @@ namespace dbcrudgen {
                     std::string entityInstanceVars;
                     std::string entityGetterSetters;
 
+                    std::string beansInstanceVars;
+                    std::string beansGetterSetters;
+                    std::string beanCtorVariables;
+                    std::string beanInstanceVariablesInit;
+                    std::string beanDefaultCtorVariablesInit;
+
                     const std::vector<dbcrudgen::db::generic::Column> &columns = table.getTableColumns();
 
+                    int index = 0;
                     for (const dbcrudgen::db::generic::Column &column : columns) {
 
                         entityInstanceVars += HibernateEntitiesParser::createInstanceVariable(column);
                         entityGetterSetters += HibernateEntitiesParser::createGetterSetter(column);
+
+                        beansInstanceVars += JaxbCodeGen::createInstanceVariable(column);
+                        beansGetterSetters += JaxbCodeGen::createGetterSetter(column);
+                        beanCtorVariables += JaxbCodeGen::createConstructorVariable(column, index < columns.size() - 1);
+                        beanInstanceVariablesInit += JaxbCodeGen::createInstanceVariableConstructorInitialization(
+                                column);
+                        beanDefaultCtorVariablesInit += JaxbCodeGen::createInstanceVariableDefaultBeanConstructorInitialization(
+                                column);
+
+                        index++;
                     }
 
                     HibernateEntitiesParser::parseColumnInstanceVariables(entitySource, entityInstanceVars);
                     HibernateEntitiesParser::parseColumnGetterSetters(entitySource, entityGetterSetters);
+
+                    JaxbCodeGen::addInstanceVariables(beansSource, beansInstanceVars);
+                    JaxbCodeGen::addGetterSetters(beansSource, beansGetterSetters);
+                    JaxbCodeGen::addConstructorVariables(beansSource, beanCtorVariables);
+                    JaxbCodeGen::addConstructorVariablesInitialization(beansSource, beanInstanceVariablesInit);
+                    JaxbCodeGen::addDefaultInstanceVariablesInitialization(beansSource, beanDefaultCtorVariablesInit);
 
                     std::string apiFile =
                             projectModel.getApisAbsolutePath() + "/" + apiClass + ".java";
@@ -148,9 +181,13 @@ namespace dbcrudgen {
                     std::string trxFile =
                             projectModel.getTransactionsAbsolutePath() + "/" + trxClass + ".java";
 
+                    std::string beanFile =
+                            projectModel.getBeansAbsolutePath() + "/" + beansClass + ".java";
+
                     FilesWriter::writeFile(apiFile, apiSource);
                     FilesWriter::writeFile(entityFile, entitySource);
                     FilesWriter::writeFile(trxFile, trxSource);
+                    FilesWriter::writeFile(beanFile, beansSource);
                 }
 
 
@@ -160,7 +197,7 @@ namespace dbcrudgen {
 
                 createWebXMLFile(webXMLSource);
                 createWebApplicationClassFile(webAppSource);
-                //createHibernateConnectionScript(entityMappings);
+                createHibernateConnectionScript(entityMappings);
 
             }
 
@@ -169,8 +206,8 @@ namespace dbcrudgen {
              */
             void createHibernateConnectionClass() {
                 HibernateClassConfigurationTemplate hConnConfigTemplate;
-                std::string trxPath = projectModel.getTransactionsAbsolutePath();
-                std::string connConfigFile = trxPath + "/DatabaseConnection.java";
+                std::string connPath = projectModel.getDatabaseConnectionAbsolutePath();
+                std::string connConfigFile = connPath + "/" + projectModel.getDbConnClassName() + ".java";
 
                 std::string configSource = hConnConfigTemplate.getTemplate();
                 HibernateConfigurationParser::parseConfigurationClass(projectModel, configSource);
@@ -201,7 +238,7 @@ namespace dbcrudgen {
              */
             void createWebXMLFile(const std::string &webXmlSource) {
                 FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathSrc(), webXmlSource);
-                FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathRes(), webXmlSource);
+                //FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathRes(), webXmlSource);
             }
 
             /**

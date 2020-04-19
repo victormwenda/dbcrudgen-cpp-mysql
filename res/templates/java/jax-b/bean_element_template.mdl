@@ -1,0 +1,1 @@
+@XmlElement ${VISIBILITY} ${DATA_TYPE} ${VARIABLE_NAME};

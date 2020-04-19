@@ -47,6 +47,8 @@ namespace dbcrudgen {
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
+                FilesWriter::createDirs(projectModel.getDatabaseConnectionAbsolutePath());
+                FilesWriter::createDirs(projectModel.getBeansAbsolutePath());
             }
 
             /**
@@ -63,7 +65,7 @@ namespace dbcrudgen {
 
                     std::string apiSuffix = projectModel.getApiClassSuffix();
                     std::string entitySuffix = projectModel.getEntityClassSuffix();
-                    std::string trxSuffix = projectModel.getTransactionsClassSuffix();
+                    std::string trxSuffix = projectModel.getTrxClassSuffix();
 
                     std::string apiClass = JavaParser::toJavaClassName(tableName);
                     std::string entityClass = JavaParser::toJavaClassName(tableName);

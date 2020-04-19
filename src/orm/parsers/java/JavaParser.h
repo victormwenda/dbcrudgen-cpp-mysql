@@ -238,6 +238,37 @@ namespace dbcrudgen {
                     }
                 }
             }
+
+            /**
+             * Get java data type default value
+             * @param dataType
+             * @return
+             */
+            static std::string getJavaDataTypeDefaultValue(std::string dataType) {
+
+                if (dataType == "boolean") {
+                    return "false";
+                }
+                if (dataType == "char") {
+                    return "''";
+                }
+                if (dataType == "int") {
+                    return "0";
+                }
+                if (dataType == "double") {
+                    return "0.0";
+                }
+                if (dataType == "float") {
+                    return "0.0f";
+                }
+                if (dataType == "long") {
+                    return "0L";
+                }
+                if (dataType == "String") {
+                    return R"("")";
+                }
+                return "null";
+            }
         };
     }
 }

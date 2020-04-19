@@ -15,20 +15,26 @@ namespace dbcrudgen {
             std::string webDir;
 
             std::string apisPkg;
+            std::string dbConnPkg;
             std::string entitiesPkg;
             std::string transactionsPkg;
             std::string webAppPkg;
+            std::string beansPkg;
 
             std::string apiClassSuffix;
             std::string entityClassSuffix;
             std::string trxClassSuffix;
-            std::string webAppClassName;
+            std::string beansClassSuffix;
 
+            std::string webAppClassName;
+            std::string dbConnClassName;
+
+            std::string urlPattern;
 
         public:
 
             /**
-             * Jax-Rs Project Model
+             * JAX-RS Project Model
              * @param projectName
              * @param workspaceDir
              * @param srcDir
@@ -39,29 +45,46 @@ namespace dbcrudgen {
              * @param packageName
              * @param webDir
              * @param apisPkg
+             * @param dbConnPkg
              * @param entitiesPkg
              * @param transactionsPkg
+             * @param webAppPkg
+             * @param beansPkg
              * @param apiClassSuffix
              * @param entityClassSuffix
              * @param trxClassSuffix
+             * @param beansClassSuffix
+             * @param webAppClassName
+             * @param dbConnClassName
+             * @param urlPattern
              */
             JaxRsProjectModel(std::string &projectName, std::string &workspaceDir, std::string &srcDir,
                               std::string &moduleDir, std::string &javaDir, std::string &libsDir,
                               std::string &resourcesDir, std::string &packageName,
 
                               std::string &webDir,
-                              std::string &apisPkg, std::string &entitiesPkg, std::string transactionsPkg,
-                              std::string &webAppPkg,
+                              std::string &apisPkg, std::string &dbConnPkg, std::string &entitiesPkg,
+                              std::string &transactionsPkg, std::string &webAppPkg, std::string &beansPkg,
+
                               std::string &apiClassSuffix, std::string &entityClassSuffix, std::string &trxClassSuffix,
-                              std::string &webAppClassName)
+                              std::string &beansClassSuffix,
+
+                              std::string &webAppClassName, std::string &dbConnClassName,
+
+                              std::string &urlPattern)
 
                     : JavaProjectModel{projectName, workspaceDir, srcDir, moduleDir, javaDir,
                                        libsDir, resourcesDir, packageName},
                       webDir{webDir},
-                      apisPkg{apisPkg}, entitiesPkg{entitiesPkg}, transactionsPkg{transactionsPkg},
-                      webAppPkg{webAppPkg},
+
+                      apisPkg{apisPkg}, dbConnPkg{dbConnPkg}, entitiesPkg{entitiesPkg},
+                      transactionsPkg{transactionsPkg}, webAppPkg{webAppPkg}, beansPkg{beansPkg},
+
                       apiClassSuffix{apiClassSuffix}, entityClassSuffix{entityClassSuffix},
-                      trxClassSuffix{trxClassSuffix}, webAppClassName{webAppClassName} {}
+                      trxClassSuffix{trxClassSuffix}, beansClassSuffix{beansClassSuffix},
+
+                      webAppClassName{webAppClassName}, dbConnClassName{dbConnClassName},
+                      urlPattern{urlPattern} {}
 
 
             const std::string &getWebDir() const {
@@ -70,6 +93,10 @@ namespace dbcrudgen {
 
             const std::string &getApisPkg() const {
                 return apisPkg;
+            }
+
+            const std::string &getDbConnPkg() const {
+                return dbConnPkg;
             }
 
             const std::string &getEntitiesPkg() const {
@@ -84,6 +111,10 @@ namespace dbcrudgen {
                 return webAppPkg;
             }
 
+            const std::string &getBeansPkg() const {
+                return beansPkg;
+            }
+
             const std::string &getApiClassSuffix() const {
                 return apiClassSuffix;
             }
@@ -92,12 +123,24 @@ namespace dbcrudgen {
                 return entityClassSuffix;
             }
 
-            const std::string &getTransactionsClassSuffix() const {
+            const std::string &getTrxClassSuffix() const {
                 return trxClassSuffix;
+            }
+
+            const std::string &getBeansClassSuffix() const {
+                return beansClassSuffix;
             }
 
             const std::string &getWebAppClassName() const {
                 return webAppClassName;
+            }
+
+            const std::string &getDbConnClassName() const {
+                return dbConnClassName;
+            }
+
+            const std::string &getUrlPattern() const {
+                return urlPattern;
             }
 
             /**
@@ -126,6 +169,7 @@ namespace dbcrudgen {
             }
 
             /**
+             * TODO :: this method is not supposed to be there
              * Get the absolute path to the web.xml file
              * @param filename
              * @return
@@ -142,6 +186,16 @@ namespace dbcrudgen {
                 std::string pkgName = getApisPkg();
                 std::string apisPackage = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + apisPackage;
+            }
+
+            /**
+             * Get absolute path to database connection dir
+             * @return
+             */
+            const std::string getDatabaseConnectionAbsolutePath() {
+                std::string pkgName = getDbConnPkg();
+                std::string dbConnPackage = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + dbConnPackage;
             }
 
             /**
@@ -166,22 +220,41 @@ namespace dbcrudgen {
             }
 
             /**
-            * Get absolute path to transactions dir
+            * Get absolute path to web application dir
             * @return
             */
             const std::string getWebApplicationAbsolutePath() {
                 std::string pkgName = getWebAppPkg();
-                std::string webAppPkg = StringUtils::replace(pkgName, ".", "/");
+                std::string webAppPackage = StringUtils::replace(pkgName, ".", "/");
                 const std::string &baseCodePath = getAbsoluteBaseCodePath();
-                return baseCodePath + "/" + webAppPkg;
+                return baseCodePath + "/" + webAppPackage;
             }
 
             /**
-            * Get absolute path to transactions dir
+            * Get absolute path to beans package dir
+            * @return
+            */
+            const std::string getBeansAbsolutePath() {
+                std::string pkgName = getBeansPkg();
+                std::string beansPackage = StringUtils::replace(pkgName, ".", "/");
+                const std::string &baseCodePath = getAbsoluteBaseCodePath();
+                return baseCodePath + "/" + beansPackage;
+            }
+
+            /**
+            * Get absolute path to web application file
             * @return
             */
             const std::string getWebApplicationFileAbsolutePath() {
                 return getWebApplicationAbsolutePath() + "/" + getWebAppClassName() + ".java";
+            }
+
+            /**
+            * Get absolute path to database connection file
+            * @return
+            */
+            const std::string getDatabaseConnectionFileAbsolutePath() {
+                return getWebApplicationAbsolutePath() + "/" + getDbConnClassName() + ".java";
             }
         };
 
