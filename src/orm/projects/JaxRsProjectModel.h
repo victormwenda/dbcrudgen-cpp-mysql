@@ -256,6 +256,14 @@ namespace dbcrudgen {
             const std::string getDatabaseConnectionFileAbsolutePath() {
                 return getWebApplicationAbsolutePath() + "/" + getDbConnClassName() + ".java";
             }
+
+            /**
+            * Get absolute path to database connection file
+            * @return
+            */
+            const std::string getAbstractableTransactionsExecutorFileAbsolutePath() {
+                return getTransactionsAbsolutePath() + "/AbstractableTransactionsExecutor.java";
+            }
         };
 
     }

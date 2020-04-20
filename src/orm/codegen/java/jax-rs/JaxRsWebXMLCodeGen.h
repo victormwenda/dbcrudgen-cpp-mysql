@@ -5,9 +5,9 @@
 #ifndef DBCRUDGEN_CPP_JAXRSWEBXMLCODEGEN_H
 #define DBCRUDGEN_CPP_JAXRSWEBXMLCODEGEN_H
 
-#include "JavaProjectCodeGen.h"
-#include "../../templates/java/jax-rs/JaxRsScriptWebXMLTemplate.h"
-#include "../../parsers/java/JaxRsWebXMLParser.h"
+#include "../JavaProjectCodeGen.h"
+#include "../../../templates/java/jax-rs/JaxRsScriptWebXMLTemplate.h"
+#include "../../../parsers/java/JaxRsWebXMLParser.h"
 
 namespace dbcrudgen {
     namespace orm {

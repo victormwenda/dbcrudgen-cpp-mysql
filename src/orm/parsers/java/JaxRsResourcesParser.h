@@ -15,18 +15,42 @@ namespace dbcrudgen {
         public:
 
             /**
-             * Set the class name and other general class details
+             * Create API Resource source code
              * @param model
-             * @param sourceTemplate
-             * @param className
+             * @param apiSource
+             * @param table
+             * @param column
+             * @param apiClass
+             * @param entityClass
+             * @param trxClass
+             * @return
              */
-            static void parseClassDetails(dbcrudgen::orm::JaxRsProjectModel &model, std::string &sourceTemplate,
-                                          const std::string &tableName, const std::string &className) {
-                StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
-                StringUtils::replace(sourceTemplate, "${RESOURCES_PACKAGE}", model.getApisPkg());
-                StringUtils::replace(sourceTemplate, "${CLASS_NAME}", className);
-                StringUtils::replace(sourceTemplate, "${VISIBILITY}", "public");
-                StringUtils::replace(sourceTemplate, "${RESOURCE-NAME}", toKebabCase(tableName));
+            static std::string
+            parseClassDetails(JaxRsProjectModel &model, std::string apiSource, const db::generic::Table &table,
+                              const db::generic::Column &column, const std::string &apiClass,
+                              const std::string &entityClass,
+                              const std::string &trxClass) {
+                StringUtils::replace(apiSource, "${PROJECT_PACKAGE}", model.getPackageName());
+                StringUtils::replace(apiSource, "${RESOURCES_PACKAGE}", model.getApisPkg());
+                StringUtils::replace(apiSource, "${CLASS_NAME}", apiClass);
+                StringUtils::replace(apiSource, "${VISIBILITY}", "public");
+                StringUtils::replace(apiSource, "${RESOURCE-NAME}", toKebabCase(table.getTableName()));
+
+                StringUtils::replace(apiSource, "${TRX_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(apiSource, "${TRX_CLASS}", trxClass);
+                StringUtils::replace(apiSource, "${TRX_OBJECT}", toJavaVariableInstance(trxClass));
+
+                StringUtils::replace(apiSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
+                StringUtils::replace(apiSource, "${ENTITY_CLASS}", entityClass);
+                StringUtils::replace(apiSource, "${ENTITY_OBJECT}", toJavaVariableInstance(entityClass));
+
+                StringUtils::replace(apiSource, "${PK_COLUMN_NAME}", column.getColumnName());
+                StringUtils::replace(apiSource, "${PK_COLUMN_DATATYPE}", toJavaDataType(column.getDataType()));
+                std::string methodGetter = "get";
+                methodGetter = methodGetter.append(toJavaClassName(column.getColumnName()));
+                StringUtils::replace(apiSource, "${PK_METHOD_GETTER}", methodGetter);
+
+                return apiSource;
             }
         };
     }

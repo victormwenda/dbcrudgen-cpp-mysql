@@ -59,7 +59,7 @@ void createJaxRsHibernateProject();
 int main(int argc, char **argv) {
 
     createJaxRsHibernateProject();
-
+    //createPostmanProject();
     return EXIT_SUCCESS;
 }
 
@@ -155,12 +155,12 @@ void createPostmanProject() {
 
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "Test";
+    std::string projectName = "Pesarika";
     std::string storeDirectory = "/home/victor/Desktop";
     std::string protocol = "http";
     std::string apiHost = "localhost";
-    int port = 8000;
-    std::string pathSegments{"api/v1"};
+    int port = 8282;
+    std::string pathSegments{"pesarika-rs-alpha/api/v1"};
     std::map<std::string, std::string> headers;
     std::string databaseType{"mysql"};
 

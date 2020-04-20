@@ -1,0 +1,146 @@
+package ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE};
+
+import ${PROJECT_PACKAGE}.${DB_CONN_PACKAGE}.${DB_CONN_CLASS};
+
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.List;
+
+${VISIBILITY} class AbstractableTransactionsExecutor {
+
+    Session mSession;
+    EntityManagerFactory mEntityManagerFactory;
+    EntityManager mEntityManager;
+    EntityTransaction mTransaction;
+
+    /**
+     * Get Transactions executor
+     */
+    public AbstractableTransactionsExecutor() {
+        mSession = DatabaseConnectionHandler.getSession();
+        mEntityManagerFactory = mSession.getEntityManagerFactory();
+        mEntityManager = mEntityManagerFactory.createEntityManager();
+        mTransaction = mEntityManager.getTransaction();
+    }
+
+    /**
+     * Get database connection session
+     *
+     * @return
+     */
+    public Session getSession() {
+        return mSession;
+    }
+
+    /**
+     * Get entity manager factory
+     *
+     * @return
+     */
+    public EntityManagerFactory getEntityManagerFactory() {
+        return mEntityManagerFactory;
+    }
+
+    /**
+     * Get entity manager
+     *
+     * @return
+     */
+    public EntityManager getEntityManager() {
+        return mEntityManager;
+    }
+
+    /**
+     * Get entity transactions
+     *
+     * @return
+     */
+    public EntityTransaction getTransaction() {
+        return mTransaction;
+    }
+
+
+    /**
+     * Insert new item into the database
+     *
+     * @param object
+     */
+    protected Object insert(Object object) {
+        getTransaction().begin();
+
+        getEntityManager().persist(object);
+        getEntityManager().flush();
+
+        getTransaction().commit();
+
+        return object;
+    }
+
+    /**
+     * Update database item
+     *
+     * @param object
+     */
+    protected void update(Object object) {
+        getTransaction().begin();
+        getEntityManager().merge(object);
+        getTransaction().commit();
+    }
+
+    /**
+     * Delete an item from the database
+     *
+     * @param object
+     */
+    protected void delete(Object object) {
+        getTransaction().begin();
+        getEntityManager().remove(object);
+        getTransaction().commit();
+    }
+
+    /**
+     * Get the queried item from the database
+     *
+     * @param mClass
+     * @param primaryKey
+     * @return
+     */
+    protected Object queryOne(Class mClass, Object primaryKey) {
+        getTransaction().begin();
+        Object result = getEntityManager().find(mClass, primaryKey);
+        getTransaction().commit();
+        return result;
+    }
+
+    /**
+     * Get objects
+     *
+     * @param connection
+     * @param hql
+     * @return
+     */
+    protected List queryMany(DatabaseConnectionHandler connection, String hql) {
+        Session session = DatabaseConnectionHandler.getSession();
+        Transaction transaction = session.getTransaction();
+        transaction.begin();
+
+        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+
+        Query query = entityManager.createQuery(hql);
+        List resultList = query.getResultList();
+
+        transaction.commit();
+
+        return resultList;
+    }
+
+}

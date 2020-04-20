@@ -18,9 +18,14 @@
 #include "../../parsers/java/JaxRsResourcesParser.h"
 #include "../../templates/java/crud/hibernate/HibernateScriptConfigurationTemplate.h"
 #include "../../templates/java/crud/hibernate/HibernateParameterEntityMappingTemplate.h"
-#include "../../codegen/java/JaxRsWebXMLCodeGen.h"
-#include "../../codegen/java/JaxRSWebApplicationCodeGen.h"
+#include "../../codegen/java/jax-rs/JaxRsWebXMLCodeGen.h"
+#include "../../codegen/java/jax-rs/JaxRSWebApplicationCodeGen.h"
 #include "../../codegen/java/JaxbCodeGen.h"
+#include "../../codegen/java/hibernate/HibernateAbstractableTransactionsCodeGen.h"
+#include "../../codegen/java/jax-rs/JaxRsAPIResourcesCodeGen.h"
+#include "../../codegen/java/hibernate/HibernateEntitiyCodeGen.h"
+#include "../../codegen/java/hibernate/HibernateTransactionsCodeGen.h"
+#include "../../codegen/java/hibernate/HibernateConfigCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -81,12 +86,8 @@ namespace dbcrudgen {
 
                 std::vector<dbcrudgen::db::generic::Table> tables = database.getTables();
 
-                JaxRsClassResourcesTemplate rsClassResourcesTemplate;
-                HibernateClassEntityTemplate hEntityTemplate;
-                HibernateClassTransactionsTemplate hTrxTemplate;
-                HibernateParameterEntityMappingTemplate hEntityParamTemplate;
-
                 createHibernateConnectionClass();
+                createAbstractableTransactionsExecutorClassFile();
 
                 std::string entityMappings;
                 std::string webApiClassesImports;
@@ -114,16 +115,19 @@ namespace dbcrudgen {
                     trxClass.append(trxSuffix);
                     beansClass.append(beansSuffix);
 
-                    std::string apiSource = rsClassResourcesTemplate.getTemplate();
-                    std::string entitySource = hEntityTemplate.getTemplate();
-                    std::string trxSource = hTrxTemplate.getTemplate();
+                    std::string apiSource =
+                            JaxRSAPIResourcesCodeGen::createAPIResourceSource(projectModel,  table, apiClass,
+                                    entityClass, trxClass);
+
+                    std::string entitySource =
+                            HibernateEntityCodeGen::createHibernateEntitySource(projectModel, tableName, entityClass);
+
+                    std::string trxSource =
+                            HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass, entityClass);
+
                     std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
-                    std::string mappingSource = hEntityParamTemplate.getTemplate();
+                    std::string mappingSource = HibernateConfigCodeGen::createEntityTableMappingSource();
 
-
-                    JaxRsResourcesParser::parseClassDetails(projectModel, apiSource, tableName, apiClass);
-                    HibernateEntitiesParser::parseClassDetails(projectModel, entitySource, tableName, entityClass);
-                    HibernateTransactionsParser::parseClassDetails(projectModel, trxSource, trxClass);
 
                     entityMappings += HibernateParser::parseEntityClassMapping(mappingSource,
                                                                                projectModel.getPackageName(),
@@ -215,21 +219,35 @@ namespace dbcrudgen {
             }
 
             /**
+             * Writes the abstractable transactions executor class file
+             * @param absTrxSource
+             */
+            void createAbstractableTransactionsExecutorClassFile() {
+                std::string absTrxSource = HibernateAbstractableTransactionsCodeGen::getAbstractableTransactionsSource(
+                        projectModel);
+                std::string filename = projectModel.getAbstractableTransactionsExecutorFileAbsolutePath();
+                FilesWriter::writeFile(filename, absTrxSource);
+            }
+
+            /**
              * Create the hibernate connection script
              * @param entityMappings
              */
             void createHibernateConnectionScript(std::string &entityMappings) {
-                HibernateScriptConfigurationTemplate hConnConfigTemplate;
-                std::string configSource = hConnConfigTemplate.getTemplate();
 
-                configSource = HibernateParser::parseConnectionScript(configSource, projectModel, database,
-                                                                      entityMappings);
+                std::string configSource =
+                        HibernateConfigCodeGen::createHibernateConfigSource(projectModel, database, entityMappings);
 
                 std::string javaPath = projectModel.getAbsoluteJavaPath();
-                std::string connConfigFile = javaPath + "/hibernate.cfg.xml";
+                std::string resourcesPath = projectModel.getAbsoluteResourcesPath();
+
+                std::string javaHibernateConfigFile = javaPath + "/hibernate.cfg.xml";
+                std::string resourcesHibernateConfigFile = resourcesPath + "/hibernate.cfg.xml";
 
                 HibernateConfigurationParser::parseConfigurationClass(projectModel, configSource);
-                FilesWriter::writeFile(connConfigFile, configSource);
+
+                FilesWriter::writeFile(javaHibernateConfigFile, configSource);
+                FilesWriter::writeFile(resourcesHibernateConfigFile, configSource);
             }
 
             /**
@@ -249,6 +267,7 @@ namespace dbcrudgen {
                 std::string filename = projectModel.getWebApplicationFileAbsolutePath();
                 FilesWriter::writeFile(filename, webAppSource);
             }
+
 
         };
     }

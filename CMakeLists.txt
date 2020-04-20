@@ -289,8 +289,13 @@ set(SOURCE_FILES
         src/orm/codegen/java/JavaOracleProjectCodeGen.h
         src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JaxbCodeGen.h
-        src/orm/codegen/java/JaxRsWebXMLCodeGen.h
-        src/orm/codegen/java/JaxRSWebApplicationCodeGen.h
+        src/orm/codegen/java/jax-rs/JaxRsWebXMLCodeGen.h
+        src/orm/codegen/java/jax-rs/JaxRSWebApplicationCodeGen.h
+        src/orm/codegen/java/jax-rs/JaxRsAPIResourcesCodeGen.h
+        src/orm/codegen/java/hibernate/HibernateAbstractableTransactionsCodeGen.h
+        src/orm/codegen/java/hibernate/HibernateTransactionsCodeGen.h
+        src/orm/codegen/java/hibernate/HibernateEntitiyCodeGen.h
+        src/orm/codegen/java/hibernate/HibernateConfigCodeGen.h
 
         src/orm/codegen/postman/PostmanProjectCodeGen.h
 
@@ -326,9 +331,10 @@ set(SOURCE_FILES
         src/orm/parsers/cpp/CppMYSQLParser.h
         src/orm/parsers/cpp/CppMYSQLSCRUDParser.h
 
+        src/orm/parsers/java/HibernateAbstractableTransactionsParser.h
         src/orm/parsers/java/HibernateConfigurationParser.h
-        src/orm/parsers/java/HibernateTransactionsParser.h
         src/orm/parsers/java/HibernateEntitiesParser.h
+        src/orm/parsers/java/HibernateTransactionsParser.h
         src/orm/parsers/java/HibernateParser.h
         src/orm/parsers/java/JavaParser.h
         src/orm/parsers/java/JaxbParser.h
@@ -444,12 +450,12 @@ set(SOURCE_FILES
         src/orm/templates/java/JavaVariableLocalTemplate.h
         src/orm/templates/java/JavaVariableStaticTemplate.h
 
+        src/orm/templates/java/crud/hibernate/HibernateClassAbstractableTransactionsTemplate.h
         src/orm/templates/java/jax-rs/JaxRsClassResourcesTemplate.h
         src/orm/templates/java/jax-rs/JaxRsMethodGetTemplate.h
         src/orm/templates/java/jax-rs/JaxRsMethodDeleteTemplate.h
         src/orm/templates/java/jax-rs/JaxRsMethodPostTemplate.h
         src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h
-
         src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h
 
 
@@ -490,9 +496,7 @@ set(SOURCE_FILES
         src/orm/creators/postman/PostmanProjectCreator.h
         src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
-
         src/orm/utils/StringUtils.h
-
 
         )
 

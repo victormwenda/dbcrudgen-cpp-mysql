@@ -1,19 +1,24 @@
 package ${PROJECT_PACKAGE}.${RESOURCES_PACKAGE};
 
+import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
+import ${PROJECT_PACKAGE}.${TRX_PACKAGE}.${TRX_CLASS};
+
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 @Path("/${RESOURCE-NAME}")
 ${VISIBILITY} class ${CLASS_NAME} {
 
     @GET
-    @Path("/get")
+    @Path("/get/{${PK_COLUMN_NAME}}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getOne() {
-        return Response.ok().build();
+    public Response getOne(@PathParam("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
+        return Response.ok(${ENTITY_OBJECT}).build();
     }
 
 
@@ -21,35 +26,51 @@ ${VISIBILITY} class ${CLASS_NAME} {
     @Path("/list")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAll() {
-        return Response.ok().build();
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        List list = ${TRX_OBJECT}.queryAll();
+        return Response.ok().entity(list).build();
     }
 
     @GET
     @Path("/search")
     @Produces(MediaType.APPLICATION_JSON)
     public Response search() {
-        return Response.ok().build();
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        List list = ${TRX_OBJECT}.queryAll();
+        return Response.ok().entity(list).build();
     }
 
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response create() throws URISyntaxException {
-        URI uri = new URI("");
-        return Response.created(uri).build();
+    public Response create(@Context UriInfo uriInfo, ${ENTITY_CLASS} ${ENTITY_OBJECT}) throws URISyntaxException {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${TRX_OBJECT}.insert(${ENTITY_OBJECT});
+
+        ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME} = ${ENTITY_OBJECT}.${PK_METHOD_GETTER}();
+
+        UriBuilder builder = uriInfo.getBaseUriBuilder().path(${CLASS_NAME}.class).path(String.valueOf(id));
+        URI uri = builder.build();
+        return Response.created(uri).entity(${ENTITY_OBJECT}).build();
     }
 
     @PUT
     @Path("/update")
+    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response update() {
-        return Response.noContent().build();
+    public Response update(${ENTITY_CLASS} ${ENTITY_OBJECT}) {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${TRX_OBJECT}.update(${ENTITY_OBJECT});
+        return Response.ok().entity(${ENTITY_OBJECT}).build();
     }
 
     @DELETE
-    @Path("/delete")
+    @Path("/delete/{${PK_COLUMN_NAME}}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response delete() {
+    public Response delete(@PathParam("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
+            ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+            ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
+            ${TRX_OBJECT}.delete(${ENTITY_OBJECT});
         return Response.noContent().build();
     }
 

@@ -1,121 +1,79 @@
 package ${PROJECT_PACKAGE}.${TRANSACTIONS_PACKAGE};
 
-import ${PROJECT_PACKAGE}.${DB_CONN_PACKAGE}.${DB_CONN_CLASS};
+import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
 
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
-
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
-${VISIBILITY} class ${CLASS_NAME} {
+${VISIBILITY} class ${CLASS_NAME} extends AbstractableTransactionsExecutor {
 
-    /**
-     * Insert object
-     *
-     * @param object
-     */
-    public void insert(Object object) {
-        Session session = ${DB_CONN_CLASS}.getSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-
-        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        entityManager.persist(object);
-
-        transaction.commit();
-
-
+    ${VISIBILITY} ${CLASS_NAME} () {
+        super();
     }
 
     /**
-     * Update object
+     * Insert new item into the database
      *
-     * @param connection
-     * @param object
+     * @param ${ENTITY_OBJECT}
      */
-    public void update(${DB_CONN_CLASS} connection, Object object) {
-        Session session = ${DB_CONN_CLASS}.getSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-
-        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        entityManager.merge(object);
-
-        transaction.commit();
+    public Object insert(Object ${ENTITY_OBJECT}) {
+        return super.insert(${ENTITY_OBJECT});
     }
 
     /**
-     * Delete object
+     * Update database item
      *
-     * @param connection
-     * @param object
+     * @param ${ENTITY_OBJECT}
      */
-    public void delete(${DB_CONN_CLASS} connection, Object object) {
-        Session session = ${DB_CONN_CLASS}.getSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-
-        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        entityManager.remove(object);
-
-        transaction.commit();
+    public void update(${ENTITY_CLASS} ${ENTITY_OBJECT}) {
+        super.update(${ENTITY_OBJECT});
     }
 
     /**
-     * Get object
+     * Delete an item from the database
      *
-     * @param connection
-     * @param hql
-     * @param aClass
+     * @param ${ENTITY_OBJECT}
+     */
+    public void delete(${ENTITY_CLASS} ${ENTITY_OBJECT}) {
+        super.delete(${ENTITY_OBJECT});
+    }
+
+    /**
+     * Get the queried item from the database
+     *
+     * @param ${ENTITY_PRIMARY_KEY}
      * @return
      */
-    public Object queryOne(${DB_CONN_CLASS} connection, String hql, Class aClass) {
-        Session session = ${DB_CONN_CLASS}.getSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-
-        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        Query query = entityManager.createQuery(hql, aClass);
-        Object singleResult = query.getSingleResult();
-
-        transaction.commit();
-
-        return singleResult;
+    public ${ENTITY_CLASS} queryOne(${PRIMARY_KEY_DATATYPE} ${ENTITY_PRIMARY_KEY}) {
+        return (${ENTITY_CLASS}) super.queryOne(${ENTITY_CLASS}.class, ${ENTITY_PRIMARY_KEY});
     }
 
     /**
-     * Get objects
+     * Get all the records in the entity
      *
-     * @param connection
-     * @param hql
      * @return
      */
-    public List queryMany(${DB_CONN_CLASS} connection, String hql) {
-        Session session = ${DB_CONN_CLASS}.getSession();
-        Transaction transaction = session.getTransaction();
-        transaction.begin();
-
-        EntityManagerFactory entityManagerFactory = session.getEntityManagerFactory();
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-
-        Query query = entityManager.createQuery(hql);
-        List resultList = query.getResultList();
-
-        transaction.commit();
-
-        return resultList;
+    public List queryMany() {
+        return queryAll();
     }
 
+    /**
+     * Get all the records in the entity
+     *
+     * @return
+     */
+    public List queryAll() {
+
+        CriteriaBuilder criteriaBuilder = getSession().getCriteriaBuilder();
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(${ENTITY_CLASS}.class);
+
+        Root<Class> root = criteriaQuery.from(${ENTITY_CLASS}.class);
+        CriteriaQuery<Class> select = criteriaQuery.select(root);
+        Query query = getSession().createQuery(select);
+
+        return query.getResultList();
+    }
 }

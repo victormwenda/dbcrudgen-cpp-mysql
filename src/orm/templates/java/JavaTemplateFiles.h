@@ -36,6 +36,7 @@ namespace dbcrudgen {
                 static constexpr const char *CLASS_CONFIGURATION_TEMPLATE = "templates/java/hibernate/class_configuration_template.mdl";
                 static constexpr const char *CLASS_ENTITY_TEMPLATE = "templates/java/hibernate/class_entity_template.mdl";
                 static constexpr const char *CLASS_TRANSACTIONS_TEMPLATE = "templates/java/hibernate/class_transactions_template.mdl";
+                static constexpr const char *CLASS_ABSTRACTABLE_TRANSACTIONS_TEMPLATE = "templates/java/hibernate/class_abstractable_transactions_executor_template.mdl";
 
                 static constexpr const char *PARAMETER_ENTITY_MAPPING = "templates/java/hibernate/parameter_entity_mapping_template.mdl";
 
