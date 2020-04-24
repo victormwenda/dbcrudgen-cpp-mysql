@@ -18,10 +18,10 @@ set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 set(MYSQL_HOME ${PROJECT_DIR}/include/mysql-connector-cpp/include)
 
 #Oracle Instant client dir
-set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instant-client/19_6)
+set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
 
 #Oracle OCCI Headers
-set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/headers)
+set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
 
 #Oracle Libs
 set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
