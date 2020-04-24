@@ -8,11 +8,16 @@
 
 #ifndef DBCRUDGEN_CPP_ORACLEDATABASE_H
 #define DBCRUDGEN_CPP_ORACLEDATABASE_H
+namespace dbcrudgen {
+    namespace db {
+        namespace oracle {
+            class OracleDatabaseSchemas {
 
+            };
 
-class OracleDatabaseSchemas {
-
-};
+        }
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_ORACLEDATABASE_H

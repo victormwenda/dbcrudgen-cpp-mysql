@@ -16,96 +16,104 @@
 #include "../../sql/connectors/DatabaseConnector.h"
 #include "OracleDatabaseConnectionParams.h"
 
+namespace dbcrudgen {
+    namespace db {
+        namespace oracle {
 
-//
-// OracleDatabaseConnector
-// //
-class OracleDatabaseConnector : public DatabaseConnector {
+            //
+            // OracleDatabaseConnector
+            // //
+            class OracleDatabaseConnector : public DatabaseConnector {
 
-private:
-    bool autoConnect;
-    OracleDatabaseConnectionParams connectionParams;
-    oracle::occi::Environment *environment;
-    oracle::occi::Connection *connection;
-public:
-    OracleDatabaseConnector(const OracleDatabaseConnectionParams &connectionParams, bool autoConnect)
-            : autoConnect(autoConnect), connectionParams(connectionParams) {
+            private:
+                bool autoConnect;
+                OracleDatabaseConnectionParams connectionParams;
+                ::oracle::occi::Environment *environment;
+                ::oracle::occi::Connection *connection;
+            public:
+                OracleDatabaseConnector(const OracleDatabaseConnectionParams &connectionParams, bool autoConnect)
+                        : autoConnect(autoConnect), connectionParams(connectionParams) {
 
-        environment = oracle::occi::Environment::createEnvironment(oracle::occi::Environment::DEFAULT);
+                    environment = ::oracle::occi::Environment::createEnvironment(::oracle::occi::Environment::DEFAULT);
 
-        connection = nullptr;
+                    connection = nullptr;
 
-        if (autoConnect) {
-            open();
+                    if (autoConnect) {
+                        open();
+                    }
+                }
+
+                bool isAutoConnect() const {
+                    return autoConnect;
+                }
+
+                const OracleDatabaseConnectionParams &getConnectionParams() const {
+                    return connectionParams;
+                }
+
+                bool open() override {
+
+                    try {
+                        connection = environment->createConnection(
+                                connectionParams.getUsername(),
+                                connectionParams.getPassword(),
+                                connectionParams.getConnectString()
+                        );
+
+                    } catch (::oracle::occi::SQLException &exception) {
+                        onError("FATAL_ERROR", exception.getMessage(), true);
+                    }
+
+
+                    return connection != nullptr;
+                }
+
+                bool isOpen() override {
+                    return connection != nullptr;
+                }
+
+                /**
+                 * Creates a statement
+                 * @param sql
+                 * @return
+                 */
+                ::oracle::occi::Statement &getStatement(const std::string &sql = "") {
+                    return *connection->createStatement(sql);
+                }
+
+                /**
+                 * Executes query
+                 * @param sql
+                 * @return result set
+                 */
+                ::oracle::occi::ResultSet &executeQuery(const std::string& sql) {
+                    return *getStatement(sql).executeQuery();
+                }
+
+
+                bool close() override {
+                    if (connection != nullptr) {
+                        environment->terminateConnection(connection);
+                    }
+
+                    return false;
+                }
+
+                ~OracleDatabaseConnector() {
+                    if (isOpen()) {
+                        close();
+                    }
+
+                    if (environment != nullptr) {
+                        ::oracle::occi::Environment::terminateEnvironment(environment);
+                    }
+                }
+            };
         }
     }
-
-    bool isAutoConnect() const {
-        return autoConnect;
-    }
-
-    const OracleDatabaseConnectionParams &getConnectionParams() const {
-        return connectionParams;
-    }
-
-    bool open() override {
-
-        try {
-            connection = environment->createConnection(
-                    connectionParams.getUsername(),
-                    connectionParams.getPassword(),
-                    connectionParams.getConnectString()
-            );
-
-        } catch (oracle::occi::SQLException &exception) {
-            onError("FATAL_ERROR", exception.getMessage(), true);
-        }
+}
 
 
-        return connection != nullptr;
-    }
-
-    bool isOpen() override {
-        return connection != nullptr;
-    }
-
-    /**
-     * Creates a statement
-     * @param sql
-     * @return
-     */
-    oracle::occi::Statement &getStatement(const std::string &sql = "") {
-        return *connection->createStatement(sql);
-    }
-
-    /**
-     * Executes query
-     * @param sql
-     * @return result set
-     */
-    oracle::occi::ResultSet &executeQuery(const std::string sql) {
-        return *getStatement(sql).executeQuery();
-    }
-
-
-    bool close() override {
-        if (connection != nullptr) {
-            environment->terminateConnection(connection);
-        }
-
-        return false;
-    }
-
-    ~OracleDatabaseConnector() {
-        if (isOpen()) {
-            close();
-        }
-
-        if (environment != nullptr) {
-            oracle::occi::Environment::terminateEnvironment(environment);
-        }
-    }
-};
 
 
 #endif //DBCRUDGEN_CPP_ORACLEDATABASECONNECTOR_H

@@ -11,24 +11,30 @@
 #ifndef DBCRUDGEN_CPP_ORACLETABLEDDL_H
 #define DBCRUDGEN_CPP_ORACLETABLEDDL_H
 
-
 #include <string>
 #include <utility>
 
-//
-// OracleTableDDL
-// //
-class OracleTableDDL {
+namespace dbcrudgen {
+    namespace db {
+        namespace oracle {
+            //
+            // OracleTableDDL
+            // //
+            class OracleTableDDL {
 
-    std::string ddl;
+                std::string ddl;
 
-public:
-    explicit OracleTableDDL(std::string ddl) : ddl{std::move(ddl)} {}
+            public:
+                explicit OracleTableDDL(std::string ddl) : ddl{std::move(ddl)} {}
 
-    const std::string &getDdl() const {
-        return ddl;
+                const std::string &getDdl() const {
+                    return ddl;
+                }
+            };
+
+        }
     }
-};
+}
 
 
 #endif //DBCRUDGEN_CPP_ORACLETABLEDDL_H

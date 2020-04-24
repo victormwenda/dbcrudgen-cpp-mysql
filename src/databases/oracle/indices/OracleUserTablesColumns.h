@@ -14,19 +14,25 @@
 
 #include "OracleAllTablesColumns.h"
 
-//
-// OracleUserTablesColumns
-// The columns for the table 'ALL_TABLES'
-//
-// SELECT * FROM ALL_TABLES WHERE OWNER = 'VICTOR';
-//
-class OracleUserTablesColumns : public OracleAllTablesColumns{
+namespace dbcrudgen {
+    namespace db {
+        namespace oracle {
+            //
+            // OracleUserTablesColumns
+            // The columns for the table 'ALL_TABLES'
+            //
+            // SELECT * FROM ALL_TABLES WHERE OWNER = 'VICTOR';
+            //
+            class OracleUserTablesColumns : public OracleAllTablesColumns {
 
-public:
+            public:
 
-    OracleUserTablesColumns() {}
+                OracleUserTablesColumns() {}
 
-};
+            };
+        }
+    }
+}
 
 
 #endif //DBCRUDGEN_CPP_ORACLEUSERTABLESCOLUMNS_H

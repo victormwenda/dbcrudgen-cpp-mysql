@@ -16,6 +16,9 @@
 #include "orm/creators/java/JaxWsProjectCreator.h"
 #include "orm/creators/java/JaxRsProjectCreator.h"
 #include "databases/mysql/builder/MYSQLDatabaseModelBuilder.h"
+#include "databases/oracle/parsers/OracleDatabaseFlattener.h"
+#include "databases/oracle/connectors/OracleDatabaseConnector.h"
+#include "databases/oracle/models/OracleDatabaseModel.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -58,8 +61,22 @@ void createJaxRsHibernateProject();
 
 int main(int argc, char **argv) {
 
-    createJaxRsHibernateProject();
-    //createPostmanProject();
+    dbcrudgen::db::oracle::OracleDatabaseFlattener flattener;
+
+    std::string username = "SYSTEM";
+    std::string password = "root@3358";
+    std::string serviceName = "DBCRUDGEN";
+
+
+    //${HOST}:${PORT}/${SERVICE_NAME}
+    std::string connectionString = "//localhost:1521/DBCRUDGEN";
+    dbcrudgen::db::oracle::OracleDatabaseModel model{username, password, connectionString};
+    auto dbaUsers = model.getAllDBAUsers();
+
+    for (const auto &dbauser : dbaUsers) {
+        std::cout << dbauser.username << std::endl;
+    }
+
     return EXIT_SUCCESS;
 }
 
