@@ -495,12 +495,10 @@ set(SOURCE_FILES
         )
 
 #GoogleTest
-add_subdirectory(lib/test/googletest)
-include_directories(lib/test/googletest/googletest/include)
-include_directories(lib/test/googletest/googlemock/include)
+add_subdirectory(include/google-test)
 
 #GoogleBenchmark
-add_subdirectory(lib/benchmark/)
+add_subdirectory(include/google-benchmark)
 
 #Create executable
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
