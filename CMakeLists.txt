@@ -15,7 +15,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 
 #MYSQL connector dir
-set(MYSQL_HOME ${PROJECT_DIR}/include/mysql-connector-cpp/include)
+set(MYSQL_HEADERS ${PROJECT_DIR}/include/mysql-connector-cpp/include)
+
+#Oracle Libs
+set(MYSQL_LIBS_DIR lib/mysql-connector-cpp/lib64)
 
 #Oracle Instant client dir
 set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
@@ -34,8 +37,11 @@ set(OCCI_LIBS
         ${ORACLE_LIBS}/libociei.so
         )
 
+#Instant client libs
+set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7)
+
 #Include the Mysql Dirs
-include_directories(${MYSQL_HOME})
+include_directories(${MYSQL_HEADERS})
 
 #Include the Oracle instant client directory
 include_directories(${ORACLE_HEADERS})
@@ -516,7 +522,7 @@ target_link_libraries(dbcrudgen_cpp benchmark)
 target_link_libraries(dbcrudgen_cpp sqlite3)
 
 #Link MysqlCpp libs
-target_link_libraries(dbcrudgen_cpp mysqlcppconn)
+target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib with source code
 
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
