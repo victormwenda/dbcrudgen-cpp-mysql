@@ -61,7 +61,7 @@ void createJaxRsHibernateProject();
 
 int main(int argc, char **argv) {
 
-    /*dbcrudgen::db::oracle::OracleDatabaseFlattener flattener;
+    dbcrudgen::db::oracle::OracleDatabaseFlattener flattener;
 
     std::string username = "SYSTEM";
     std::string password = "root@3358";
@@ -75,8 +75,8 @@ int main(int argc, char **argv) {
 
     for (const auto &dbauser : dbaUsers) {
         std::cout << dbauser.username << std::endl;
-    }*/
-    createJavaProject();
+    }
+
 
     return EXIT_SUCCESS;
 }

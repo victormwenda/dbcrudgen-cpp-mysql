@@ -14,37 +14,55 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 #Project path
 set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 
-#MYSQL connector dir
+#MYSQL Configs
 set(MYSQL_HEADERS ${PROJECT_DIR}/include/mysql-connector-cpp/include)
-
-#Oracle Libs
+include_directories(${MYSQL_HEADERS})
 set(MYSQL_LIBS_DIR lib/mysql-connector-cpp/lib64)
-
-#Oracle Instant client dir
-set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
-
-#Oracle OCCI Headers
-set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
-
-#Oracle Libs
-set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
-
-#Instant client libs
-set(OCCI_LIBS
-        ${ORACLE_LIBS}/libclntsh.so.11.1
-        ${ORACLE_LIBS}/libnnz11.so
-        ${ORACLE_LIBS}/libocci.so.11.1
-        ${ORACLE_LIBS}/libociei.so
-        )
-
-#Instant client libs
 set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7)
 
-#Include the Mysql Dirs
-include_directories(${MYSQL_HEADERS})
+#Oracle configs
+set(ORACLE_VERSION "19.6")
+set(ORACLE_INSTANT_CLIENT_HOME "")
+set(ORACLE_HEADERS "")
+set(ORACLE_LIBS "")
+set(OCCI_LIBS "")
+set(OCCI_LIBS_VARIANTS "")
 
-#Include the Oracle instant client directory
 include_directories(${ORACLE_HEADERS})
+
+if (${ORACLE_VERSION} STREQUAL "10.1")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_1)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_1)
+elseif (${ORACLE_VERSION} STREQUAL "10.2")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_2)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_2)
+elseif (${ORACLE_VERSION} STREQUAL "11.1")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1)
+elseif (${ORACLE_VERSION} STREQUAL "12.1")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_1)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_1)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1)
+elseif (${ORACLE_VERSION} STREQUAL "12.2")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_2)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_2)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1)
+elseif (${ORACLE_VERSION} STREQUAL "18.5")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_5)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_5)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1)
+elseif (${ORACLE_VERSION} STREQUAL "19.6")
+    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_6)
+    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so.19.1 ${ORACLE_LIBS}/libocci.so.19.1)
+endif ()
+
+set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
+set(OCCI_LIBS ${ORACLE_LIBS}/libociei.so ${OCCI_LIBS_VARIANTS})
+
+include_directories(${ORACLE_HEADERS})
+
 
 set(SOURCE_FILES
 
