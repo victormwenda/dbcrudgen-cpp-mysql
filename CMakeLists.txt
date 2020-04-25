@@ -5,11 +5,15 @@ cmake_minimum_required(VERSION 3.7)
 project(dbcrudgen_cpp)
 
 #Compilers
-SET(CMAKE_C_COMPILER /usr/bin/cc)
-SET(CMAKE_CXX_COMPILER /usr/bin/c++)
+SET(CMAKE_C_COMPILER /usr/bin/clang)
+SET(CMAKE_CXX_COMPILER /usr/bin/clang++)
 
 #Linker flags
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+if (${CMAKE_CXX_COMPILER} STREQUAL "/usr/bin/g++-4.8")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
+else ()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+endif ()
 
 #Project path
 set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
@@ -21,7 +25,7 @@ set(MYSQL_LIBS_DIR lib/mysql-connector-cpp/lib64)
 set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7)
 
 #Oracle configs
-set(ORACLE_VERSION "19.6")
+set(ORACLE_VERSION "12.2")
 set(ORACLE_INSTANT_CLIENT_HOME "")
 set(ORACLE_HEADERS "")
 set(ORACLE_LIBS "")
@@ -39,27 +43,27 @@ elseif (${ORACLE_VERSION} STREQUAL "10.2")
 elseif (${ORACLE_VERSION} STREQUAL "11.1")
     set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
     set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
 elseif (${ORACLE_VERSION} STREQUAL "12.1")
     set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_1)
     set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_1)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
 elseif (${ORACLE_VERSION} STREQUAL "12.2")
     set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_2)
     set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_2)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
 elseif (${ORACLE_VERSION} STREQUAL "18.5")
     set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_5)
     set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_5)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
 elseif (${ORACLE_VERSION} STREQUAL "19.6")
     set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_6)
     set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so.19.1 ${ORACLE_LIBS}/libocci.so.19.1)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1  ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
 endif ()
 
 set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
-set(OCCI_LIBS ${ORACLE_LIBS}/libociei.so ${OCCI_LIBS_VARIANTS})
+set(OCCI_LIBS ${OCCI_LIBS_VARIANTS})
 
 include_directories(${ORACLE_HEADERS})
 
@@ -522,7 +526,7 @@ set(SOURCE_FILES
 add_subdirectory(include/google-test)
 
 #GoogleBenchmark
-add_subdirectory(include/google-benchmark)
+#add_subdirectory(include/google-benchmark)
 
 #Create executable
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
@@ -534,7 +538,7 @@ target_link_libraries(dbcrudgen_cpp gtest gtest_main pthread)
 target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread)
 
 #Link with GoogleBenchmark
-target_link_libraries(dbcrudgen_cpp benchmark)
+#target_link_libraries(dbcrudgen_cpp benchmark)
 
 #Link SQLite3 libs
 target_link_libraries(dbcrudgen_cpp sqlite3)

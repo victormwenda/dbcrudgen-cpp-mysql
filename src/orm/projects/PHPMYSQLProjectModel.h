@@ -32,7 +32,7 @@ namespace dbcrudgen {
              * @param workspaceDir
              * @param generatedCodeDir
              */
-            [[deprecated]] PHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir,
+            PHPMYSQLProjectModel(std::string &projectName, std::string &workspaceDir,
                                                 std::string assetsDir,
                                                 std::string jsDir, std::string cssDir)
                     : PHPProjectModel(projectName, workspaceDir, assetsDir, jsDir, cssDir), projectName(projectName),

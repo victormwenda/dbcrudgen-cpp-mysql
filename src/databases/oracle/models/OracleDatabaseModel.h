@@ -59,9 +59,11 @@ namespace dbcrudgen {
                  * @param password
                  * @param connectionString
                  */
-                OracleDatabaseModel(std::string username, std::string password, std::string connectionString)
+                OracleDatabaseModel(const std::string username, const std::string password,
+                                    const std::string connectionString)
                         : username(username), password(password), connectionString(connectionString) {
                     env = ::oracle::occi::Environment::createEnvironment();
+
                     conn = env->createConnection(username, password, connectionString);
                 }
 
