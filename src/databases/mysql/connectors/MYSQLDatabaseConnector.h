@@ -163,15 +163,15 @@ namespace dbcrudgen {
                     return connection->getClientOption(optionName);
                 }
 
-                std::string getClientOption(const std::string &optionName, void *optionValue) {
+                void getClientOption(const std::string &optionName, void *optionValue) {
                     connection->getClientOption(optionName, optionValue);
                 }
 
-                std::string setClientOption(const std::string &optionName, const std::string &optionValue) {
+                void setClientOption(const std::string &optionName, const std::string &optionValue) {
                     connection->setClientOption(optionName, optionValue);
                 }
 
-                std::string setClientOption(const std::string &optionName, void *optionValue) {
+                void setClientOption(const std::string &optionName, void *optionValue) {
                     connection->setClientOption(optionName, optionValue);
                 }
 

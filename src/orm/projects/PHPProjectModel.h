@@ -12,6 +12,7 @@
 
 #include "ProjectModel.h"
 #include "../codegen/Languages.h"
+#include "../codegen/Frameworks.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -91,7 +92,7 @@ namespace dbcrudgen {
             * Get PHP Framework used to develop the project
             * @return
             */
-            virtual std::string getFramework() { return std::string{}; };
+            virtual std::string getFramework() { return std::string{Frameworks::PHP::CORE}; };
         };
 
     }

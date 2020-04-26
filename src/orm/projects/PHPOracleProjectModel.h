@@ -33,8 +33,8 @@ namespace dbcrudgen {
              * @param generatedCodeDir
              */
             PHPOracleProjectModel(std::string &projectName, std::string &workspaceDir,
-                                                 std::string assetsDir,
-                                                 std::string jsDir, std::string cssDir)
+                                  std::string assetsDir,
+                                  std::string jsDir, std::string cssDir)
                     : PHPProjectModel(projectName, workspaceDir, assetsDir, jsDir, cssDir), projectName(projectName),
                       workspaceDir(workspaceDir) {
                 generatedCodeDir = getProjectDir();
@@ -60,7 +60,7 @@ namespace dbcrudgen {
             * Get PHP Framework used to develop the project
             * @return
             */
-            virtual std::string getFramework() { return std::string{}; };
+            virtual std::string getFramework() override { return std::string{Frameworks::PHP::CORE}; };
         };
     }
 }

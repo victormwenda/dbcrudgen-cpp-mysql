@@ -44,7 +44,7 @@ namespace dbcrudgen {
 
 
             std::string getFramework() override {
-                return std::string{Frameworks::LARAVEL};
+                return std::string{Frameworks::PHP::LARAVEL};
             }
 
             const std::string &getControllersDir() const {

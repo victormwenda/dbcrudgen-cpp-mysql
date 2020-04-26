@@ -61,21 +61,7 @@ void createJaxRsHibernateProject();
 
 int main(int argc, char **argv) {
 
-    dbcrudgen::db::oracle::OracleDatabaseFlattener flattener;
 
-    std::string username = "SYSTEM";
-    std::string password = "root3358";
-    std::string serviceName = "DBCRUDGEN";
-
-
-    //${HOST}:${PORT}/${SERVICE_NAME}
-    std::string connectionString = "//localhost:1521/ORCLCDB";
-    dbcrudgen::db::oracle::OracleDatabaseModel model{username, password, connectionString};
-    auto dbaUsers = model.getAllDBAUsers();
-
-    for (const auto &dbauser : dbaUsers) {
-        std::cout << dbauser.username << std::endl;
-    }
 
 
     return EXIT_SUCCESS;
