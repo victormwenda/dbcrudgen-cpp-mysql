@@ -549,6 +549,9 @@ target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib 
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
 
+#Link with ODBC drivers
+target_link_libraries(dbcrudgen_cpp odbc)
+
 #Copy the template resources
 file(COPY res/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
 
