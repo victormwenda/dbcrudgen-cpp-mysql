@@ -26,6 +26,10 @@ Note – for 64-bit installations, the path will be:
 #### Update the configuration by running following command:
 - [x] ```sudo ldconfig```
 
+
+##### Shorthand
+ - [x] ``` sudo sh -c "echo /usr/lib/oracle/XX.X/client64/lib > /etc/ld.so.conf.d/oracle-instantclient.conf" sudo ldconfig ```
+
 #### Testing:
 Try to connect using:
 

@@ -127,6 +127,12 @@ The following sections explain how to install the Microsoft ODBC driver 17 from 
 ### Ubuntu 19.10
  - [x] ```curl https://packages.microsoft.com/config/ubuntu/19.10/prod.list > /etc/apt/sources.list.d/mssql-release.list```
 
+### Ubuntu 20.04
+ - [x] ```curl https://packages.microsoft.com/config/ubuntu/20.04/prod.list > /etc/apt/sources.list.d/mssql-release.list```
+
+
+#### Continue
+
  - [x] ```exit```
  - [x] ```sudo apt-get update``` 
  - [x] ```sudo ACCEPT_EULA=Y apt-get install msodbcsql17```  

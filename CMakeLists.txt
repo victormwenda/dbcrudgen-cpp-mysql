@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.7)
 project(dbcrudgen_cpp)
 
 #Compilers
-SET(CMAKE_C_COMPILER /usr/bin/clang)
-SET(CMAKE_CXX_COMPILER /usr/bin/clang++)
+SET(CMAKE_C_COMPILER /usr/bin/clang-10)
+SET(CMAKE_CXX_COMPILER /usr/bin/clang++-10)
 
 #Linker flags
 if (${CMAKE_CXX_COMPILER} STREQUAL "/usr/bin/g++-4.8")
@@ -21,11 +21,11 @@ set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 #MYSQL Configs
 set(MYSQL_HEADERS ${PROJECT_DIR}/include/mysql-connector-cpp/include)
 include_directories(${MYSQL_HEADERS})
-set(MYSQL_LIBS_DIR lib/mysql-connector-cpp/lib64)
-set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7)
+set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/mysql-connector-cpp/lib64)
+set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn8.so.2)
 
 #Oracle configs
-set(ORACLE_VERSION "12.2")
+set(ORACLE_VERSION "11.2")
 set(ORACLE_INSTANT_CLIENT_HOME "")
 set(ORACLE_HEADERS "")
 set(ORACLE_LIBS "")
@@ -544,7 +544,8 @@ target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread)
 target_link_libraries(dbcrudgen_cpp sqlite3)
 
 #Link MysqlCpp libs
-target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib with source code
+target_link_libraries(dbcrudgen_cpp ${MYSQL_LIBS}) # Using bundled mysql libs
+#target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib with source code - ${MYSQL_LIBS}
 
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
