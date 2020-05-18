@@ -25,7 +25,7 @@ set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/mysql-connector-cpp/lib64)
 set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn8.so.2)
 
 #Oracle configs
-set(ORACLE_VERSION "11.2")
+set(ORACLE_VERSION "19.6")
 set(ORACLE_INSTANT_CLIENT_HOME "")
 set(ORACLE_HEADERS "")
 set(ORACLE_LIBS "")
@@ -59,7 +59,7 @@ elseif (${ORACLE_VERSION} STREQUAL "18.5")
 elseif (${ORACLE_VERSION} STREQUAL "19.6")
     set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_6)
     set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1  ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
+    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
 endif ()
 
 set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
@@ -544,8 +544,8 @@ target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread)
 target_link_libraries(dbcrudgen_cpp sqlite3)
 
 #Link MysqlCpp libs
-target_link_libraries(dbcrudgen_cpp ${MYSQL_LIBS}) # Using bundled mysql libs
-#target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib with source code - ${MYSQL_LIBS}
+#target_link_libraries(dbcrudgen_cpp ${MYSQL_LIBS}) # Using bundled mysql libs
+target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib with source code - ${MYSQL_LIBS}
 
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
