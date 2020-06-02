@@ -10,6 +10,7 @@ namespace dbcrudgen {
         class Languages {
 
         public:
+            static constexpr const char *Angular = "Angular";
             static constexpr const char *C = "C";
             static constexpr const char *JAVA = "Java";
             static constexpr const char *JAVASCRIPT = "JavaScript";

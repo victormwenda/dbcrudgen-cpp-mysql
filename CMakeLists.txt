@@ -330,6 +330,8 @@ set(SOURCE_FILES
 
         src/orm/creators/ProjectCreator.h
 
+        src/orm/creators/angular/AngularProjectCreator.h
+
         src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/creators/cpp/CppOracleProjectCreator.h
         src/orm/creators/cpp/CppProjectCreator.h
@@ -343,14 +345,20 @@ set(SOURCE_FILES
         src/orm/creators/java/JaxRsProjectCreator.h
         src/orm/creators/java/JaxWsProjectCreator.h
 
+        src/orm/creators/php/LaravelProjectCreator.h
+        src/orm/creators/php/PHPProjectCreator.h
+        src/orm/creators/php/PHPMYSQLProjectCreator.h
+        src/orm/creators/postman/PostmanProjectCreator.h
+
         src/orm/creators/swift/SwiftSQLiteProjectCreator.h
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
-        src/orm/creators/php/PHPMYSQLProjectCreator.h
-        src/orm/creators/php/PHPProjectCreator.h
 
         src/orm/parsers/SyntaxParser.h
         src/orm/parsers/cpp/CppMYSQLParser.h
+
+        src/orm/parsers/angular/AngularParser.h
+
         src/orm/parsers/cpp/CppMYSQLSCRUDParser.h
 
         src/orm/parsers/java/HibernateAbstractableTransactionsParser.h
@@ -370,6 +378,8 @@ set(SOURCE_FILES
 
         src/orm/projects/AndroidProjectModel.h
 
+        src/orm/projects/AngularProjectModel.h
+
         src/orm/projects/CppMYSQLProjectModel.h
         src/orm/projects/CppOracleProjectModel.h
         src/orm/projects/CppSQLiteProjectModel.h
@@ -385,7 +395,6 @@ set(SOURCE_FILES
 
         src/orm/projects/LaravelProjectModel.h
 
-        src/orm/creators/php/LaravelProjectCreator.h
         src/orm/projects/PHPMYSQLProjectModel.h
         src/orm/projects/PHPOracleProjectModel.h
         src/orm/projects/PHPProjectModel.h
@@ -401,6 +410,9 @@ set(SOURCE_FILES
 
         src/orm/templates/android/AndroidContentProviderTemplate.h
         src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.h
+
+        src/orm/templates/angular/AngularClassTemplate.h
+        src/orm/templates/angular/AngularEnumTemplate.h
 
         src/orm/templates/cpp/CppClassTableModelTemplate.h
         src/orm/templates/cpp/CppCtorInitializersTemplate.h
@@ -515,10 +527,10 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanCollectionTemplate.h
         src/orm/templates/postman/PostmanRequestTemplate.h
         src/orm/templates/postman/PostmanTemplateFiles.h
-        src/orm/creators/postman/PostmanProjectCreator.h
         src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
         src/orm/utils/StringUtils.h
+
 
         )
 

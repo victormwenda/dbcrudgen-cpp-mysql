@@ -16,6 +16,8 @@
 #include "orm/creators/java/JaxWsProjectCreator.h"
 #include "orm/creators/java/JaxRsProjectCreator.h"
 #include "databases/mysql/builder/MYSQLDatabaseModelBuilder.h"
+#include "orm/projects/AngularProjectModel.h"
+#include "orm/creators/angular/AngularProjectCreator.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -48,6 +50,11 @@ void createCppProject();
 void createPhpProject();
 
 /**
+ * Create Angular Project
+ */
+void createAngularProject();
+
+/**
  * Create Postman project
  */
 void createPostmanProject();
@@ -58,7 +65,7 @@ void createJaxRsHibernateProject();
 
 int main(int argc, char **argv) {
 
-    createPhpProject();
+    createAngularProject();
 
     return EXIT_SUCCESS;
 }
@@ -83,7 +90,7 @@ dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string datab
 
     dbcrudgen::db::mysql::MYSQLDatabaseModelBuilder builder{connStr, host, port, username, password, database};
 
-    std::map<std::string, std::vector<dbcrudgen::db::mysql::Columns>> tableColumns;
+    std::map <std::string, std::vector<dbcrudgen::db::mysql::Columns>> tableColumns;
 
     dbcrudgen::db::mysql::MYSQLDatabaseConnectionModel connectionModel{host, port, username, password, database};
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel{builder};
@@ -116,6 +123,31 @@ void createCppProject() {
                                                       generatedCodeDir, generatedModelCodeDir, generatedDbOpsCodeDir};
 
     dbcrudgen::orm::CppMYSQLProjectCreator projectCreator{projectModel, databaseModel};
+    projectCreator.createProject();
+
+}
+
+void createAngularProject() {
+
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("eqtr");
+    dbcrudgen::db::generic::Database database = getGenericDatabase(databaseModel);
+
+    std::string projectName = "eqtr-web";
+    std::string workspaceDir = "/opt/workspace/javascript";
+    std::string distDir = "dist";
+    std::string e2eDir = "e2e";
+    std::string nodeModulesDir = "node_modules";
+    std::string srcDir = "src";
+    std::string appDir = "app";
+    std::string assetsDir = "assets";
+    std::string environmentDir = "environments";
+    std::string moduleDir = "admin";
+    std::string modelsDir = "models";
+
+    dbcrudgen::orm::AngularProjectModel projectModel {workspaceDir, projectName,distDir, e2eDir,nodeModulesDir,srcDir,
+                                                      appDir, assetsDir, environmentDir, moduleDir, modelsDir};
+
+    dbcrudgen::orm::AngularProjectCreator projectCreator{projectModel, database};
     projectCreator.createProject();
 
 }
@@ -161,7 +193,7 @@ void createPostmanProject() {
     std::string apiHost = "localhost";
     int port = 8282;
     std::string pathSegments{"pesarika-rs-alpha/api/v1"};
-    std::map<std::string, std::string> headers;
+    std::map <std::string, std::string> headers;
     std::string databaseType{"mysql"};
 
     headers.insert(std::pair<std::string, std::string>(std::string{"Content-Type"}, std::string{"application/json"}));
@@ -238,7 +270,7 @@ void createMYSQLProjectBuilder() {
     std::string connStr{"tcp://"};
     connStr = connStr.append(host).append(":").append(std::to_string(port));
     dbcrudgen::db::mysql::MYSQLDatabaseModelBuilder builder{connStr, host, port, user, password, database};
-    const std::vector<dbcrudgen::db::mysql::Tables> &tables = builder.getSchemaTables();
+    const std::vector <dbcrudgen::db::mysql::Tables> &tables = builder.getSchemaTables();
 
     std::cout << "--------------------------- TABLES ---------------------------------" << std::endl;
     for (const auto &table : tables) {
@@ -246,19 +278,19 @@ void createMYSQLProjectBuilder() {
     }
 
     std::cout << "--------------------------- PRIMARY KEYS ---------------------------------" << std::endl;
-    const std::vector<dbcrudgen::db::mysql::Columns> &primaryKeys = builder.getTablePrimaryKeyColumns("child");
+    const std::vector <dbcrudgen::db::mysql::Columns> &primaryKeys = builder.getTablePrimaryKeyColumns("child");
     for (const auto &key : primaryKeys) {
         std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
     }
 
     std::cout << "--------------------------- TABLE KEYS ---------------------------------" << std::endl;
-    const std::vector<dbcrudgen::db::mysql::Columns> &keys = builder.getTableKeysColumns("child");
+    const std::vector <dbcrudgen::db::mysql::Columns> &keys = builder.getTableKeysColumns("child");
     for (const auto &key : keys) {
         std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
     }
 
     std::cout << "--------------------------- FOREIGN KEYS ---------------------------------" << std::endl;
-    const std::vector<dbcrudgen::db::mysql::Columns> &foreign = builder.getTableForeignKeyColumns("child");
+    const std::vector <dbcrudgen::db::mysql::Columns> &foreign = builder.getTableForeignKeyColumns("child");
     for (const auto &key : foreign) {
         std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
     }

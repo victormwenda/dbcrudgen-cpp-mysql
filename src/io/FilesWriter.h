@@ -53,9 +53,10 @@ public:
     /**
      * Create multiple directories
      * @param path
+     * @param verbose - default false
      * @return
      */
-    static bool createDirs(std::string path) {
+    static bool createDirs(std::string path, bool verbose = false) {
 
         //Add a trailing file separator to create all dirs in path
         if (path[path.size() - 1] != '/') {
@@ -83,6 +84,10 @@ public:
             if (statRC != 0) {
 
                 int status = mkdir(parentDir.c_str(), 0777);
+
+                if (verbose) {
+                    std::cout << "Creating dir : (" << parentDir << ") Status :: [" << status << "]" << std::endl;
+                }
 
                 switch (status) {
                     case 0:
