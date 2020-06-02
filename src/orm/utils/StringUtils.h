@@ -337,41 +337,33 @@ public:
      */
     static std::string toCamelCase(std::string name) {
 
-        //convert all letters to small letters
-        int index = 0;
-        while (index < name.length()) {
-            name[index] = tolower(name[index]);
-            index++;
-        }
+        name = to_lower(name);
+        name[0] = toupper(name[0]);
 
-        std::string variable_name;
+        std::string class_name;
         std::vector<std::string> parts = split(name.c_str(), "_");
 
         if (parts.size() == 0) {
+            name = to_lower(name);
+            name[0] = toupper(name[0]);
             return name;
         }
 
-        int partsIndex = 0;
-
         for (std::string &part : parts) {
 
-            if (partsIndex == 0) {
-                variable_name += part;
-                partsIndex++;
-                continue;
+            part = to_lower(part);
+
+            char firstChar = part[0];
+
+            if (isalpha(firstChar) && islower(firstChar)) {
+                part[0] = toupper(firstChar);
             }
 
-            char partsFirstChar = part[0];
-
-            if (isalpha(partsFirstChar) && islower(partsFirstChar)) {
-                part[0] = toupper(partsFirstChar);
-            }
-
-            partsIndex++;
-            variable_name += part;
+            class_name += part;
         }
 
-        name = variable_name;
+        name = class_name;
+
         return name;
     }
 

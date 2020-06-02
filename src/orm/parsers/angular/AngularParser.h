@@ -8,6 +8,10 @@
 #include "../SyntaxParser.h"
 #include "../../../databases/generic/Table.h"
 #include "../../templates/angular/AngularClassTableModelTemplate.h"
+#include "../../templates/angular/AngularComponentCssTemplate.h"
+#include "../../templates/angular/AngularComponentTsTemplate.h"
+#include "../../templates/angular/AngularComponentTsSpecTemplate.h"
+#include "../../templates/angular/AngularComponentHtmlTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -69,6 +73,44 @@ namespace dbcrudgen {
                 std::string columnName = toCamelCase(column.getColumnName());
 
                 return columnName + ":" + dataType + ";";
+            }
+
+            static std::string createComponentCssSrc(const std::string &componentName) {
+                dbcrudgen::orm::AngularComponentCssTemplate cssTemplate;
+                return cssTemplate.getTemplate();
+            }
+
+            static std::string createComponentHtmlSrc(const std::string &componentName) {
+                dbcrudgen::orm::AngularComponentHtmlTemplate htmlTemplate;
+                std::string src = htmlTemplate.getTemplate();
+
+                src = replace(src, "${COMPONENT_NAME}", componentName);
+
+                return src;
+            }
+
+            static std::string
+            createComponentSpecSrc(const std::string &componentName, const std::string &componentClass) {
+                dbcrudgen::orm::AngularComponentTsSpecTemplate specTemplate;
+                std::string src = specTemplate.getTemplate();
+
+                src = replace(src, "${COMPONENT_NAME}", componentName);
+                src = replace(src, "${COMPONENT_CLASS}", componentClass);
+
+                return src;
+            }
+
+            static std::string
+            createComponentTsSrc(const std::string &moduleName, const std::string &componentName,
+                                 const std::string &componentClass) {
+                dbcrudgen::orm::AngularComponentTsTemplate tsTemplate;
+                std::string src = tsTemplate.getTemplate();
+
+                src = replace(src, "${MODULE_NAME}", moduleName);
+                src = replace(src, "${COMPONENT_NAME}", componentName);
+                src = replace(src, "${CLASS_NAME}", componentClass);
+
+                return src;
             }
         };
     }

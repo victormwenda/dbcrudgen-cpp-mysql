@@ -94,6 +94,16 @@ namespace dbcrudgen {
                 return modelsDir;
             }
 
+            //Gets evaluated module name. if the name of the module was empty, the app name will be used
+            std::string getEvalModuleName() {
+
+                if (getModuleDir().empty()) {
+                    return getAppDir();
+                }
+
+                return getModuleDir();
+            }
+
             //Get project dir full path
             std::string getProjectDirFullPath() {
                 return getWorkspaceDir() + "/" + getProjectName();

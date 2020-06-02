@@ -1,0 +1,17 @@
+import { Component, OnInit } from '@angular/core';
+
+@Component({
+  selector: '${MODULE_NAME}-${COMPONENT_NAME}',
+  templateUrl: './${COMPONENT_NAME}.component.html',
+  styleUrls: ['./${COMPONENT_NAME}.component.css']
+})
+export class ${CLASS_NAME}Component implements OnInit {
+
+  constructor() {
+  }
+
+
+  ngOnInit(): void {
+  }
+
+}

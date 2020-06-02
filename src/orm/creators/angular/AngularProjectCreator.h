@@ -81,9 +81,12 @@ namespace dbcrudgen {
                 FilesWriter::createDirs(modelsDir);
             }
 
+
             void createSourceFiles() override {
 
                 auto tables = databaseModel.getTables();
+
+                std::string moduleName = SyntaxParser::toKebabCase(projectModel.getEvalModuleName());
 
                 for (const auto &table : tables) {
 
@@ -93,7 +96,21 @@ namespace dbcrudgen {
                     std::string modelClassName = SyntaxParser::toPascalCase(tableName);
                     std::string modelInstanceVars = "";
 
+                    //Component files
+                    std::string componentName = SyntaxParser::toKebabCase(tableName);
+                    std::string componentClass = SyntaxParser::toCamelCase(tableName);
+                    std::cout << "class name " << componentClass << std::endl;
+
+                    std::string componentCssSrc = dbcrudgen::orm::AngularParser::createComponentCssSrc(componentName);
+                    std::string componentHtmlSrc = dbcrudgen::orm::AngularParser::createComponentHtmlSrc(componentName);
+                    std::string componentTestsSrc = dbcrudgen::orm::AngularParser::createComponentSpecSrc(
+                            componentName, componentClass);
+                    std::string componentTsSrc = dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName,
+                                                                                                     componentName,
+                                                                                                     componentClass);
+
                     for (const auto &column : table.getTableColumns()) {
+                        //Model instance vars
                         modelInstanceVars += dbcrudgen::orm::AngularParser::createModelInstanceVariable(column);
 
                     }
@@ -101,15 +118,47 @@ namespace dbcrudgen {
                     std::string modelSrc = dbcrudgen::orm::AngularParser::createModelSource(modelClassName,
                                                                                             modelInstanceVars);
                     writeModelSrc(modelClassName, modelSrc);
+                    writeComponentSrc(componentName, componentCssSrc, componentHtmlSrc, componentTestsSrc,
+                                      componentTsSrc);
 
                     break;
                 }
 
             }
 
+            //Write the model source file
             void writeModelSrc(std::string className, std::string modelSrc) {
                 std::string filePath = {projectModel.getModelsDirFullPath() + "/" + className + ".ts"};
                 FilesWriter::writeFile(filePath, modelSrc);
+            }
+
+            //Write the component source files
+            void
+            writeComponentSrc(const std::string &componentName, const std::string &componentCssSrc,
+                              const std::string &componentHtmlSrc, const std::string &componentSpecSrc,
+                              const std::string &componentTsSrc) {
+
+                std::string componentDir = projectModel.getModuleDirFullPath() + "/" + componentName;
+                FilesWriter::createDirs(componentDir);
+
+                //File names
+                std::string cssFile = componentDir + "/" + componentName + ".component.css";
+                std::string htmlFile = componentDir + "/" + componentName + ".component.html";
+                std::string tsSpecsFile = componentDir + "/" + componentName + ".component.spec.ts";
+                std::string typeScriptFile = componentDir + "/" + componentName + ".component.ts";
+
+                //Write css file
+                FilesWriter::writeFile(cssFile, componentCssSrc);
+
+                //Write html file
+                FilesWriter::writeFile(htmlFile, componentHtmlSrc);
+
+                //Write ts test cases
+                FilesWriter::writeFile(tsSpecsFile, componentSpecSrc);
+
+                //write typescript file
+                FilesWriter::writeFile(typeScriptFile, componentTsSrc);
+
             }
         };
     }
