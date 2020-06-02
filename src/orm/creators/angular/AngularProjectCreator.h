@@ -10,6 +10,7 @@
 #include "../ProjectCreator.h"
 #include "../../codegen/Databases.h"
 #include "../../../io/FilesWriter.h"
+#include "../../parsers/angular/AngularParser.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -76,12 +77,39 @@ namespace dbcrudgen {
                 const std::string &moduleDirFullPath = projectModel.getModuleDirFullPath();
                 FilesWriter::createDirs(moduleDirFullPath);
 
-                const std::string& modelsDir = projectModel.getModelsDirFullPath();
-                FilesWriter::createDirs(modelsDir, true);
+                const std::string &modelsDir = projectModel.getModelsDirFullPath();
+                FilesWriter::createDirs(modelsDir);
             }
 
             void createSourceFiles() override {
 
+                auto tables = databaseModel.getTables();
+
+                for (const auto &table : tables) {
+
+                    std::string tableName = table.getTableName();
+
+                    //Model source files
+                    std::string modelClassName = SyntaxParser::toPascalCase(tableName);
+                    std::string modelInstanceVars = "";
+
+                    for (const auto &column : table.getTableColumns()) {
+                        modelInstanceVars += dbcrudgen::orm::AngularParser::createModelInstanceVariable(column);
+
+                    }
+
+                    std::string modelSrc = dbcrudgen::orm::AngularParser::createModelSource(modelClassName,
+                                                                                            modelInstanceVars);
+                    writeModelSrc(modelClassName, modelSrc);
+
+                    break;
+                }
+
+            }
+
+            void writeModelSrc(std::string className, std::string modelSrc) {
+                std::string filePath = {projectModel.getModelsDirFullPath() + "/" + className + ".ts"};
+                FilesWriter::writeFile(filePath, modelSrc);
             }
         };
     }

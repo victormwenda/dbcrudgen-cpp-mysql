@@ -1,0 +1,8 @@
+export class ${CLASS_NAME} {
+
+    ${INSTANCE_VARIABLES}
+
+    constructor(${CTOR_PARAMS}) { }
+
+    ${METHODS}
+}

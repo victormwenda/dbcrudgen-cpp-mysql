@@ -376,6 +376,43 @@ public:
     }
 
     /**
+     * Create a pascal case name
+     * @param name
+     * @return
+     */
+    static std::string toPascalCase(std::string name) {
+
+        name = to_lower(name);
+        name[0] = toupper(name[0]);
+
+        std::string class_name;
+        std::vector<std::string> parts = split(name.c_str(), "_");
+
+        if (parts.size() == 0) {
+            name = to_lower(name);
+            name[0] = toupper(name[0]);
+            return name;
+        }
+
+        for (std::string &part : parts) {
+
+            part = to_lower(part);
+
+            char firstChar = part[0];
+
+            if (isalpha(firstChar) && islower(firstChar)) {
+                part[0] = toupper(firstChar);
+            }
+
+            class_name += part;
+        }
+
+        name = class_name;
+
+        return name;
+    }
+
+    /**
      * Convert text to space separated title case
      * @param name
      * @return

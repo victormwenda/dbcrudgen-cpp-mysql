@@ -413,6 +413,8 @@ set(SOURCE_FILES
 
         src/orm/templates/angular/AngularClassTemplate.h
         src/orm/templates/angular/AngularEnumTemplate.h
+        src/orm/templates/angular/AngularClassTableModelTemplate.h
+        src/orm/templates/angular/AngularTemplateFiles.h
 
         src/orm/templates/cpp/CppClassTableModelTemplate.h
         src/orm/templates/cpp/CppCtorInitializersTemplate.h
@@ -530,7 +532,6 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
         src/orm/utils/StringUtils.h
-
 
         )
 

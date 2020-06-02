@@ -152,12 +152,21 @@ namespace dbcrudgen {
             }
 
             /**
-             * Convert name to camel case case
+             * Convert name to camel case
              * @param name
              * @return
              */
             static std::string toCamelCase(std::string name) {
                 return StringUtils::toCamelCase(name);
+            }
+
+            /**
+             * Convert name to pascal case
+             * @param name
+             * @return
+             */
+            static std::string toPascalCase(std::string name) {
+                return StringUtils::toPascalCase(name);
             }
         };
     }
