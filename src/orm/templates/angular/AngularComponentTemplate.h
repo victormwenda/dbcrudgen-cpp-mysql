@@ -2,8 +2,8 @@
 // Created by victor on 6/2/20.
 //
 
-#ifndef DBCRUDGEN_CPP_ANGULARCOMPONENTTSTEMPLATE_H
-#define DBCRUDGEN_CPP_ANGULARCOMPONENTTSTEMPLATE_H
+#ifndef DBCRUDGEN_CPP_ANGULARCOMPONENTTEMPLATE_H
+#define DBCRUDGEN_CPP_ANGULARCOMPONENTTEMPLATE_H
 
 
 #include "../FileSourceCodeTemplate.h"
@@ -12,11 +12,11 @@
 namespace dbcrudgen {
     namespace orm {
 
-        class AngularComponentTsTemplate : public dbcrudgen::orm::FileSourceCodeTemplate {
+        class AngularComponentTemplate : public dbcrudgen::orm::FileSourceCodeTemplate {
 
         protected:
             std::string getSourceFile() override {
-                return std::string{dbcrudgen::orm::AngularTemplateFiles::Component::COMPONENT_TS};
+                return std::string{dbcrudgen::orm::AngularTemplateFiles::Component::COMPONENT_CLASS};
             }
 
         private:
@@ -28,4 +28,4 @@ namespace dbcrudgen {
 }
 
 
-#endif //DBCRUDGEN_CPP_ANGULARCOMPONENTTSTEMPLATE_H
+#endif //DBCRUDGEN_CPP_ANGULARCOMPONENTTEMPLATE_H

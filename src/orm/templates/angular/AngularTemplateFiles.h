@@ -17,10 +17,17 @@ namespace dbcrudgen {
                 static constexpr const char *COMPONENT_CSS = "templates/angular/component_css.mdl";
                 static constexpr const char *COMPONENT_HTML = "templates/angular/component_html.mdl";
                 static constexpr const char *COMPONENT_SPEC = "templates/angular/component_spec.mdl";
-                static constexpr const char *COMPONENT_TS = "templates/angular/component_ts.mdl";
+                static constexpr const char *COMPONENT_CLASS = "templates/angular/component_ts.mdl";
             };
             struct Enums {
                 static constexpr const char *ANGULAR_ENUM_DEFAULT = "templates/angular/enum_template.mdl";
+            };
+            struct Module {
+                static constexpr const char *MODULE_CLASS = "templates/angular/module_class.mdl";
+            };
+            struct Service {
+                static constexpr const char *SERVICE_CLASS = "templates/angular/service_class.mdl";
+                static constexpr const char *SERVICE_CLASS_SPEC = "templates/angular/service_class_spec.mdl";
             };
         };
     }

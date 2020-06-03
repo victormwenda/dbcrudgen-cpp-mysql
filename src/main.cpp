@@ -141,7 +141,7 @@ void createAngularProject() {
     std::string appDir = "app";
     std::string assetsDir = "assets";
     std::string environmentDir = "environments";
-    std::string moduleDir = "admin";
+    std::string moduleDir = "";
     std::string modelsDir = "models";
 
     dbcrudgen::orm::AngularProjectModel projectModel {workspaceDir, projectName,distDir, e2eDir,nodeModulesDir,srcDir,

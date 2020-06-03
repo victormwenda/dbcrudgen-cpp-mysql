@@ -88,9 +88,17 @@ namespace dbcrudgen {
 
                 std::string moduleName = SyntaxParser::toKebabCase(projectModel.getEvalModuleName());
 
+
+                std::string componentsClasses = "";
+                std::string componentsClassImports = "";
+
+                int index = 0;
+
                 for (const auto &table : tables) {
 
-                    std::string tableName = table.getTableName();
+                    bool isLastTable = index < (tables.size() - 1);
+
+                    const std::string &tableName = table.getTableName();
 
                     //Model source files
                     std::string modelClassName = SyntaxParser::toPascalCase(tableName);
@@ -103,11 +111,22 @@ namespace dbcrudgen {
 
                     std::string componentCssSrc = dbcrudgen::orm::AngularParser::createComponentCssSrc(componentName);
                     std::string componentHtmlSrc = dbcrudgen::orm::AngularParser::createComponentHtmlSrc(componentName);
-                    std::string componentTestsSrc = dbcrudgen::orm::AngularParser::createComponentSpecSrc(
-                            componentName, componentClass);
-                    std::string componentTsSrc = dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName,
-                                                                                                     componentName,
-                                                                                                     componentClass);
+                    std::string componentTestsSrc =
+                            dbcrudgen::orm::AngularParser::createComponentSpecSrc(componentName, componentClass);
+                    std::string componentTsSrc =
+                            dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName, componentName,
+                                                                                componentClass);
+
+                    componentsClasses +=
+                            dbcrudgen::orm::AngularParser::addComponentClassDeclaration(componentClass, isLastTable);
+                    componentsClassImports +=
+                            dbcrudgen::orm::AngularParser::addComponentClassImport(componentName, componentClass);
+
+                    std::string serviceSrc =
+                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, componentClass);
+                    std::string serviceSpecSrc =
+                            dbcrudgen::orm::AngularParser::createServiceSpecSrc(componentName, componentClass);
+
 
                     for (const auto &column : table.getTableColumns()) {
                         //Model instance vars
@@ -115,19 +134,38 @@ namespace dbcrudgen {
 
                     }
 
-                    std::string modelSrc = dbcrudgen::orm::AngularParser::createModelSource(modelClassName,
-                                                                                            modelInstanceVars);
+                    //Write model
+                    std::string modelSrc
+                            = dbcrudgen::orm::AngularParser::createModelSource(modelClassName, modelInstanceVars);
                     writeModelSrc(modelClassName, modelSrc);
+
+                    //Write components
                     writeComponentSrc(componentName, componentCssSrc, componentHtmlSrc, componentTestsSrc,
                                       componentTsSrc);
+
+                    //Write services
+                    writeServiceSrc(componentName, serviceSrc);
+                    writeServiceSpecSrc(componentName, serviceSpecSrc);
 
                     break;
                 }
 
+                std::string moduleClassName = SyntaxParser::toKebabCase(projectModel.getEvalModuleName());
+                std::string moduleSrc =
+                        dbcrudgen::orm::AngularParser::createModuleSrc(moduleClassName, componentsClassImports,
+                                                                       componentsClasses);
+                writeModuleSrc(moduleName, moduleSrc);
+
             }
 
+            void writeModuleSrc(const std::string &moduleName, const std::string &moduleSrc) {
+                std::string filePath = {projectModel.getModuleDirFullPath() + "/" + moduleName + ".module.ts"};
+                FilesWriter::writeFile(filePath, moduleSrc);
+            }
+
+
             //Write the model source file
-            void writeModelSrc(std::string className, std::string modelSrc) {
+            void writeModelSrc(const std::string &className, const std::string &modelSrc) {
                 std::string filePath = {projectModel.getModelsDirFullPath() + "/" + className + ".ts"};
                 FilesWriter::writeFile(filePath, modelSrc);
             }
@@ -159,6 +197,18 @@ namespace dbcrudgen {
                 //write typescript file
                 FilesWriter::writeFile(typeScriptFile, componentTsSrc);
 
+            }
+
+            void writeServiceSrc(const std::string &componentName, const std::string &serviceSrc) {
+                std::string componentDir = projectModel.getModuleDirFullPath() + "/" + componentName;
+                std::string filePath = {componentDir + "/" + componentName + ".service.ts"};
+                FilesWriter::writeFile(filePath, serviceSrc);
+            }
+
+            void writeServiceSpecSrc(const std::string &componentName, const std::string &serviceSpecSrc) {
+                std::string componentDir = projectModel.getModuleDirFullPath() + "/" + componentName;
+                std::string filePath = {componentDir + "/" + componentName + ".service.spec.ts"};
+                FilesWriter::writeFile(filePath, serviceSpecSrc);
             }
         };
     }

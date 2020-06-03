@@ -9,9 +9,12 @@
 #include "../../../databases/generic/Table.h"
 #include "../../templates/angular/AngularClassTableModelTemplate.h"
 #include "../../templates/angular/AngularComponentCssTemplate.h"
-#include "../../templates/angular/AngularComponentTsTemplate.h"
-#include "../../templates/angular/AngularComponentTsSpecTemplate.h"
+#include "../../templates/angular/AngularComponentTemplate.h"
+#include "../../templates/angular/AngularComponentSpecTemplate.h"
 #include "../../templates/angular/AngularComponentHtmlTemplate.h"
+#include "../../templates/angular/AngularServiceSpecTemplate.h"
+#include "../../templates/angular/AngularServiceTemplate.h"
+#include "../../templates/angular/AngularModuleTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -55,6 +58,20 @@ namespace dbcrudgen {
             }
 
         public:
+
+            //Create module name
+            static std::string createModuleSrc(const std::string &moduleName, const std::string &componentsClassImports,
+                                               const std::string &componentsClassesDeclarations) {
+                dbcrudgen::orm::AngularModuleTemplate srcTemplate;
+                std::string src = srcTemplate.getTemplate();
+
+                src = replace(src, "${MODULE_NAME}", moduleName);
+                src = replace(src, "${COMPONENTS_IMPORTS}", componentsClassImports);
+                src = replace(src, "${COMPONENTS_DECLARATIONS}", componentsClassesDeclarations);
+
+                return src;
+            }
+
             //Create Table Model source
             static std::string createModelSource(const std::string &className, const std::string modelInstanceVars) {
                 dbcrudgen::orm::AngularClassTableModelTemplate srcTemplate;
@@ -91,7 +108,7 @@ namespace dbcrudgen {
 
             static std::string
             createComponentSpecSrc(const std::string &componentName, const std::string &componentClass) {
-                dbcrudgen::orm::AngularComponentTsSpecTemplate specTemplate;
+                dbcrudgen::orm::AngularComponentSpecTemplate specTemplate;
                 std::string src = specTemplate.getTemplate();
 
                 src = replace(src, "${COMPONENT_NAME}", componentName);
@@ -103,7 +120,7 @@ namespace dbcrudgen {
             static std::string
             createComponentTsSrc(const std::string &moduleName, const std::string &componentName,
                                  const std::string &componentClass) {
-                dbcrudgen::orm::AngularComponentTsTemplate tsTemplate;
+                dbcrudgen::orm::AngularComponentTemplate tsTemplate;
                 std::string src = tsTemplate.getTemplate();
 
                 src = replace(src, "${MODULE_NAME}", moduleName);
@@ -111,6 +128,47 @@ namespace dbcrudgen {
                 src = replace(src, "${CLASS_NAME}", componentClass);
 
                 return src;
+            }
+
+            //Creates the service class source code
+            static std::string createServiceSrc(const std::string &componentName, const std::string &componentClass) {
+                dbcrudgen::orm::AngularServiceTemplate serviceTemplate;
+                std::string src = serviceTemplate.getTemplate();
+
+                src = replace(src, "${COMPONENT_NAME}", componentName);
+                src = replace(src, "${CLASS_NAME}", componentClass);
+
+                return src;
+            }
+
+            //Creates the service class test cases(spec) code
+            static std::string
+            createServiceSpecSrc(const std::string &componentName, const std::string &componentClass) {
+                dbcrudgen::orm::AngularServiceSpecTemplate specTemplate;
+                std::string src = specTemplate.getTemplate();
+
+                src = replace(src, "${COMPONENT_NAME}", componentName);
+                src = replace(src, "${SERVICE_CLASS}", componentClass);
+
+                return src;
+            }
+
+            //Set the component class declaration
+            static std::string addComponentClassDeclaration(const std::string &componentClass, bool isBeforeLast) {
+
+                return isBeforeLast ?
+                       std::string{componentClass + "Component,"} : std::string{componentClass + "Component"};
+            }
+
+            //Set the component class imports
+            static std::string
+            addComponentClassImport(const std::string &componentName, const std::string &componentClass) {
+
+                std::string declarationTemplate = {
+                        "import { " + componentClass + "Component } from './" + componentName + "/" + componentName +
+                        ".component';"};
+
+                return declarationTemplate;
             }
         };
     }
