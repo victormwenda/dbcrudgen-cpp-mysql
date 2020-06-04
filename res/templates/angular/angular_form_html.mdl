@@ -1,0 +1,7 @@
+<form [formGroup]="${FORM_NAME}" (ngSubmit)="onSubmitForm${FORM_NAME}()">
+
+    ${INPUTS}
+
+    <button type="submit" name="submit" >Submit</button>
+    <button type="clear" name="clear" >Clear</button>
+</form>

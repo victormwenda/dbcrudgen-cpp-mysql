@@ -1,0 +1,3 @@
+//Create form control for ${INPUT_NAME}
+this.${INPUT_NAME} = new FormControl("${DEFAULT_VALUE}", []);
+this.${FORM_BUILDER_OBJECT}.addControl(this.${INPUT_NAME});
