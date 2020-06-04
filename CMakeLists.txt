@@ -418,6 +418,9 @@ set(SOURCE_FILES
         src/orm/templates/angular/AngularComponentTemplate.h
         src/orm/templates/angular/AngularComponentSpecTemplate.h
         src/orm/templates/angular/AngularEnumTemplate.h
+        src/orm/templates/angular/AngularHtmlTableBodyTemplate.h
+        src/orm/templates/angular/AngularHtmlTableHeadTemplate.h
+        src/orm/templates/angular/AngularHtmlTableTemplate.h
         src/orm/templates/angular/AngularModuleTemplate.h
         src/orm/templates/angular/AngularServiceTemplate.h
         src/orm/templates/angular/AngularServiceSpecTemplate.h

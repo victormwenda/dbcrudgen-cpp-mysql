@@ -1,0 +1,4 @@
+<table class="table table-boarded table-stripped">
+  ${TABLE_HEAD}
+  ${TABLE_BODY}
+</table>

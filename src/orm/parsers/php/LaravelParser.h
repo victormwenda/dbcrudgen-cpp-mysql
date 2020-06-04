@@ -219,8 +219,8 @@ namespace dbcrudgen {
 
                 std::string sourceTemplate = R"(<div class="form-group"><label for="${INPUT_ID}">${INPUT_PLACEHOLDER}</label><input class="form-control" id="${INPUT_ID}" placeholder="${INPUT_PLACEHOLDER}"></div>)";
 
-                std::string inputKey = StringUtils::toKebabCase(column.getColumnName());
-                std::string inputTitle = StringUtils::toTitle(column.getColumnName());
+                std::string inputKey = SyntaxParser::toKebabCase(column.getColumnName());
+                std::string inputTitle = SyntaxParser::toTitle(column.getColumnName());
                 replace(sourceTemplate, "${INPUT_PLACEHOLDER}", inputTitle);
                 replace(sourceTemplate, "${INPUT_ID}", inputKey);
                 return sourceTemplate.append("\r\n");
@@ -235,7 +235,7 @@ namespace dbcrudgen {
             static std::string
             createTableHeaderColumns(const db::generic::Table &table, const db::generic::Column &column) {
                 std::string sourceTemplate = "<th>${COLUMN_NAME}</th>";
-                replace(sourceTemplate, "${COLUMN_NAME}", StringUtils::toTitle(column.getColumnName()));
+                replace(sourceTemplate, "${COLUMN_NAME}", SyntaxParser::toTitle(column.getColumnName()));
                 return sourceTemplate;
             }
 
@@ -247,8 +247,8 @@ namespace dbcrudgen {
             static std::string
             packJSFormItems(const db::generic::Column &column) {
                 std::string sourceTemplate = "let ${FORM_ITEM} = $('#${DOCUMENT-ID}').val();";
-                replace(sourceTemplate, "${FORM_ITEM}", StringUtils::toCamelCase(column.getColumnName()));
-                replace(sourceTemplate, "${DOCUMENT-ID}", StringUtils::toKebabCase(column.getColumnName()));
+                replace(sourceTemplate, "${FORM_ITEM}", SyntaxParser::toCamelCase(column.getColumnName()));
+                replace(sourceTemplate, "${DOCUMENT-ID}", SyntaxParser::toKebabCase(column.getColumnName()));
                 return sourceTemplate;
             }
 
@@ -256,7 +256,7 @@ namespace dbcrudgen {
             packRequestParams(const db::generic::Column &column, bool isBeforeLast) {
                 std::string sourceTemplate = R"('${KEY}':${VALUE} ${DELIMITER})";
 
-                std::string requestParam = StringUtils::toCamelCase(column.getColumnName());
+                std::string requestParam = SyntaxParser::toCamelCase(column.getColumnName());
 
                 replace(sourceTemplate, "${KEY}", requestParam);
                 replace(sourceTemplate, "${VALUE}", requestParam);
@@ -279,7 +279,7 @@ namespace dbcrudgen {
             unpackItemData(const db::generic::Column &column) {
                 std::string sourceTemplate = "let ${ITEM_VALUE} = jqXHRData.${ITEM_KEY};";
                 replace(sourceTemplate, "${ITEM_KEY}", column.getColumnName());
-                replace(sourceTemplate, "${ITEM_VALUE}", StringUtils::toCamelCase(column.getColumnName()));
+                replace(sourceTemplate, "${ITEM_VALUE}", SyntaxParser::toCamelCase(column.getColumnName()));
                 return sourceTemplate;
             }
 
@@ -291,8 +291,8 @@ namespace dbcrudgen {
             static std::string
             bindItemDataToDocument(const db::generic::Column &column) {
                 std::string sourceTemplate = "$('#${DOCUMENT_ID}').val(${ITEM_VALUE});";
-                replace(sourceTemplate, "${DOCUMENT_ID}", StringUtils::toKebabCase(column.getColumnName()));
-                replace(sourceTemplate, "${ITEM_VALUE}", StringUtils::toCamelCase(column.getColumnName()));
+                replace(sourceTemplate, "${DOCUMENT_ID}", SyntaxParser::toKebabCase(column.getColumnName()));
+                replace(sourceTemplate, "${ITEM_VALUE}", SyntaxParser::toCamelCase(column.getColumnName()));
                 return sourceTemplate;
             }
 

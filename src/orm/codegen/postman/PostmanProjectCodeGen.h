@@ -44,7 +44,7 @@ namespace dbcrudgen {
             createSource(PostmanProjectModel &projectModel, const dbcrudgen::db::generic::Table &table,
                          PostmanRequestTemplate reqTemplate) {
                 std::string source = reqTemplate.getTemplate();
-                std::string apiName = StringUtils::toKebabCase(table.getTableName());
+                std::string apiName = SyntaxParser::toKebabCase(table.getTableName());
                 std::string baseURL = projectModel.getBaseURL();
                 std::string rawURL = std::string{baseURL + "/" + apiName};
                 StringUtils::replace(source, "${RAW_URL}", rawURL);
@@ -125,14 +125,14 @@ namespace dbcrudgen {
             createGetSource(PostmanProjectModel &projectModel, const dbcrudgen::db::generic::Table &table,
                             std::string reqSource) {
                 const std::string &tableName = table.getTableName();
-                std::string apiName = std::string{StringUtils::toKebabCase(tableName) + "-get"};
+                std::string apiName = std::string{SyntaxParser::toKebabCase(tableName) + "-get"};
 
                 StringUtils::replace(reqSource, "${REQUEST_NAME}", apiName);
                 StringUtils::replace(reqSource, "${REQUEST_METHOD}", "GET");
                 StringUtils::replace(reqSource, "${REQUEST_BODY}", "");
                 StringUtils::replace(reqSource, "${DESCRIPTION}", "Get a single item from the table " + tableName);
 
-                std::string resSegment = std::string{StringUtils::toKebabCase(tableName) + "/get"};
+                std::string resSegment = std::string{SyntaxParser::toKebabCase(tableName) + "/get"};
                 std::string segments = createPathSegments(
                         std::string{projectModel.getPathSegments() + "/" + resSegment});
 
@@ -151,14 +151,14 @@ namespace dbcrudgen {
             createGetSourceSearch(PostmanProjectModel &projectModel, const dbcrudgen::db::generic::Table &table,
                                   std::string reqSource) {
                 const std::string &tableName = table.getTableName();
-                std::string apiName = std::string{StringUtils::toKebabCase(tableName) + "-search"};
+                std::string apiName = std::string{SyntaxParser::toKebabCase(tableName) + "-search"};
 
                 StringUtils::replace(reqSource, "${REQUEST_NAME}", apiName);
                 StringUtils::replace(reqSource, "${REQUEST_METHOD}", "GET");
                 StringUtils::replace(reqSource, "${REQUEST_BODY}", "");
                 StringUtils::replace(reqSource, "${DESCRIPTION}", "Search items from the table " + tableName);
 
-                std::string resSegment = std::string{StringUtils::toKebabCase(tableName) + "/search"};
+                std::string resSegment = std::string{SyntaxParser::toKebabCase(tableName) + "/search"};
                 std::string segments = createPathSegments(
                         std::string{projectModel.getPathSegments() + "/" + resSegment});
 
@@ -177,14 +177,14 @@ namespace dbcrudgen {
             createGetSourceList(PostmanProjectModel &projectModel, const dbcrudgen::db::generic::Table &table,
                                 std::string reqSource) {
                 const std::string &tableName = table.getTableName();
-                std::string apiName = std::string{StringUtils::toKebabCase(tableName) + "-list"};
+                std::string apiName = std::string{SyntaxParser::toKebabCase(tableName) + "-list"};
 
                 StringUtils::replace(reqSource, "${REQUEST_NAME}", apiName);
                 StringUtils::replace(reqSource, "${REQUEST_METHOD}", "GET");
                 StringUtils::replace(reqSource, "${REQUEST_BODY}", "");
                 StringUtils::replace(reqSource, "${DESCRIPTION}", "List items from the table " + tableName);
 
-                std::string resSegment = std::string{StringUtils::toKebabCase(tableName) + "/list"};
+                std::string resSegment = std::string{SyntaxParser::toKebabCase(tableName) + "/list"};
                 std::string segments = createPathSegments(
                         std::string{projectModel.getPathSegments() + "/" + resSegment});
 
@@ -204,7 +204,7 @@ namespace dbcrudgen {
                              std::string reqSource) {
 
                 const std::string &tableName = table.getTableName();
-                std::string apiName = std::string{StringUtils::toKebabCase(tableName) + "-store"};
+                std::string apiName = std::string{SyntaxParser::toKebabCase(tableName) + "-store"};
 
                 StringUtils::replace(reqSource, "${REQUEST_NAME}", apiName);
                 StringUtils::replace(reqSource, "${REQUEST_METHOD}", "POST");
@@ -214,7 +214,7 @@ namespace dbcrudgen {
                 StringUtils::replace(reqSource, "${REQUEST_BODY}", requestBodyTemplate.getTemplate());
                 StringUtils::replace(reqSource, "${DATA_MODE}", "formdata");
 
-                std::string resSegment = std::string{StringUtils::toKebabCase(tableName) + "/store"};
+                std::string resSegment = std::string{SyntaxParser::toKebabCase(tableName) + "/store"};
                 std::string segments = createPathSegments(
                         std::string{projectModel.getPathSegments() + "/" + resSegment});
 
@@ -234,7 +234,7 @@ namespace dbcrudgen {
             createPutSource(PostmanProjectModel &projectModel, const dbcrudgen::db::generic::Table &table,
                             std::string reqSource) {
                 const std::string &tableName = table.getTableName();
-                std::string apiName = std::string{StringUtils::toKebabCase(tableName) + "-update/"};
+                std::string apiName = std::string{SyntaxParser::toKebabCase(tableName) + "-update/"};
 
                 StringUtils::replace(reqSource, "${REQUEST_NAME}", apiName);;
                 StringUtils::replace(reqSource, "${REQUEST_METHOD}", "PUT");
@@ -244,7 +244,7 @@ namespace dbcrudgen {
                 StringUtils::replace(reqSource, "${REQUEST_BODY}", requestBodyTemplate.getTemplate());
                 StringUtils::replace(reqSource, "${DATA_MODE}", "urlencoded");
 
-                std::string resSegment = std::string{StringUtils::toKebabCase(tableName) + "/update/"};
+                std::string resSegment = std::string{SyntaxParser::toKebabCase(tableName) + "/update/"};
                 std::string segments = createPathSegments(
                         std::string{projectModel.getPathSegments() + "/" + resSegment});
                 StringUtils::replace(reqSource, "${PATH_SEGMENTS}", segments);
@@ -263,14 +263,14 @@ namespace dbcrudgen {
                                std::string reqSource) {
 
                 const std::string &tableName = table.getTableName();
-                std::string apiName = std::string{StringUtils::toKebabCase(tableName) + "-delete/"};
+                std::string apiName = std::string{SyntaxParser::toKebabCase(tableName) + "-delete/"};
 
                 StringUtils::replace(reqSource, "${REQUEST_NAME}", apiName);
                 StringUtils::replace(reqSource, "${REQUEST_BODY}", "");
                 StringUtils::replace(reqSource, "${REQUEST_METHOD}", "DELETE");
                 StringUtils::replace(reqSource, "${DESCRIPTION}", "Delete a single item in the table " + tableName);
 
-                std::string resSegment = std::string{StringUtils::toKebabCase(tableName) + "/delete"};
+                std::string resSegment = std::string{SyntaxParser::toKebabCase(tableName) + "/delete"};
                 std::string segments = createPathSegments(
                         std::string{projectModel.getPathSegments() + "/" + resSegment});
                 StringUtils::replace(reqSource, "${PATH_SEGMENTS}", segments);
@@ -287,7 +287,7 @@ namespace dbcrudgen {
             static std::string createRequestParams(const db::generic::Column &column) {
                 std::string paramsTemplate = R"({"key":"${KEY}","value":"${VALUE}","type":"text"})";
                 const std::string &columnName = column.getColumnName();
-                std::string key = StringUtils::toCamelCase(columnName);
+                std::string key = SyntaxParser::toCamelCase(columnName);
                 StringUtils::replace(paramsTemplate, "${KEY}", key);
                 StringUtils::replace(paramsTemplate, "${VALUE}", "");
                 return paramsTemplate;
@@ -301,7 +301,7 @@ namespace dbcrudgen {
             static std::string createQueryParams(const db::generic::Column &column) {
                 std::string paramsTemplate = R"({"key":"${KEY}","value":"${VALUE}","type":"text"})";
                 const std::string &columnName = column.getColumnName();
-                std::string key = StringUtils::toCamelCase(columnName);
+                std::string key = SyntaxParser::toCamelCase(columnName);
                 StringUtils::replace(paramsTemplate, "${KEY}", key);
                 StringUtils::replace(paramsTemplate, "${VALUE}", "");
                 return paramsTemplate;

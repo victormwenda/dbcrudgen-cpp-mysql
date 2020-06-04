@@ -29,7 +29,7 @@ namespace dbcrudgen {
              */
             static std::string toJavaClassName(std::string name) {
                 //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
-                return StringUtils::createClassNameCamelCase(name);
+                return SyntaxParser::createClassNameCamelCase(name);
             }
 
             /**

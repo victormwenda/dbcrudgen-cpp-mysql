@@ -1,0 +1,5 @@
+<tbody>
+  <tr *ngFor="let _${MODEL_ARR_OBJECT} of ${MODEL_ARR_OBJECT}">
+    ${TABLE_COLS}
+  </tr>
+</tbody>

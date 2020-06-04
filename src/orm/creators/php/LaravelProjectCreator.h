@@ -158,7 +158,7 @@ namespace dbcrudgen {
 
                     LaravelParser::replace(viewSource, "${FORM_ITEMS}", formItems);
 
-                    std::string tableViewDir = StringUtils::toKebabCase(tableName);
+                    std::string tableViewDir = SyntaxParser::toKebabCase(tableName);
                     LaravelParser::replace(viewSource, "${VIEW_DIR}", tableViewDir);
 
 
@@ -240,7 +240,7 @@ namespace dbcrudgen {
                 //Add class names
                 std::string className = LaravelParser::toPHPClassName(tableName);
                 std::string classNameVariable = LaravelParser::toPHPVariableName(tableName);
-                std::string viewName = StringUtils::toKebabCase(tableName);
+                std::string viewName = SyntaxParser::toKebabCase(tableName);
 
 
                 LaravelParser::replace(controllerSource, "${CLASS_NAME}", className);
@@ -301,8 +301,8 @@ namespace dbcrudgen {
 
                 std::string viewSource = viewTemplate.getTemplate();
 
-                std::string tableTitle = StringUtils::toTitle(tableName);
-                std::string projectTitle = StringUtils::toTitle(projectModel.getProjectName());
+                std::string tableTitle = SyntaxParser::toTitle(tableName);
+                std::string projectTitle = SyntaxParser::toTitle(projectModel.getProjectName());
                 std::string className = LaravelParser::toPHPClassName(tableName);
                 std::string classVariable = LaravelParser::toPHPVariableName(tableName);
                 std::string classId = LaravelParser::toSnakeCase(tableName);
@@ -329,7 +329,7 @@ namespace dbcrudgen {
 
                 //Add JS details
                 LaravelParser::replace(viewSource, "${JS-ASSET-DIR}", projectModel.getJsDir());
-                LaravelParser::replace(viewSource, "${VIEW-JS-FILE}", StringUtils::toKebabCase(tableName));
+                LaravelParser::replace(viewSource, "${VIEW-JS-FILE}", SyntaxParser::toKebabCase(tableName));
 
                 return viewSource;
             }
@@ -366,8 +366,8 @@ namespace dbcrudgen {
 
                 std::string viewSource = jsTemplate.getTemplate();
 
-                std::string tableTitle = StringUtils::toTitle(tableName);
-                std::string projectTitle = StringUtils::toTitle(projectModel.getProjectName());
+                std::string tableTitle = SyntaxParser::toTitle(tableName);
+                std::string projectTitle = SyntaxParser::toTitle(projectModel.getProjectName());
                 std::string className = LaravelParser::toPHPClassName(tableName);
                 std::string classVariable = LaravelParser::toPHPVariableName(tableName);
                 std::string classId = LaravelParser::toSnakeCase(tableName);
@@ -391,7 +391,7 @@ namespace dbcrudgen {
                 LaravelParser::replace(viewSource, "${ITEMS_HANDLE}", classVariable);
                 LaravelParser::replace(viewSource, "${MODAL_ID}", classId);
                 LaravelParser::replace(viewSource, "${MODAL_TITLE}", tableTitle);
-                LaravelParser::replace(viewSource, "${API_NAME}", StringUtils::toKebabCase(tableName));
+                LaravelParser::replace(viewSource, "${API_NAME}", SyntaxParser::toKebabCase(tableName));
 
                 return viewSource;
             }
@@ -406,7 +406,7 @@ namespace dbcrudgen {
                 std::string source = routeWebTemplate.getTemplate();
 
                 std::string className = LaravelParser::toPHPClassName(table.getTableName());
-                std::string apiName = StringUtils::toKebabCase(className);
+                std::string apiName = SyntaxParser::toKebabCase(className);
 
                 LaravelParser::replace(source, "${CONTROLLER_CLASS}", className.append("Controller"));
                 LaravelParser::replace(source, "${API_NAME}", apiName);
@@ -426,7 +426,7 @@ namespace dbcrudgen {
 
                 std::string className = LaravelParser::toPHPClassName(table.getTableName());
                 std::string classVariable = LaravelParser::toPHPVariableName(table.getTableName());
-                std::string apiName = StringUtils::toKebabCase(className);
+                std::string apiName = SyntaxParser::toKebabCase(className);
 
                 LaravelParser::replace(source, "${API_VERSION}", projectModel.getApiVersion());
                 LaravelParser::replace(source, "${API_NAME}", apiName);

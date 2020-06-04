@@ -15,6 +15,9 @@
 #include "../../templates/angular/AngularServiceSpecTemplate.h"
 #include "../../templates/angular/AngularServiceTemplate.h"
 #include "../../templates/angular/AngularModuleTemplate.h"
+#include "../../templates/angular/AngularHtmlTableTemplate.h"
+#include "../../templates/angular/AngularHtmlTableHeadTemplate.h"
+#include "../../templates/angular/AngularHtmlTableBodyTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -59,6 +62,10 @@ namespace dbcrudgen {
 
         public:
 
+            static std::string toVariableName(const std::string &name) {
+                return createVariableNameCamelCase(name);
+            }
+
             //Create module name
             static std::string createModuleSrc(const std::string &moduleName, const std::string &componentsClassImports,
                                                const std::string &componentsClassesDeclarations) {
@@ -87,7 +94,7 @@ namespace dbcrudgen {
             static std::string createModelInstanceVariable(const db::generic::Column &column) {
 
                 std::string dataType = getDataType(column.getDataType());
-                std::string columnName = toCamelCase(column.getColumnName());
+                std::string columnName = toVariableName(column.getColumnName());
 
                 return columnName + ":" + dataType + ";";
             }
@@ -170,6 +177,49 @@ namespace dbcrudgen {
 
                 return declarationTemplate;
             }
+
+            //Prepare a Table Head TD Item <td>??</td>
+            static std::string prepareTableHeadTD(const db::generic::Column &column) {
+                std::string columnTitle = toCamelCase(column.getColumnName());
+                return std::string{"<td>" + columnTitle + "</td>"};
+            }
+
+            //Prepare a Table Row TD Item <td>??</td>
+            static std::string prepareTableRowTD(const std::string &modelArrObject, const db::generic::Column &column) {
+                std::string columnObject = toVariableName(column.getColumnName());
+                return std::string{"<td> {{_" + modelArrObject + "." + columnObject + "}}</td>"};
+            }
+
+            static std::string createTableHeading(const std::string &tableHeadingTitles) {
+                dbcrudgen::orm::AngularHtmlTableHeadTemplate headTemplate;
+                std::string src = headTemplate.getTemplate();
+
+                src = replace(src, "${TABLE_HEADINGS}", tableHeadingTitles);
+
+                return src;
+            }
+
+            static std::string createTableBody(const std::string &modelArrObject, std::string tableBody) {
+                dbcrudgen::orm::AngularHtmlTableBodyTemplate bodyTemplate;
+                std::string src = bodyTemplate.getTemplate();
+
+                src = replace(src, "${MODEL_ARR_OBJECT}", modelArrObject);
+                src = replace(src, "${TABLE_COLS}", tableBody);
+
+                return src;
+            }
+
+            static std::string createTable(const std::string &tableHeader, std::string tableBody) {
+                dbcrudgen::orm::AngularHtmlTableTemplate tableTemplate;
+                std::string src = tableTemplate.getTemplate();
+
+                src = replace(src, "${TABLE_HEAD}", tableHeader);
+                src = replace(src, "${TABLE_BODY}", tableBody);
+
+                return src;
+            }
+
+
         };
     }
 }

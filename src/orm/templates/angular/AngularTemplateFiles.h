@@ -22,6 +22,11 @@ namespace dbcrudgen {
             struct Enums {
                 static constexpr const char *ANGULAR_ENUM_DEFAULT = "templates/angular/enum_template.mdl";
             };
+            struct Html {
+                static constexpr const char *HTML_TABLE = "templates/angular/html_table.mdl";
+                static constexpr const char *HTML_TABLE_HEADER = "templates/angular/html_table_head.mdl";
+                static constexpr const char *HTML_TABLE_BODY = "templates/angular/html_table_body.mdl";
+            };
             struct Module {
                 static constexpr const char *MODULE_CLASS = "templates/angular/module_class.mdl";
             };
