@@ -1,27 +1,28 @@
-DbCrudGen-CPP
+# DbCrudGen-CPP
 
 Database CRUD Generators written in C++
 
 Generates Database CRUD codes for various Databases
 
-Supported databases
-  1. MYSQL
-  2. ORACLE
-  3. SQLITE
+## Supported databases
+ - MYSQL
+ - ORACLE
+ - SQLITE
   
- Supported CRUD's
-  1. Android
-  2. CPP
-  3. Java(J2SE)
-  4. Python
-  5. PHP
-  6. Swift
+## Supported CRUD's
+ - Android
+ - Angular
+ - C++
+ - Java (J2SE, Jax-Rs)
+ - Python
+ - PHP (Laravel)
+ - Swift
   
-  DbCrudGen helps to improve the whole developer workflow of embedding a database in your application.
+DbCrudGen helps to improve the whole developer workflow of embedding a database in your application.
   
-  It allows connecting to one of the supported Databases and creating CRUD code's for the target supported platforms.
+It allows connecting to one of the supported Databases and creating CRUD code's for the target supported platforms.
 
-External libraries
-  1. Googletest - Google C++ Unit testing library
-  2. Benchmark - Google C++ benchmarking library 
+## External libraries
+- Googletest - Google C++ Unit testing library
+- Benchmark - Google C++ benchmarking library 
     
