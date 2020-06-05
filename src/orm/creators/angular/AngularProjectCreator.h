@@ -186,12 +186,13 @@ namespace dbcrudgen {
                                                                                                          htmlTable);
                     std::string componentTestsSrc =
                             dbcrudgen::orm::AngularParser::createComponentSpecSrc(componentName, componentClass);
-                    std::string componentTsSrc =
-                            dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName, componentName,
-                                                                                componentClass, modelClassName,
-                                                                                formGroupDeclaration,
-                                                                                formControlsDeclarationTs,
-                                                                                formGroupInit, formControlsBindTs);
+                    std::string componentTsSrc
+                            = dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName,
+                                                                                  componentName, componentClass,
+                                                                                  modelClassName, modelObjectName,
+                                                                                  formGroupDeclaration,
+                                                                                  formControlsDeclarationTs,
+                                                                                  formGroupInit, formControlsBindTs);
 
                     writeComponentSrc(componentName, componentCssSrc, componentHtmlSrc, componentTestsSrc,
                                       componentTsSrc);

@@ -1,3 +1,5 @@
 <thead>
-    ${TABLE_HEADINGS}
+    <tr>
+        ${TABLE_HEADINGS}
+    </tr>
 </thead>

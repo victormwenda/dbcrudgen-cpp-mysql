@@ -139,8 +139,9 @@ namespace dbcrudgen {
             }
 
             static std::string
-            createComponentTsSrc(const std::string &moduleName, const std::string &componentName,
-                                 const std::string &componentClass, const std::string &modelClass,
+            createComponentTsSrc(const std::string &moduleName,
+                                 const std::string &componentName, const std::string &componentClass,
+                                 const std::string &modelClass, const std::string &modelClassObject,
                                  const std::string &formGroupDeclaration, const std::string &formControlsDeclarationTs,
                                  const std::string &formGroupInit, const std::string &formControlsBindTs) {
                 dbcrudgen::orm::AngularComponentTemplate tsTemplate;
@@ -150,6 +151,7 @@ namespace dbcrudgen {
                 src = replace(src, "${COMPONENT_NAME}", componentName);
                 src = replace(src, "${CLASS_NAME}", componentClass);
                 src = replace(src, "${MODEL_CLASS}", modelClass);
+                src = replace(src, "${MODEL_OBJECT}", modelClassObject);
 
                 src = replace(src, "${FORM_GROUP_DECLARATION}", formGroupDeclaration);
                 src = replace(src, "${FORM_CONTROLS_DECLARATION}", formControlsDeclarationTs);
@@ -223,7 +225,7 @@ namespace dbcrudgen {
                 dbcrudgen::orm::AngularHtmlTableBodyTemplate bodyTemplate;
                 std::string src = bodyTemplate.getTemplate();
 
-                src = replace(src, "${MODEL_ARR_OBJECT}", modelArrObject);
+                src = replace(src, "${MODEL_OBJECT}", modelArrObject);
                 src = replace(src, "${TABLE_COLS}", tableBody);
 
                 return src;
