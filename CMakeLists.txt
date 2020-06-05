@@ -418,6 +418,8 @@ set(SOURCE_FILES
         src/orm/templates/angular/AngularComponentTemplate.h
         src/orm/templates/angular/AngularComponentSpecTemplate.h
         src/orm/templates/angular/AngularEnumTemplate.h
+        src/orm/templates/angular/AngularHtmlFormInputTemplate.h
+        src/orm/templates/angular/AngularHtmlFormTemplate.h
         src/orm/templates/angular/AngularHtmlTableBodyTemplate.h
         src/orm/templates/angular/AngularHtmlTableHeadTemplate.h
         src/orm/templates/angular/AngularHtmlTableTemplate.h
@@ -425,6 +427,9 @@ set(SOURCE_FILES
         src/orm/templates/angular/AngularServiceTemplate.h
         src/orm/templates/angular/AngularServiceSpecTemplate.h
         src/orm/templates/angular/AngularTemplateFiles.h
+        src/orm/templates/angular/AngularTextTemplates.h
+        src/orm/templates/angular/AngularTsFormControlInitBindTemplate.h
+        src/orm/templates/angular/AngularTsFormGroupInitBindTemplate.h
 
         src/orm/templates/cpp/CppClassTableModelTemplate.h
         src/orm/templates/cpp/CppCtorInitializersTemplate.h
@@ -542,6 +547,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
         src/orm/utils/StringUtils.h
+
         )
 
 #GoogleTest

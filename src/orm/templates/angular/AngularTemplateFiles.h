@@ -22,6 +22,12 @@ namespace dbcrudgen {
             struct Enums {
                 static constexpr const char *ANGULAR_ENUM_DEFAULT = "templates/angular/enum_template.mdl";
             };
+            struct Forms {
+                static constexpr const char * HTML_FORM = "templates/angular/angular_html_form.mdl";
+                static constexpr const char * HTML_FORM_INPUT = "templates/angular/angular_html_form_input.mdl";
+                static constexpr const char * TS_FORM_CONTROL_INIT_BIND = "templates/angular/angular_form_control_init_bind_ts.mdl";
+                static constexpr const char * TS_FORM_GROUP_INIT_BIND = "templates/angular/angular_form_group_bind_ts.mdl";
+            };
             struct Html {
                 static constexpr const char *HTML_TABLE = "templates/angular/html_table.mdl";
                 static constexpr const char *HTML_TABLE_HEADER = "templates/angular/html_table_head.mdl";

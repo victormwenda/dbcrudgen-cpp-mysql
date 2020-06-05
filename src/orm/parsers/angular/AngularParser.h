@@ -18,12 +18,18 @@
 #include "../../templates/angular/AngularHtmlTableTemplate.h"
 #include "../../templates/angular/AngularHtmlTableHeadTemplate.h"
 #include "../../templates/angular/AngularHtmlTableBodyTemplate.h"
+#include "../../templates/angular/AngularHtmlFormInputTemplate.h"
+#include "../../templates/angular/AngularTsFormControlInitBindTemplate.h"
+#include "../../templates/angular/AngularHtmlFormTemplate.h"
+#include "../../templates/angular/AngularTextTemplates.h"
 
 namespace dbcrudgen {
     namespace orm {
         class AngularParser : public SyntaxParser {
 
-        private:
+        public:
+
+
             static std::string getDataType(const std::string &dataType) {
                 if (dataType == "bool") {
                     return "bool";
@@ -60,7 +66,15 @@ namespace dbcrudgen {
                 return "any";
             }
 
-        public:
+            /**
+            * Create  Class name
+            * @param name
+            * @return
+            */
+            static std::string toClassName(std::string name) {
+                //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
+                return SyntaxParser::createClassNameCamelCase(name);
+            }
 
             static std::string toVariableName(const std::string &name) {
                 return createVariableNameCamelCase(name);
@@ -91,12 +105,9 @@ namespace dbcrudgen {
             }
 
             //Create model table instance variable. The instance variable is deduced from the column
-            static std::string createModelInstanceVariable(const db::generic::Column &column) {
-
-                std::string dataType = getDataType(column.getDataType());
-                std::string columnName = toVariableName(column.getColumnName());
-
-                return columnName + ":" + dataType + ";";
+            static std::string
+            createModelInstanceVariable(const std::string &dataType, const std::string &columnObject) {
+                return columnObject + ":" + dataType + ";";
             }
 
             static std::string createComponentCssSrc(const std::string &componentName) {
@@ -104,11 +115,14 @@ namespace dbcrudgen {
                 return cssTemplate.getTemplate();
             }
 
-            static std::string createComponentHtmlSrc(const std::string &componentName) {
+            static std::string createComponentHtmlSrc(const std::string &componentName, const std::string &htmlForm,
+                                                      const std::string &htmlTable) {
                 dbcrudgen::orm::AngularComponentHtmlTemplate htmlTemplate;
                 std::string src = htmlTemplate.getTemplate();
 
                 src = replace(src, "${COMPONENT_NAME}", componentName);
+                src = replace(src, "${FORM}", htmlForm);
+                src = replace(src, "${TABLE}", htmlTable);
 
                 return src;
             }
@@ -126,13 +140,21 @@ namespace dbcrudgen {
 
             static std::string
             createComponentTsSrc(const std::string &moduleName, const std::string &componentName,
-                                 const std::string &componentClass) {
+                                 const std::string &componentClass, const std::string &modelClass,
+                                 const std::string &formGroupDeclaration, const std::string &formControlsDeclarationTs,
+                                 const std::string &formGroupInit, const std::string &formControlsBindTs) {
                 dbcrudgen::orm::AngularComponentTemplate tsTemplate;
                 std::string src = tsTemplate.getTemplate();
 
                 src = replace(src, "${MODULE_NAME}", moduleName);
                 src = replace(src, "${COMPONENT_NAME}", componentName);
                 src = replace(src, "${CLASS_NAME}", componentClass);
+                src = replace(src, "${MODEL_CLASS}", modelClass);
+
+                src = replace(src, "${FORM_GROUP_DECLARATION}", formGroupDeclaration);
+                src = replace(src, "${FORM_CONTROLS_DECLARATION}", formControlsDeclarationTs);
+                src = replace(src, "${INIT_FORM_GROUP}", formGroupInit);
+                src = replace(src, "${INIT_BIND_FORM_CONTROLS}", formControlsBindTs);
 
                 return src;
             }
@@ -179,14 +201,12 @@ namespace dbcrudgen {
             }
 
             //Prepare a Table Head TD Item <td>??</td>
-            static std::string prepareTableHeadTD(const db::generic::Column &column) {
-                std::string columnTitle = toCamelCase(column.getColumnName());
+            static std::string prepareTableHeadTD(const std::string &columnTitle) {
                 return std::string{"<td>" + columnTitle + "</td>"};
             }
 
             //Prepare a Table Row TD Item <td>??</td>
-            static std::string prepareTableRowTD(const std::string &modelArrObject, const db::generic::Column &column) {
-                std::string columnObject = toVariableName(column.getColumnName());
+            static std::string prepareTableRowTD(const std::string &modelArrObject, const std::string &columnObject) {
                 return std::string{"<td> {{_" + modelArrObject + "." + columnObject + "}}</td>"};
             }
 
@@ -219,6 +239,65 @@ namespace dbcrudgen {
                 return src;
             }
 
+            static std::string prepareHtmlFormInputs(const std::string &inputTitle, const std::string &inputType,
+                                                     const std::string &controlName) {
+                dbcrudgen::orm::AngularHtmlFormInputTemplate formInputTemplate;
+                std::string src = formInputTemplate.getTemplate();
+                src = replace(src, "${INPUT_TYPE}", inputType);
+                src = replace(src, "${INPUT_TITLE}", inputTitle);
+                src = replace(src, "${FORM_CONTROL}", controlName);
+
+                return src;
+            }
+
+            static std::string prepareTsFormInputs(const std::string &formName, const std::string &controlName,
+                                                   const std::string &defaultValue) {
+                dbcrudgen::orm::AngularTsFormControlInitBindTemplate formControlInitBindTemplate;
+                std::string src = formControlInitBindTemplate.getTemplate();
+
+                src = replace(src, "${FORM_GROUP}", formName);
+                src = replace(src, "${FORM_CONTROL}", controlName);
+                src = replace(src, "${DEFAULT_VALUE}", defaultValue);
+
+                return src;
+            }
+
+            static std::string generateHtmlForm(const std::string &modelClass, const std::string &formGroup,
+                                                const std::string &formControls) {
+                dbcrudgen::orm::AngularHtmlFormTemplate htmlFormTemplate;
+                std::string src = htmlFormTemplate.getTemplate();
+
+                src = replace(src, "${MODEL_CLASS}", modelClass);
+                src = replace(src, "${FORM_GROUP}", formGroup);
+                src = replace(src, "${FORM_CONTROLS}", formControls);
+
+                return src;
+            }
+
+
+            static std::string prepareFormGroupDeclaration(std::string formGroupName) {
+                std::string src = AngularTextTemplates::FORM_GROUP_DECLARATION;
+
+                src = replace(src, "${FORM_GROUP}", formGroupName);
+
+                return src;
+            }
+
+            static std::string prepareFormGroupInt(std::string formGroupName) {
+                std::string src = AngularTextTemplates::FORM_GROUP_INIT;
+
+                src = replace(src, "${FORM_GROUP}", formGroupName);
+
+                return src;
+            }
+
+            static std::string prepareFormControlDeclaration(std::string formControlName) {
+                std::string src = AngularTextTemplates::FORM_CONTROL_DECLARATION;
+
+                src = replace(src, "${FORM_CONTROL}", formControlName);
+
+                return src;
+            }
 
         };
     }

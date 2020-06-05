@@ -89,8 +89,8 @@ namespace dbcrudgen {
                 std::string moduleName = SyntaxParser::toKebabCase(projectModel.getEvalModuleName());
 
 
-                std::string componentsClasses = "";
-                std::string componentsClassImports = "";
+                std::string componentsClasses;
+                std::string componentsClassImports;
 
                 int index = 0;
 
@@ -101,22 +101,16 @@ namespace dbcrudgen {
                     const std::string &tableName = table.getTableName();
 
                     //Model source files
-                    std::string modelClassName = SyntaxParser::toPascalCase(tableName);
+                    std::string modelClassName = AngularParser::toClassName(tableName);
+
                     std::string modelObjectName = AngularParser::toVariableName(modelClassName);
 
-                    std::string modelInstanceVars = "";
+                    std::string modelInstanceVars;
 
                     //Component files
                     std::string componentName = SyntaxParser::toKebabCase(tableName);
                     std::string componentClass = SyntaxParser::toCamelCase(tableName);
 
-                    std::string componentCssSrc = dbcrudgen::orm::AngularParser::createComponentCssSrc(componentName);
-                    std::string componentHtmlSrc = dbcrudgen::orm::AngularParser::createComponentHtmlSrc(componentName);
-                    std::string componentTestsSrc =
-                            dbcrudgen::orm::AngularParser::createComponentSpecSrc(componentName, componentClass);
-                    std::string componentTsSrc =
-                            dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName, componentName,
-                                                                                componentClass);
 
                     componentsClasses +=
                             dbcrudgen::orm::AngularParser::addComponentClassDeclaration(componentClass, isLastTable);
@@ -132,14 +126,46 @@ namespace dbcrudgen {
                     std::string tblHeadingTitles;
                     std::string tblColsDataItems;
 
-                    for (const auto &column : table.getTableColumns()) {
-                        //Model instance vars
-                        modelInstanceVars += dbcrudgen::orm::AngularParser::createModelInstanceVariable(column);
+                    std::string formInputsHtml;
+                    std::string formControlsBindTs;
+                    std::string formControlsDeclarationTs;
+                    std::string formGroupDeclaration = dbcrudgen::orm::AngularParser::prepareFormGroupDeclaration(
+                            modelObjectName);
+                    std::string formGroupInit = dbcrudgen::orm::AngularParser::prepareFormGroupInt(modelObjectName);
 
-                        tblHeadingTitles += dbcrudgen::orm::AngularParser::prepareTableHeadTD(column);
-                        tblColsDataItems += dbcrudgen::orm::AngularParser::prepareTableRowTD(modelObjectName,column);
+                    for (const auto &column : table.getTableColumns()) {
+
+                        std::string dataType = AngularParser::getDataType(column.getDataType());
+
+                        std::string columnTitleName = AngularParser::toTitle(column.getColumnName());
+                        std::string columnObjectName = AngularParser::toVariableName(column.getColumnName());
+
+                        const std::string &defaultValue = column.getDefaultValue();
+
+                        //Model instance vars
+                        modelInstanceVars += dbcrudgen::orm::AngularParser::createModelInstanceVariable(dataType,
+                                                                                                        columnObjectName);
+
+                        tblHeadingTitles += dbcrudgen::orm::AngularParser::prepareTableHeadTD(columnTitleName);
+                        tblColsDataItems += dbcrudgen::orm::AngularParser::prepareTableRowTD(modelObjectName,
+                                                                                             columnObjectName);
+
+                        formInputsHtml
+                                += dbcrudgen::orm::AngularParser::prepareHtmlFormInputs(columnTitleName, dataType,
+                                                                                        columnObjectName);
+
+                        formControlsBindTs += dbcrudgen::orm::AngularParser::prepareTsFormInputs(modelObjectName,
+                                                                                                 columnObjectName,
+                                                                                                 defaultValue);
+
+                        formControlsDeclarationTs += dbcrudgen::orm::AngularParser::prepareFormControlDeclaration(
+                                columnObjectName);
 
                     }
+
+                    std::string htmlForm = dbcrudgen::orm::AngularParser::generateHtmlForm(modelClassName,
+                                                                                           modelObjectName,
+                                                                                           formInputsHtml);
 
                     std::string tableHeadings = dbcrudgen::orm::AngularParser::createTableHeading(tblHeadingTitles);
                     std::string tableBody
@@ -154,6 +180,19 @@ namespace dbcrudgen {
                     writeModelSrc(modelClassName, modelSrc);
 
                     //Write components
+                    std::string componentCssSrc = dbcrudgen::orm::AngularParser::createComponentCssSrc(componentName);
+                    std::string componentHtmlSrc = dbcrudgen::orm::AngularParser::createComponentHtmlSrc(componentName,
+                                                                                                         htmlForm,
+                                                                                                         htmlTable);
+                    std::string componentTestsSrc =
+                            dbcrudgen::orm::AngularParser::createComponentSpecSrc(componentName, componentClass);
+                    std::string componentTsSrc =
+                            dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName, componentName,
+                                                                                componentClass, modelClassName,
+                                                                                formGroupDeclaration,
+                                                                                formControlsDeclarationTs,
+                                                                                formGroupInit, formControlsBindTs);
+
                     writeComponentSrc(componentName, componentCssSrc, componentHtmlSrc, componentTestsSrc,
                                       componentTsSrc);
 
@@ -204,20 +243,20 @@ namespace dbcrudgen {
                 FilesWriter::writeFile(cssFile, componentCssSrc);
 
                 //Write html file
-                //FilesWriter::writeFile(htmlFile, componentHtmlSrc);
+                FilesWriter::writeFile(htmlFile, componentHtmlSrc);
 
                 //Write ts test cases
                 FilesWriter::writeFile(tsSpecsFile, componentSpecSrc);
 
                 //write typescript file
-                //FilesWriter::writeFile(typeScriptFile, componentTsSrc);
+                FilesWriter::writeFile(typeScriptFile, componentTsSrc);
 
             }
 
             void writeServiceSrc(const std::string &componentName, const std::string &serviceSrc) {
                 std::string componentDir = projectModel.getModuleDirFullPath() + "/" + componentName;
                 std::string filePath = {componentDir + "/" + componentName + ".service.ts"};
-                //FilesWriter::writeFile(filePath, serviceSrc);
+                FilesWriter::writeFile(filePath, serviceSrc);
             }
 
             void writeServiceSpecSrc(const std::string &componentName, const std::string &serviceSpecSrc) {

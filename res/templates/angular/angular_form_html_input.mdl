@@ -1,3 +1,0 @@
-<label> ${INPUT_TITLE}
-    <input type="${INPUT_TYPE}" formControlName="${INPUT_NAME}" >
-</label>

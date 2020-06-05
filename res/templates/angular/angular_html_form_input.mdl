@@ -1,0 +1,6 @@
+
+<div class="form-control">
+    <label> ${INPUT_TITLE}
+        <input type="${INPUT_TYPE}" [formControl]="${FORM_CONTROL}Fc" placeholder="${INPUT_TITLE}" >
+    </label>
+</div>

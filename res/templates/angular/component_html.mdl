@@ -1,1 +1,4 @@
 <p>${COMPONENT_NAME} Works!</p>
+
+<div>${FORM}</div>
+<div>${TABLE}</div>

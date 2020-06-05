@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup} from "@angular/forms";
 
 @Component({
   selector: '${MODULE_NAME}-${COMPONENT_NAME}',
@@ -8,10 +9,23 @@ import { Component, OnInit } from '@angular/core';
 export class ${CLASS_NAME}Component implements OnInit {
 
   constructor() {
+
   }
 
 
   ngOnInit(): void {
+
+    ${INIT_FORM_GROUP}
+
+    ${INIT_BIND_FORM_CONTROLS}
+
   }
+
+  onSubmitForm${MODEL_CLASS}() {
+
+  }
+
+  ${FORM_GROUP_DECLARATION}
+  ${FORM_CONTROLS_DECLARATION}
 
 }
