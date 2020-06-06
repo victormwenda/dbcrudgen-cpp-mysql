@@ -205,33 +205,41 @@ namespace dbcrudgen {
              */
             static std::string toCamelCase(std::string name) {
 
-                name = StringUtils::to_lower(name);
-                name[0] = toupper(name[0]);
+                //convert all letters to small letters
+                int index = 0;
+                while (index < name.length()) {
+                    name[index] = tolower(name[index]);
+                    index++;
+                }
 
-                std::string class_name;
+                std::string variable_name;
                 std::vector<std::string> parts = StringUtils::split(name.c_str(), "_");
 
                 if (parts.size() == 0) {
-                    name = StringUtils::to_lower(name);
-                    name[0] = toupper(name[0]);
                     return name;
                 }
 
+                int partsIndex = 0;
+
                 for (std::string &part : parts) {
 
-                    part = StringUtils::to_lower(part);
-
-                    char firstChar = part[0];
-
-                    if (isalpha(firstChar) && islower(firstChar)) {
-                        part[0] = toupper(firstChar);
+                    if (partsIndex == 0) {
+                        variable_name += part;
+                        partsIndex++;
+                        continue;
                     }
 
-                    class_name += part;
+                    char partsFirstChar = part[0];
+
+                    if (isalpha(partsFirstChar) && islower(partsFirstChar)) {
+                        part[0] = toupper(partsFirstChar);
+                    }
+
+                    partsIndex++;
+                    variable_name += part;
                 }
 
-                name = class_name;
-
+                name = variable_name;
                 return name;
             }
 
@@ -417,43 +425,7 @@ namespace dbcrudgen {
              * @return
              */
             static std::string createVariableNameCamelCase(std::string name) {
-
-                //convert all letters to small letters
-                int index = 0;
-                while (index < name.length()) {
-                    name[index] = tolower(name[index]);
-                    index++;
-                }
-
-                std::string variable_name;
-                std::vector<std::string> parts = StringUtils::split(name.c_str(), "_");
-
-                if (parts.size() == 0) {
-                    return name;
-                }
-
-                int partsIndex = 0;
-
-                for (std::string &part : parts) {
-
-                    if (partsIndex == 0) {
-                        variable_name += part;
-                        partsIndex++;
-                        continue;
-                    }
-
-                    char partsFirstChar = part[0];
-
-                    if (isalpha(partsFirstChar) && islower(partsFirstChar)) {
-                        part[0] = toupper(partsFirstChar);
-                    }
-
-                    partsIndex++;
-                    variable_name += part;
-                }
-
-                name = variable_name;
-                return name;
+                return toCamelCase(name);
             }
         };
     }

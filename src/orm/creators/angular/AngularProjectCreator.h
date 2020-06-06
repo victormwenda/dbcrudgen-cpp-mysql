@@ -84,10 +84,11 @@ namespace dbcrudgen {
 
             void createSourceFiles() override {
 
+                const std::string &baseUrl = projectModel.getBaseUrl();
+
                 auto tables = databaseModel.getTables();
 
                 std::string moduleName = SyntaxParser::toKebabCase(projectModel.getEvalModuleName());
-
 
                 std::string componentsClasses;
                 std::string componentsClassImports;
@@ -99,11 +100,12 @@ namespace dbcrudgen {
                     bool isLastTable = index < (tables.size() - 1);
 
                     const std::string &tableName = table.getTableName();
+                    std::string modelUri = SyntaxParser::toKebabCase(tableName);
 
 
                     //Model source files
                     std::string modelClassName = AngularParser::toClassName(tableName);
-                    std::string modelObjectName = AngularParser::toVariableName(modelClassName);
+                    std::string modelObjectName = AngularParser::toCamelCase(tableName);
                     std::string modelLocation = AngularParser::prepareModelLocation(projectModel.getModelsDir(),
                                                                                     modelClassName);
 
@@ -111,7 +113,9 @@ namespace dbcrudgen {
 
                     //Component files
                     std::string componentName = SyntaxParser::toKebabCase(tableName);
-                    std::string componentClass = SyntaxParser::toCamelCase(tableName);
+                    std::string componentClass = SyntaxParser::toPascalCase(tableName);
+                    std::string serviceClass = SyntaxParser::toPascalCase(tableName);
+                    std::string serviceObject = AngularParser::toCamelCase(tableName);
 
 
                     componentsClasses +=
@@ -132,6 +136,8 @@ namespace dbcrudgen {
 
                     std::string tsServicePkMethodParams;
                     std::string tsServicePkQueryParams;
+
+                    std::string modelDataExtraction;
 
                     int pkItrIndex = 0;
                     const std::vector<dbcrudgen::db::generic::Column> &priKeyColumns = table.getPrimaryColumns();
@@ -156,11 +162,14 @@ namespace dbcrudgen {
 
                     for (const auto &column : table.getTableColumns()) {
 
+                        const std::string &columnName = column.getColumnName();
+
                         std::string jsDataType = AngularParser::getJSDataType(column.getDataType());
                         std::string html5DataType = AngularParser::getHtml5DataType(column.getDataType());
 
-                        std::string columnTitleName = AngularParser::toTitle(column.getColumnName());
-                        std::string columnObjectName = AngularParser::toVariableName(column.getColumnName());
+
+                        std::string columnTitleName = AngularParser::toTitle(columnName);
+                        std::string columnObjectName = AngularParser::toVariableName(columnName);
 
                         const std::string &defaultValue = column.getDefaultValue();
 
@@ -183,6 +192,12 @@ namespace dbcrudgen {
                         formControlsDeclarationTs += dbcrudgen::orm::AngularParser::prepareFormControlDeclaration(
                                 columnObjectName);
 
+
+                        modelDataExtraction +=
+                                dbcrudgen::orm::AngularParser::prepareModelDataExtractor(modelClassName,
+                                                                                         modelObjectName, columnName,
+                                                                                         columnObjectName);
+
                     }
 
                     std::string htmlForm = dbcrudgen::orm::AngularParser::generateHtmlForm(modelClassName,
@@ -197,7 +212,8 @@ namespace dbcrudgen {
 
 
                     std::string serviceSrc =
-                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, componentClass,
+                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, serviceClass,
+                                                                            baseUrl, modelUri,
                                                                             modelLocation, modelClassName,
                                                                             modelObjectName,
                                                                             tsServicePkMethodParams,
@@ -223,9 +239,11 @@ namespace dbcrudgen {
                                                                                   componentName, componentClass,
                                                                                   modelLocation, modelClassName,
                                                                                   modelObjectName,
+                                                                                  serviceClass, serviceObject,
                                                                                   formGroupDeclaration,
                                                                                   formControlsDeclarationTs,
-                                                                                  formGroupInit, formControlsBindTs);
+                                                                                  formGroupInit, formControlsBindTs,
+                                                                                  modelDataExtraction);
 
                     writeComponentSrc(componentName, componentCssSrc, componentHtmlSrc, componentTestsSrc,
                                       componentTsSrc);
@@ -238,7 +256,7 @@ namespace dbcrudgen {
 
                 }
 
-                std::string moduleClassName = SyntaxParser::toKebabCase(projectModel.getEvalModuleName());
+                std::string moduleClassName = SyntaxParser::toPascalCase(projectModel.getEvalModuleName());
                 std::string moduleSrc =
                         dbcrudgen::orm::AngularParser::createModuleSrc(moduleClassName, componentsClassImports,
                                                                        componentsClasses);

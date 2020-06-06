@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {ReactiveFormsModule} from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { ReactiveFormsModule } from "@angular/forms";
 
 ${COMPONENTS_IMPORTS}
 
 @NgModule({
   declarations: [ ${COMPONENTS_DECLARATIONS} ],
+  exports : [ ${COMPONENTS_DECLARATIONS} ],
   imports: [
-    CommonModule,  ReactiveFormsModule
+    CommonModule, HttpClientModule, ReactiveFormsModule
   ]
 })
-export class AdminModule { }
+export class ${MODULE_NAME}Module { }

@@ -24,6 +24,7 @@ namespace dbcrudgen {
             std::string environmentsDir;
             std::string moduleDir;
             std::string modelsDir;
+            std::string baseUrl;
 
         public:
             //
@@ -32,7 +33,7 @@ namespace dbcrudgen {
             AngularProjectModel(std::string &workspaceDir, std::string &projectName, std::string &distDir,
                                 std::string &e2EDir, std::string &nodeModulesDir, std::string &srdDir,
                                 std::string &appDir, std::string &assetsDir, std::string &environmentsDir,
-                                std::string &moduleDir, std::string &modelsDir)
+                                std::string &moduleDir, std::string &modelsDir, std::string &baseUrl)
                     : workspaceDir(workspaceDir), projectName(projectName),
                       distDir(distDir), e2eDir(e2EDir),
                       nodeModulesDir(nodeModulesDir),
@@ -40,7 +41,8 @@ namespace dbcrudgen {
                       appDir(appDir),
                       assetsDir(assetsDir),
                       environmentsDir(environmentsDir),
-                      moduleDir(moduleDir), modelsDir(modelsDir) {}
+                      moduleDir(moduleDir), modelsDir(modelsDir),
+                      baseUrl(baseUrl) {}
 
             const std::string &getProjectName() override {
                 return projectName;
@@ -92,6 +94,10 @@ namespace dbcrudgen {
 
             const std::string &getModelsDir() const {
                 return modelsDir;
+            }
+
+            const std::string &getBaseUrl() const {
+                return baseUrl;
             }
 
             //Gets evaluated module name. if the name of the module was empty, the app name will be used

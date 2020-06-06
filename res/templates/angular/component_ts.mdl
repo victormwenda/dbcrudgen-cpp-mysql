@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup} from "@angular/forms";
 
-import { ${MODEL_CLASS} } from "${MODEL_LOCATION}"
+import { ${MODEL_CLASS} } from "${MODEL_LOCATION}";
+import { ${SERVICE_CLASS}Service } from "./${COMPONENT_NAME}.service";
 
 @Component({
   selector: '${MODULE_NAME}-${COMPONENT_NAME}',
@@ -10,14 +11,19 @@ import { ${MODEL_CLASS} } from "${MODEL_LOCATION}"
 })
 export class ${CLASS_NAME}Component implements OnInit {
 
-  constructor() {
+  ${MODEL_OBJECT}List : ${MODEL_CLASS} [];
+
+  ${FORM_GROUP_DECLARATION}
+  ${FORM_CONTROLS_DECLARATION}
+
+  constructor(private ${SERVICE_OBJECT}Service : ${SERVICE_CLASS}Service) {
 
   }
-
 
   ngOnInit(): void {
 
     this.initFormGroupAndControls();
+    this.lazyLoadItems();
 
   }
 
@@ -33,9 +39,37 @@ export class ${CLASS_NAME}Component implements OnInit {
 
   }
 
-  ${MODEL_OBJECT}List : ${MODEL_CLASS} [];
+  lazyLoadItems() {
 
-  ${FORM_GROUP_DECLARATION}
-  ${FORM_CONTROLS_DECLARATION}
+    let ${MODEL_OBJECT}Observable = this.${SERVICE_OBJECT}Service.list();
+
+    ${MODEL_OBJECT}Observable.subscribe(responseData => {
+      let errors = responseData["errors"];
+      let statusCode = responseData["status_code"];
+      let ${MODEL_OBJECT}Data = responseData["data"];
+
+      this.${MODEL_OBJECT}List = this.extractResponseData(${MODEL_OBJECT}Data);
+
+    });
+
+  }
+
+  extractResponseData(${MODEL_OBJECT}Data): AccessLogs [] {
+
+    let tmp${MODEL_CLASS}List : ${MODEL_CLASS} [] = [] ;
+    let arraySize = ${MODEL_OBJECT}Data.length;
+
+    for (let i = 0; i < arraySize; i++) {
+
+      let tmp${MODEL_CLASS} : ${MODEL_CLASS} = new ${MODEL_CLASS}();
+
+      ${MODEL_EXTRACTION}
+
+      tmp${MODEL_CLASS}List.push(tmp${MODEL_CLASS});
+    }
+
+    return tmp${MODEL_CLASS}List;
+
+  }
 
 }

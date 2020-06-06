@@ -143,9 +143,11 @@ void createAngularProject() {
     std::string environmentDir = "environments";
     std::string moduleDir = "admin";
     std::string modelsDir = "models";
+    std::string baseUrl = "http://127.0.0.1:8000/api/v1";
 
-    dbcrudgen::orm::AngularProjectModel projectModel{workspaceDir, projectName, distDir, e2eDir, nodeModulesDir, srcDir,
-                                                     appDir, assetsDir, environmentDir, moduleDir, modelsDir};
+    dbcrudgen::orm::AngularProjectModel projectModel{workspaceDir, projectName, distDir, e2eDir,
+                                                     nodeModulesDir, srcDir, appDir, assetsDir,
+                                                     environmentDir, moduleDir, modelsDir, baseUrl};
 
     dbcrudgen::orm::AngularProjectCreator projectCreator{projectModel, database};
     projectCreator.createProject();
