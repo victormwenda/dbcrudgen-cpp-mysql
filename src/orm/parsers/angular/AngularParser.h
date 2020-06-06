@@ -29,8 +29,8 @@ namespace dbcrudgen {
 
         public:
 
-
-            static std::string getDataType(const std::string &dataType) {
+            //Create a Java Script data type
+            static std::string getJSDataType(const std::string &dataType) {
                 if (dataType == "bool") {
                     return "bool";
                 }
@@ -66,6 +66,43 @@ namespace dbcrudgen {
                 return "any";
             }
 
+            //Create HTML 5 Data type
+            static std::string getHtml5DataType(const std::string &dataType) {
+                if (dataType == "bool") {
+                    return "bool";
+                }
+                if (dataType == "int") {
+                    return "number";
+                }
+                if (dataType == "bigint") {
+                    return "number";
+                }
+                if (dataType == "integer") {
+                    return "number";
+                }
+                if (dataType == "double") {
+                    return "number";
+                }
+                if (dataType == "float") {
+                    return "number";
+                }
+                if (dataType == "longtext") {
+                    return "text";
+                }
+                if (dataType == "varchar") {
+                    return "text";
+                }
+                if (dataType == "string") {
+                    return "text";
+                }
+                if (dataType == "timestamp") {
+                    return "text";
+                }
+
+
+                return "any";
+            }
+
             /**
             * Create  Class name
             * @param name
@@ -78,6 +115,15 @@ namespace dbcrudgen {
 
             static std::string toVariableName(const std::string &name) {
                 return createVariableNameCamelCase(name);
+            }
+
+
+            static std::string prepareModelLocation(const std::string &moduleName, const std::string &modelClassName) {
+
+                if (moduleName == "") {
+                    return std::string{"./" + moduleName + "/" + modelClassName};
+                }
+                return std::string{"../" + moduleName + "/" + modelClassName};
             }
 
             //Create module name
@@ -141,7 +187,8 @@ namespace dbcrudgen {
             static std::string
             createComponentTsSrc(const std::string &moduleName,
                                  const std::string &componentName, const std::string &componentClass,
-                                 const std::string &modelClass, const std::string &modelClassObject,
+                                 const std::string &modelLocation, const std::string &modelClass,
+                                 const std::string &modelClassObject,
                                  const std::string &formGroupDeclaration, const std::string &formControlsDeclarationTs,
                                  const std::string &formGroupInit, const std::string &formControlsBindTs) {
                 dbcrudgen::orm::AngularComponentTemplate tsTemplate;
@@ -150,6 +197,8 @@ namespace dbcrudgen {
                 src = replace(src, "${MODULE_NAME}", moduleName);
                 src = replace(src, "${COMPONENT_NAME}", componentName);
                 src = replace(src, "${CLASS_NAME}", componentClass);
+
+                src = replace(src, "${MODEL_LOCATION}", modelLocation);
                 src = replace(src, "${MODEL_CLASS}", modelClass);
                 src = replace(src, "${MODEL_OBJECT}", modelClassObject);
 
@@ -162,12 +211,18 @@ namespace dbcrudgen {
             }
 
             //Creates the service class source code
-            static std::string createServiceSrc(const std::string &componentName, const std::string &componentClass) {
+            static std::string createServiceSrc(const std::string &componentName, const std::string &componentClass,
+                                                const std::string &modelLocation, const std::string &modelClass,
+                                                const std::string &modelObject) {
                 dbcrudgen::orm::AngularServiceTemplate serviceTemplate;
                 std::string src = serviceTemplate.getTemplate();
 
                 src = replace(src, "${COMPONENT_NAME}", componentName);
                 src = replace(src, "${CLASS_NAME}", componentClass);
+
+                src = replace(src, "${MODEL_LOCATION}", modelLocation);
+                src = replace(src, "${MODEL_CLASS}", modelClass);
+                src = replace(src, "${MODEL_OBJECT}", modelObject);
 
                 return src;
             }
@@ -300,7 +355,6 @@ namespace dbcrudgen {
 
                 return src;
             }
-
         };
     }
 }

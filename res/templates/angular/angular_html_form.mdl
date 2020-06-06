@@ -3,5 +3,5 @@
     ${FORM_CONTROLS}
 
     <button type="submit" name="submit" >Submit</button>
-    <button type="clear" name="clear" >Clear</button>
+    <button type="reset" name="clear" >Clear</button>
 </form>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup} from "@angular/forms";
 
+import { ${MODEL_CLASS} } from "${MODEL_LOCATION}"
+
 @Component({
   selector: '${MODULE_NAME}-${COMPONENT_NAME}',
   templateUrl: './${COMPONENT_NAME}.component.html',
@@ -15,9 +17,15 @@ export class ${CLASS_NAME}Component implements OnInit {
 
   ngOnInit(): void {
 
-    ${INIT_FORM_GROUP}
+    this.initFormGroupAndControls();
 
-    ${INIT_BIND_FORM_CONTROLS}
+  }
+
+  initFormGroupAndControls () {
+
+      ${INIT_FORM_GROUP}
+
+      ${INIT_BIND_FORM_CONTROLS}
 
   }
 

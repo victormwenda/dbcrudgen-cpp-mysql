@@ -102,8 +102,9 @@ namespace dbcrudgen {
 
                     //Model source files
                     std::string modelClassName = AngularParser::toClassName(tableName);
-
                     std::string modelObjectName = AngularParser::toVariableName(modelClassName);
+                    std::string modelLocation = AngularParser::prepareModelLocation(projectModel.getModelsDir(),
+                                                                                    modelClassName);
 
                     std::string modelInstanceVars;
 
@@ -118,7 +119,9 @@ namespace dbcrudgen {
                             dbcrudgen::orm::AngularParser::addComponentClassImport(componentName, componentClass);
 
                     std::string serviceSrc =
-                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, componentClass);
+                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, componentClass,
+                                                                            modelLocation, modelClassName,
+                                                                            modelObjectName);
                     std::string serviceSpecSrc =
                             dbcrudgen::orm::AngularParser::createServiceSpecSrc(componentName, componentClass);
 
@@ -135,7 +138,8 @@ namespace dbcrudgen {
 
                     for (const auto &column : table.getTableColumns()) {
 
-                        std::string dataType = AngularParser::getDataType(column.getDataType());
+                        std::string jsDataType = AngularParser::getJSDataType(column.getDataType());
+                        std::string html5DataType = AngularParser::getHtml5DataType(column.getDataType());
 
                         std::string columnTitleName = AngularParser::toTitle(column.getColumnName());
                         std::string columnObjectName = AngularParser::toVariableName(column.getColumnName());
@@ -143,7 +147,7 @@ namespace dbcrudgen {
                         const std::string &defaultValue = column.getDefaultValue();
 
                         //Model instance vars
-                        modelInstanceVars += dbcrudgen::orm::AngularParser::createModelInstanceVariable(dataType,
+                        modelInstanceVars += dbcrudgen::orm::AngularParser::createModelInstanceVariable(jsDataType,
                                                                                                         columnObjectName);
 
                         tblHeadingTitles += dbcrudgen::orm::AngularParser::prepareTableHeadTD(columnTitleName);
@@ -151,7 +155,7 @@ namespace dbcrudgen {
                                                                                              columnObjectName);
 
                         formInputsHtml
-                                += dbcrudgen::orm::AngularParser::prepareHtmlFormInputs(columnTitleName, dataType,
+                                += dbcrudgen::orm::AngularParser::prepareHtmlFormInputs(columnTitleName, html5DataType,
                                                                                         columnObjectName);
 
                         formControlsBindTs += dbcrudgen::orm::AngularParser::prepareTsFormInputs(modelObjectName,
@@ -189,7 +193,8 @@ namespace dbcrudgen {
                     std::string componentTsSrc
                             = dbcrudgen::orm::AngularParser::createComponentTsSrc(moduleName,
                                                                                   componentName, componentClass,
-                                                                                  modelClassName, modelObjectName,
+                                                                                  modelLocation, modelClassName,
+                                                                                  modelObjectName,
                                                                                   formGroupDeclaration,
                                                                                   formControlsDeclarationTs,
                                                                                   formGroupInit, formControlsBindTs);
