@@ -108,7 +108,7 @@ namespace dbcrudgen {
             * @param name
             * @return
             */
-            static std::string toClassName(std::string name) {
+            static std::string toClassName(const std::string &name) {
                 //TODO :: Validate name is not reserved, if reserved, add prefix or suffix impurity
                 return SyntaxParser::createClassNameCamelCase(name);
             }
@@ -213,7 +213,10 @@ namespace dbcrudgen {
             //Creates the service class source code
             static std::string createServiceSrc(const std::string &componentName, const std::string &componentClass,
                                                 const std::string &modelLocation, const std::string &modelClass,
-                                                const std::string &modelObject) {
+                                                const std::string &modelObject,
+                                                const std::string &tablePkMethodParams,
+                                                const std::string &tablePkQueryParams) {
+
                 dbcrudgen::orm::AngularServiceTemplate serviceTemplate;
                 std::string src = serviceTemplate.getTemplate();
 
@@ -223,6 +226,9 @@ namespace dbcrudgen {
                 src = replace(src, "${MODEL_LOCATION}", modelLocation);
                 src = replace(src, "${MODEL_CLASS}", modelClass);
                 src = replace(src, "${MODEL_OBJECT}", modelObject);
+
+                src = replace(src, "${PK_METHOD_PARAMS}", tablePkMethodParams);
+                src = replace(src, "${QUERY_PARAMS}", tablePkQueryParams);
 
                 return src;
             }
@@ -276,7 +282,7 @@ namespace dbcrudgen {
                 return src;
             }
 
-            static std::string createTableBody(const std::string &modelArrObject, std::string tableBody) {
+            static std::string createTableBody(const std::string &modelArrObject, const std::string &tableBody) {
                 dbcrudgen::orm::AngularHtmlTableBodyTemplate bodyTemplate;
                 std::string src = bodyTemplate.getTemplate();
 
@@ -286,7 +292,7 @@ namespace dbcrudgen {
                 return src;
             }
 
-            static std::string createTable(const std::string &tableHeader, std::string tableBody) {
+            static std::string createTable(const std::string &tableHeader, const std::string &tableBody) {
                 dbcrudgen::orm::AngularHtmlTableTemplate tableTemplate;
                 std::string src = tableTemplate.getTemplate();
 
@@ -332,7 +338,7 @@ namespace dbcrudgen {
             }
 
 
-            static std::string prepareFormGroupDeclaration(std::string formGroupName) {
+            static std::string prepareFormGroupDeclaration(const std::string &formGroupName) {
                 std::string src = AngularTextTemplates::FORM_GROUP_DECLARATION;
 
                 src = replace(src, "${FORM_GROUP}", formGroupName);
@@ -340,7 +346,7 @@ namespace dbcrudgen {
                 return src;
             }
 
-            static std::string prepareFormGroupInt(std::string formGroupName) {
+            static std::string prepareFormGroupInt(const std::string &formGroupName) {
                 std::string src = AngularTextTemplates::FORM_GROUP_INIT;
 
                 src = replace(src, "${FORM_GROUP}", formGroupName);
@@ -348,10 +354,37 @@ namespace dbcrudgen {
                 return src;
             }
 
-            static std::string prepareFormControlDeclaration(std::string formControlName) {
+            static std::string prepareFormControlDeclaration(const std::string &formControlName) {
                 std::string src = AngularTextTemplates::FORM_CONTROL_DECLARATION;
 
                 src = replace(src, "${FORM_CONTROL}", formControlName);
+
+                return src;
+            }
+
+            static std::string
+            prepareServiceRestPrimaryKeyMethodParams(const std::string &jsDataType, const std::string &columnObjectName,
+                                                     bool isBeforeLast) {
+                std::string src = "${PK_COLUMN}: ${PK_DATATYPE} ${DELIMITER}";
+
+                src = replace(src, "${PK_COLUMN}", columnObjectName);
+                src = replace(src, "${PK_DATATYPE}", jsDataType);
+                src = replace(src, "${DELIMITER}", isBeforeLast ? "," : "");
+
+                return src;
+            }
+
+            static std::string
+            prepareServiceRestPrimaryKeyQueryParams(const std::string &columnObjectName, bool isBeforeLast) {
+
+                std::string src = R"(+ "${QUERY_NAME}="+${COLUMN_OBJECT})";
+
+                src = replace(src, "${QUERY_NAME}", columnObjectName);
+                src = replace(src, "${COLUMN_OBJECT}", columnObjectName);
+
+                if (isBeforeLast) {
+                    src.append(R"( +"&")");
+                }
 
                 return src;
             }

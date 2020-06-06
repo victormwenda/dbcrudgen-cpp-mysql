@@ -1,3 +1,4 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from '@angular/core';
 
 import { ${MODEL_CLASS} } from "${MODEL_LOCATION}"
@@ -7,5 +8,35 @@ import { ${MODEL_CLASS} } from "${MODEL_LOCATION}"
 })
 export class ${CLASS_NAME}Service {
 
-  constructor() { }
+  baseUrl: string = "${BASE_URL}/${MODULE_URI_NAME}";
+
+  constructor(private httpClient: HttpClient) {
+
+  }
+
+  create (${MODEL_OBJECT}: ${MODEL_CLASS}) {
+    let url = this.baseUrl + "/create";
+    return this.httpClient.post(url, ${MODEL_OBJECT}, {responseType: "json"});
+  }
+
+  delete (${PK_METHOD_PARAMS}) {
+    let url = this.baseUrl + "/delete?" ${QUERY_PARAMS};
+    return this.httpClient.delete(url, {responseType: "json"});
+  }
+
+  get (${PK_METHOD_PARAMS}) {
+    let url = this.baseUrl + "/get?" ${QUERY_PARAMS};
+    return this.httpClient.get(url, {responseType: "json"});
+  }
+
+  list () {
+    let url = this.baseUrl + "/list";
+    return this.httpClient.get(url, {responseType: "json"});
+  }
+
+  update (${PK_METHOD_PARAMS}, ${MODEL_OBJECT}: ${MODEL_CLASS}) {
+    let url = this.baseUrl + "/update?" ${QUERY_PARAMS};
+    return this.httpClient.put(url, ${MODEL_OBJECT}, {responseType: "json"});
+  }
+
 }

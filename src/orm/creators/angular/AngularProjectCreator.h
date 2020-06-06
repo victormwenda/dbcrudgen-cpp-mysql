@@ -100,6 +100,7 @@ namespace dbcrudgen {
 
                     const std::string &tableName = table.getTableName();
 
+
                     //Model source files
                     std::string modelClassName = AngularParser::toClassName(tableName);
                     std::string modelObjectName = AngularParser::toVariableName(modelClassName);
@@ -118,13 +119,6 @@ namespace dbcrudgen {
                     componentsClassImports +=
                             dbcrudgen::orm::AngularParser::addComponentClassImport(componentName, componentClass);
 
-                    std::string serviceSrc =
-                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, componentClass,
-                                                                            modelLocation, modelClassName,
-                                                                            modelObjectName);
-                    std::string serviceSpecSrc =
-                            dbcrudgen::orm::AngularParser::createServiceSpecSrc(componentName, componentClass);
-
 
                     std::string tblHeadingTitles;
                     std::string tblColsDataItems;
@@ -135,6 +129,30 @@ namespace dbcrudgen {
                     std::string formGroupDeclaration = dbcrudgen::orm::AngularParser::prepareFormGroupDeclaration(
                             modelObjectName);
                     std::string formGroupInit = dbcrudgen::orm::AngularParser::prepareFormGroupInt(modelObjectName);
+
+                    std::string tsServicePkMethodParams;
+                    std::string tsServicePkQueryParams;
+
+                    int pkItrIndex = 0;
+                    const std::vector<dbcrudgen::db::generic::Column> &priKeyColumns = table.getPrimaryColumns();
+
+                    for (const auto &primaryColumn : priKeyColumns) {
+                        std::string jsDataType = AngularParser::getJSDataType(primaryColumn.getDataType());
+
+                        std::string columnTitleName = AngularParser::toTitle(primaryColumn.getColumnName());
+                        std::string columnObjectName = AngularParser::toVariableName(primaryColumn.getColumnName());
+
+                        bool isBeforeLast = pkItrIndex < (priKeyColumns.size() - 1);
+
+                        tsServicePkMethodParams
+                                += AngularParser::prepareServiceRestPrimaryKeyMethodParams(jsDataType, columnObjectName,
+                                                                                           isBeforeLast);
+                        tsServicePkQueryParams
+                                += AngularParser::prepareServiceRestPrimaryKeyQueryParams(columnObjectName,
+                                                                                          isBeforeLast);
+
+                        pkItrIndex++;
+                    }
 
                     for (const auto &column : table.getTableColumns()) {
 
@@ -176,6 +194,16 @@ namespace dbcrudgen {
                             = dbcrudgen::orm::AngularParser::createTableBody(modelObjectName, tblColsDataItems);
 
                     std::string htmlTable = dbcrudgen::orm::AngularParser::createTable(tableHeadings, tableBody);
+
+
+                    std::string serviceSrc =
+                            dbcrudgen::orm::AngularParser::createServiceSrc(componentName, componentClass,
+                                                                            modelLocation, modelClassName,
+                                                                            modelObjectName,
+                                                                            tsServicePkMethodParams,
+                                                                            tsServicePkQueryParams);
+                    std::string serviceSpecSrc =
+                            dbcrudgen::orm::AngularParser::createServiceSpecSrc(componentName, componentClass);
 
 
                     //Write model
