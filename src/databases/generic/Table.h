@@ -21,6 +21,9 @@ namespace dbcrudgen {
                 std::string databaseName;
                 std::string tableName;
                 std::vector<dbcrudgen::db::generic::Column> tableColumns;
+                std::vector<dbcrudgen::db::generic::Column> primaryKeysColumns;
+                std::vector<dbcrudgen::db::generic::Column> foreignKeysColumns;
+                std::vector<dbcrudgen::db::generic::Column> indexKeysColumns;
 
             public:
 
@@ -31,8 +34,13 @@ namespace dbcrudgen {
                  * @param tableColumns
                  */
                 Table(std::string &databaseName, std::string &tableName,
-                      std::vector<dbcrudgen::db::generic::Column> &tableColumns)
-                        : databaseName(databaseName), tableName(tableName), tableColumns(tableColumns) {}
+                      std::vector<dbcrudgen::db::generic::Column> &tableColumns,
+                      std::vector<dbcrudgen::db::generic::Column> &primaryKeysColumns,
+                      std::vector<dbcrudgen::db::generic::Column> &indexKeysColumns,
+                      std::vector<dbcrudgen::db::generic::Column> &foreignKeysColumns)
+                        : databaseName(databaseName), tableName(tableName), tableColumns(tableColumns),
+                          primaryKeysColumns(primaryKeysColumns), foreignKeysColumns(foreignKeysColumns),
+                          indexKeysColumns(indexKeysColumns) {}
 
                 const std::string &getDatabaseName() const {
                     return databaseName;
@@ -56,6 +64,30 @@ namespace dbcrudgen {
 
                 void setTableColumns(const std::vector<dbcrudgen::db::generic::Column> &tableColumns) {
                     Table::tableColumns = tableColumns;
+                }
+
+                const std::vector<dbcrudgen::db::generic::Column> &getPrimaryColumns() const {
+                    return primaryKeysColumns;
+                }
+
+                void setPrimaryColumns(const std::vector<dbcrudgen::db::generic::Column> &primaryColumns) {
+                    Table::primaryKeysColumns = primaryColumns;
+                }
+
+                const std::vector<dbcrudgen::db::generic::Column> &getForeignColumns() const {
+                    return foreignKeysColumns;
+                }
+
+                void setForeignColumns(const std::vector<dbcrudgen::db::generic::Column> &foreignColumns) {
+                    Table::foreignKeysColumns = foreignColumns;
+                }
+
+                const std::vector<dbcrudgen::db::generic::Column> &getIndexColumns() const {
+                    return indexKeysColumns;
+                }
+
+                void setIndexColumns(const std::vector<dbcrudgen::db::generic::Column> &indexColumns) {
+                    Table::indexKeysColumns = indexColumns;
                 }
             };
         }
