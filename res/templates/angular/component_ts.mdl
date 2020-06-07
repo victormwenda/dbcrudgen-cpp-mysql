@@ -36,7 +36,9 @@ export class ${CLASS_NAME}Component implements OnInit {
   }
 
   onSubmitForm${MODEL_CLASS}() {
-
+    let fm${MODEL_CLASS} : ${MODEL_CLASS} = new ${MODEL_CLASS}();
+    ${FORM_EXTRACTION}
+    this.${SERVICE_OBJECT}Service.create(fm${MODEL_CLASS});
   }
 
   lazyLoadItems() {

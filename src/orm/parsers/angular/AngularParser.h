@@ -192,7 +192,7 @@ namespace dbcrudgen {
                                  const std::string &serviceClass, const std::string &serviceObject,
                                  const std::string &formGroupDeclaration, const std::string &formControlsDeclarationTs,
                                  const std::string &formGroupInit, const std::string &formControlsBindTs,
-                                 const std::string &modelDataExtraction) {
+                                 const std::string &modelDataExtraction, const std::string &formInputExtraction) {
 
                 dbcrudgen::orm::AngularComponentTemplate tsTemplate;
                 std::string src = tsTemplate.getTemplate();
@@ -215,13 +215,14 @@ namespace dbcrudgen {
 
 
                 src = replace(src, "${MODEL_EXTRACTION}", modelDataExtraction);
+                src = replace(src, "${FORM_EXTRACTION}", formInputExtraction);
 
                 return src;
             }
 
             //Creates the service class source code
             static std::string createServiceSrc(const std::string &componentName, const std::string &serviceClass,
-                                                const std::string& baseUrl, const std::string& modelUri,
+                                                const std::string &baseUrl, const std::string &modelUri,
                                                 const std::string &modelLocation, const std::string &modelClass,
                                                 const std::string &modelObject,
                                                 const std::string &tablePkMethodParams,
@@ -403,14 +404,24 @@ namespace dbcrudgen {
             }
 
             static std::string
-            prepareModelDataExtractor(const std::string &modelClass, const std::string &modelObject, const std::string &columnName,
-                                      const std::string & columnObjectName) {
+            prepareModelDataExtractor(const std::string &modelClass, const std::string &modelObject,
+                                      const std::string &columnName,
+                                      const std::string &columnObjectName) {
                 std::string src = "tmp${MODEL_CLASS}.${COLUMN_OBJECT} = ${MODEL_OBJECT}Data[i].${COLUMN_NAME};";
 
                 src = replace(src, "${MODEL_CLASS}", modelClass);
                 src = replace(src, "${MODEL_OBJECT}", modelObject);
                 src = replace(src, "${COLUMN_OBJECT}", columnObjectName);
                 src = replace(src, "${COLUMN_NAME}", columnName);
+
+                return src;
+            }
+
+            static std::string prepareFormInputExtractor(std::string modelClass, std::string columnObject) {
+                std::string src = "fm${MODEL_CLASS}.${COLUMN_OBJECT} = this.${COLUMN_OBJECT}Fc.value;";
+
+                src = replace(src, "${MODEL_CLASS}", modelClass);
+                src = replace(src, "${COLUMN_OBJECT}", columnObject);
 
                 return src;
             }

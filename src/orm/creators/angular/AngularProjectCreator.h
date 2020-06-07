@@ -137,7 +137,6 @@ namespace dbcrudgen {
                     std::string tsServicePkMethodParams;
                     std::string tsServicePkQueryParams;
 
-                    std::string modelDataExtraction;
 
                     int pkItrIndex = 0;
                     const std::vector<dbcrudgen::db::generic::Column> &priKeyColumns = table.getPrimaryColumns();
@@ -159,6 +158,9 @@ namespace dbcrudgen {
 
                         pkItrIndex++;
                     }
+
+                    std::string modelDataExtraction;
+                    std::string formInputExtraction;
 
                     for (const auto &column : table.getTableColumns()) {
 
@@ -196,6 +198,10 @@ namespace dbcrudgen {
                         modelDataExtraction +=
                                 dbcrudgen::orm::AngularParser::prepareModelDataExtractor(modelClassName,
                                                                                          modelObjectName, columnName,
+                                                                                         columnObjectName);
+
+                        formInputExtraction +=
+                                dbcrudgen::orm::AngularParser::prepareFormInputExtractor(modelClassName,
                                                                                          columnObjectName);
 
                     }
@@ -243,7 +249,8 @@ namespace dbcrudgen {
                                                                                   formGroupDeclaration,
                                                                                   formControlsDeclarationTs,
                                                                                   formGroupInit, formControlsBindTs,
-                                                                                  modelDataExtraction);
+                                                                                  modelDataExtraction,
+                                                                                  formInputExtraction);
 
                     writeComponentSrc(componentName, componentCssSrc, componentHtmlSrc, componentTestsSrc,
                                       componentTsSrc);
