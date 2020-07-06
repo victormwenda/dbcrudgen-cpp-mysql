@@ -35,6 +35,26 @@ namespace dbcrudgen {
             }
 
             /**
+             * Substitute class details
+             * @param model
+             * @param className
+             * @param beanSource
+             */
+            static std::string
+            substituteClassDetails(const SpringBootProjectModel &model, const std::string &className,
+                                   std::string &beanSource) {
+
+
+                StringUtils::replace(beanSource, "${PROJECT_PACKAGE}", model.getPackageName());
+                StringUtils::replace(beanSource, "${BEANS_PACKAGE}", model.getBeansPkg());
+
+                StringUtils::replace(beanSource, "${CLASS_NAME}", className);
+
+                return beanSource;
+
+            }
+
+            /**
              * Replace Getter Setters for java bean elements and attributes
              * @param beanSource
              * @param getterSetters

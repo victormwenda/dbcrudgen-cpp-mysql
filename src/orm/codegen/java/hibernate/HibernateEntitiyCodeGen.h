@@ -40,6 +40,23 @@ namespace dbcrudgen {
                 HibernateEntitiesParser::parseClassDetails(projectModel, entitySource, tableName, entityClass);
                 return entitySource;
             }
+
+            /**
+             * Create hibernate entity source
+             * @param projectModel
+             * @param tableName
+             * @param entityClass
+             * @return
+             */
+            static std::string
+            createHibernateEntitySource(dbcrudgen::orm::SpringBootProjectModel &projectModel,
+                                        const std::string &tableName,
+                                        const std::string &entityClass) {
+                HibernateClassEntityTemplate hEntityTemplate;
+                std::string entitySource = hEntityTemplate.getTemplate();
+                HibernateEntitiesParser::parseClassDetails(projectModel, entitySource, tableName, entityClass);
+                return entitySource;
+            }
         };
 
     }

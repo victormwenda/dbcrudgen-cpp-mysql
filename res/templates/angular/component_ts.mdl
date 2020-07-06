@@ -36,9 +36,15 @@ export class ${CLASS_NAME}Component implements OnInit {
   }
 
   onSubmitForm${MODEL_CLASS}() {
+
     let fm${MODEL_CLASS} : ${MODEL_CLASS} = new ${MODEL_CLASS}();
+
     ${FORM_EXTRACTION}
-    this.${SERVICE_OBJECT}Service.create(fm${MODEL_CLASS});
+
+    this.${SERVICE_OBJECT}Service.create(fm${MODEL_CLASS}).subscribe(response => {
+         console.log(response);
+    });
+
   }
 
   lazyLoadItems() {
@@ -56,7 +62,7 @@ export class ${CLASS_NAME}Component implements OnInit {
 
   }
 
-  extractResponseData(${MODEL_OBJECT}Data): AccessLogs [] {
+  extractResponseData(${MODEL_OBJECT}Data): ${MODEL_CLASS} [] {
 
     let tmp${MODEL_CLASS}List : ${MODEL_CLASS} [] = [] ;
     let arraySize = ${MODEL_OBJECT}Data.length;

@@ -548,7 +548,7 @@ set(SOURCE_FILES
 
         src/orm/utils/StringUtils.h
 
-        )
+        src/orm/projects/SpringBootProjectModel.h src/orm/creators/java/SpringBootProjectCreator.h src/orm/codegen/java/spring-boot/SpringBootApplicationCodeGen.h src/orm/parsers/java/SpringBootApplicationParser.h src/orm/parsers/java/SpringBootControllerParser.h src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h src/orm/templates/java/spring-boot/SpringBootClassControllerTemplate.h)
 
 #GoogleTest
 add_subdirectory(include/google-test)

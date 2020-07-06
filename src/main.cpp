@@ -18,6 +18,8 @@
 #include "databases/mysql/builder/MYSQLDatabaseModelBuilder.h"
 #include "orm/projects/AngularProjectModel.h"
 #include "orm/creators/angular/AngularProjectCreator.h"
+#include "orm/projects/SpringBootProjectModel.h"
+#include "orm/creators/java/SpringBootProjectCreator.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -57,15 +59,19 @@ void createAngularProject();
 /**
  * Create Postman project
  */
-void createPostmanProject();
+void createPostmanProject(std::string &projectName, std::string &storeDirectory, std::string &protocol,
+                          std::string &apiHost, int port, std::string &pathSegments, std::string &databaseType,
+                          std::string &databaseName);
 
 void createJavaProject();
 
 void createJaxRsHibernateProject();
 
+void createSpringBootHibernateProject();
+
 int main(int argc, char **argv) {
 
-    createAngularProject();
+    createSpringBootHibernateProject();
 
     return EXIT_SUCCESS;
 }
@@ -183,20 +189,15 @@ void createPhpProject() {
 }
 
 
-void createPostmanProject() {
+void createPostmanProject(std::string &projectName, std::string &storeDirectory, std::string &protocol,
+                          std::string &apiHost, int port, std::string &pathSegments, std::string &databaseType,
+                          std::string &databaseName) {
 
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel(databaseName);
 
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "Pesarika";
-    std::string storeDirectory = "/home/victor/Desktop";
-    std::string protocol = "http";
-    std::string apiHost = "localhost";
-    int port = 8282;
-    std::string pathSegments{"pesarika-rs-alpha/api/v1"};
     std::map<std::string, std::string> headers;
-    std::string databaseType{"mysql"};
 
     headers.insert(std::pair<std::string, std::string>(std::string{"Content-Type"}, std::string{"application/json"}));
     headers.insert(std::pair<std::string, std::string>(std::string{"Accept"}, std::string{"application/json"}));
@@ -209,12 +210,12 @@ void createPostmanProject() {
 
 void createJavaProject() {
 
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("pesarika");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("eqtr");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "pesarika-rs-alpha";
-    std::string workspaceDir = "/opt/victor/workspace/java";
-    std::string packageName = "com.pesarika";
+    std::string projectName = "eqtr-apis";
+    std::string workspaceDir = "/opt/workspace/java";
+    std::string packageName = "com.eqtr";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";
@@ -300,4 +301,47 @@ void createMYSQLProjectBuilder() {
 
 void createJaxRsHibernateProject() {
     createJavaProject();
+}
+
+void createSpringBootHibernateProject() {
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("eqtr");
+    auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
+
+    std::string projectName = "dbcrudgen-springboot";
+    std::string workspaceDir = "/opt/workspace/java";
+    std::string packageName = "com.eqtr";
+
+    std::string srcDir = "src";
+    std::string moduleDir = "main";
+    std::string javaDir = "java";
+    std::string libsDir = "libs";
+    std::string resourcesDir = "resources";
+
+    std::string webDir = "public";
+    std::string apisPkg = "controllers";
+    std::string dbConnPkg = "db.conn";
+    std::string entitiesPkg = "db.entities";
+    std::string transactionsPkg = "db.transactions";
+    std::string webAppPkg = "application";
+    std::string beansPkg = "beans";
+
+    std::string apiClassSuffix = "Controller";
+    std::string entityClassSuffix = "Entity";
+    std::string trxClassSuffix = "Transactions";
+    std::string beansClassSuffix = "Beans";
+
+    std::string webAppClass = "Application";
+    std::string dbConnClass = "DatabaseConnectionHandler";
+    std::string urlPattern = "/api/v1/*";
+
+    dbcrudgen::orm::SpringBootProjectModel sbModel{projectName, workspaceDir,
+                                                   srcDir, moduleDir, javaDir, libsDir,
+                                                   resourcesDir, packageName, webDir, apisPkg, dbConnPkg, entitiesPkg,
+                                                   transactionsPkg, webAppPkg, beansPkg, apiClassSuffix,
+                                                   entityClassSuffix,
+                                                   trxClassSuffix, beansClassSuffix, webAppClass, dbConnClass,
+                                                   urlPattern};
+
+    dbcrudgen::orm::SpringBootProjectCreator sbCreator{sbModel, genericDatabase};
+    sbCreator.createProject();
 }

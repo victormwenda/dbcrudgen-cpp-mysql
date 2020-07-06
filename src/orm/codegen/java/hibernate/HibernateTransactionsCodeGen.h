@@ -57,6 +57,21 @@ namespace dbcrudgen {
                 return HibernateTransactionsParser::parseClassDetails(projectModel, trxSource, trxClass, entityClass,
                                                                       primaryKeyColumn);
             }
+
+            static std::string
+            createHibernateTrxSource(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
+                                     const dbcrudgen::db::generic::Table &table,
+                                     const std::string &trxClass,
+                                     const std::string &entityClass) {
+
+                HibernateClassTransactionsTemplate hTrxTemplate;
+                std::string trxSource = hTrxTemplate.getTemplate();
+
+                const dbcrudgen::db::generic::Column primaryKeyColumn = getTablePrimaryKeyColumn(table);
+
+                return HibernateTransactionsParser::parseClassDetails(projectModel, trxSource, trxClass, entityClass,
+                                                                      primaryKeyColumn);
+            }
         };
 
     }

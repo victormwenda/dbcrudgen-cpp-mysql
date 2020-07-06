@@ -32,6 +32,22 @@ namespace dbcrudgen {
             }
 
             /**
+             * Set the class name and other general class details
+             * @param model
+             * @param sourceTemplate
+             * @param className
+             */
+            static void parseClassDetails(dbcrudgen::orm::SpringBootProjectModel &model, std::string &sourceTemplate,
+                                          const std::string &tableName,
+                                          const std::string &className) {
+                StringUtils::replace(sourceTemplate, "${PROJECT_PACKAGE}", model.getPackageName());
+                StringUtils::replace(sourceTemplate, "${ENTITIES_PACKAGE}", model.getEntitiesPkg());
+                StringUtils::replace(sourceTemplate, "${VISIBILITY}", "public");
+                StringUtils::replace(sourceTemplate, "${CLASS_NAME}", className);
+                StringUtils::replace(sourceTemplate, "${TABLE_NAME}", tableName);
+            }
+
+            /**
              * Add the entity instance variables
              * @param sourceTemplate
              * @param instanceVars

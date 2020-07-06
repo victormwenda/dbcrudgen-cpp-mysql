@@ -1,48 +1,37 @@
 //
-// Created by victor on 4/13/20.
+// Created by victor on 7/6/20.
 //
 
-#ifndef DBCRUDGEN_CPP_JAXRSPROJECTCREATOR_H
-#define DBCRUDGEN_CPP_JAXRSPROJECTCREATOR_H
+#ifndef DBCRUDGEN_CPP_SPRINGBOOTPROJECTCREATOR_H
+#define DBCRUDGEN_CPP_SPRINGBOOTPROJECTCREATOR_H
 
 #include "JavaProjectCreator.h"
-#include "../../projects/JaxRsProjectModel.h"
+#include "../../projects/SpringBootProjectModel.h"
 #include "../../../databases/generic/Database.h"
-#include "../../templates/java/jax-rs/JaxRsClassResourcesTemplate.h"
-#include "../../templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h"
-#include "../../templates/java/crud/hibernate/HibernateClassEntityTemplate.h"
-#include "../../templates/java/crud/hibernate/HibernateClassTransactionsTemplate.h"
-#include "../../parsers/java/HibernateConfigurationParser.h"
-#include "../../parsers/java/HibernateTransactionsParser.h"
-#include "../../parsers/java/HibernateEntitiesParser.h"
-#include "../../parsers/java/JaxRsResourcesParser.h"
-#include "../../templates/java/crud/hibernate/HibernateScriptConfigurationTemplate.h"
-#include "../../templates/java/crud/hibernate/HibernateParameterEntityMappingTemplate.h"
-#include "../../codegen/java/jax-rs/JaxRsWebXMLCodeGen.h"
-#include "../../codegen/java/jax-rs/JaxRSWebApplicationCodeGen.h"
+#include "../../parsers/java/JavaParser.h"
 #include "../../codegen/java/JaxbCodeGen.h"
+#include "../../parsers/java/HibernateEntitiesParser.h"
+#include "../../parsers/java/HibernateConfigurationParser.h"
+#include "../../templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h"
 #include "../../codegen/java/hibernate/HibernateAbstractableTransactionsCodeGen.h"
-#include "../../codegen/java/jax-rs/JaxRsAPIResourcesCodeGen.h"
-#include "../../codegen/java/hibernate/HibernateEntitiyCodeGen.h"
-#include "../../codegen/java/hibernate/HibernateTransactionsCodeGen.h"
 #include "../../codegen/java/hibernate/HibernateConfigCodeGen.h"
+#include "../../codegen/java/hibernate/HibernateTransactionsCodeGen.h"
+#include "../../codegen/java/hibernate/HibernateEntitiyCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootApplicationCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
 
-        /**
-         * JAX-RS Project Creator
-         */
-        class JaxRsProjectCreator : public JavaProjectCreator {
+        class SpringBootProjectCreator : public JavaProjectCreator {
 
         private:
-            JaxRsProjectModel projectModel;
+            SpringBootProjectModel projectModel;
             dbcrudgen::db::generic::Database database;
 
         public:
 
-            JaxRsProjectCreator(JaxRsProjectModel &projectModel, dbcrudgen::db::generic::Database &database)
-                    : projectModel{projectModel}, database{database}, JavaProjectCreator{projectModel} {}
+            SpringBootProjectCreator(SpringBootProjectModel &projectModel, dbcrudgen::db::generic::Database &database)
+            : projectModel{projectModel}, database{database}, JavaProjectCreator{projectModel} {}
 
             std::string getLanguage() override {
                 return std::string{Languages::JAVA};
@@ -116,8 +105,8 @@ namespace dbcrudgen {
                     beansClass.append(beansSuffix);
 
                     std::string apiSource =
-                            JaxRSAPIResourcesCodeGen::createAPIResourceSource(projectModel,  table, apiClass,
-                                    entityClass, trxClass);
+                            SpringBootControllerCodeGen::createAPIResourceSource(projectModel,  table, apiClass,
+                                                                              entityClass, trxClass);
 
                     std::string entitySource =
                             HibernateEntityCodeGen::createHibernateEntitySource(projectModel, tableName, entityClass);
@@ -134,10 +123,10 @@ namespace dbcrudgen {
                                                                                projectModel.getEntitiesPkg(),
                                                                                entityClass);
 
-                    webApiClassesImports += JaxRsWebApplicationCodeGen::parseWebAPIResourceClassImport(
+                    webApiClassesImports += SpringBootApplicationCodeGen::parseWebAPIResourceClassImport(
                             projectModel.getPackageName(), projectModel.getApisPkg(), apiClass);
 
-                    webApiClasses += JaxRsWebApplicationCodeGen::parseWebAPIResourceClass(apiClass);
+                    webApiClasses += SpringBootApplicationCodeGen::parseWebAPIResourceClass(apiClass);
 
                     std::string entityInstanceVars;
                     std::string entityGetterSetters;
@@ -267,9 +256,8 @@ namespace dbcrudgen {
                 std::string filename = projectModel.getWebApplicationFileAbsolutePath();
                 FilesWriter::writeFile(filename, webAppSource);
             }
-
-
         };
     }
 }
-#endif //DBCRUDGEN_CPP_JAXRSPROJECTCREATOR_H
+
+#endif //DBCRUDGEN_CPP_SPRINGBOOTPROJECTCREATOR_H

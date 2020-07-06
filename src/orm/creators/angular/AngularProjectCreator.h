@@ -259,8 +259,6 @@ namespace dbcrudgen {
                     writeServiceSrc(componentName, serviceSrc);
                     writeServiceSpecSrc(componentName, serviceSpecSrc);
 
-                    break;
-
                 }
 
                 std::string moduleClassName = SyntaxParser::toPascalCase(projectModel.getEvalModuleName());

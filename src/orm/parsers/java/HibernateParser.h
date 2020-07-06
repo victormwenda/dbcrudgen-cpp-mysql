@@ -6,6 +6,7 @@
 #define DBCRUDGEN_CPP_HIBERNATEPARSER_H
 
 #include "JavaParser.h"
+#include "../../projects/SpringBootProjectModel.h"
 
 
 namespace dbcrudgen {
@@ -23,6 +24,39 @@ namespace dbcrudgen {
              */
             static std::string
             parseConnectionScript(std::string configSource, const JaxRsProjectModel &model,
+                                  const db::generic::Database &database, const std::string &entityMappings) {
+
+                db::generic::Flavor flavor = database.getFlavor();
+
+                std::string connectorDriver = getDatabaseDriverManager(flavor);
+                std::string connectionString = getDatabaseConnectionString(flavor);
+                std::string hibernateDialect = getHibernateDialect(flavor);
+
+                connectionString = parseConnectionString(database.getConnection(), connectionString);
+
+                StringUtils::replace(configSource, "${USER}", database.getConnection().getUser());
+                StringUtils::replace(configSource, "${PASSWORD}", database.getConnection().getPassword());
+
+
+                StringUtils::replace(configSource, "${DRIVER_CLASS}", connectorDriver);
+                StringUtils::replace(configSource, "${CONNECTION_STRING}", connectionString);
+                StringUtils::replace(configSource, "${HIBERNATE_DIALECT}", hibernateDialect);
+
+                StringUtils::replace(configSource, " ${ENTITY_MAPPINGS}", entityMappings);
+
+                return configSource;
+            }
+
+            /**
+             * Parse the hibernate connection script
+             * @param configSource
+             * @param model
+             * @param database
+             * @param entityMappings
+             * @return
+             */
+            static std::string
+            parseConnectionScript(std::string configSource, const SpringBootProjectModel &model,
                                   const db::generic::Database &database, const std::string &entityMappings) {
 
                 db::generic::Flavor flavor = database.getFlavor();

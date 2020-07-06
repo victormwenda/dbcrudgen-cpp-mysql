@@ -50,6 +50,20 @@ namespace dbcrudgen {
                 std::string configSource = hConnConfigTemplate.getTemplate();
                 return HibernateParser::parseConnectionScript(configSource, projectModel, database, entityMappings);
             }
+            /**
+             * Create hibernate config file
+             * @param projectModel
+             * @param database
+             * @param entityMappings
+             * @return
+             */
+            static std::string createHibernateConfigSource(const SpringBootProjectModel &projectModel,
+                                                           const db::generic::Database &database,
+                                                           const std::string &entityMappings) {
+                HibernateScriptConfigurationTemplate hConnConfigTemplate;
+                std::string configSource = hConnConfigTemplate.getTemplate();
+                return HibernateParser::parseConnectionScript(configSource, projectModel, database, entityMappings);
+            }
         };
 
     }

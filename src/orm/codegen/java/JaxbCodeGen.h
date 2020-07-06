@@ -36,6 +36,19 @@ namespace dbcrudgen {
             }
 
             /**
+             * Create a java bean source code
+             * @param model
+             * @param beanClassName
+             * @return
+             */
+            static std::string
+            createBeansSource(const dbcrudgen::orm::SpringBootProjectModel &model, const std::string &beanClassName) {
+                JaxbClassTemplate beanTpl;
+                std::string beanSource = beanTpl.getTemplate();
+                return JaxbParser::substituteClassDetails(model, beanClassName, beanSource);
+            }
+
+            /**
              * Substitute instance variables
              * @param beanSource
              * @param instanceVars

@@ -12,6 +12,7 @@
 #include "../../../parsers/java/JaxRsWebApplicationParser.h"
 #include "../../../templates/java/crud/hibernate/HibernateClassAbstractableTransactionsTemplate.h"
 #include "../../../parsers/java/HibernateAbstractableTransactionsParser.h"
+#include "../../../projects/SpringBootProjectModel.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -28,6 +29,20 @@ namespace dbcrudgen {
              * @return
              */
             static std::string getAbstractableTransactionsSource(const JaxRsProjectModel &model) {
+                HibernateClassAbstractableTransactionsTemplate abstractableTransactionsTemplate;
+                std::string absTrxTemplate = abstractableTransactionsTemplate.getTemplate();
+
+                HibernateAbstractableTransactionsParser parser;
+                parser.parseClassDetails(model, absTrxTemplate);
+
+                return absTrxTemplate;
+            }
+
+            /**
+             * Get abstractable transactions source
+             * @return
+             */
+            static std::string getAbstractableTransactionsSource(const SpringBootProjectModel &model) {
                 HibernateClassAbstractableTransactionsTemplate abstractableTransactionsTemplate;
                 std::string absTrxTemplate = abstractableTransactionsTemplate.getTemplate();
 
