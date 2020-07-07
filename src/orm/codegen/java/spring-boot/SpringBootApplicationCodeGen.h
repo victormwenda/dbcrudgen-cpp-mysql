@@ -15,45 +15,13 @@ namespace dbcrudgen {
         class SpringBootApplicationCodeGen : public JavaProjectCodeGen {
 
         public:
-            static std::string createWebApplication(const SpringBootProjectModel &projectModel) {
-                SpringBootClassApplicationTemplate webAppTemplate;
-                std::string webAppSrc = webAppTemplate.getTemplate();
+            static std::string createApplicationClass(const SpringBootProjectModel &projectModel) {
+                SpringBootClassApplicationTemplate appTemplate;
+                std::string appSrc = appTemplate.getTemplate();
 
-                SpringBootApplicationParser::substituteProjectDetails(projectModel, webAppSrc);
+                SpringBootApplicationParser::substituteProjectDetails(projectModel, appSrc);
 
-                return webAppSrc;
-            }
-
-            static void addApisResources(std::string &webApiClassSrc, const std::string &webApiClassesImports,
-                                         const std::string &webApiClasses) {
-                SpringBootApplicationParser::substituteWebResources(webApiClassSrc, webApiClassesImports, webApiClasses);
-            }
-
-            /**
-             * Substitute web resource class and imports
-             * @param apisPkg
-             * @param apiClass
-             * @return
-             */
-            static std::string
-            parseWebAPIResourceClassImport(const std::string &projectPkg, const std::string &apisPkg,
-                                           std::string &apiClass) {
-                std::string importTemplate = R"(import ${PROJECT_PACKAGE}.${RESOURCE_PACKAGE}.${RESOURCE_CLASS};)";
-                StringUtils::replace(importTemplate, "${PROJECT_PACKAGE}", projectPkg);
-                StringUtils::replace(importTemplate, "${RESOURCE_PACKAGE}", apisPkg);
-                StringUtils::replace(importTemplate, "${RESOURCE_CLASS}", apiClass);
-                return importTemplate;
-            }
-
-            /**
-             * Substitute web resource class
-             * @param apiClass
-             * @return
-             */
-            static std::string parseWebAPIResourceClass(std::string &apiClass) {
-                std::string addResourceTemplate = R"(mClasses.add(${RESOURCE_CLASS}.class);)";
-                StringUtils::replace(addResourceTemplate, "${RESOURCE_CLASS}", apiClass);
-                return addResourceTemplate;
+                return appSrc;
             }
         };
     }

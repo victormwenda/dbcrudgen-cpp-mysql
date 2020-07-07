@@ -11,6 +11,19 @@
 namespace dbcrudgen {
     namespace orm {
         class SpringBootApplicationParser : public JavaParser {
+        public:
+            /**
+            *
+            * @param model
+            * @param sbAppClassSrc
+            */
+            static void substituteProjectDetails(const SpringBootProjectModel &model, std::string &sbAppClassSrc) {
+
+                StringUtils::replace(sbAppClassSrc, "${PROJECT_PACKAGE}", model.getPackageName());
+                StringUtils::replace(sbAppClassSrc, "${SB_APPLICATION_PACKAGE}", model.getSBAppClassPkg());
+                StringUtils::replace(sbAppClassSrc, "${CLASS_NAME}", model.getSBAppClassName());
+
+            }
         };
     }
 }

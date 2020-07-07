@@ -18,7 +18,7 @@ namespace dbcrudgen {
             std::string dbConnPkg;
             std::string entitiesPkg;
             std::string transactionsPkg;
-            std::string appPkg;
+            std::string sbAppPkg;
             std::string beansPkg;
 
             std::string apiClassSuffix;
@@ -26,7 +26,7 @@ namespace dbcrudgen {
             std::string trxClassSuffix;
             std::string beansClassSuffix;
 
-            std::string appClassName;
+            std::string sbAppClassName;
             std::string dbConnClassName;
 
             std::string urlPattern;
@@ -48,13 +48,13 @@ namespace dbcrudgen {
              * @param dbConnPkg
              * @param entitiesPkg
              * @param transactionsPkg
-             * @param appPkg
+             * @param sbAppPkg
              * @param beansPkg
              * @param apiClassSuffix
              * @param entityClassSuffix
              * @param trxClassSuffix
              * @param beansClassSuffix
-             * @param appClassName
+             * @param sbAppClassName
              * @param dbConnClassName
              * @param urlPattern
              */
@@ -64,13 +64,13 @@ namespace dbcrudgen {
 
                                    std::string &webDir,
                                    std::string &apisPkg, std::string &dbConnPkg, std::string &entitiesPkg,
-                                   std::string &transactionsPkg, std::string &appPkg, std::string &beansPkg,
+                                   std::string &transactionsPkg, std::string &sbAppPkg, std::string &beansPkg,
 
                                    std::string &apiClassSuffix, std::string &entityClassSuffix,
                                    std::string &trxClassSuffix,
                                    std::string &beansClassSuffix,
 
-                                   std::string &appClassName, std::string &dbConnClassName,
+                                   std::string &sbAppClassName, std::string &dbConnClassName,
 
                                    std::string &urlPattern)
 
@@ -79,12 +79,12 @@ namespace dbcrudgen {
                       webDir{webDir},
 
                       apisPkg{apisPkg}, dbConnPkg{dbConnPkg}, entitiesPkg{entitiesPkg},
-                      transactionsPkg{transactionsPkg}, appPkg{appPkg}, beansPkg{beansPkg},
+                      transactionsPkg{transactionsPkg}, sbAppPkg{sbAppPkg}, beansPkg{beansPkg},
 
                       apiClassSuffix{apiClassSuffix}, entityClassSuffix{entityClassSuffix},
                       trxClassSuffix{trxClassSuffix}, beansClassSuffix{beansClassSuffix},
 
-                      appClassName{appClassName}, dbConnClassName{dbConnClassName},
+                      sbAppClassName{sbAppClassName}, dbConnClassName{dbConnClassName},
                       urlPattern{urlPattern} {}
 
 
@@ -108,8 +108,8 @@ namespace dbcrudgen {
                 return transactionsPkg;
             }
 
-            const std::string &getAppPkg() const {
-                return appPkg;
+            const std::string &getSBAppClassPkg() const {
+                return sbAppPkg;
             }
 
             const std::string &getBeansPkg() const {
@@ -132,8 +132,8 @@ namespace dbcrudgen {
                 return beansClassSuffix;
             }
 
-            const std::string &getAppClassName() const {
-                return appClassName;
+            const std::string &getSBAppClassName() const {
+                return sbAppClassName;
             }
 
             const std::string &getDbConnClassName() const {
@@ -146,37 +146,40 @@ namespace dbcrudgen {
 
             /**
             * Get the absolute path to the project webdir files
+             * This is resources/public
             * @return
             */
             const std::string getAbsoluteWebDirPath() {
-                return getAbsoluteModulePath() + "/" + getWebDir();
+                return getAbsoluteResourcesPath() + "/" + getWebDir();
             }
 
             /**
-            * Get the absolute path to the project WEB-INF files
+            * Get the absolute path to the project error files dir
             * @return
             */
-            const std::string getAbsoluteWebInfDirPath() {
-                return getAbsoluteWebDirPath() + "/WEB-INF";
+            const std::string getAbsoluteWebErrorDirPath() {
+                return getAbsoluteWebDirPath() + "/error";
             }
 
             /**
-             * Get the absolute path to the web.xml file
+             * Get the absolute path for a web error
              * @param filename
              * @return
              */
-            const std::string getAbsoluteWebXMLFilePathSrc(std::string filename = "web.xml") {
-                return getAbsoluteWebInfDirPath() + "/" + filename;
+            const std::string getAbsoluteWebErrorFilePath(std::string error) {
+                return getAbsoluteWebErrorDirPath() + "/" + error + ".html";
             }
 
-            /**
-             * TODO :: this method is not supposed to be there
-             * Get the absolute path to the web.xml file
-             * @param filename
-             * @return
-             */
-            const std::string getAbsoluteWebXMLFilePathRes(std::string filename = "web.xml") {
-                return getAbsoluteResourcesPath() + "/" + filename;
+            const std::string getAbsoluteWebError404FilePath() {
+                return getAbsoluteWebErrorFilePath("404");
+            }
+
+            const std::string getAbsoluteWebError400FilePath() {
+                return getAbsoluteWebErrorFilePath("400");
+            }
+
+            const std::string getAbsoluteWebError500FilePath() {
+                return getAbsoluteWebErrorFilePath("500");
             }
 
             /**
@@ -225,7 +228,7 @@ namespace dbcrudgen {
             * @return
             */
             const std::string getWebApplicationAbsolutePath() {
-                std::string pkgName = getAppPkg();
+                std::string pkgName = getSBAppClassPkg();
                 std::string webAppPackage = StringUtils::replace(pkgName, ".", "/");
                 const std::string &baseCodePath = getAbsoluteBaseCodePath();
                 return baseCodePath + "/" + webAppPackage;
@@ -247,7 +250,7 @@ namespace dbcrudgen {
             * @return
             */
             const std::string getWebApplicationFileAbsolutePath() {
-                return getWebApplicationAbsolutePath() + "/" + getAppClassName() + ".java";
+                return getWebApplicationAbsolutePath() + "/" + getSBAppClassName() + ".java";
             }
 
             /**

@@ -20,6 +20,7 @@
 #include "orm/creators/angular/AngularProjectCreator.h"
 #include "orm/projects/SpringBootProjectModel.h"
 #include "orm/creators/java/SpringBootProjectCreator.h"
+#include "orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h"
 
 /**
  * Returns a MYSQL Database Model

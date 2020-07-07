@@ -1,16 +1,16 @@
 //
-// Created by victor on 7/6/20.
+// Created by victor on 7/7/20.
 //
 
-#ifndef DBCRUDGEN_CPP_SPRINGBOOTWEBERRORFILETEMPLATE_H
-#define DBCRUDGEN_CPP_SPRINGBOOTWEBERRORFILETEMPLATE_H
+#ifndef DBCRUDGEN_CPP_SPRINGBOOTHTTPERRORTEMPLATE_H
+#define DBCRUDGEN_CPP_SPRINGBOOTHTTPERRORTEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
 #include "../JavaTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class SpringBootWebErrorFileTemplate : public FileSourceCodeTemplate {
+        class SpringBootHttpErrorTemplate : public FileSourceCodeTemplate {
 
         protected:
             std::string getSourceFile() override {
@@ -24,4 +24,5 @@ namespace dbcrudgen {
 
     }
 }
-#endif //DBCRUDGEN_CPP_SPRINGBOOTWEBERRORFILETEMPLATE_H
+
+#endif //DBCRUDGEN_CPP_SPRINGBOOTHTTPERRORTEMPLATE_H

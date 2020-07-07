@@ -18,6 +18,8 @@
 #include "../../codegen/java/hibernate/HibernateTransactionsCodeGen.h"
 #include "../../codegen/java/hibernate/HibernateEntitiyCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootApplicationCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootControllerCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -31,7 +33,7 @@ namespace dbcrudgen {
         public:
 
             SpringBootProjectCreator(SpringBootProjectModel &projectModel, dbcrudgen::db::generic::Database &database)
-            : projectModel{projectModel}, database{database}, JavaProjectCreator{projectModel} {}
+                    : projectModel{projectModel}, database{database}, JavaProjectCreator{projectModel} {}
 
             std::string getLanguage() override {
                 return std::string{Languages::JAVA};
@@ -48,7 +50,7 @@ namespace dbcrudgen {
                 JavaProjectCreator::createProjectDirs();
 
                 FilesWriter::createDirs(projectModel.getAbsoluteWebDirPath());
-                FilesWriter::createDirs(projectModel.getAbsoluteWebInfDirPath());
+                FilesWriter::createDirs(projectModel.getAbsoluteWebErrorDirPath());
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
@@ -70,8 +72,11 @@ namespace dbcrudgen {
             void createSourceFiles() override {
                 JavaProjectCreator::createSourceFiles();
 
-                std::string webXMLSource = JaxRsWebXMLCodeGen::createWebXML(projectModel);
-                std::string webAppSource = JaxRsWebApplicationCodeGen::createWebApplication(projectModel);
+                std::string error400 = SpringBootHttpErrorCodeGen::createErrorPage(projectModel, "400");
+                std::string error404 = SpringBootHttpErrorCodeGen::createErrorPage(projectModel, "404");
+                std::string error500 = SpringBootHttpErrorCodeGen::createErrorPage(projectModel, "500");
+
+                std::string applicationClass = SpringBootApplicationCodeGen::createApplicationClass(projectModel);
 
                 std::vector<dbcrudgen::db::generic::Table> tables = database.getTables();
 
@@ -79,8 +84,6 @@ namespace dbcrudgen {
                 createAbstractableTransactionsExecutorClassFile();
 
                 std::string entityMappings;
-                std::string webApiClassesImports;
-                std::string webApiClasses;
 
 
                 for (const dbcrudgen::db::generic::Table &table : tables) {
@@ -105,14 +108,15 @@ namespace dbcrudgen {
                     beansClass.append(beansSuffix);
 
                     std::string apiSource =
-                            SpringBootControllerCodeGen::createAPIResourceSource(projectModel,  table, apiClass,
-                                                                              entityClass, trxClass);
+                            SpringBootControllerCodeGen::createControllerSource(projectModel, table, apiClass,
+                                                                                entityClass, trxClass);
 
                     std::string entitySource =
                             HibernateEntityCodeGen::createHibernateEntitySource(projectModel, tableName, entityClass);
 
                     std::string trxSource =
-                            HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass, entityClass);
+                            HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass,
+                                                                                   entityClass);
 
                     std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
                     std::string mappingSource = HibernateConfigCodeGen::createEntityTableMappingSource();
@@ -122,11 +126,6 @@ namespace dbcrudgen {
                                                                                projectModel.getPackageName(),
                                                                                projectModel.getEntitiesPkg(),
                                                                                entityClass);
-
-                    webApiClassesImports += SpringBootApplicationCodeGen::parseWebAPIResourceClassImport(
-                            projectModel.getPackageName(), projectModel.getApisPkg(), apiClass);
-
-                    webApiClasses += SpringBootApplicationCodeGen::parseWebAPIResourceClass(apiClass);
 
                     std::string entityInstanceVars;
                     std::string entityGetterSetters;
@@ -183,14 +182,9 @@ namespace dbcrudgen {
                     FilesWriter::writeFile(beanFile, beansSource);
                 }
 
-
-                //Add API classes to application class
-                JaxRsWebApplicationCodeGen::addApisResources(webAppSource, webApiClassesImports, webApiClasses);
-
-
-                createWebXMLFile(webXMLSource);
-                createWebApplicationClassFile(webAppSource);
-                createHibernateConnectionScript(entityMappings);
+                createHtmlErrorPages(error400, error404, error500);
+                createApplicationClassFile(applicationClass);
+                //createHibernateConnectionScript((std::string &) "THIS IS THE SRC CODE");
 
             }
 
@@ -241,20 +235,22 @@ namespace dbcrudgen {
 
             /**
              * Writes the Web XML Source on disk
-             * @param webXmlSource
+             * @param error400Html
              */
-            void createWebXMLFile(const std::string &webXmlSource) {
-                FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathSrc(), webXmlSource);
-                FilesWriter::writeFile(projectModel.getAbsoluteWebXMLFilePathRes(), webXmlSource);
+            void createHtmlErrorPages(const std::string &error400Html, const std::string &error404Html,
+                                      const std::string &error500Html) {
+                FilesWriter::writeFile(projectModel.getAbsoluteWebError400FilePath(), error400Html);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebError404FilePath(), error404Html);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebError500FilePath(), error500Html);
             }
 
             /**
             * Writes the Web XML Source on disk
-            * @param webAppSource
+            * @param appClassSource
             */
-            void createWebApplicationClassFile(const std::string &webAppSource) {
+            void createApplicationClassFile(const std::string &appClassSource) {
                 std::string filename = projectModel.getWebApplicationFileAbsolutePath();
-                FilesWriter::writeFile(filename, webAppSource);
+                FilesWriter::writeFile(filename, appClassSource);
             }
         };
     }
