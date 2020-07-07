@@ -1,0 +1,38 @@
+package ${PROJECT_PACKAGE}.${CONTROLLER_PACKAGE};
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/${RESOURCE-NAME}")
+public class ${CONTROLLER_CLASS} {
+
+    @GetMapping("/index")
+    public String index() {
+        return "Welcome to the world";
+    }
+
+    @GetMapping("/get")
+    public String get() {
+        return "Welcome to the helloed world";
+    }
+
+    @GetMapping("/list")
+    public String list() {
+        return "Welcome to the helloed world";
+    }
+
+    @PostMapping("/create")
+    public String create() {
+        return "Welcome to the helloed world";
+    }
+
+    @PutMapping("/update")
+    public String update() {
+        return "Welcome to the helloed world";
+    }
+
+    @DeleteMapping("/delete")
+    public String delete() {
+        return "Welcome to the helloed world";
+    }
+}

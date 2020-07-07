@@ -318,6 +318,9 @@ set(SOURCE_FILES
         src/orm/codegen/java/hibernate/HibernateTransactionsCodeGen.h
         src/orm/codegen/java/hibernate/HibernateEntitiyCodeGen.h
         src/orm/codegen/java/hibernate/HibernateConfigCodeGen.h
+        src/orm/codegen/java/spring-boot/SpringBootApplicationCodeGen.h
+        src/orm/codegen/java/spring-boot/SpringBootControllerCodeGen.h
+        src/orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h
 
         src/orm/codegen/postman/PostmanProjectCodeGen.h
 
@@ -344,6 +347,7 @@ set(SOURCE_FILES
 
         src/orm/creators/java/JaxRsProjectCreator.h
         src/orm/creators/java/JaxWsProjectCreator.h
+        src/orm/creators/java/SpringBootProjectCreator.h
 
         src/orm/creators/php/LaravelProjectCreator.h
         src/orm/creators/php/PHPProjectCreator.h
@@ -371,6 +375,8 @@ set(SOURCE_FILES
         src/orm/parsers/java/JaxRsResourcesParser.h
         src/orm/parsers/java/JaxRsWebXMLParser.h
         src/orm/parsers/java/JaxRsWebApplicationParser.h
+        src/orm/parsers/java/SpringBootApplicationParser.h
+        src/orm/parsers/java/SpringBootControllerParser.h
 
         src/orm/parsers/php/PHPParser.h
         src/orm/parsers/php/PHPMYSQLParser.h
@@ -402,6 +408,8 @@ set(SOURCE_FILES
         src/orm/projects/PostmanProjectModel.h
         src/orm/projects/ProjectModel.h
         src/orm/projects/SwiftProjectModel.h
+
+        src/orm/projects/SpringBootProjectModel.h
 
         src/orm/templates/FileSourceCodeTemplate.h
         src/orm/templates/SourceCodeTemplate.h
@@ -509,6 +517,11 @@ set(SOURCE_FILES
         src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h
         src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h
 
+        src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassControllerTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootHttpErrorTemplate.h
 
         src/orm/templates/php/laravel/LaravelControllerTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodCreateTemplate.h
@@ -548,7 +561,7 @@ set(SOURCE_FILES
 
         src/orm/utils/StringUtils.h
 
-        src/orm/projects/SpringBootProjectModel.h src/orm/creators/java/SpringBootProjectCreator.h src/orm/codegen/java/spring-boot/SpringBootApplicationCodeGen.h src/orm/parsers/java/SpringBootApplicationParser.h src/orm/parsers/java/SpringBootControllerParser.h src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h src/orm/templates/java/spring-boot/SpringBootClassControllerTemplate.h src/orm/codegen/java/spring-boot/SpringBootControllerCodeGen.h src/orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h src/orm/templates/java/spring-boot/SpringBootHttpErrorTemplate.h)
+ )
 
 #GoogleTest
 add_subdirectory(include/google-test)

@@ -13,7 +13,7 @@ namespace dbcrudgen {
         class SpringBootApplicationParser : public JavaParser {
         public:
             /**
-            *
+            * substitute project details
             * @param model
             * @param sbAppClassSrc
             */
@@ -21,8 +21,21 @@ namespace dbcrudgen {
 
                 StringUtils::replace(sbAppClassSrc, "${PROJECT_PACKAGE}", model.getPackageName());
                 StringUtils::replace(sbAppClassSrc, "${SB_APPLICATION_PACKAGE}", model.getSBAppClassPkg());
+                StringUtils::replace(sbAppClassSrc, "${CONTROLLERS_PACKAGE}", model.getControllersPkg());
                 StringUtils::replace(sbAppClassSrc, "${CLASS_NAME}", model.getSBAppClassName());
 
+            }
+
+            static std::string
+            substituteControllerDetails(const SpringBootProjectModel &model, std::string ctrlSource,
+                                        const std::string &ctrlClass,
+                                        const std::string &entityClass,
+                                        const std::string &trxClass, const std::string &apiResName) {
+                StringUtils::replace(ctrlSource, "${PROJECT_PACKAGE}", model.getPackageName());
+                StringUtils::replace(ctrlSource, "${CONTROLLER_PACKAGE}", model.getControllersPkg());
+                StringUtils::replace(ctrlSource, "${CONTROLLER_CLASS}", ctrlClass);
+                StringUtils::replace(ctrlSource, "${RESOURCE-NAME}", apiResName);
+                return ctrlSource;
             }
         };
     }

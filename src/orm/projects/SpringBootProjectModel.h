@@ -14,7 +14,7 @@ namespace dbcrudgen {
 
             std::string webDir;
 
-            std::string apisPkg;
+            std::string ctlsPkg;
             std::string dbConnPkg;
             std::string entitiesPkg;
             std::string transactionsPkg;
@@ -44,7 +44,7 @@ namespace dbcrudgen {
              * @param resourcesDir
              * @param packageName
              * @param webDir
-             * @param apisPkg
+             * @param ctlsPkg
              * @param dbConnPkg
              * @param entitiesPkg
              * @param transactionsPkg
@@ -63,7 +63,7 @@ namespace dbcrudgen {
                                    std::string &resourcesDir, std::string &packageName,
 
                                    std::string &webDir,
-                                   std::string &apisPkg, std::string &dbConnPkg, std::string &entitiesPkg,
+                                   std::string &ctlsPkg, std::string &dbConnPkg, std::string &entitiesPkg,
                                    std::string &transactionsPkg, std::string &sbAppPkg, std::string &beansPkg,
 
                                    std::string &apiClassSuffix, std::string &entityClassSuffix,
@@ -78,7 +78,7 @@ namespace dbcrudgen {
                                        libsDir, resourcesDir, packageName},
                       webDir{webDir},
 
-                      apisPkg{apisPkg}, dbConnPkg{dbConnPkg}, entitiesPkg{entitiesPkg},
+                      ctlsPkg{ctlsPkg}, dbConnPkg{dbConnPkg}, entitiesPkg{entitiesPkg},
                       transactionsPkg{transactionsPkg}, sbAppPkg{sbAppPkg}, beansPkg{beansPkg},
 
                       apiClassSuffix{apiClassSuffix}, entityClassSuffix{entityClassSuffix},
@@ -92,8 +92,8 @@ namespace dbcrudgen {
                 return webDir;
             }
 
-            const std::string &getApisPkg() const {
-                return apisPkg;
+            const std::string &getControllersPkg() const {
+                return ctlsPkg;
             }
 
             const std::string &getDbConnPkg() const {
@@ -187,7 +187,7 @@ namespace dbcrudgen {
              * @return
              */
             const std::string getApisAbsolutePath() {
-                std::string pkgName = getApisPkg();
+                std::string pkgName = getControllersPkg();
                 std::string apisPackage = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + apisPackage;
             }

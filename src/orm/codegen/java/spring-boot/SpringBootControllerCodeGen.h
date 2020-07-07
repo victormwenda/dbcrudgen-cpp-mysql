@@ -32,6 +32,10 @@ namespace dbcrudgen {
                 SpringBootClassControllerTemplate ctlTemplate;
                 std::string apiSource = ctlTemplate.getTemplate();
 
+                std::string apiResName = SyntaxParser::toKebabCase(table.getTableName());
+                apiSource = SpringBootApplicationParser::substituteControllerDetails(projectModel, apiSource, apiClass,
+                                                                                     entityClass,
+                                                                                     trxClass, apiResName);
                 return apiSource;
             }
         };
