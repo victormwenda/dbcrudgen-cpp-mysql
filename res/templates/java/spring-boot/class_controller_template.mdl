@@ -1,38 +1,71 @@
 package ${PROJECT_PACKAGE}.${CONTROLLER_PACKAGE};
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
+import ${PROJECT_PACKAGE}.${TRX_PACKAGE}.${TRX_CLASS};
 
 @RestController
 @RequestMapping("/${RESOURCE-NAME}")
 public class ${CONTROLLER_CLASS} {
 
     @GetMapping("/index")
-    public String index() {
-        return "Welcome to the world";
+    public ResponseEntity index() {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        List list = ${TRX_OBJECT}.queryAll();
+        return ResponseEntity.ok(list);
     }
 
-    @GetMapping("/get")
-    public String get() {
-        return "Welcome to the helloed world";
+    @GetMapping("/get/{${PK_COLUMN_NAME}}")
+    public ResponseEntity get(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
+        return ResponseEntity.ok(${ENTITY_OBJECT});
     }
 
     @GetMapping("/list")
-    public String list() {
-        return "Welcome to the helloed world";
+    public ResponseEntity list() {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        List list = ${TRX_OBJECT}.queryAll();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity search() {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        List list = ${TRX_OBJECT}.queryAll();
+        return ResponseEntity.ok(list);
     }
 
     @PostMapping("/create")
-    public String create() {
-        return "Welcome to the helloed world";
+    public ResponseEntity create(${ENTITY_CLASS} ${ENTITY_OBJECT}) throws URISyntaxException {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${TRX_OBJECT}.insert(${ENTITY_OBJECT});
+
+        ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME} = ${ENTITY_OBJECT}.${PK_METHOD_GETTER}();
+
+        URI uri = new URI("http://127.0.0.1/${RESOURCE-NAME}/"+id);
+
+        return ResponseEntity.created(uri).body(${ENTITY_OBJECT});
     }
 
     @PutMapping("/update")
-    public String update() {
-        return "Welcome to the helloed world";
+    public ResponseEntity update(${ENTITY_CLASS} ${ENTITY_OBJECT}) {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${TRX_OBJECT}.update(${ENTITY_OBJECT});
+        return ResponseEntity.accepted().body(${ENTITY_OBJECT});
     }
 
     @DeleteMapping("/delete")
-    public String delete() {
-        return "Welcome to the helloed world";
+    public ResponseEntity delete(@PathVariable("${PK_COLUMN_NAME}")  ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
+        ${TRX_OBJECT}.delete(${ENTITY_OBJECT});
+        return ResponseEntity.accepted().body(${ENTITY_OBJECT});
     }
 }

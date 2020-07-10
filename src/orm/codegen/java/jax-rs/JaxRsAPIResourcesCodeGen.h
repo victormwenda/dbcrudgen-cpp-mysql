@@ -53,14 +53,13 @@ namespace dbcrudgen {
              * @param table
              * @return
              */
-            static const db::generic::Column &getTablePrimaryKeyColumn(const db::generic::Table &table) {
+            static db::generic::Column getTablePrimaryKeyColumn(const db::generic::Table &table) {
 
-                const db::generic::Column &defaultColumn = table.getTableColumns()[0];
+                db::generic::Column defaultColumn = table.getTableColumns()[0];
 
-                for (const db::generic::Column &column : table.getTableColumns()) {
-                    if (column.isPrimary()) {
-                        return column;
-                    }
+                for (db::generic::Column column : table.getPrimaryColumns()) {
+                    defaultColumn = column;
+                    break;
                 }
 
                 return defaultColumn;

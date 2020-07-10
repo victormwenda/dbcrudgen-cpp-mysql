@@ -32,11 +32,30 @@ namespace dbcrudgen {
                 SpringBootClassControllerTemplate ctlTemplate;
                 std::string apiSource = ctlTemplate.getTemplate();
 
+                const db::generic::Column& pkColumn = getTablePrimaryKeyColumn(table);
+
                 std::string apiResName = SyntaxParser::toKebabCase(table.getTableName());
-                apiSource = SpringBootApplicationParser::substituteControllerDetails(projectModel, apiSource, apiClass,
-                                                                                     entityClass,
+                apiSource = SpringBootApplicationParser::substituteControllerDetails(projectModel, pkColumn, apiSource,
+                                                                                     apiClass, entityClass,
                                                                                      trxClass, apiResName);
                 return apiSource;
+            }
+
+            /**
+             * Get Table Primary Key Column
+             * @param table
+             * @return
+             */
+            static db::generic::Column getTablePrimaryKeyColumn(const db::generic::Table &table) {
+
+                db::generic::Column defaultColumn = table.getTableColumns()[0];
+
+                for (db::generic::Column column : table.getPrimaryColumns()) {
+                    defaultColumn = column;
+                    break;
+                }
+
+                return defaultColumn;
             }
         };
 

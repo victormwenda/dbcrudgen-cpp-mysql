@@ -68,9 +68,9 @@ ${VISIBILITY} class ${CLASS_NAME} {
     @Path("/delete/{${PK_COLUMN_NAME}}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response delete(@PathParam("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
-            ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
-            ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
-            ${TRX_OBJECT}.delete(${ENTITY_OBJECT});
+        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
+        ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
+        ${TRX_OBJECT}.delete(${ENTITY_OBJECT});
         return Response.noContent().build();
     }
 
