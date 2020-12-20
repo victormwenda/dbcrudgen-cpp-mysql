@@ -96,10 +96,6 @@ dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string datab
     connStr = connStr.append(host).append(":").append(std::to_string(port));
 
     dbcrudgen::db::mysql::MYSQLDatabaseModelBuilder builder{connStr, host, port, username, password, database};
-
-    std::map<std::string, std::vector<dbcrudgen::db::mysql::Columns>> tableColumns;
-
-    dbcrudgen::db::mysql::MYSQLDatabaseConnectionModel connectionModel{host, port, username, password, database};
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel{builder};
 
     return databaseModel;
@@ -317,31 +313,40 @@ void createSpringBootHibernateProject() {
     std::string javaDir = "java";
     std::string libsDir = "libs";
     std::string resourcesDir = "resources";
-
     std::string webDir = "public";
+    dbcrudgen::orm::SpringProjectDirs sbDirs{srcDir, moduleDir, javaDir, libsDir, resourcesDir, webDir};
+
     std::string apisPkg = "controllers";
     std::string dbConnPkg = "db.conn";
     std::string entitiesPkg = "db.entities";
+    std::string httpReqPkg = "http.requests";
+    std::string httpResPkg = "http.responses";
+    std::string reposPkg = "db.repos";
     std::string transactionsPkg = "db.transactions";
     std::string webAppPkg = "application";
     std::string beansPkg = "beans";
-
-    std::string apiClassSuffix = "Controller";
-    std::string entityClassSuffix = "Entity";
-    std::string trxClassSuffix = "Transactions";
-    std::string beansClassSuffix = "Beans";
+    dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, beansPkg, dbConnPkg, entitiesPkg, httpReqPkg,
+                                                 httpResPkg, reposPkg, transactionsPkg, webAppPkg};
 
     std::string webAppClass = "Application";
     std::string dbConnClass = "DatabaseConnectionHandler";
+    dbcrudgen::orm::SpringProjectClasses sbClasses{dbConnClass, webAppClass};
+
     std::string urlPattern = "/api/v1/*";
 
-    dbcrudgen::orm::SpringBootProjectModel sbModel{projectName, workspaceDir,
-                                                   srcDir, moduleDir, javaDir, libsDir,
-                                                   resourcesDir, packageName, webDir, apisPkg, dbConnPkg, entitiesPkg,
-                                                   transactionsPkg, webAppPkg, beansPkg, apiClassSuffix,
-                                                   entityClassSuffix,
-                                                   trxClassSuffix, beansClassSuffix, webAppClass, dbConnClass,
-                                                   urlPattern};
+    std::string apiClassSuffix = "Controller";
+    std::string beansClassSuffix = "Beans";
+    std::string entityClassSuffix = "Entity";
+    std::string httpReqClassSuffix = "Request";
+    std::string httpResClassSuffix = "Response";
+    std::string reposClassSuffix = "Repository";
+    std::string trxClassSuffix = "Transactions";
+    dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs{apiClassSuffix, beansClassSuffix, entityClassSuffix,
+                                                      httpReqClassSuffix, httpResClassSuffix, reposClassSuffix,
+                                                      trxClassSuffix};
+
+    dbcrudgen::orm::SpringBootProjectModel sbModel{projectName, workspaceDir, packageName, sbDirs, sbPkgs, sbClasses,
+                                                   sbClsSuffxs, urlPattern};
 
     dbcrudgen::orm::SpringBootProjectCreator sbCreator{sbModel, genericDatabase};
     sbCreator.createProject();

@@ -269,6 +269,24 @@ namespace dbcrudgen {
                 }
                 return "null";
             }
+
+            /**
+             * Convert a data type to java data type
+             * @param name
+             * @return
+             */
+            static std::string primitiveToObject(std::string primitiveDataType) {
+                if (primitiveDataType == "int") {
+                    return "Integer";
+                }
+                if (primitiveDataType == "double") {
+                    return "Double";
+                }
+                if (primitiveDataType == "long") {
+                    return "Long";
+                }
+                return std::string{"Object"};
+            }
         };
     }
 }

@@ -321,6 +321,8 @@ set(SOURCE_FILES
         src/orm/codegen/java/spring-boot/SpringBootApplicationCodeGen.h
         src/orm/codegen/java/spring-boot/SpringBootControllerCodeGen.h
         src/orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h
+        src/orm/codegen/java/spring-boot/SpringBootHttpCodeGen.h
+        src/orm/codegen/java/spring-boot/SpringBootRepoCodeGen.h
 
         src/orm/codegen/postman/PostmanProjectCodeGen.h
 
@@ -357,6 +359,11 @@ set(SOURCE_FILES
         src/orm/creators/swift/SwiftSQLiteProjectCreator.h
         src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
+
+        src/orm/dslmodels/java/springboot/SpringProjectDirs.h
+        src/orm/dslmodels/java/springboot/SpringProjectPackages.h
+        src/orm/dslmodels/java/springboot/SpringProjectClasses.h
+        src/orm/dslmodels/java/springboot/SpringProjectSuffixes.h
 
         src/orm/parsers/SyntaxParser.h
         src/orm/parsers/cpp/CppMYSQLParser.h
@@ -466,7 +473,6 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppVariableTemplate.h
         src/orm/templates/cpp/CppTemplateFiles.h
 
-
         src/orm/templates/java/JavaTemplateFiles.h
         src/orm/templates/java/JavaClassTemplate.h
         src/orm/templates/java/JavaMethodTemplate.h
@@ -517,6 +523,9 @@ set(SOURCE_FILES
         src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h
         src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h
 
+        src/orm/templates/java/spring-boot/SpringBootClassHttpReqTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassHttpResTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassRepoTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h
         src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h
         src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h
@@ -560,8 +569,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
         src/orm/utils/StringUtils.h
-
- )
+        )
 
 #GoogleTest
 add_subdirectory(include/google-test)

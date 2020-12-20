@@ -19,7 +19,7 @@ namespace dbcrudgen {
 
 
                 struct Prepared {
-                    static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}';";
+                    static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}' AND TABLE_TYPE = 'BASE TABLE';";
 
                     static constexpr const char *GET_TABLE_CREATE_STATEMENT = "SHOW CREATE TABLE ${TABLE_SCHEMA}.${TABLE_NAME}";
 

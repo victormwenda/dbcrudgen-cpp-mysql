@@ -20,7 +20,6 @@ namespace dbcrudgen {
                 return std::string{Languages::JAVA};
             }
         };
-        };
-    }
+    };
 }
 #endif //DBCRUDGEN_CPP_JAVAVARIABLESTATICTEMPLATE_H

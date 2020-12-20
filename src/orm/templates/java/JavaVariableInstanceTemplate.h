@@ -23,5 +23,5 @@ namespace dbcrudgen {
         };
     };
 }
-}
+
 #endif //DBCRUDGEN_CPP_JAVAVARIABLEINSTANCETEMPLATE_H

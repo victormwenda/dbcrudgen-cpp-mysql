@@ -10,6 +10,8 @@
 #include "../../../templates/java/spring-boot/SpringBootClassApplicationTemplate.h"
 #include "../../../parsers/java/SpringBootApplicationParser.h"
 #include "../../../templates/java/spring-boot/SpringBootClassControllerTemplate.h"
+#include "../../../templates/java/spring-boot/SpringBootClassHttpReqTemplate.h"
+#include "../../../templates/java/spring-boot/SpringBootClassRepoTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -32,7 +34,7 @@ namespace dbcrudgen {
                 SpringBootClassControllerTemplate ctlTemplate;
                 std::string apiSource = ctlTemplate.getTemplate();
 
-                const db::generic::Column& pkColumn = getTablePrimaryKeyColumn(table);
+                const db::generic::Column &pkColumn = getTablePrimaryKeyColumn(table);
 
                 std::string apiResName = SyntaxParser::toKebabCase(table.getTableName());
                 apiSource = SpringBootApplicationParser::substituteControllerDetails(projectModel, pkColumn, apiSource,

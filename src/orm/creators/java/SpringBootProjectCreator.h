@@ -20,6 +20,8 @@
 #include "../../codegen/java/spring-boot/SpringBootApplicationCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootControllerCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootHttpCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootRepoCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -51,12 +53,15 @@ namespace dbcrudgen {
 
                 FilesWriter::createDirs(projectModel.getAbsoluteWebDirPath());
                 FilesWriter::createDirs(projectModel.getAbsoluteWebErrorDirPath());
-                FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getApisAbsolutePath());
+                FilesWriter::createDirs(projectModel.getBeansAbsolutePath());
+                FilesWriter::createDirs(projectModel.getDatabaseConnectionAbsolutePath());
+                FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
+                FilesWriter::createDirs(projectModel.getHttpRequestsDirPath());
+                FilesWriter::createDirs(projectModel.getHttpResponsesDirPath());
+                FilesWriter::createDirs(projectModel.getRepositoriesDirPath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
                 FilesWriter::createDirs(projectModel.getWebApplicationAbsolutePath());
-                FilesWriter::createDirs(projectModel.getDatabaseConnectionAbsolutePath());
-                FilesWriter::createDirs(projectModel.getBeansAbsolutePath());
             }
 
             /**
@@ -89,23 +94,33 @@ namespace dbcrudgen {
                 for (const dbcrudgen::db::generic::Table &table : tables) {
 
                     const std::string &tableName = table.getTableName();
+                    dbcrudgen::db::generic::Column *pkColumn = nullptr;
 
                     std::string apiSuffix = projectModel.getApiClassSuffix();
-                    std::string entitySuffix = projectModel.getEntityClassSuffix();
-                    std::string trxSuffix = projectModel.getTrxClassSuffix();
                     std::string beansSuffix = projectModel.getBeansClassSuffix();
+                    std::string entitySuffix = projectModel.getEntityClassSuffix();
+                    std::string httpReqSuffix = projectModel.getHttpReqClassSuffix();
+                    std::string httpResSuffix = projectModel.getHttpResClassSuffix();
+                    std::string reposSuffix = projectModel.getRepoClassSuffix();
+                    std::string trxSuffix = projectModel.getTrxClassSuffix();
 
                     std::string tmpClassName = JavaParser::toJavaClassName(tableName);
 
+                    std::string beansClass = tmpClassName;
                     std::string ctlClass = tmpClassName;
                     std::string entityClass = tmpClassName;
+                    std::string httpReqClass = tmpClassName;
+                    std::string httpResClass = tmpClassName;
+                    std::string repoClass = tmpClassName;
                     std::string trxClass = tmpClassName;
-                    std::string beansClass = tmpClassName;
 
+                    beansClass.append(beansSuffix);
                     ctlClass.append(apiSuffix);
                     entityClass.append(entitySuffix);
+                    httpReqClass.append(httpReqSuffix);
+                    httpResClass.append(httpResSuffix);
+                    repoClass.append(reposSuffix);
                     trxClass.append(trxSuffix);
-                    beansClass.append(beansSuffix);
 
                     std::string ctlSource =
                             SpringBootControllerCodeGen::createControllerSource(projectModel, table, ctlClass,
@@ -117,6 +132,12 @@ namespace dbcrudgen {
                     std::string trxSource =
                             HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass,
                                                                                    entityClass);
+
+                    std::string httpReqSource = SpringBootHttpCodeGen::createHttpReqSource(projectModel,
+                                                                                           httpReqClass);
+                    std::string httpResSource = SpringBootHttpCodeGen::createHttpResSource(projectModel, httpResClass);
+                    std::string repoSource = SpringBootRepoCodeGen::createRepositorySource(projectModel,
+                                                                                           repoClass, entityClass);
 
                     std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
                     std::string mappingSource = HibernateConfigCodeGen::createEntityTableMappingSource();
@@ -136,6 +157,8 @@ namespace dbcrudgen {
                     std::string beanInstanceVariablesInit;
                     std::string beanDefaultCtorVariablesInit;
 
+                    std::string httpReqInstanceVars;
+
                     const std::vector<dbcrudgen::db::generic::Column> &columns = table.getTableColumns();
 
                     int index = 0;
@@ -152,6 +175,13 @@ namespace dbcrudgen {
                         beanDefaultCtorVariablesInit += JaxbCodeGen::createInstanceVariableDefaultBeanConstructorInitialization(
                                 column);
 
+                        if (!column.isNullable()) {
+                            httpReqInstanceVars += SpringBootRepoCodeGen::createInstanceVariable(column);
+                        }
+
+                        if (column.isPrimary()) {
+                            pkColumn = const_cast<dbcrudgen::db::generic::Column *>(&column);
+                        }
                         index++;
                     }
 
@@ -163,6 +193,9 @@ namespace dbcrudgen {
                     JaxbCodeGen::addConstructorVariables(beansSource, beanCtorVariables);
                     JaxbCodeGen::addConstructorVariablesInitialization(beansSource, beanInstanceVariablesInit);
                     JaxbCodeGen::addDefaultInstanceVariablesInitialization(beansSource, beanDefaultCtorVariablesInit);
+
+                    SpringBootHttpCodeGen::addReqModelInstanceVariables(httpReqSource, httpReqInstanceVars);
+                    SpringBootHttpCodeGen::addRepositoryPrimaryKey(repoSource, pkColumn);
 
                     std::string ctlFile =
                             projectModel.getApisAbsolutePath() + "/" + ctlClass + ".java";
@@ -176,10 +209,21 @@ namespace dbcrudgen {
                     std::string beanFile =
                             projectModel.getBeansAbsolutePath() + "/" + beansClass + ".java";
 
+                    std::string httpReqFile =
+                            projectModel.getHttpRequestsDirPath() + "/" + httpReqClass + ".java";
+                    std::string httpResFile =
+                            projectModel.getHttpResponsesDirPath() + "/" + httpResClass + ".java";
+                    std::string repoFile =
+                            projectModel.getRepositoriesDirPath() + "/" + repoClass + ".java";
+
                     FilesWriter::writeFile(ctlFile, ctlSource);
-                    //FilesWriter::writeFile(entityFile, entitySource);
-                    //FilesWriter::writeFile(trxFile, trxSource);
-                    //FilesWriter::writeFile(beanFile, beansSource);
+                    FilesWriter::writeFile(entityFile, entitySource);
+                    FilesWriter::writeFile(trxFile, trxSource);
+                    FilesWriter::writeFile(beanFile, beansSource);
+
+                    FilesWriter::writeFile(httpReqFile, httpReqSource);
+                    FilesWriter::writeFile(httpResFile, httpResSource);
+                    FilesWriter::writeFile(repoFile, repoSource);
                 }
 
                 createHtmlErrorPages(error400, error404, error500);
@@ -198,7 +242,7 @@ namespace dbcrudgen {
 
                 std::string configSource = hConnConfigTemplate.getTemplate();
                 HibernateConfigurationParser::parseConfigurationClass(projectModel, configSource);
-                //FilesWriter::writeFile(connConfigFile, configSource);
+                FilesWriter::writeFile(connConfigFile, configSource);
             }
 
             /**
@@ -209,7 +253,7 @@ namespace dbcrudgen {
                 std::string absTrxSource = HibernateAbstractableTransactionsCodeGen::getAbstractableTransactionsSource(
                         projectModel);
                 std::string filename = projectModel.getAbstractableTransactionsExecutorFileAbsolutePath();
-                //FilesWriter::writeFile(filename, absTrxSource);
+                FilesWriter::writeFile(filename, absTrxSource);
             }
 
             /**
@@ -229,8 +273,8 @@ namespace dbcrudgen {
 
                 HibernateConfigurationParser::parseConfigurationClass(projectModel, configSource);
 
-                //FilesWriter::writeFile(javaHibernateConfigFile, configSource);
-                //FilesWriter::writeFile(resourcesHibernateConfigFile, configSource);
+                FilesWriter::writeFile(javaHibernateConfigFile, configSource);
+                FilesWriter::writeFile(resourcesHibernateConfigFile, configSource);
             }
 
             /**
@@ -239,9 +283,9 @@ namespace dbcrudgen {
              */
             void createHtmlErrorPages(const std::string &error400Html, const std::string &error404Html,
                                       const std::string &error500Html) {
-                //FilesWriter::writeFile(projectModel.getAbsoluteWebError400FilePath(), error400Html);
-                //FilesWriter::writeFile(projectModel.getAbsoluteWebError404FilePath(), error404Html);
-                //FilesWriter::writeFile(projectModel.getAbsoluteWebError500FilePath(), error500Html);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebError400FilePath(), error400Html);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebError404FilePath(), error404Html);
+                FilesWriter::writeFile(projectModel.getAbsoluteWebError500FilePath(), error500Html);
             }
 
             /**
@@ -250,7 +294,7 @@ namespace dbcrudgen {
             */
             void createApplicationClassFile(const std::string &appClassSource) {
                 std::string filename = projectModel.getWebApplicationFileAbsolutePath();
-                //FilesWriter::writeFile(filename, appClassSource);
+                FilesWriter::writeFile(filename, appClassSource);
             }
         };
     }

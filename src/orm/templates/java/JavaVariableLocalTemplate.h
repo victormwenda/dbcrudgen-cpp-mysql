@@ -22,5 +22,4 @@ namespace dbcrudgen {
         };
     };
 }
-}
 #endif //DBCRUDGEN_CPP_JAVAVARIABLELOCALTEMPLATE_H

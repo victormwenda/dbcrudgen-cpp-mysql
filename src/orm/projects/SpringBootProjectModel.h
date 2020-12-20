@@ -7,137 +7,125 @@
 
 #include "JavaProjectModel.h"
 #include "../utils/StringUtils.h"
+#include "../dslmodels/java/springboot/SpringProjectClasses.h"
+#include "../dslmodels/java/springboot/SpringProjectDirs.h"
+#include "../dslmodels/java/springboot/SpringProjectPackages.h"
+#include "../dslmodels/java/springboot/SpringProjectSuffixes.h"
 
 namespace dbcrudgen {
     namespace orm {
         class SpringBootProjectModel : public JavaProjectModel {
 
-            std::string webDir;
+            std::string projectName;
+            std::string workspaceDir;
+            std::string packageName;
 
-            std::string ctlsPkg;
-            std::string dbConnPkg;
-            std::string entitiesPkg;
-            std::string transactionsPkg;
-            std::string sbAppPkg;
-            std::string beansPkg;
-
-            std::string apiClassSuffix;
-            std::string entityClassSuffix;
-            std::string trxClassSuffix;
-            std::string beansClassSuffix;
-
-            std::string sbAppClassName;
-            std::string dbConnClassName;
+            dbcrudgen::orm::SpringProjectDirs sbDirs;
+            dbcrudgen::orm::SpringProjectPackages sbPkgs;
+            dbcrudgen::orm::SpringProjectClasses sbClasses;
+            dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs;
 
             std::string urlPattern;
 
         public:
 
-            /**
-             * SpringBoot Project Model
-             * @param projectName
-             * @param workspaceDir
-             * @param srcDir
-             * @param moduleDir
-             * @param javaDir
-             * @param libsDir
-             * @param resourcesDir
-             * @param packageName
-             * @param webDir
-             * @param ctlsPkg
-             * @param dbConnPkg
-             * @param entitiesPkg
-             * @param transactionsPkg
-             * @param sbAppPkg
-             * @param beansPkg
-             * @param apiClassSuffix
-             * @param entityClassSuffix
-             * @param trxClassSuffix
-             * @param beansClassSuffix
-             * @param sbAppClassName
-             * @param dbConnClassName
-             * @param urlPattern
-             */
-            SpringBootProjectModel(std::string &projectName, std::string &workspaceDir, std::string &srcDir,
-                                   std::string &moduleDir, std::string &javaDir, std::string &libsDir,
-                                   std::string &resourcesDir, std::string &packageName,
 
-                                   std::string &webDir,
-                                   std::string &ctlsPkg, std::string &dbConnPkg, std::string &entitiesPkg,
-                                   std::string &transactionsPkg, std::string &sbAppPkg, std::string &beansPkg,
-
-                                   std::string &apiClassSuffix, std::string &entityClassSuffix,
-                                   std::string &trxClassSuffix,
-                                   std::string &beansClassSuffix,
-
-                                   std::string &sbAppClassName, std::string &dbConnClassName,
-
+            SpringBootProjectModel(std::string &projectName, std::string &workspaceDir, std::string &packageName,
+                                   dbcrudgen::orm::SpringProjectDirs &sbDirs,
+                                   dbcrudgen::orm::SpringProjectPackages &sbPkgs,
+                                   dbcrudgen::orm::SpringProjectClasses &sbClasses,
+                                   dbcrudgen::orm::SpringProjectSuffixes &sbClsSuffxs,
                                    std::string &urlPattern)
+                    : JavaProjectModel{projectName, workspaceDir, sbDirs.getSrcDir(), sbDirs.getModuleDir(),
+                                       sbDirs.getJavaDir(),
+                                       sbDirs.getLibsDir(), sbDirs.getResourcesDir(), packageName},
 
-                    : JavaProjectModel{projectName, workspaceDir, srcDir, moduleDir, javaDir,
-                                       libsDir, resourcesDir, packageName},
-                      webDir{webDir},
+                      projectName(projectName),
+                      workspaceDir(workspaceDir),
+                      packageName(packageName),
 
-                      ctlsPkg{ctlsPkg}, dbConnPkg{dbConnPkg}, entitiesPkg{entitiesPkg},
-                      transactionsPkg{transactionsPkg}, sbAppPkg{sbAppPkg}, beansPkg{beansPkg},
+                      sbDirs(sbDirs),
+                      sbPkgs(sbPkgs),
+                      sbClasses(sbClasses),
+                      sbClsSuffxs(sbClsSuffxs),
 
-                      apiClassSuffix{apiClassSuffix}, entityClassSuffix{entityClassSuffix},
-                      trxClassSuffix{trxClassSuffix}, beansClassSuffix{beansClassSuffix},
-
-                      sbAppClassName{sbAppClassName}, dbConnClassName{dbConnClassName},
                       urlPattern{urlPattern} {}
 
 
-            const std::string &getWebDir() const {
-                return webDir;
+            const std::string &getWebDir() {
+                return sbDirs.getWebDir();
             }
 
             const std::string &getControllersPkg() const {
-                return ctlsPkg;
+                return sbPkgs.getCtlsPkg();
             }
 
             const std::string &getDbConnPkg() const {
-                return dbConnPkg;
+                return sbPkgs.getDbConnPkg();
             }
 
             const std::string &getEntitiesPkg() const {
-                return entitiesPkg;
+                return sbPkgs.getEntitiesPkg();
+            }
+
+            const std::string &getHttpReqsPkg() const {
+                return sbPkgs.getHttpReqPkg();
+            }
+
+            const std::string &getHttpResPkg() const {
+                return sbPkgs.getHttpResPkg();
+            }
+
+            const std::string &getRepositoriesPkg() const {
+                return sbPkgs.getReposPkg();
             }
 
             const std::string &getTransactionsPkg() const {
-                return transactionsPkg;
+                return sbPkgs.getTransactionsPkg();
             }
 
             const std::string &getSBAppClassPkg() const {
-                return sbAppPkg;
+                return sbPkgs.getWebAppPkg();
             }
 
             const std::string &getBeansPkg() const {
-                return beansPkg;
+                return sbPkgs.getBeansPkg();
             }
 
             const std::string &getApiClassSuffix() const {
-                return apiClassSuffix;
+                return sbPkgs.getApisPkg();
             }
 
             const std::string &getEntityClassSuffix() const {
-                return entityClassSuffix;
+                return sbClsSuffxs.getEntityClassSuffix();
+            }
+
+            const std::string &getHttpReqClassSuffix() const {
+                return sbClsSuffxs.getHttpReqClassSuffix();
+            }
+
+            const std::string &getHttpResClassSuffix() const {
+                return sbClsSuffxs.getHttpResClassSuffix();
+            }
+
+            const std::string &getRepoClassSuffix() const {
+                return sbClsSuffxs.getRepoClassSuffix();
             }
 
             const std::string &getTrxClassSuffix() const {
-                return trxClassSuffix;
+                return sbClsSuffxs.getTrxClassSuffix();
             }
 
             const std::string &getBeansClassSuffix() const {
-                return beansClassSuffix;
+                return sbClsSuffxs.getBeansClassSuffix();
             }
 
             const std::string &getSBAppClassName() const {
-                return sbAppClassName;
+                return sbClasses.getWebAppClass();
             }
 
             const std::string &getDbConnClassName() const {
-                return dbConnClassName;
+                return sbClasses.getDbConnClass();
             }
 
             const std::string &getUrlPattern() const {
@@ -193,6 +181,17 @@ namespace dbcrudgen {
             }
 
             /**
+           * Get absolute path to beans package dir
+           * @return
+           */
+            const std::string getBeansAbsolutePath() {
+                std::string pkgName = getBeansPkg();
+                std::string beansPackage = StringUtils::replace(pkgName, ".", "/");
+                const std::string &baseCodePath = getAbsoluteBaseCodePath();
+                return baseCodePath + "/" + beansPackage;
+            }
+
+            /**
              * Get absolute path to database connection dir
              * @return
              */
@@ -210,6 +209,34 @@ namespace dbcrudgen {
                 std::string pkgName = getEntitiesPkg();
                 std::string entitiesPackage = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + entitiesPackage;
+            }/**
+             * Get absolute path to http requests dir
+             * @return
+             */
+            const std::string getHttpRequestsDirPath() {
+                std::string pkgName = getHttpReqsPkg();
+                std::string httpReqPkg = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + httpReqPkg;
+            }
+
+            /**
+             * Get absolute path to http responses dir
+             * @return
+             */
+            const std::string getHttpResponsesDirPath() {
+                std::string pkgName = getHttpResPkg();
+                std::string httpResPkg = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + httpResPkg;
+            }
+
+            /**
+             * Get absolute path to http responses dir
+             * @return
+             */
+            const std::string getRepositoriesDirPath() {
+                std::string pkgName = getRepositoriesPkg();
+                std::string reposPkg = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + reposPkg;
             }
 
             /**
@@ -234,16 +261,6 @@ namespace dbcrudgen {
                 return baseCodePath + "/" + webAppPackage;
             }
 
-            /**
-            * Get absolute path to beans package dir
-            * @return
-            */
-            const std::string getBeansAbsolutePath() {
-                std::string pkgName = getBeansPkg();
-                std::string beansPackage = StringUtils::replace(pkgName, ".", "/");
-                const std::string &baseCodePath = getAbsoluteBaseCodePath();
-                return baseCodePath + "/" + beansPackage;
-            }
 
             /**
             * Get absolute path to web application file
