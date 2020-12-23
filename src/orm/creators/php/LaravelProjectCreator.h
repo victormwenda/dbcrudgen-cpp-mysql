@@ -15,7 +15,7 @@
 #include "../../projects/LaravelProjectModel.h"
 #include "PHPProjectCreator.h"
 #include "../../templates/php/laravel/LaravelViewTemplate.h"
-#include "../../templates/php/laravel/LaravelTableScrudJSTemplate.h"
+#include "../../templates/php/laravel/LaravelTableCrudJSTemplate.h"
 #include "../../templates/php/laravel/LaravelDataTableTemplate.h"
 
 namespace dbcrudgen {
@@ -362,7 +362,7 @@ namespace dbcrudgen {
 
                 const std::string &tableName = table.getTableName();
 
-                LaravelTableScrudJSTemplate jsTemplate;
+                LaravelTableCrudJSTemplate jsTemplate;
 
                 std::string viewSource = jsTemplate.getTemplate();
 

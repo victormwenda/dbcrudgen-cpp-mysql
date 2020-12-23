@@ -554,7 +554,7 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelRouteWebPutTemplate.h
         src/orm/templates/php/laravel/LaravelRoutesWebTemplate.h
         src/orm/templates/php/laravel/LaravelRoutesApiTemplate.h
-        src/orm/templates/php/laravel/LaravelTableScrudJSTemplate.h
+        src/orm/templates/php/laravel/LaravelTableCrudJSTemplate.h
         src/orm/templates/php/laravel/LaravelTableWebRoutesTemplate.h
         src/orm/templates/php/laravel/LaravelViewTemplate.h
 
@@ -564,9 +564,10 @@ set(SOURCE_FILES
 
 
         src/orm/templates/postman/PostmanCollectionTemplate.h
+        src/orm/templates/postman/PostmanFolderTemplate.h
+        src/orm/templates/postman/PostmanRequestBodyTemplate.h
         src/orm/templates/postman/PostmanRequestTemplate.h
         src/orm/templates/postman/PostmanTemplateFiles.h
-        src/orm/templates/postman/PostmanRequestBodyTemplate.h
 
         src/orm/utils/StringUtils.h
         )

@@ -17,6 +17,7 @@ namespace dbcrudgen {
 
         public:
             static constexpr const char *COLLECTION_TEMPLATE = "templates/postman/postman_collection.mdl";
+            static constexpr const char *FOLDER_TEMPLATE = "templates/postman/postman_folder.mdl";
             static constexpr const char *REQUEST_TEMPLATE = "templates/postman/postman_request.mdl";
             static constexpr const char *REQUEST_BODY_TEMPLATE = "templates/postman/postman_request_body.mdl";
         };

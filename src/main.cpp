@@ -72,7 +72,16 @@ void createSpringBootHibernateProject();
 
 int main(int argc, char **argv) {
 
-    createSpringBootHibernateProject();
+    std::string projectName = "Digisoko";
+    std::string storeDirectory = "/home/victor/Desktop";
+    std::string protocol = "https";
+    std::string apiHost = "localhost";
+    int port = 443;
+    std::string pathSegments = "/v1/";
+    std::string databaseType = "mysql";
+    std::string databaseName = "digisoko";
+    createPostmanProject(projectName, storeDirectory, protocol, apiHost, port, pathSegments, databaseType,
+                         databaseName);
 
     return EXIT_SUCCESS;
 }

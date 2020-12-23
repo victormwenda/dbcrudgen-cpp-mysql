@@ -1,0 +1,6 @@
+{
+    "name": "${FOLDER_NAME}",
+	"item": [
+        ${REQUESTS}
+	]
+}

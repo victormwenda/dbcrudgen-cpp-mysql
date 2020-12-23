@@ -2,15 +2,15 @@
 // Created by victor on 3/24/20.
 //
 
-#ifndef DBCRUDGEN_CPP_LARAVELTABLESCRUDJSTEMPLATE_H
-#define DBCRUDGEN_CPP_LARAVELTABLESCRUDJSTEMPLATE_H
+#ifndef DBCRUDGEN_CPP_LARAVELTABLECRUDJSTEMPLATE_H
+#define DBCRUDGEN_CPP_LARAVELTABLECRUDJSTEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
 #include "LaravelTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class LaravelTableScrudJSTemplate : public FileSourceCodeTemplate {
+        class LaravelTableCrudJSTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
                 return std::string{LaravelTemplateFiles::SCRIPT_SCRUD_JS};
@@ -23,4 +23,4 @@ namespace dbcrudgen {
         };
     }
 }
-#endif //DBCRUDGEN_CPP_LARAVELTABLESCRUDJSTEMPLATE_H
+#endif //DBCRUDGEN_CPP_LARAVELTABLECRUDJSTEMPLATE_H

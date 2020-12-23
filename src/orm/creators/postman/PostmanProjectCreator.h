@@ -13,6 +13,7 @@
 #include "../../templates/postman/PostmanCollectionTemplate.h"
 #include "../../templates/postman/PostmanRequestTemplate.h"
 #include "../../codegen/postman/PostmanProjectCodeGen.h"
+#include "../../templates/postman/PostmanFolderTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -54,23 +55,28 @@ namespace dbcrudgen {
             void createSourceFiles() override {
 
                 PostmanCollectionTemplate collectionTemplate;
+                PostmanFolderTemplate folderTemplate;
                 PostmanRequestTemplate requestTemplate;
 
                 std::string collectionSource = collectionTemplate.getTemplate();
-                std::string requestsSource;
+                std::string foldersSource;
+
 
                 auto tables = database.getTables();
                 int tablesIndex = 0;
                 for (const auto &table : tables) {
 
-                    std::string source = PostmanProjectCodeGen::createSource(projectModel, table, requestTemplate);
+                    std::string folderSource = folderTemplate.getTemplate();
+                    std::string requestSource = PostmanProjectCodeGen::createSource(projectModel, table,
+                                                                                    requestTemplate);
+                    std::string requestsSource;
 
-                    std::string getSource = source;
-                    std::string searchSource = source;
-                    std::string listSource = source;
-                    std::string postSource = source;
-                    std::string putSource = source;
-                    std::string deleteSource = source;
+                    std::string getSource = requestSource;
+                    std::string searchSource = requestSource;
+                    std::string listSource = requestSource;
+                    std::string postSource = requestSource;
+                    std::string putSource = requestSource;
+                    std::string deleteSource = requestSource;
 
                     getSource = PostmanProjectCodeGen::createGetSource(projectModel, table, getSource);
                     searchSource = PostmanProjectCodeGen::createGetSourceSearch(projectModel, table, searchSource);
@@ -123,8 +129,12 @@ namespace dbcrudgen {
                     requestsSource += putSource.append(",");
                     requestsSource += deleteSource;
 
+                    StringUtils::replace(folderSource, "${FOLDER_NAME}", table.getTableName());
+                    StringUtils::replace(folderSource, "${REQUESTS}", requestsSource);
+                    foldersSource += folderSource;
+
                     if (tablesIndex < tables.size() - 1) {
-                        requestsSource.append(",");
+                        foldersSource.append(",");
                     }
 
                     tablesIndex++;
@@ -132,7 +142,7 @@ namespace dbcrudgen {
 
                 PostmanProjectCodeGen::parseProjectDetails(collectionSource, projectModel);
 
-                StringUtils::replace(collectionSource, "${REQUESTS}", requestsSource);
+                StringUtils::replace(collectionSource, "${REQUESTS_FOLDERS}", foldersSource);
 
                 std::string collectionFilename =
                         projectModel.getGeneratedCodeDir() + "/" + projectModel.getProjectName() +
