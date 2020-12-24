@@ -87,21 +87,30 @@ namespace dbcrudgen {
 
 
                     auto tableColumns = table.getTableColumns();
+                    std::vector<dbcrudgen::db::generic::Column> mandatoryCols;
 
                     std::string requestParams;
                     std::string queryParams;
 
                     int columnsIndex = 0;
                     for (const auto &tableColumn : tableColumns) {
-                        requestParams += PostmanProjectCodeGen::createRequestParams(tableColumn);
                         queryParams += PostmanProjectCodeGen::createQueryParams(tableColumn);
-
                         if (columnsIndex < tableColumns.size() - 1) {
-                            requestParams.append(",");
                             queryParams.append(",");
                         }
-
+                        if (!tableColumn.isNullable()) {
+                            mandatoryCols.emplace_back(tableColumn);
+                        }
                         columnsIndex++;
+                    }
+
+                    int mandatoryColsIndex = 0;
+                    for (const auto &tableColumn : mandatoryCols) {
+                        requestParams += PostmanProjectCodeGen::createRequestParams(tableColumn);
+                        if (mandatoryColsIndex < mandatoryCols.size() - 1) {
+                            requestParams.append(",");
+                        }
+                        mandatoryColsIndex++;
                     }
 
                     StringUtils::replace(getSource, "${REQUEST_DATA}", "");
