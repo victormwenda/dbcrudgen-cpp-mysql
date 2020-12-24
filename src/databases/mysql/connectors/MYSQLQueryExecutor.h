@@ -34,7 +34,7 @@ namespace dbcrudgen {
                  * @param connector the connection
                  * @param schema the database
                  */
-                MYSQLQueryExecutor(MYSQLDatabaseConnector *connector, const sql::SQLString schema)
+                MYSQLQueryExecutor(MYSQLDatabaseConnector *connector, const sql::SQLString& schema)
                         : connector(connector), schema(schema) {
                     connector->getConnection().setSchema(schema);
                 }
@@ -44,7 +44,7 @@ namespace dbcrudgen {
                  * Change the database
                  * @param schema
                  */
-                void setSchema(sql::SQLString schema) {
+                void setSchema(sql::SQLString& schema) {
                     MYSQLQueryExecutor::schema = schema;
                     changeSchema(schema);
                 }
@@ -53,7 +53,7 @@ namespace dbcrudgen {
                  * Change the database
                  * @param schema
                  */
-                void changeSchema(sql::SQLString schema) {
+                void changeSchema(sql::SQLString& schema) {
                     connector->getConnection().setSchema(schema);
                 }
 
@@ -70,7 +70,7 @@ namespace dbcrudgen {
                  * @param sql
                  * @return
                  */
-                sql::ResultSet &exec(sql::SQLString sql) {
+                sql::ResultSet &exec(sql::SQLString &sql) {
                     return *(&getStatement())->executeQuery(sql);
                 }
             };
