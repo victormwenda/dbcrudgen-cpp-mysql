@@ -9,10 +9,14 @@
 #ifndef DBCRUDGEN_CPP_MSSQLDATABASE_H
 #define DBCRUDGEN_CPP_MSSQLDATABASE_H
 
+namespace dbcrudgen {
+    namespace db {
+        namespace mssql {
+            class MSSQLDatabaseSchemas {
 
-class MSSQLDatabaseSchemas {
-
-};
-
+            };
+        }
+    }
+}
 
 #endif //DBCRUDGEN_CPP_MSSQLDATABASE_H

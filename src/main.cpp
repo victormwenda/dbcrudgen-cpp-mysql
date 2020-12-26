@@ -21,6 +21,8 @@
 #include "orm/projects/SpringBootProjectModel.h"
 #include "orm/creators/java/SpringBootProjectCreator.h"
 #include "orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h"
+#include "databases/mssql/connectors/MSSQLDbConnParams.h"
+#include "databases/mssql/connectors/MSSQLDbConnector.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -70,18 +72,21 @@ void createJaxRsHibernateProject();
 
 void createSpringBootHibernateProject();
 
+void testPostmanProject();
+
+
 int main(int argc, char **argv) {
 
-    std::string projectName = "Digisoko";
-    std::string storeDirectory = "/home/victor/Desktop";
-    std::string protocol = "https";
-    std::string apiHost = "localhost";
-    int port = 443;
-    std::string pathSegments = "/v1/";
-    std::string databaseType = "mysql";
-    std::string databaseName = "digisoko";
-    createPostmanProject(projectName, storeDirectory, protocol, apiHost, port, pathSegments, databaseType,
-                         databaseName);
+     std::string host = "localhost";
+    int port = 1433;
+    std::string database = "dbcrudgen";
+    std::string user = "sa";
+    std::string password = "Root@3358";
+    dbcrudgen::db::mssql::MSSQLDbConnParams connParams{host, port, database, user, password};
+    dbcrudgen::db::mssql::MSSQLDbConnector connector{connParams};
+    connector.openConnection();
+
+
 
     return EXIT_SUCCESS;
 }
@@ -194,6 +199,18 @@ void createPhpProject() {
 
 }
 
+void testPostmanProject() {
+    std::string projectName = "Digisoko";
+    std::string storeDirectory = "/home/victor/Desktop";
+    std::string protocol = "https";
+    std::string apiHost = "localhost";
+    int port = 443;
+    std::string pathSegments = "/v1/";
+    std::string databaseType = "mysql";
+    std::string databaseName = "digisoko";
+    createPostmanProject(projectName, storeDirectory, protocol, apiHost, port, pathSegments, databaseType,
+                         databaseName);
+}
 
 void createPostmanProject(std::string &projectName, std::string &storeDirectory, std::string &protocol,
                           std::string &apiHost, int port, std::string &pathSegments, std::string &databaseType,

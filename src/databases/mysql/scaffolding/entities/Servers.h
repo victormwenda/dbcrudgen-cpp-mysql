@@ -68,7 +68,7 @@ namespace dbcrudgen {
                           port{port},
                           socket{socket}, wrapper{wrapper}, owner{owner} {}
 
-                // Get the value of serverName
+                // Get the value of database
                 const std::string &getServerName() const {
                     return serverName;
                 }
