@@ -73,6 +73,7 @@ namespace dbcrudgen {
 
                 /**
                  * Allocate environment handle
+                 * https://docs.microsoft.com/en-us/sql/odbc/reference/syntax/sqlsetenvattr-function?view=sql-server-ver15
                  * @return
                  */
                 bool allocateEnvironment() {
