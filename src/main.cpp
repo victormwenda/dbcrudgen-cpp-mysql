@@ -23,6 +23,7 @@
 #include "orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h"
 #include "databases/mssql/connectors/MSSQLDbConnParams.h"
 #include "databases/mssql/connectors/MSSQLDbConnector.h"
+#include "databases/mssql/executor/MSSQLQueryExecutor.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -77,7 +78,7 @@ void testPostmanProject();
 
 int main(int argc, char **argv) {
 
-     std::string host = "localhost";
+    std::string host = "localhost";
     int port = 1433;
     std::string database = "dbcrudgen";
     std::string user = "sa";
@@ -85,8 +86,15 @@ int main(int argc, char **argv) {
     dbcrudgen::db::mssql::MSSQLDbConnParams connParams{host, port, database, user, password};
     dbcrudgen::db::mssql::MSSQLDbConnector connector{connParams};
     connector.openConnection();
+    SQLHDBC hDbc = connector.getHDbc();
 
+    if(hDbc == nullptr) {
+        std::cout << "second check -- null" << std::endl;
+    }
 
+    dbcrudgen::db::mssql::MSSQLQueryExecutor executor{hDbc};
+    executor.freeStatementHandle();
+    connector.closeConnection();
 
     return EXIT_SUCCESS;
 }

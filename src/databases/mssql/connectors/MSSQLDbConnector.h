@@ -40,6 +40,9 @@ namespace dbcrudgen {
                  * @return
                  */
                 SQLHDBC getHDbc() const {
+                    if (hDbc == nullptr) {
+                        std::cout << "first check -- null" << std::endl;
+                    }
                     return hDbc;
                 }
 
@@ -53,16 +56,16 @@ namespace dbcrudgen {
 
                     switch (allocReturn) {
                         case SQL_SUCCESS:
-                            std::cout << " ALLOCATE ENVIRONMENT SUCCESS" << std::endl;
+                            std::cout << "ALLOCATE ENVIRONMENT HANDLE SUCCESS" << std::endl;
                             return true;
                         case SQL_SUCCESS_WITH_INFO:
-                            std::cout << " ALLOCATE ENVIRONMENT SUCCESS WITH INFO" << std::endl;
+                            std::cout << "ALLOCATE ENVIRONMENT HANDLE  SUCCESS WITH INFO" << std::endl;
                             return true;
                         case SQL_INVALID_HANDLE:
-                            std::cout << " ALLOCATE ENVIRONMENT FAILED INVALID HANDLE" << std::endl;
+                            std::cout << "ALLOCATE ENVIRONMENT HANDLE  FAILED INVALID HANDLE" << std::endl;
                             return false;
                         case SQL_ERROR:
-                            std::cout << " ALLOCATE ENVIRONMENT FAILED SQL ERROR" << std::endl;
+                            std::cout << "ALLOCATE ENVIRONMENT HANDLE  FAILED SQL ERROR" << std::endl;
                             return false;
                         default:
                             std::cout << "FAILED :: " << allocReturn << std::endl;
@@ -82,19 +85,19 @@ namespace dbcrudgen {
 
                     switch (setEnvReturn) {
                         case SQL_SUCCESS:
-                            std::cout << " ALLOCATE ENVIRONMENT SUCCESS" << std::endl;
+                            std::cout << "SET ENV ATTR SUCCESS" << std::endl;
                             return true;
                         case SQL_SUCCESS_WITH_INFO:
-                            std::cout << " ALLOCATE ENVIRONMENT SUCCESS WITH INFO" << std::endl;
+                            std::cout << "SET ENV ATTR  SUCCESS WITH INFO" << std::endl;
                             return true;
                         case SQL_INVALID_HANDLE:
-                            std::cout << " ALLOCATE ENVIRONMENT FAILED INVALID HANDLE" << std::endl;
+                            std::cout << "SET ENV ATTR  FAILED INVALID HANDLE" << std::endl;
                             return false;
                         case SQL_ERROR:
-                            std::cout << " ALLOCATE ENVIRONMENT FAILED SQL ERROR" << std::endl;
+                            std::cout << "SET ENV ATTR  FAILED SQL ERROR" << std::endl;
                             return false;
                         default:
-                            std::cout << "FAILED :: " << setEnvReturn << std::endl;
+                            std::cout << "ALLOCATE ENV FAILED :: ERROR CODE" << setEnvReturn << std::endl;
                             return false;
                     }
                 }
@@ -103,29 +106,94 @@ namespace dbcrudgen {
                  * Allocate connection handle
                  * @return
                  */
-                SQLRETURN allocateConnectionHandle() {
-                    return SQLAllocHandle(SQL_HANDLE_DBC, hEnv, &hDbc);
+                bool allocateConnectionHandle() {
+
+                    SQLRETURN allocHandle = SQLAllocHandle(SQL_HANDLE_DBC, hEnv, &hDbc);
+
+                    switch (allocHandle) {
+                        case SQL_SUCCESS:
+                            std::cout << "SET CONN HANDLE SUCCESS" << std::endl;
+                            return true;
+                        case SQL_SUCCESS_WITH_INFO:
+                            std::cout << "SET CONN HANDLE SUCCESS WITH INFO" << std::endl;
+                            return true;
+                        case SQL_INVALID_HANDLE:
+                            std::cout << "SET CONN HANDLE FAILED INVALID HANDLE" << std::endl;
+                            return false;
+                        case SQL_ERROR:
+                            std::cout << "SET CONN HANDLE FAILED SQL ERROR" << std::endl;
+                            return false;
+                        default:
+                            std::cout << "CONNECTION HANDLE FAILED :: ERROR CODE" << allocHandle << std::endl;
+                            return false;
+                    }
                 }
 
                 bool createConnection() {
                     std::string dbConnStr = getConnParams().getConnStr();
                     SQLCHAR *connStr = (SQLCHAR *) dbConnStr.c_str();
-                    SQLRETURN conn = SQLDriverConnect(hDbc, nullptr, connStr, SQL_NTS, nullptr,
-                                                      0, nullptr, SQL_DRIVER_COMPLETE);
-                    switch (conn) {
+                    SQLRETURN connResult = SQLDriverConnect(hDbc, nullptr, connStr, SQL_NTS, nullptr,
+                                                            0, nullptr, SQL_DRIVER_COMPLETE);
+                    std::cout << dbConnStr << std::endl;
+                    switch (connResult) {
                         case SQL_SUCCESS:
-                            std::cout << " DB CONN SUCCESS" << std::endl;
+                            std::cout << "DB CONN SUCCESS" << std::endl;
                         case SQL_SUCCESS_WITH_INFO:
-                            std::cout << " DB CONN WITH INFO" << std::endl;
+                            std::cout << "DB CONN WITH INFO" << std::endl;
                             return true;
                         case SQL_INVALID_HANDLE:
-                            std::cout << " INVALID DB CONN HANDLE" << std::endl;
+                            std::cout << "INVALID DB CONN HANDLE" << std::endl;
                         default:
+                            std::cout << "CONNECTION FAILED :: ERROR CODE : " << connResult << std::endl;
                             return false;
 
                     }
                 }
 
+
+                void openConnection() {
+
+                    if (allocateEnvironmentHandle()) {
+                        std::cout << "allocated env handle" << std::endl;
+
+                        if (allocateEnvironment()) {
+                            std::cout << "allocated env" << std::endl;
+
+
+                            if (allocateConnectionHandle()) {
+                                std::cout << "allocated conn handle" << std::endl;
+
+                                if (createConnection()) {
+                                    std::cout << "created conn" << std::endl;
+                                } else {
+                                    std::cout << "could not create conn" << std::endl;
+                                }
+
+
+                            } else {
+                                std::cout << "could not allocate conn handle" << std::endl;
+                            }
+
+
+                        } else {
+                            std::cout << "could not allocate env";
+                        }
+
+                    } else {
+                        std::cerr << "could not allocate env handle" << std::endl;
+                    }
+                }
+
+                /**
+                 * Close SQL Server Connection
+                 */
+                void closeConnection() {
+                    disconnect();
+                    freeConnectionHandle();
+                    freeEnvironmentHandle();
+                }
+
+            private:
                 void disconnect() {
                     SQLDisconnect(hDbc);
                 }
@@ -142,24 +210,6 @@ namespace dbcrudgen {
                         SQLFreeHandle(SQL_HANDLE_ENV, hEnv);
                     }
                     return hEnv == nullptr;
-                }
-
-                void openConnection() {
-
-                    if (allocateEnvironmentHandle()) {
-                        std::cout << "allocated env handle" << std::endl;
-
-                        if (allocateEnvironment()) {
-                            std::cout << "allocated env" << std::endl;
-                        } else {
-                            std::cout << "could not allocate env";
-                        }
-
-                    } else {
-                        std::cerr << " could not allocate env handle" << std::endl;
-                    }
-
-
                 }
             };
 
