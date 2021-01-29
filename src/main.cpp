@@ -78,7 +78,7 @@ void testPostmanProject();
 
 int main(int argc, char **argv) {
 
-    std::string host = "localhost";
+    /*std::string host = "localhost";
     int port = 1433;
     std::string database = "dbcrudgen";
     std::string user = "sa";
@@ -88,13 +88,16 @@ int main(int argc, char **argv) {
     connector.openConnection();
     SQLHDBC hDbc = connector.getHDbc();
 
-    if(hDbc == nullptr) {
+    if (hDbc == nullptr) {
         std::cout << "second check -- null" << std::endl;
     }
 
     dbcrudgen::db::mssql::MSSQLQueryExecutor executor{hDbc};
+    executor.execQuery("SELECT * FROM test;");
     executor.freeStatementHandle();
-    connector.closeConnection();
+    connector.closeConnection();*/
+
+    createSpringBootHibernateProject();
 
     return EXIT_SUCCESS;
 }
@@ -338,7 +341,7 @@ void createSpringBootHibernateProject() {
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("eqtr");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "dbcrudgen-springboot";
+    std::string projectName = "eqtr-ws-builder";
     std::string workspaceDir = "/opt/workspace/java";
     std::string packageName = "com.eqtr";
 
@@ -351,12 +354,12 @@ void createSpringBootHibernateProject() {
     dbcrudgen::orm::SpringProjectDirs sbDirs{srcDir, moduleDir, javaDir, libsDir, resourcesDir, webDir};
 
     std::string apisPkg = "controllers";
-    std::string dbConnPkg = "db.conn";
-    std::string entitiesPkg = "db.entities";
+    std::string dbConnPkg = "database.conn";
+    std::string entitiesPkg = "database.entities";
     std::string httpReqPkg = "http.requests";
     std::string httpResPkg = "http.responses";
-    std::string reposPkg = "db.repos";
-    std::string transactionsPkg = "db.transactions";
+    std::string reposPkg = "database.repos";
+    std::string transactionsPkg = "database.transactions";
     std::string webAppPkg = "application";
     std::string beansPkg = "beans";
     dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, beansPkg, dbConnPkg, entitiesPkg, httpReqPkg,

@@ -8,5 +8,10 @@ select * from INFORMATION_SCHEMA.TABLES;
 SELECT OBJECT_DEFINITION(OBJECT_ID('INFORMATION_SCHEMA.TABLES'));
 create database dbcrudgen;
 use dbcrudgen;
-create table test (username varchar);
 drop table test;
+create table test (username varchar(128));
+select * from test;
+truncate table test;
+while 1 = 1
+insert into test values ( convert(varchar, getdate(),13)  );
+select convert(varchar,getdate(),13);
