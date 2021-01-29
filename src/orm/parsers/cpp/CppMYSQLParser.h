@@ -36,7 +36,7 @@ namespace dbcrudgen {
              */
             static std::string toCppDataType(const char *mysqlDataType) {
                 if (strcmp(mysqlDataType, "TINYINT") == 0 || strcmp(mysqlDataType, "tinyint") == 0) {
-                    return std::string{"int"};
+                    return std::string{"bool"};
                 }
                 if (strcmp(mysqlDataType, "SMALLINT") == 0 || strcmp(mysqlDataType, "smallint") == 0) {
                     return std::string{"int"};

@@ -39,7 +39,7 @@ namespace dbcrudgen {
              */
             static std::string toJavaDataType(std::string name) {
                 if (name == "TINYINT" || name == "tinyint") {
-                    return std::string{"int"};
+                    return std::string{"boolean"};
                 }
                 if (name == "SMALLINT" || name == "smallint") {
                     return std::string{"int"};
