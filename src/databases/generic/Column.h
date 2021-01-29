@@ -24,13 +24,15 @@ namespace dbcrudgen {
                 bool nullable;
                 long length;
                 bool primary;
+                bool autoIncrements;
 
             public:
 
                 Column(std::string &columnName, std::string &tableName, std::string &dataType,
-                       std::string &defaultValue, bool nullable, long length, bool primary)
+                       std::string &defaultValue, bool nullable, long length, bool primary = false,
+                       bool autoIncrements = false)
                         : columnName(columnName), tableName(tableName), dataType(dataType), defaultValue(defaultValue),
-                          nullable(nullable), length(length), primary(primary) {}
+                          nullable(nullable), length(length), primary(primary), autoIncrements(autoIncrements) {}
 
                 const std::string &getColumnName() const {
                     return columnName;
@@ -86,6 +88,14 @@ namespace dbcrudgen {
 
                 void setPrimary(bool primary) {
                     Column::primary = primary;
+                }
+
+                bool isAutoIncrement() const {
+                    return autoIncrements;
+                }
+
+                void setAutoIncrements(bool autoIncrements) {
+                    Column::autoIncrements = autoIncrements;
                 }
             };
         }

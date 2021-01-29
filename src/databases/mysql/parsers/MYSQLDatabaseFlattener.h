@@ -116,9 +116,10 @@ namespace dbcrudgen {
                         bool nullable = mysqlColumn.getIsNullable() == "YES";
                         long length = mysqlColumn.getCharacterMaximumLength();
                         bool primary = isPrimaryKeyColumn(mysqlDatabase, mysqlTable, mysqlColumn);
+                        bool autoIncrements = columnAutoIncrements(mysqlColumn);
 
                         dbcrudgen::db::generic::Column column{columnName, tableName, dataType, defaultValue, nullable,
-                                                              length, primary};
+                                                              length, primary, autoIncrements};
 
                         genericColumns.emplace_back(column);
 
@@ -126,6 +127,9 @@ namespace dbcrudgen {
 
                     return genericColumns;
                 }
+
+                static bool
+                columnAutoIncrements(const Columns &mysqlColumn) { return mysqlColumn.getExtra() == "auto_increment"; }
 
                 /**
                  * Validates if a column is a primary key column
@@ -173,9 +177,10 @@ namespace dbcrudgen {
                         bool nullable = mysqlColumn.getIsNullable() == "YES";
                         long length = mysqlColumn.getCharacterMaximumLength();
                         bool primary = true;
+                        bool autoIncrements = columnAutoIncrements(mysqlColumn);
 
                         dbcrudgen::db::generic::Column column{columnName, tableName, dataType, defaultValue, nullable,
-                                                              length, primary};
+                                                              length, primary, autoIncrements};
 
                         genericPrimaryKeyCols.emplace_back(column);
 
@@ -198,9 +203,10 @@ namespace dbcrudgen {
                         bool nullable = mysqlColumn.getIsNullable() == "YES";
                         long length = mysqlColumn.getCharacterMaximumLength();
                         bool primary = false; //TODO Fix
+                        bool autoIncrements = columnAutoIncrements(mysqlColumn);
 
                         dbcrudgen::db::generic::Column column{columnName, tableName, dataType, defaultValue, nullable,
-                                                              length, primary};
+                                                              length, primary, autoIncrements};
 
                         genericPrimaryKeyCols.emplace_back(column);
 
@@ -223,9 +229,10 @@ namespace dbcrudgen {
                         bool nullable = mysqlColumn.getIsNullable() == "YES";
                         long length = mysqlColumn.getCharacterMaximumLength();
                         bool primary = false;//TODO Fix
+                        bool autoIncrements = columnAutoIncrements(mysqlColumn);
 
                         dbcrudgen::db::generic::Column column{columnName, tableName, dataType, defaultValue, nullable,
-                                                              length, primary};
+                                                              length, primary, autoIncrements};
 
                         genericPrimaryKeyCols.emplace_back(column);
 

@@ -86,6 +86,11 @@ namespace dbcrudgen {
                     misc.append(" @Id ");
                 }
 
+                //If column auto increments
+                if (column.isAutoIncrement()) {
+                    misc.append(" @GeneratedValue(strategy = GenerationType.AUTO) ");
+                }
+
                 StringUtils::replace(srcTemplate, "${ANNOTATIONS}", misc);
 
                 return srcTemplate;
