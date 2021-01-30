@@ -3,9 +3,9 @@ package ${PROJECT_PACKAGE}.${SB_REPOSITORIES_PACKAGE};
 import ${PROJECT_PACKAGE}.${ENTITIES_PACKAGE}.${ENTITY_CLASS};
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.stereotype.Repository;
 
-@EnableJpaRepositories
-interface ${CLASS_NAME} extends JpaRepository<${ENTITY_CLASS}, ${PK_DATATYPE}> {
+@Repository
+public interface ${CLASS_NAME} extends JpaRepository<${ENTITY_CLASS}, ${PK_DATATYPE}> {
 
 }
