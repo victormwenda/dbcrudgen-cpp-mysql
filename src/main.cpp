@@ -249,7 +249,7 @@ void createJavaProject() {
 
     std::string projectName = "eqtr-apis";
     std::string workspaceDir = "/opt/workspace/java";
-    std::string packageName = "com.eqtr";
+    std::string packageName = "com.eqtr.webservices";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";
@@ -259,9 +259,9 @@ void createJavaProject() {
 
     std::string webDir = "webapp";
     std::string apisPkg = "web.apis";
-    std::string dbConnPkg = "db.conn";
-    std::string entitiesPkg = "db.entities";
-    std::string transactionsPkg = "db.transactions";
+    std::string dbConnPkg = "database.conn";
+    std::string entitiesPkg = "database.entities";
+    std::string transactionsPkg = "database.transactions";
     std::string webAppPkg = "web.application";
     std::string beansPkg = "web.beans";
 
@@ -343,7 +343,7 @@ void createSpringBootHibernateProject() {
 
     std::string projectName = "eqtr-ws-builder";
     std::string workspaceDir = "/opt/workspace/java";
-    std::string packageName = "com.eqtr";
+    std::string packageName = "com.eqtr.webservices";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";

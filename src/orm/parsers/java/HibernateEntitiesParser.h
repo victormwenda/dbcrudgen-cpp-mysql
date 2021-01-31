@@ -88,7 +88,7 @@ namespace dbcrudgen {
 
                 //If column auto increments
                 if (column.isAutoIncrement()) {
-                    misc.append(" @GeneratedValue(strategy = GenerationType.AUTO) ");
+                    misc.append(" @GeneratedValue(strategy = GenerationType.IDENTITY) ");
                 }
 
                 StringUtils::replace(srcTemplate, "${ANNOTATIONS}", misc);
