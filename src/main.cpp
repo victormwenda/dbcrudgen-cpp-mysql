@@ -97,8 +97,8 @@ int main(int argc, char **argv) {
     executor.freeStatementHandle();
     connector.closeConnection();*/
 
-    createSpringBootHibernateProject();
-
+    // createSpringBootHibernateProject();
+    createPhpProject();
     return EXIT_SUCCESS;
 }
 
@@ -187,7 +187,7 @@ void createPhpProject() {
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("eqtr");
     dbcrudgen::db::generic::Database database = getGenericDatabase(databaseModel);
 
-    std::string projectName = "eqtr-admin";
+    std::string projectName = "eqtr-web-adm-laravel";
     std::string workspaceDir = "/var/www/html";
     std::string assetsDir = "public";
     std::string jsDir = "js";

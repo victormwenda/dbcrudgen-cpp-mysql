@@ -23,7 +23,7 @@ function onClickSave() {
     console.log("clicked edit " + id);
 
     $.ajax({
-        url: '${API_NAME}/store/',
+        url: '/${API_NAME}/store/',
         type: "POST",
         headers: {"X-CSRF-TOKEN": csrfToken},
         data: {${PACK_REQUEST_PARAMS}},
@@ -54,7 +54,7 @@ function onClickEdit() {
     console.log("clicked edit " + data_id);
 
     $.ajax({
-        url: '${API_NAME}/edit/' +data_id,
+        url: '/${API_NAME}/edit/' +data_id,
         type: "GET",
         headers: {"X-CSRF-TOKEN": csrfToken},
         data: null,
@@ -92,7 +92,7 @@ function onClickUpdate() {
     console.log("clicked edit " + data_id);
 
     $.ajax({
-        url: '${API_NAME}/update/' +data_id,
+        url: '/${API_NAME}/update/' +data_id,
         type: "PUT",
         headers: {"X-CSRF-TOKEN": csrfToken},
         data: {${PACK_REQUEST_PARAMS}},
@@ -119,7 +119,7 @@ function onClickDelete() {
     var csrfToken = $("meta[name='csrf-token']").attr("content");
 
     $.ajax({
-        url: '${API_NAME}/destroy/' +data_id,
+        url: '/${API_NAME}/destroy/' +data_id,
         type: "DELETE",
         headers: {"X-CSRF-TOKEN": csrfToken},
         data: null,
@@ -138,7 +138,7 @@ function onClickDelete() {
 
 function refreshTableItems() {
 
-    $(".table-container").load('${API_NAME}/refresh', function () {
+    $(".table-container").load('/${API_NAME}/refresh', function () {
         $('.delete-item').click(onClickDelete);
         $('.edit-item').click(onClickEdit);
     });
