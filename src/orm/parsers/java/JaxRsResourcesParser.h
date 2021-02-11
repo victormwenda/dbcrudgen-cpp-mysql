@@ -45,7 +45,8 @@ namespace dbcrudgen {
                 StringUtils::replace(apiSource, "${ENTITY_OBJECT}", toJavaVariableInstance(entityClass));
 
                 StringUtils::replace(apiSource, "${PK_COLUMN_NAME}", column.getColumnName());
-                StringUtils::replace(apiSource, "${PK_COLUMN_DATATYPE}", toJavaDataType(column.getDataType()));
+                StringUtils::replace(apiSource, "${PK_COLUMN_DATATYPE}",
+                                     toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
                 std::string methodGetter = "get";
                 methodGetter = methodGetter.append(toJavaClassName(column.getColumnName()));
                 StringUtils::replace(apiSource, "${PK_METHOD_GETTER}", methodGetter);

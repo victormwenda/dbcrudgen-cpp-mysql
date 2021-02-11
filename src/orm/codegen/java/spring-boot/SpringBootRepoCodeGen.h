@@ -36,7 +36,8 @@ namespace dbcrudgen {
                 std::string srcTemplate = javaVarTemplate.getTemplate();
 
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", "private");
-                StringUtils::replace(srcTemplate, "${DATA_TYPE}", JavaParser::toJavaDataType(column.getDataType()));
+                StringUtils::replace(srcTemplate, "${DATA_TYPE}",
+                                     JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
                 StringUtils::replace(srcTemplate, "${OBJECT_NAME}",
                                      JavaParser::toJavaVariableInstance(column.getColumnName()));
 

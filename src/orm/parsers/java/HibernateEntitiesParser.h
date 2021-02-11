@@ -75,7 +75,8 @@ namespace dbcrudgen {
 
                 StringUtils::replace(srcTemplate, "${COLUMN_NAME}", column.getColumnName());
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", "private");
-                StringUtils::replace(srcTemplate, "${DATA_TYPE}", JavaParser::toJavaDataType(column.getDataType()));
+                StringUtils::replace(srcTemplate, "${DATA_TYPE}",
+                                     JavaParser::toJavaClassDataTypeFromSQL(column.getDataType()));
                 StringUtils::replace(srcTemplate, "${VARIABLE_NAME}",
                                      JavaParser::toJavaVariableInstance(column.getColumnName()));
 
@@ -110,7 +111,8 @@ namespace dbcrudgen {
                 StringUtils::replace(srcTemplate, "${COLUMN_NAME}", columnName);
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", "public");
                 StringUtils::replace(srcTemplate, "${METHOD_NAME}", JavaParser::toJavaClassName(columnName));
-                StringUtils::replace(srcTemplate, "${DATA_TYPE}", JavaParser::toJavaDataType(column.getDataType()));
+                StringUtils::replace(srcTemplate, "${DATA_TYPE}",
+                                     JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
                 StringUtils::replace(srcTemplate, "${VARIABLE_NAME}",
                                      JavaParser::toJavaVariableInstance(columnName));
 

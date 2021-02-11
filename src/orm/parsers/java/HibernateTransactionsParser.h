@@ -35,7 +35,7 @@ namespace dbcrudgen {
                 StringUtils::replace(sourceTemplate, "${ENTITY_OBJECT}", toJavaVariableInstance(entityClass));
 
                 StringUtils::replace(sourceTemplate, "${PRIMARY_KEY_DATATYPE}",
-                                     toJavaDataType(primaryKeyColumn.getDataType()));
+                                     toJavaPrimitiveDataTypeFromSQL(primaryKeyColumn.getDataType()));
                 StringUtils::replace(sourceTemplate, "${ENTITY_PRIMARY_KEY}",
                                      toJavaVariableInstance(primaryKeyColumn.getColumnName()));
 
@@ -64,7 +64,7 @@ namespace dbcrudgen {
                 StringUtils::replace(sourceTemplate, "${ENTITY_OBJECT}", toJavaVariableInstance(entityClass));
 
                 StringUtils::replace(sourceTemplate, "${PRIMARY_KEY_DATATYPE}",
-                                     toJavaDataType(primaryKeyColumn.getDataType()));
+                                     toJavaPrimitiveDataTypeFromSQL(primaryKeyColumn.getDataType()));
                 StringUtils::replace(sourceTemplate, "${ENTITY_PRIMARY_KEY}",
                                      toJavaVariableInstance(primaryKeyColumn.getColumnName()));
 

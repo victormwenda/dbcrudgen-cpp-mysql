@@ -97,8 +97,8 @@ int main(int argc, char **argv) {
     executor.freeStatementHandle();
     connector.closeConnection();*/
 
-    // createSpringBootHibernateProject();
-    createPhpProject();
+     createSpringBootHibernateProject();
+    //createPhpProject();
     return EXIT_SUCCESS;
 }
 
@@ -355,7 +355,7 @@ void createSpringBootHibernateProject() {
 
     std::string apisPkg = "controllers";
     std::string dbConnPkg = "database.conn";
-    std::string entitiesPkg = "database.entities";
+    std::string entitiesPkg = "database.tables";
     std::string httpReqPkg = "http.requests";
     std::string httpResPkg = "http.responses";
     std::string reposPkg = "database.repos";

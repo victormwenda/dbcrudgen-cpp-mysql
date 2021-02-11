@@ -52,7 +52,7 @@ namespace dbcrudgen {
                 if (pkColumn == nullptr) {
                     return SpringBootApplicationParser::substituteRepoPrimaryKeyCol(httpReqSource, "Object");
                 }
-                std::string dataType = JavaParser::toJavaDataType(pkColumn->getDataType());
+                std::string dataType = JavaParser::toJavaPrimitiveDataTypeFromSQL(pkColumn->getDataType());
                 std::string objectType = JavaParser::primitiveToObject(dataType);
                 return SpringBootApplicationParser::substituteRepoPrimaryKeyCol(httpReqSource, objectType);
             }

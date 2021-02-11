@@ -68,7 +68,8 @@ namespace dbcrudgen {
                 std::string srcTemplate = jaxbElementTemplate.getTemplate();
 
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", "private");
-                StringUtils::replace(srcTemplate, "${DATA_TYPE}", JavaParser::toJavaDataType(column.getDataType()));
+                StringUtils::replace(srcTemplate, "${DATA_TYPE}",
+                                     JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
                 StringUtils::replace(srcTemplate, "${VARIABLE_NAME}",
                                      JavaParser::toJavaVariableInstance(column.getColumnName()));
 
@@ -99,7 +100,8 @@ namespace dbcrudgen {
                 StringUtils::replace(srcTemplate, "${COLUMN_NAME}", columnName);
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", "public");
                 StringUtils::replace(srcTemplate, "${METHOD_NAME}", JavaParser::toJavaClassName(columnName));
-                StringUtils::replace(srcTemplate, "${DATA_TYPE}", JavaParser::toJavaDataType(column.getDataType()));
+                StringUtils::replace(srcTemplate, "${DATA_TYPE}",
+                                     JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
                 StringUtils::replace(srcTemplate, "${VARIABLE_NAME}",
                                      JavaParser::toJavaVariableInstance(columnName));
 
@@ -151,7 +153,7 @@ namespace dbcrudgen {
                 const std::string &colDataType = column.getDataType();
                 const std::string &colName = column.getColumnName();
 
-                std::string javaDataType = JaxbParser::toJavaDataType(colDataType);
+                std::string javaDataType = JaxbParser::toJavaPrimitiveDataTypeFromSQL(colDataType);
                 std::string variableName = JaxbParser::toJavaVariableLocal(colName);
 
                 StringUtils::replace(source, "${DATA_TYPE}", javaDataType);
@@ -194,7 +196,7 @@ namespace dbcrudgen {
                 const std::string &colName = column.getColumnName();
 
                 std::string instanceVariable = JaxbParser::toJavaVariableInstance(colName);
-                std::string javaDataType = JaxbParser::toJavaDataType(dataType);
+                std::string javaDataType = JaxbParser::toJavaPrimitiveDataTypeFromSQL(dataType);
                 std::string defaultInitValue = JaxbParser::getJavaDataTypeDefaultValue(javaDataType);
 
 
