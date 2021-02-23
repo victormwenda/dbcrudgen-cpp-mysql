@@ -20,9 +20,6 @@
 #include "orm/creators/angular/AngularProjectCreator.h"
 #include "orm/projects/SpringBootProjectModel.h"
 #include "orm/creators/java/SpringBootProjectCreator.h"
-#include "orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h"
-#include "databases/mssql/connectors/MSSQLDbConnParams.h"
-#include "databases/mssql/connectors/MSSQLDbConnector.h"
 #include "databases/mssql/executor/MSSQLQueryExecutor.h"
 
 /**
@@ -338,12 +335,12 @@ void createJaxRsHibernateProject() {
 }
 
 void createSpringBootHibernateProject() {
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("eqtr");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("nmg");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "eqtr-ws-builder";
+    std::string projectName = "nmg-ads-mgmt";
     std::string workspaceDir = "/opt/workspace/java";
-    std::string packageName = "com.eqtr.webservices";
+    std::string packageName = "com.nmg.classifieds";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";
@@ -353,7 +350,7 @@ void createSpringBootHibernateProject() {
     std::string webDir = "public";
     dbcrudgen::orm::SpringProjectDirs sbDirs{srcDir, moduleDir, javaDir, libsDir, resourcesDir, webDir};
 
-    std::string apisPkg = "controllers";
+    std::string apisPkg = "apis";
     std::string dbConnPkg = "database.conn";
     std::string entitiesPkg = "database.tables";
     std::string httpReqPkg = "http.requests";
@@ -362,7 +359,8 @@ void createSpringBootHibernateProject() {
     std::string transactionsPkg = "database.transactions";
     std::string webAppPkg = "application";
     std::string beansPkg = "beans";
-    dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, beansPkg, dbConnPkg, entitiesPkg, httpReqPkg,
+    std::string ctlPkg = "controllers";
+    dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, ctlPkg, dbConnPkg, entitiesPkg, httpReqPkg,
                                                  httpResPkg, reposPkg, transactionsPkg, webAppPkg};
 
     std::string webAppClass = "Application";

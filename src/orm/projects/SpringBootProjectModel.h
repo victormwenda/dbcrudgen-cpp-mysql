@@ -93,7 +93,7 @@ namespace dbcrudgen {
             }
 
             const std::string &getApiClassSuffix() const {
-                return sbPkgs.getApisPkg();
+                return sbClsSuffxs.getApiClassSuffix();
             }
 
             const std::string &getEntityClassSuffix() const {

@@ -228,7 +228,7 @@ namespace dbcrudgen {
 
                 createHtmlErrorPages(error400, error404, error500);
                 createApplicationClassFile(applicationClass);
-                //createHibernateConnectionScript((std::string &) "THIS IS THE SRC CODE");
+                createHibernateConnectionScript(entityMappings);
 
             }
 
