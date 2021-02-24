@@ -106,10 +106,19 @@ namespace dbcrudgen {
             }
 
             /**
+             * Get the absolute path to the application.properties file
+             * @param filename
+             * @return
+             */
+            std::string getApplicationPropertiesFilePath(const std::string& filename = "application.properties") {
+                return getAbsoluteResourcesPath() + "/" + filename;
+            }
+
+            /**
             * Get the absolute path to the project java files
             * @return
             */
-           const std::string getAbsoluteBaseCodePath() const {
+            const std::string getAbsoluteBaseCodePath() const {
                 std::string pkgName = getPackageName();
                 std::string baseCode = StringUtils::replace(pkgName, ".", "/");
                 const std::string &javaPath = getAbsoluteJavaPath();

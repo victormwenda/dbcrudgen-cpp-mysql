@@ -9,7 +9,20 @@ namespace dbcrudgen {
     namespace db {
         namespace generic {
             enum class Flavor {
-                MYSQL, MSSQL, ORACLE, SQLITE
+                DB2,
+                DB2_AS_400,
+                DB2_OS390,
+                INGRES,
+                MYSQL,
+                MSSQL,
+                ORACLE,
+                ORACLE_9I,
+                ORACLE_10G,
+                POSTGRESQL,
+                SAP_DB,
+                SYBASE,
+                SYBASE_ANYWHERE,
+                SQLITE
             };
         }
     }

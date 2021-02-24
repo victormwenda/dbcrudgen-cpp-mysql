@@ -82,6 +82,8 @@ namespace dbcrudgen {
                 std::string error500 = SpringBootHttpErrorCodeGen::createErrorPage(projectModel, "500");
 
                 std::string applicationClass = SpringBootApplicationCodeGen::createApplicationClass(projectModel);
+                std::string appPropertiesSource = SpringBootApplicationCodeGen::createApplicationPropertiesSource(
+                        projectModel, database);
 
                 std::vector<dbcrudgen::db::generic::Table> tables = database.getTables();
 
@@ -229,6 +231,7 @@ namespace dbcrudgen {
                 createHtmlErrorPages(error400, error404, error500);
                 createApplicationClassFile(applicationClass);
                 createHibernateConnectionScript(entityMappings);
+                createApplicationPropertiesScript(appPropertiesSource);
 
             }
 
@@ -286,6 +289,16 @@ namespace dbcrudgen {
                 FilesWriter::writeFile(projectModel.getAbsoluteWebError400FilePath(), error400Html);
                 FilesWriter::writeFile(projectModel.getAbsoluteWebError404FilePath(), error404Html);
                 FilesWriter::writeFile(projectModel.getAbsoluteWebError500FilePath(), error500Html);
+            }
+
+            /**
+            * Writes the Web XML Source on disk
+            * @param applicationPropertiesSource
+            */
+            void createApplicationPropertiesScript(const std::string &applicationPropertiesSource) {
+                const std::string &filename = projectModel.getApplicationPropertiesFilePath(
+                        projectModel.getSBApplicationPropertiesFileName());
+                FilesWriter::writeFile(filename, applicationPropertiesSource);
             }
 
             /**

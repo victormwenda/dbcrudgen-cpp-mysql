@@ -9,6 +9,7 @@
 #include "../../../projects/SpringBootProjectModel.h"
 #include "../../../templates/java/spring-boot/SpringBootClassApplicationTemplate.h"
 #include "../../../parsers/java/SpringBootApplicationParser.h"
+#include "../../../templates/java/spring-boot/SpringBootFileApplicationPropertiesTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -20,6 +21,16 @@ namespace dbcrudgen {
                 std::string appSrc = appTemplate.getTemplate();
 
                 SpringBootApplicationParser::substituteProjectDetails(projectModel, appSrc);
+
+                return appSrc;
+            }
+
+            static std::string createApplicationPropertiesSource(const SpringBootProjectModel &projectModel,
+                                                                 const dbcrudgen::db::generic::Database &database) {
+                SpringBootFileApplicationPropertiesTemplate propertiesTemplate;
+                std::string appSrc = propertiesTemplate.getTemplate();
+
+                SpringBootApplicationParser::parseApplicationProperties(projectModel, database, appSrc);
 
                 return appSrc;
             }

@@ -7,6 +7,7 @@
 
 
 #include "JavaParser.h"
+#include "../../../databases/utils/DatabaseUtils.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -142,6 +143,35 @@ namespace dbcrudgen {
             substituteRepoPrimaryKeyCol(std::string &repoSource, const std::string &pkDataType) {
                 StringUtils::replace(repoSource, "${PK_DATATYPE}", pkDataType);
                 return repoSource;
+            }
+
+
+            static std::string
+            parseApplicationProperties(const SpringBootProjectModel &model, const db::generic::Database &database,
+                                       std::string& propertiesSrc) {
+                const db::generic::Connection &connection = database.getConnection();
+                const std::string &dbHost = connection.getHost();
+                const std::string &user = connection.getUser();
+                int port = connection.getPort();
+                const std::string &dbName = connection.getDatabase();
+                const db::generic::Flavor &flavor = database.getFlavor();
+                const std::string &password = connection.getPassword();
+                std::string connStr = dbcrudgen::db::DatabaseUtils::genDbConnStrJava(flavor, dbHost, port, user,
+                                                                                     password, dbName);
+
+                const std::string dbType = dbcrudgen::db::DatabaseUtils::getDbType(flavor);
+                const std::string hibernateDialect = dbcrudgen::db::DatabaseUtils::getHibernateDialect(flavor);
+
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${SERVER_PORT}", std::to_string(model.getServerPort()));
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_DRIVER}", getDatabaseDriver(flavor));
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_CONNECTION_STRING}", connStr);
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_USER}", user);
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${USER_PASSWORD}", password);
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_TYPE}", dbType);
+               propertiesSrc = StringUtils::replace(propertiesSrc, "${HIBERNATE_DIALECT}", hibernateDialect);
+
+
+                return propertiesSrc;
             }
         };
     }

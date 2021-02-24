@@ -1,0 +1,19 @@
+# ===================================
+# SERVER CONFIGURATION
+# ===================================
+server.port=${SERVER_PORT}
+# ===================================
+# DATABASE CONFIGURATION
+# ===================================
+spring.datasource.driver-class-name=${DATABASE_DRIVER}
+spring.datasource.url=${DATABASE_CONNECTION_STRING}
+spring.datasource.username=${DATABASE_USER}
+spring.datasource.password=${USER_PASSWORD}
+spring.jpa.database=${DATABASE_TYPE}
+# ===================================
+# HIBERNATE CONFIGURATION
+# ===================================
+spring.jpa.show-sql=true
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.database-platform=${HIBERNATE_DIALECT}
+hibernate.format_sql=true

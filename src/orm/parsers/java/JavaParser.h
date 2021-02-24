@@ -411,6 +411,29 @@ namespace dbcrudgen {
                 }
                 return std::string{"Object"};
             }
+
+            /**
+             * Get java Database drivers for different databases
+             * @param flavor
+             * @return
+             */
+            static std::string getDatabaseDriver(const db::generic::Flavor &flavor) {
+                switch (flavor) {
+                    case db::generic::Flavor::MSSQL:
+                        return std::string{"com.microsoft.sqlserver.jdbc.SQLServerDriver"};
+
+                    case db::generic::Flavor::MYSQL:
+                        return std::string{"com.mysql.cj.jdbc.Driver"};
+
+                    case db::generic::Flavor::ORACLE:
+                        return std::string{"oracle.jdbc.OracleDriver"};
+
+                    case db::generic::Flavor::SQLITE:
+                        return std::string{"org.sqlite.JDBC"};
+
+                }
+                return std::string{};
+            }
         };
     }
 }

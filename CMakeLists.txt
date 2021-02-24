@@ -267,6 +267,8 @@ set(SOURCE_FILES
         src/databases/sqlite/models/SQLiteDatabaseModel.h
         src/databases/sqlite/parsers/SQLiteDatabaseFlattener.h
 
+        src/databases/utils/DatabaseUtils.h
+
         ##############################################################################################################
         # IO
         ##############################################################################################################
@@ -529,10 +531,11 @@ set(SOURCE_FILES
         src/orm/templates/java/spring-boot/SpringBootClassHttpResTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassRepoTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h
-        src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h
-        src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassControllerTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootFileApplicationPropertiesTemplate.h
         src/orm/templates/java/spring-boot/SpringBootHttpErrorTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h
 
         src/orm/templates/mssql/MSSQLStrTemplates.h
 
@@ -574,8 +577,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanTemplateFiles.h
 
         src/orm/utils/StringUtils.h
-
-        )
+       )
 
 #GoogleTest
 add_subdirectory(include/google-test)

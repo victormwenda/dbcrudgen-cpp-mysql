@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
     executor.freeStatementHandle();
     connector.closeConnection();*/
 
-     createSpringBootHibernateProject();
+    createSpringBootHibernateProject();
     //createPhpProject();
     return EXIT_SUCCESS;
 }
@@ -365,9 +365,11 @@ void createSpringBootHibernateProject() {
 
     std::string webAppClass = "Application";
     std::string dbConnClass = "DatabaseConnectionHandler";
-    dbcrudgen::orm::SpringProjectClasses sbClasses{dbConnClass, webAppClass};
+    std::string applicationProperties = "application.properties";
+    dbcrudgen::orm::SpringProjectClasses sbClasses{dbConnClass, webAppClass, applicationProperties};
 
     std::string urlPattern = "/api/v1/*";
+    int serverPort = 8080;
 
     std::string apiClassSuffix = "Controller";
     std::string beansClassSuffix = "Beans";
@@ -381,7 +383,7 @@ void createSpringBootHibernateProject() {
                                                       trxClassSuffix};
 
     dbcrudgen::orm::SpringBootProjectModel sbModel{projectName, workspaceDir, packageName, sbDirs, sbPkgs, sbClasses,
-                                                   sbClsSuffxs, urlPattern};
+                                                   sbClsSuffxs, urlPattern, serverPort};
 
     dbcrudgen::orm::SpringBootProjectCreator sbCreator{sbModel, genericDatabase};
     sbCreator.createProject();

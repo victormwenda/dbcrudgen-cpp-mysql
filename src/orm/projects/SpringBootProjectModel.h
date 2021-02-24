@@ -26,6 +26,7 @@ namespace dbcrudgen {
             dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs;
 
             std::string urlPattern;
+            int serverPort;
 
         public:
 
@@ -35,7 +36,7 @@ namespace dbcrudgen {
                                    dbcrudgen::orm::SpringProjectPackages &sbPkgs,
                                    dbcrudgen::orm::SpringProjectClasses &sbClasses,
                                    dbcrudgen::orm::SpringProjectSuffixes &sbClsSuffxs,
-                                   std::string &urlPattern)
+                                   std::string &urlPattern, int &serverPort)
                     : JavaProjectModel{projectName, workspaceDir, sbDirs.getSrcDir(), sbDirs.getModuleDir(),
                                        sbDirs.getJavaDir(),
                                        sbDirs.getLibsDir(), sbDirs.getResourcesDir(), packageName},
@@ -49,7 +50,8 @@ namespace dbcrudgen {
                       sbClasses(sbClasses),
                       sbClsSuffxs(sbClsSuffxs),
 
-                      urlPattern{urlPattern} {}
+                      urlPattern{urlPattern},
+                      serverPort{serverPort} {}
 
 
             const std::string &getWebDir() {
@@ -124,12 +126,20 @@ namespace dbcrudgen {
                 return sbClasses.getWebAppClass();
             }
 
+            const std::string &getSBApplicationPropertiesFileName() const {
+                return sbClasses.getApplicationPropertiesFile();
+            }
+
             const std::string &getDbConnClassName() const {
                 return sbClasses.getDbConnClass();
             }
 
             const std::string &getUrlPattern() const {
                 return urlPattern;
+            }
+
+            int getServerPort() const {
+                return serverPort;
             }
 
             /**

@@ -14,9 +14,11 @@ namespace dbcrudgen {
         private:
             std::string dbConnClass;
             std::string webAppClass;
+            std::string applicationProperties;
         public:
-            SpringProjectClasses(std::string &dbConnClass, std::string &webAppClass) :
-                    dbConnClass(dbConnClass), webAppClass(webAppClass) {}
+            SpringProjectClasses(std::string &dbConnClass, std::string &webAppClass, std::string &applicationProperties)
+                    :
+                    dbConnClass(dbConnClass), webAppClass(webAppClass), applicationProperties(applicationProperties) {}
 
             const std::string &getDbConnClass() const {
                 return dbConnClass;
@@ -24,6 +26,10 @@ namespace dbcrudgen {
 
             const std::string &getWebAppClass() const {
                 return webAppClass;
+            }
+
+            const std::string &getApplicationPropertiesFile() const {
+                return applicationProperties;
             }
         };
     }
