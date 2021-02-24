@@ -59,6 +59,7 @@ namespace dbcrudgen {
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getHttpRequestsDirPath());
                 FilesWriter::createDirs(projectModel.getHttpResponsesDirPath());
+                FilesWriter::createDirs(projectModel.getModelsDirPath());
                 FilesWriter::createDirs(projectModel.getRepositoriesDirPath());
                 FilesWriter::createDirs(projectModel.getTransactionsAbsolutePath());
                 FilesWriter::createDirs(projectModel.getWebApplicationAbsolutePath());
@@ -98,6 +99,12 @@ namespace dbcrudgen {
                     const std::string &tableName = table.getTableName();
                     dbcrudgen::db::generic::Column *pkColumn = nullptr;
 
+                    std::string tmpClassName = JavaParser::toJavaClassName(tableName);
+                    std::string tablePkgName = StringUtils::to_lower(tmpClassName);
+
+                    FilesWriter::createDirs(projectModel.getHttpRequestsDirPath() + "/" + tablePkgName);
+                    FilesWriter::createDirs(projectModel.getHttpResponsesDirPath() + "/" + tablePkgName);
+
                     std::string apiSuffix = projectModel.getApiClassSuffix();
                     std::string beansSuffix = projectModel.getBeansClassSuffix();
                     std::string entitySuffix = projectModel.getEntityClassSuffix();
@@ -105,8 +112,8 @@ namespace dbcrudgen {
                     std::string httpResSuffix = projectModel.getHttpResClassSuffix();
                     std::string reposSuffix = projectModel.getRepoClassSuffix();
                     std::string trxSuffix = projectModel.getTrxClassSuffix();
+                    std::string modelSuffix = projectModel.getModelClassSuffix();
 
-                    std::string tmpClassName = JavaParser::toJavaClassName(tableName);
 
                     std::string beansClass = tmpClassName;
                     std::string ctlClass = tmpClassName;
@@ -115,6 +122,7 @@ namespace dbcrudgen {
                     std::string httpResClass = tmpClassName;
                     std::string repoClass = tmpClassName;
                     std::string trxClass = tmpClassName;
+                    std::string modelClass = tmpClassName;
 
                     beansClass.append(beansSuffix);
                     ctlClass.append(apiSuffix);
@@ -123,6 +131,7 @@ namespace dbcrudgen {
                     httpResClass.append(httpResSuffix);
                     repoClass.append(reposSuffix);
                     trxClass.append(trxSuffix);
+                    modelClass.append(modelSuffix);
 
                     std::string ctlSource =
                             SpringBootControllerCodeGen::createControllerSource(projectModel, table, ctlClass,
@@ -135,9 +144,13 @@ namespace dbcrudgen {
                             HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass,
                                                                                    entityClass);
 
-                    std::string httpReqSource = SpringBootHttpCodeGen::createHttpReqSource(projectModel,
-                                                                                           httpReqClass);
-                    std::string httpResSource = SpringBootHttpCodeGen::createHttpResSource(projectModel, httpResClass);
+                    std::string httpReqSource =
+                            SpringBootHttpCodeGen::createHttpReqSource(projectModel, httpReqClass);
+                    std::string httpResSource =
+                            SpringBootHttpCodeGen::createHttpResSource(projectModel, httpResClass);
+                    std::string modelSource =
+                            SpringBootHttpCodeGen::createModelSource(projectModel, modelClass);
+
                     std::string repoSource = SpringBootRepoCodeGen::createRepositorySource(projectModel,
                                                                                            repoClass, entityClass);
 
@@ -160,6 +173,7 @@ namespace dbcrudgen {
                     std::string beanDefaultCtorVariablesInit;
 
                     std::string httpReqInstanceVars;
+                    std::string modelInstanceVars;
 
                     const std::vector<dbcrudgen::db::generic::Column> &columns = table.getTableColumns();
 
@@ -179,6 +193,7 @@ namespace dbcrudgen {
 
                         if (!column.isNullable()) {
                             httpReqInstanceVars += SpringBootRepoCodeGen::createInstanceVariable(column);
+                            modelInstanceVars += SpringBootRepoCodeGen::createInstanceVariable(column);
                         }
 
                         if (column.isPrimary()) {
@@ -196,7 +211,8 @@ namespace dbcrudgen {
                     JaxbCodeGen::addConstructorVariablesInitialization(beansSource, beanInstanceVariablesInit);
                     JaxbCodeGen::addDefaultInstanceVariablesInitialization(beansSource, beanDefaultCtorVariablesInit);
 
-                    SpringBootHttpCodeGen::addReqModelInstanceVariables(httpReqSource, httpReqInstanceVars);
+                    SpringBootHttpCodeGen::addHttpReqInstanceVariables(httpReqSource, httpReqInstanceVars);
+                    SpringBootHttpCodeGen::addModelInstanceVariables(modelSource, modelInstanceVars);
                     SpringBootHttpCodeGen::addRepositoryPrimaryKey(repoSource, pkColumn);
 
                     std::string ctlFile =
@@ -213,8 +229,13 @@ namespace dbcrudgen {
 
                     std::string httpReqFile =
                             projectModel.getHttpRequestsDirPath() + "/" + httpReqClass + ".java";
+
                     std::string httpResFile =
                             projectModel.getHttpResponsesDirPath() + "/" + httpResClass + ".java";
+
+                    std::string modelFile =
+                            projectModel.getModelsDirPath() + "/" + modelClass + ".java";
+
                     std::string repoFile =
                             projectModel.getRepositoriesDirPath() + "/" + repoClass + ".java";
 
@@ -225,6 +246,7 @@ namespace dbcrudgen {
 
                     FilesWriter::writeFile(httpReqFile, httpReqSource);
                     FilesWriter::writeFile(httpResFile, httpResSource);
+                    FilesWriter::writeFile(modelFile, modelSource);
                     FilesWriter::writeFile(repoFile, repoSource);
                 }
 

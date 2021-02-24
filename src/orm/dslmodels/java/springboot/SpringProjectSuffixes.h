@@ -18,16 +18,17 @@ namespace dbcrudgen {
             std::string httpResClassSuffix;
             std::string repoClassSuffix;
             std::string trxClassSuffix;
+            std::string modelClassSuffix;
 
         public:
             SpringProjectSuffixes(std::string &apiClassSuffix, std::string &beansClassSuffix,
                                   std::string &entityClassSuffix, std::string &httpReqClassSuffix,
                                   std::string &httpResClassSuffix, std::string &repoClassSuffix,
-                                  std::string &trxClassSuffix)
+                                  std::string &trxClassSuffix, std::string &modelClassSuffix)
                     : apiClassSuffix(apiClassSuffix), beansClassSuffix(beansClassSuffix),
                       entityClassSuffix(entityClassSuffix), httpReqClassSuffix(httpReqClassSuffix),
                       httpResClassSuffix(httpResClassSuffix), repoClassSuffix(repoClassSuffix),
-                      trxClassSuffix(trxClassSuffix) {}
+                      trxClassSuffix(trxClassSuffix), modelClassSuffix(modelClassSuffix) {}
 
             const std::string &getApiClassSuffix() const {
                 return apiClassSuffix;
@@ -55,6 +56,10 @@ namespace dbcrudgen {
 
             const std::string &getTrxClassSuffix() const {
                 return trxClassSuffix;
+            }
+
+            const std::string &getModelClassSuffix() const {
+                return modelClassSuffix;
             }
         };
 

@@ -577,7 +577,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanTemplateFiles.h
 
         src/orm/utils/StringUtils.h
-       )
+        src/orm/templates/java/spring-boot/SpringBootClassModelTemplate.h)
 
 #GoogleTest
 add_subdirectory(include/google-test)

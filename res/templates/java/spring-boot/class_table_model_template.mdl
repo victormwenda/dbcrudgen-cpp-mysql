@@ -1,0 +1,7 @@
+package ${PROJECT_PACKAGE}.${MODELS_PACKAGE};
+
+${VISIBILITY} class ${CLASS_NAME} {
+
+    ${INSTANCE_VARIABLES}
+
+}

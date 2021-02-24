@@ -11,6 +11,7 @@
 #include "../../../parsers/java/SpringBootApplicationParser.h"
 #include "../../../templates/java/spring-boot/SpringBootClassHttpReqTemplate.h"
 #include "../../../templates/java/spring-boot/SpringBootClassHttpResTemplate.h"
+#include "../../../templates/java/spring-boot/SpringBootClassModelTemplate.h"
 
 
 namespace dbcrudgen {
@@ -41,10 +42,28 @@ namespace dbcrudgen {
             }
 
             static std::string
-            addReqModelInstanceVariables(std::string &httpReqSource, const std::string &instanceVariables) {
+            createModelSource(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
+                              const std::string &httpResClass) {
+                SpringBootClassModelTemplate resTemplate;
+                std::string resSource = resTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteModelClassDetails(projectModel, resSource,
+                                                                                     httpResClass);
+                return resSource;
+            }
+
+            static std::string
+            addHttpReqInstanceVariables(std::string &httpReqSource, const std::string &instanceVariables) {
 
                 return SpringBootApplicationParser::substituteHttpRequestInstanceVariables(httpReqSource,
                                                                                            instanceVariables);
+            }
+
+            static std::string
+            addModelInstanceVariables(std::string &modelSource, const std::string &instanceVariables) {
+
+                return SpringBootApplicationParser::substituteModelInstanceVariables(modelSource,
+                                                                                     instanceVariables);
             }
 
             static std::string

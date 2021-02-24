@@ -78,6 +78,10 @@ namespace dbcrudgen {
                 return sbPkgs.getHttpResPkg();
             }
 
+            const std::string &getModelsPkg() const {
+                return sbPkgs.getModelsPkg();
+            }
+
             const std::string &getRepositoriesPkg() const {
                 return sbPkgs.getReposPkg();
             }
@@ -116,6 +120,10 @@ namespace dbcrudgen {
 
             const std::string &getTrxClassSuffix() const {
                 return sbClsSuffxs.getTrxClassSuffix();
+            }
+
+            const std::string &getModelClassSuffix() const {
+                return sbClsSuffxs.getModelClassSuffix();
             }
 
             const std::string &getBeansClassSuffix() const {
@@ -237,6 +245,16 @@ namespace dbcrudgen {
                 std::string pkgName = getHttpResPkg();
                 std::string httpResPkg = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + httpResPkg;
+            }
+
+            /**
+           * Get absolute path to models dir
+           * @return
+           */
+            const std::string getModelsDirPath() {
+                std::string pkgName = getModelsPkg();
+                std::string modelsPkg = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + modelsPkg;
             }
 
             /**

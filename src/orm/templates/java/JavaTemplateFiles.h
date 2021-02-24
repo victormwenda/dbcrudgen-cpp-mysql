@@ -67,6 +67,7 @@ namespace dbcrudgen {
 
                 static constexpr const char *CLASS_HTTP_REQ_TEMPLATE = "templates/java/spring-boot/class_table_http_req_template.mdl";
                 static constexpr const char *CLASS_HTTP_RES_TEMPLATE = "templates/java/spring-boot/class_table_http_res_template.mdl";
+                static constexpr const char *CLASS_TABLE_MODEL_TEMPLATE = "templates/java/spring-boot/class_table_model_template.mdl";
                 static constexpr const char *CLASS_REPO_TEMPLATE = "templates/java/spring-boot/class_repository_template.mdl";
 
                 static constexpr const char *FILE_APPLICATION_PROPERTIES_TEMPLATE = "templates/java/spring-boot/application_properties.mdl";

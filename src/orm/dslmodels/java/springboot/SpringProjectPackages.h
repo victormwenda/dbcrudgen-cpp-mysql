@@ -18,6 +18,7 @@ namespace dbcrudgen {
             std::string entitiesPkg;
             std::string httpReqPkg;
             std::string httpResPkg;
+            std::string modelsPkg;
             std::string reposPkg;
             std::string transactionsPkg;
             std::string webAppPkg;
@@ -25,11 +26,12 @@ namespace dbcrudgen {
         public:
             SpringProjectPackages(std::string &apisPkg, std::string &beansPkg, std::string &ctlsPkg,
                                   std::string &dbConnPkg, std::string &entitiesPkg, std::string &httpReqPkg,
-                                  std::string &httpResPkg, std::string &reposPkg, std::string &transactionsPkg,
-                                  std::string &webAppPkg)
+                                  std::string &httpResPkg, std::string &modelsPkg, std::string &reposPkg,
+                                  std::string &transactionsPkg, std::string &webAppPkg)
                     : apisPkg(apisPkg), beansPkg(beansPkg), ctlsPkg(ctlsPkg), dbConnPkg(dbConnPkg),
                       entitiesPkg(entitiesPkg),
-                      httpReqPkg(httpReqPkg), httpResPkg(httpResPkg), reposPkg(reposPkg),
+                      httpReqPkg(httpReqPkg), httpResPkg(httpResPkg), modelsPkg(modelsPkg),
+                      reposPkg(reposPkg),
                       transactionsPkg(transactionsPkg), webAppPkg(webAppPkg) {}
 
             const std::string &getApisPkg() const {
@@ -70,6 +72,10 @@ namespace dbcrudgen {
 
             const std::string &getWebAppPkg() const {
                 return webAppPkg;
+            }
+
+            const std::string &getModelsPkg() const {
+                return modelsPkg;
             }
         };
 

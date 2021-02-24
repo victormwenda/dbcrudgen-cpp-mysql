@@ -360,8 +360,9 @@ void createSpringBootHibernateProject() {
     std::string webAppPkg = "application";
     std::string beansPkg = "beans";
     std::string ctlPkg = "controllers";
+    std::string modelPkg = "models";
     dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, ctlPkg, dbConnPkg, entitiesPkg, httpReqPkg,
-                                                 httpResPkg, reposPkg, transactionsPkg, webAppPkg};
+                                                 httpResPkg, modelPkg, reposPkg, transactionsPkg, webAppPkg};
 
     std::string webAppClass = "Application";
     std::string dbConnClass = "DatabaseConnectionHandler";
@@ -378,9 +379,11 @@ void createSpringBootHibernateProject() {
     std::string httpResClassSuffix = "Response";
     std::string reposClassSuffix = "Repository";
     std::string trxClassSuffix = "Transactions";
+    std::string modelClassSuffix = "Model";
+
     dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs{apiClassSuffix, beansClassSuffix, entityClassSuffix,
                                                       httpReqClassSuffix, httpResClassSuffix, reposClassSuffix,
-                                                      trxClassSuffix};
+                                                      trxClassSuffix, modelClassSuffix};
 
     dbcrudgen::orm::SpringBootProjectModel sbModel{projectName, workspaceDir, packageName, sbDirs, sbPkgs, sbClasses,
                                                    sbClsSuffxs, urlPattern, serverPort};

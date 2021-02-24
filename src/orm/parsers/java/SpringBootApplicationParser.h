@@ -102,6 +102,21 @@ namespace dbcrudgen {
             }
 
             /**
+            * Substitute models class details
+            * @param model
+            * @return
+            */
+            static std::string
+            substituteModelClassDetails(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
+                                        std::string modelClsSrc, const std::string &modelClassName) {
+                StringUtils::replace(modelClsSrc, "${CLASS_NAME}", modelClassName);
+                StringUtils::replace(modelClsSrc, "${VISIBILITY}", "public");
+                StringUtils::replace(modelClsSrc, "${PROJECT_PACKAGE}", projectModel.getPackageName());
+                StringUtils::replace(modelClsSrc, "${MODELS_PACKAGE}", projectModel.getModelsPkg());
+                return modelClsSrc;
+            }
+
+            /**
             * Substitute http res class details
             * @param model
             * @return
@@ -129,6 +144,17 @@ namespace dbcrudgen {
             * @return
             */
             static std::string
+            substituteModelInstanceVariables(std::string &modelSource, const std::string &instanceVars) {
+                StringUtils::replace(modelSource, "${INSTANCE_VARIABLES}", instanceVars);
+                return modelSource;
+            }
+
+            /**
+            * Substitute http res class details
+            * @param model
+            * @return
+            */
+            static std::string
             substituteRepoClassDetails(const SpringBootProjectModel &model, std::string &repoClsSource,
                                        const std::string &repoClass, const std::string &entityClass) {
                 StringUtils::replace(repoClsSource, "${PROJECT_PACKAGE}", model.getPackageName());
@@ -148,7 +174,7 @@ namespace dbcrudgen {
 
             static std::string
             parseApplicationProperties(const SpringBootProjectModel &model, const db::generic::Database &database,
-                                       std::string& propertiesSrc) {
+                                       std::string &propertiesSrc) {
                 const db::generic::Connection &connection = database.getConnection();
                 const std::string &dbHost = connection.getHost();
                 const std::string &user = connection.getUser();
@@ -162,13 +188,14 @@ namespace dbcrudgen {
                 const std::string dbType = dbcrudgen::db::DatabaseUtils::getDbType(flavor);
                 const std::string hibernateDialect = dbcrudgen::db::DatabaseUtils::getHibernateDialect(flavor);
 
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${SERVER_PORT}", std::to_string(model.getServerPort()));
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_DRIVER}", getDatabaseDriver(flavor));
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_CONNECTION_STRING}", connStr);
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_USER}", user);
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${USER_PASSWORD}", password);
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_TYPE}", dbType);
-               propertiesSrc = StringUtils::replace(propertiesSrc, "${HIBERNATE_DIALECT}", hibernateDialect);
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${SERVER_PORT}",
+                                                     std::to_string(model.getServerPort()));
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_DRIVER}", getDatabaseDriver(flavor));
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_CONNECTION_STRING}", connStr);
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_USER}", user);
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${USER_PASSWORD}", password);
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_TYPE}", dbType);
+                propertiesSrc = StringUtils::replace(propertiesSrc, "${HIBERNATE_DIALECT}", hibernateDialect);
 
 
                 return propertiesSrc;
