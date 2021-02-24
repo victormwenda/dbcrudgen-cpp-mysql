@@ -18,29 +18,6 @@ namespace dbcrudgen {
     namespace orm {
         class SpringBootHttpCodeGen : public JavaProjectCodeGen {
         public:
-
-            static std::string
-            createHttpReqSource(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
-                                const std::string &httpReqClass) {
-                SpringBootClassHttpReqTemplate reqTemplate;
-                std::string reqSource = reqTemplate.getTemplate();
-
-                reqSource = SpringBootApplicationParser::substituteHttpReqClassDetails(projectModel, reqSource,
-                                                                                       httpReqClass);
-                return reqSource;
-            }
-
-            static std::string
-            createHttpResSource(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
-                                const std::string &httpResClass) {
-                SpringBootClassHttpResTemplate resTemplate;
-                std::string resSource = resTemplate.getTemplate();
-
-                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(projectModel, resSource,
-                                                                                       httpResClass);
-                return resSource;
-            }
-
             static std::string
             createModelSource(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
                               const std::string &httpResClass) {
@@ -74,6 +51,72 @@ namespace dbcrudgen {
                 std::string dataType = JavaParser::toJavaPrimitiveDataTypeFromSQL(pkColumn->getDataType());
                 std::string objectType = JavaParser::primitiveToObject(dataType);
                 return SpringBootApplicationParser::substituteRepoPrimaryKeyCol(httpReqSource, objectType);
+            }
+
+            static std::string
+            createReqPostSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpReqPostClass,
+                             std::string &modelClass) {
+                SpringBootClassHttpReqTemplate reqTemplate;
+                std::string resSource = reqTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpReqClassDetails(model, pkgName, resSource,
+                                                                                       httpReqPostClass, modelClass);
+                return resSource;
+            }
+
+            static std::string
+            createReqPutSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpReqPutClass,
+                            std::string &modelClass) {
+                SpringBootClassHttpReqTemplate reqTemplate;
+                std::string resSource = reqTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpReqClassDetails(model, pkgName, resSource,
+                                                                                       httpReqPutClass, modelClass);
+                return resSource;
+            }
+
+            static std::string
+            createResGetSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResGetClass,
+                            std::string &modelClass) {
+                SpringBootClassHttpResTemplate resTemplate;
+                std::string resSource = resTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                                                                                       httpResGetClass, modelClass);
+                return resSource;
+            }
+
+            static std::string
+            createResDelSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResDelClass,
+                            std::string &modelClass) {
+                SpringBootClassHttpResTemplate resTemplate;
+                std::string resSource = resTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                                                                                       httpResDelClass, modelClass);
+                return resSource;
+            }
+
+            static std::string
+            createResPostSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResPostClass,
+                             std::string &modelClass) {
+                SpringBootClassHttpResTemplate resTemplate;
+                std::string resSource = resTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                                                                                       httpResPostClass, modelClass);
+                return resSource;
+            }
+
+            static std::string
+            createResPutSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResPutClass,
+                            std::string &modelClass) {
+                SpringBootClassHttpResTemplate resTemplate;
+                std::string resSource = resTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                                                                                       httpResPutClass, modelClass);
+                return resSource;
             }
         };
 

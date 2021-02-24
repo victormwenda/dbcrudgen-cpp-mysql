@@ -77,12 +77,14 @@ namespace dbcrudgen {
             * @return
             */
             static std::string
-            substituteHttpReqClassDetails(const SpringBootProjectModel &model, std::string httpReqClsSource,
-                                          const std::string &httpReqClsName) {
+            substituteHttpReqClassDetails(const SpringBootProjectModel &model, std::string &pkgName,
+                                          std::string httpReqClsSource,
+                                          const std::string &httpReqClsName, const std::string &modelClass) {
                 StringUtils::replace(httpReqClsSource, "${CLASS_NAME}", httpReqClsName);
                 StringUtils::replace(httpReqClsSource, "${VISIBILITY}", "public");
                 StringUtils::replace(httpReqClsSource, "${PROJECT_PACKAGE}", model.getPackageName());
-                StringUtils::replace(httpReqClsSource, "${HTTP_REQ_PACKAGE}", model.getHttpReqsPkg());
+                StringUtils::replace(httpReqClsSource, "${HTTP_REQ_PACKAGE}", model.getHttpReqPkg());
+                StringUtils::replace(httpReqClsSource, "${TABLE_PACKAGE}", pkgName);
                 return httpReqClsSource;
             }
 
@@ -93,11 +95,16 @@ namespace dbcrudgen {
             */
             static std::string
             substituteHttpResClassDetails(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
-                                          std::string httpResClsSource, const std::string &httpResClsName) {
+                                          std::string &pkgName,
+                                          std::string httpResClsSource, const std::string &httpResClsName,
+                                          const std::string &modelClass) {
                 StringUtils::replace(httpResClsSource, "${CLASS_NAME}", httpResClsName);
                 StringUtils::replace(httpResClsSource, "${VISIBILITY}", "public");
                 StringUtils::replace(httpResClsSource, "${PROJECT_PACKAGE}", projectModel.getPackageName());
                 StringUtils::replace(httpResClsSource, "${HTTP_RES_PACKAGE}", projectModel.getHttpResPkg());
+                StringUtils::replace(httpResClsSource, "${TABLE_PACKAGE}", pkgName);
+                StringUtils::replace(httpResClsSource, "${MODEL_PACKAGE}", projectModel.getModelsPkg());
+                StringUtils::replace(httpResClsSource, "${MODEL_CLASS}", modelClass);
                 return httpResClsSource;
             }
 
@@ -122,19 +129,8 @@ namespace dbcrudgen {
             * @return
             */
             static std::string
-            substituteHttpResClassDetails(std::string &httpReqSource, const std::string &httpReqInstanceVars) {
-                StringUtils::replace(httpReqSource, "${TABLE_COLUMN_INSTANCE_VARIABLES}", httpReqInstanceVars);
-                return httpReqSource;
-            }
-
-            /**
-            * Substitute http res class details
-            * @param model
-            * @return
-            */
-            static std::string
             substituteHttpRequestInstanceVariables(std::string &httpReqSource, const std::string &httpReqInstanceVars) {
-                StringUtils::replace(httpReqSource, "${TABLE_COLUMN_INSTANCE_VARIABLES}", httpReqInstanceVars);
+                StringUtils::replace(httpReqSource, "${INSTANCE_VARIABLES}", httpReqInstanceVars);
                 return httpReqSource;
             }
 

@@ -70,7 +70,7 @@ namespace dbcrudgen {
                 return sbPkgs.getEntitiesPkg();
             }
 
-            const std::string &getHttpReqsPkg() const {
+            const std::string &getHttpReqPkg() const {
                 return sbPkgs.getHttpReqPkg();
             }
 
@@ -232,7 +232,7 @@ namespace dbcrudgen {
              * @return
              */
             const std::string getHttpRequestsDirPath() {
-                std::string pkgName = getHttpReqsPkg();
+                std::string pkgName = getHttpReqPkg();
                 std::string httpReqPkg = StringUtils::replace(pkgName, ".", "/");
                 return getAbsoluteBaseCodePath() + "/" + httpReqPkg;
             }

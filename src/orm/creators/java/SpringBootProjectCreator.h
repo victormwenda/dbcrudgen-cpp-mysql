@@ -124,6 +124,13 @@ namespace dbcrudgen {
                     std::string trxClass = tmpClassName;
                     std::string modelClass = tmpClassName;
 
+                    std::string httpReqPostClass = tmpClassName + "PostRequest";
+                    std::string httpReqPutClass = tmpClassName + "PutRequest";
+                    std::string httpResGetClass = tmpClassName + "GetResponse";
+                    std::string httpResDelClass = tmpClassName + "DelResponse";
+                    std::string httpResPostClass = tmpClassName + "PostResponse";
+                    std::string httpResPutClass = tmpClassName + "PutResponse";
+
                     beansClass.append(beansSuffix);
                     ctlClass.append(apiSuffix);
                     entityClass.append(entitySuffix);
@@ -144,10 +151,26 @@ namespace dbcrudgen {
                             HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass,
                                                                                    entityClass);
 
-                    std::string httpReqSource =
-                            SpringBootHttpCodeGen::createHttpReqSource(projectModel, httpReqClass);
-                    std::string httpResSource =
-                            SpringBootHttpCodeGen::createHttpResSource(projectModel, httpResClass);
+
+                    std::string httpPostReqSrc = SpringBootHttpCodeGen::createReqPostSrc(projectModel, tablePkgName,
+                                                                                         httpReqPostClass,
+                                                                                         modelClass);
+                    std::string httpPutReqSrc = SpringBootHttpCodeGen::createReqPutSrc(projectModel, tablePkgName,
+                                                                                       httpReqPutClass,
+                                                                                       modelClass);
+                    std::string httpGetResSrc = SpringBootHttpCodeGen::createResGetSrc(projectModel, tablePkgName,
+                                                                                       httpResGetClass,
+                                                                                       modelClass);
+                    std::string httpResDelSrc = SpringBootHttpCodeGen::createResDelSrc(projectModel, tablePkgName,
+                                                                                       httpResDelClass,
+                                                                                       modelClass);
+                    std::string httpPostResSrc = SpringBootHttpCodeGen::createResPostSrc(projectModel, tablePkgName,
+                                                                                         httpResPostClass,
+                                                                                         modelClass);
+                    std::string httpResPutSrc = SpringBootHttpCodeGen::createResPutSrc(projectModel, tablePkgName,
+                                                                                       httpResPutClass,
+                                                                                       modelClass);
+
                     std::string modelSource =
                             SpringBootHttpCodeGen::createModelSource(projectModel, modelClass);
 
@@ -211,8 +234,11 @@ namespace dbcrudgen {
                     JaxbCodeGen::addConstructorVariablesInitialization(beansSource, beanInstanceVariablesInit);
                     JaxbCodeGen::addDefaultInstanceVariablesInitialization(beansSource, beanDefaultCtorVariablesInit);
 
-                    SpringBootHttpCodeGen::addHttpReqInstanceVariables(httpReqSource, httpReqInstanceVars);
+                    SpringBootHttpCodeGen::addHttpReqInstanceVariables(httpPostReqSrc, modelInstanceVars);
+                    SpringBootHttpCodeGen::addHttpReqInstanceVariables(httpPutReqSrc, modelInstanceVars);
+
                     SpringBootHttpCodeGen::addModelInstanceVariables(modelSource, modelInstanceVars);
+
                     SpringBootHttpCodeGen::addRepositoryPrimaryKey(repoSource, pkColumn);
 
                     std::string ctlFile =
@@ -233,6 +259,25 @@ namespace dbcrudgen {
                     std::string httpResFile =
                             projectModel.getHttpResponsesDirPath() + "/" + httpResClass + ".java";
 
+                    std::string httpReqPostFile =
+                            projectModel.getHttpRequestsDirPath() + "/" + tablePkgName + "/" + httpReqPostClass +
+                            ".java";
+                    std::string httpReqPutFile =
+                            projectModel.getHttpRequestsDirPath() + "/" + tablePkgName + "/" + httpReqPutClass +
+                            ".java";
+                    std::string httpResGetFile =
+                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResGetClass +
+                            ".java";
+                    std::string httpResPostFile =
+                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResPostClass +
+                            ".java";
+                    std::string httpResPutFile =
+                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResPutClass +
+                            ".java";
+                    std::string httpResDelFile =
+                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResDelClass +
+                            ".java";
+
                     std::string modelFile =
                             projectModel.getModelsDirPath() + "/" + modelClass + ".java";
 
@@ -244,8 +289,14 @@ namespace dbcrudgen {
                     FilesWriter::writeFile(trxFile, trxSource);
                     FilesWriter::writeFile(beanFile, beansSource);
 
-                    FilesWriter::writeFile(httpReqFile, httpReqSource);
-                    FilesWriter::writeFile(httpResFile, httpResSource);
+                    FilesWriter::writeFile(httpReqPostFile, httpPostReqSrc);
+                    FilesWriter::writeFile(httpReqPutFile, httpPutReqSrc);
+                    FilesWriter::writeFile(httpResGetFile, httpGetResSrc);
+                    FilesWriter::writeFile(httpResPostFile, httpPostResSrc);
+                    FilesWriter::writeFile(httpResPutFile, httpResPutSrc);
+                    FilesWriter::writeFile(httpResDelFile, httpResDelSrc);
+
+
                     FilesWriter::writeFile(modelFile, modelSource);
                     FilesWriter::writeFile(repoFile, repoSource);
                 }

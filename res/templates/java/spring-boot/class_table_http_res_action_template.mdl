@@ -1,9 +1,12 @@
-package ${PROJECT_PACKAGE}.${HTTP_RES_PACKAGE};
+package ${PROJECT_PACKAGE}.${HTTP_RES_PACKAGE}.${TABLE_PACKAGE};
+
+import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
 
 ${VISIBILITY} class ${CLASS_NAME} {
 
     private int responseCode;
     private String responseMessage;
+    private ${MODEL_CLASS} payload;
 
     public ${CLASS_NAME} (int responseCode, String responseMessage) {
         this.responseCode = responseCode;
@@ -16,5 +19,9 @@ ${VISIBILITY} class ${CLASS_NAME} {
 
     public String getResponseMessage() {
         return this.responseMessage;
+    }
+
+    public void setPayload(${MODEL_CLASS} payload){
+        this.payload = payload;
     }
 }
