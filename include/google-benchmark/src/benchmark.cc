@@ -284,10 +284,10 @@ void RunBenchmarks(const std::vector<BenchmarkInstance>& benchmarks,
 }
 
 // Disable deprecated warnings temporarily because we need to reference
-// CSVReporter but don't want to trigger -Werror=-Wdeprecated
+// CSVReporter but don't want to trigger -Werror=-Wdeprecated-declarations
 #ifdef __GNUC__
 #pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated"
+#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
 std::unique_ptr<BenchmarkReporter> CreateReporter(
@@ -377,7 +377,7 @@ size_t RunSpecifiedBenchmarks(BenchmarkReporter* display_reporter,
   if (!fname.empty()) {
     output_file.open(fname);
     if (!output_file.is_open()) {
-      Err << "invalid file name: '" << fname << std::endl;
+      Err << "invalid file name: '" << fname << "'" << std::endl;
       std::exit(1);
     }
     if (!file_reporter) {

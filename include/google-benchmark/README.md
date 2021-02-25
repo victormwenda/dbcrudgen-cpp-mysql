@@ -1,9 +1,13 @@
 # Benchmark
 
+[![build-and-test](https://github.com/google/benchmark/workflows/build-and-test/badge.svg)](https://github.com/google/benchmark/actions?query=workflow%3Abuild-and-test)
+[![pylint](https://github.com/google/benchmark/workflows/pylint/badge.svg)](https://github.com/google/benchmark/actions?query=workflow%3Apylint)
+[![test-bindings](https://github.com/google/benchmark/workflows/test-bindings/badge.svg)](https://github.com/google/benchmark/actions?query=workflow%3Atest-bindings)
+
 [![Build Status](https://travis-ci.org/google/benchmark.svg?branch=master)](https://travis-ci.org/google/benchmark)
 [![Build status](https://ci.appveyor.com/api/projects/status/u0qsyp7t1tk7cpxs/branch/master?svg=true)](https://ci.appveyor.com/project/google/benchmark/branch/master)
 [![Coverage Status](https://coveralls.io/repos/google/benchmark/badge.svg)](https://coveralls.io/r/google/benchmark)
-[![slackin](https://slackin-iqtfqnpzxd.now.sh/badge.svg)](https://slackin-iqtfqnpzxd.now.sh/)
+
 
 A library to benchmark code snippets, similar to unit tests. Example:
 
@@ -70,13 +74,13 @@ $ git clone https://github.com/google/googletest.git benchmark/googletest
 # Go to the library root directory
 $ cd benchmark
 # Make a build directory to place the build output.
-$ mkdir build && cd build
-# Generate a Makefile with cmake.
-# Use cmake -G <generator> to generate a different file type.
-$ cmake ../
+$ cmake -E make_directory "build"
+# Generate build system files with cmake.
+$ cmake -E chdir "build" cmake -DCMAKE_BUILD_TYPE=Release ../
+# or, starting with CMake 3.13, use a simpler form:
+# cmake -DCMAKE_BUILD_TYPE=Release -S . -B "build"
 # Build the library.
-# Use make -j<number_of_parallel_jobs> to speed up the build process, e.g. make -j8 .
-$ make
+$ cmake --build "build" --config Release
 ```
 This builds the `benchmark` and `benchmark_main` libraries and tests.
 On a unix system, the build directory should now look something like this:
@@ -94,13 +98,13 @@ On a unix system, the build directory should now look something like this:
 Next, you can run the tests to check the build.
 
 ```bash
-$ make test
+$ cmake -E chdir "build" ctest --build-config Release
 ```
 
 If you want to install the library globally, also run:
 
 ```
-sudo make install
+sudo cmake --build "build" --config Release --target install
 ```
 
 Note that Google Benchmark requires Google Test to build and run the tests. This
@@ -117,24 +121,20 @@ to `CMAKE_ARGS`.
 ### Debug vs Release
 
 By default, benchmark builds as a debug library. You will see a warning in the
-output when this is the case. To build it as a release library instead, use:
+output when this is the case. To build it as a release library instead, add
+`-DCMAKE_BUILD_TYPE=Release` when generating the build system files, as shown
+above. The use of `--config Release` in build commands is needed to properly
+support multi-configuration tools (like Visual Studio for example) and can be
+skipped for other build systems (like Makefile).
 
-```
-cmake -DCMAKE_BUILD_TYPE=Release
-```
-
-To enable link-time optimisation, use
-
-```
-cmake -DCMAKE_BUILD_TYPE=Release -DBENCHMARK_ENABLE_LTO=true
-```
+To enable link-time optimisation, also add `-DBENCHMARK_ENABLE_LTO=true` when
+generating the build system files.
 
 If you are using gcc, you might need to set `GCC_AR` and `GCC_RANLIB` cmake
 cache variables, if autodetection fails.
 
 If you are using clang, you may need to set `LLVMAR_EXECUTABLE`,
 `LLVMNM_EXECUTABLE` and `LLVMRANLIB_EXECUTABLE` cmake cache variables.
-
 
 ### Stable and Experimental Library Versions
 
@@ -391,8 +391,12 @@ name,iterations,real_time,cpu_time,bytes_per_second,items_per_second,label
 Write benchmark results to a file with the `--benchmark_out=<filename>` option
 (or set `BENCHMARK_OUT`). Specify the output format with
 `--benchmark_out_format={json|console|csv}` (or set
-`BENCHMARK_OUT_FORMAT={json|console|csv}`). Note that specifying
-`--benchmark_out` does not suppress the console output.
+`BENCHMARK_OUT_FORMAT={json|console|csv}`). Note that the 'csv' reporter is
+deperecated and the saved `.csv` file 
+[is not parsable](https://github.com/google/benchmark/issues/794) by csv 
+parsers.
+
+Specifying `--benchmark_out` does not suppress the console output.
 
 <a name="running-benchmarks" />
 
@@ -550,6 +554,29 @@ pair.
 
 ```c++
 BENCHMARK(BM_SetInsert)->Ranges({{1<<10, 8<<10}, {128, 512}});
+```
+
+Some benchmarks may require specific argument values that cannot be expressed
+with `Ranges`. In this case, `ArgsProduct` offers the ability to generate a
+benchmark input for each combination in the product of the supplied vectors.
+
+```c++
+BENCHMARK(BM_SetInsert)
+    ->ArgsProduct({{1<<10, 3<<10, 8<<10}, {20, 40, 60, 80}})
+// would generate the same benchmark arguments as
+BENCHMARK(BM_SetInsert)
+    ->Args({1<<10, 20})
+    ->Args({3<<10, 20})
+    ->Args({8<<10, 20})
+    ->Args({3<<10, 40})
+    ->Args({8<<10, 40})
+    ->Args({1<<10, 40})
+    ->Args({1<<10, 60})
+    ->Args({3<<10, 60})
+    ->Args({8<<10, 60})
+    ->Args({1<<10, 80})
+    ->Args({3<<10, 80})
+    ->Args({8<<10, 80});
 ```
 
 For more complex patterns of inputs, passing a custom function to `Apply` allows
