@@ -78,7 +78,7 @@ namespace dbcrudgen {
                     SQLSMALLINT length;
                     SQLGetDiagRec(handleType, sqlHandle, recNumber, sqlState, &nativeError, messageTxt,
                                   sizeof(messageTxt), &length);
-                    printf("%s:%d:%ld:%s\n", sqlState, 1, nativeError, messageTxt);
+                    printf("%s:%d:%d:%s\n", sqlState, 1, nativeError, messageTxt);
                 }
 
                 void execQuery(const std::string &sqlQuery) {

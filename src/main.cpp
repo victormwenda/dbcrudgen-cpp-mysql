@@ -335,7 +335,7 @@ void createJaxRsHibernateProject() {
 }
 
 void createSpringBootHibernateProject() {
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("nmg");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("dbcrudgen");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
     std::string projectName = "nmg-ads-mgmt";

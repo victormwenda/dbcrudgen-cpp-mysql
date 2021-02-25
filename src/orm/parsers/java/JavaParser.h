@@ -333,7 +333,30 @@ namespace dbcrudgen {
                         JavaSQLiteConnectionDriverTemplate drivTpl;
                         return drivTpl.getTemplate();
                     }
+                    case db::generic::Flavor::DB2:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_AS_400:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_OS390:
+                        return std::string{};
+                    case db::generic::Flavor::INGRES:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_9I:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_10G:
+                        return std::string{};
+                    case db::generic::Flavor::POSTGRESQL:
+                        return std::string{};
+                    case db::generic::Flavor::SAP_DB:
+                        return std::string{};
+                    case db::generic::Flavor::SYBASE:
+                        return std::string{};
+                    case db::generic::Flavor::SYBASE_ANYWHERE:
+                        return std::string{};
+
                 }
+
+                return std::string{};
             }
 
             /**
@@ -360,7 +383,30 @@ namespace dbcrudgen {
                         JavaSQLiteConnectionStringTemplate connStrTpl;
                         return connStrTpl.getTemplate();
                     }
+                    case db::generic::Flavor::DB2:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_AS_400:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_OS390:
+                        return std::string{};
+                    case db::generic::Flavor::INGRES:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_9I:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_10G:
+                        return std::string{};
+                    case db::generic::Flavor::POSTGRESQL:
+                        return std::string{};
+                    case db::generic::Flavor::SAP_DB:
+                        return std::string{};
+                    case db::generic::Flavor::SYBASE:
+                        return std::string{};
+
+                    case db::generic::Flavor::SYBASE_ANYWHERE:
+                        return std::string{};
                 }
+
+                return std::string{};
             }
 
             /**
@@ -430,6 +476,26 @@ namespace dbcrudgen {
 
                     case db::generic::Flavor::SQLITE:
                         return std::string{"org.sqlite.JDBC"};
+                    case db::generic::Flavor::DB2:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_AS_400:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_OS390:
+                        return std::string{};
+                    case db::generic::Flavor::INGRES:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_9I:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_10G:
+                        return std::string{};
+                    case db::generic::Flavor::POSTGRESQL:
+                        return std::string{};
+                    case db::generic::Flavor::SAP_DB:
+                        return std::string{};
+                    case db::generic::Flavor::SYBASE:
+                        return std::string{};
+                    case db::generic::Flavor::SYBASE_ANYWHERE:
+                        return std::string{};
 
                 }
                 return std::string{};

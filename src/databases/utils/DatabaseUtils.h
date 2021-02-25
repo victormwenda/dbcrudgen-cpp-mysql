@@ -29,6 +29,26 @@ namespace dbcrudgen {
                         return std::string{"ORACLE"};
                     case db::generic::Flavor::SQLITE:
                         return std::string{"SQLITE"};
+                    case db::generic::Flavor::DB2:
+                        return std::string{"DB2"};
+                    case db::generic::Flavor::DB2_AS_400:
+                        return std::string{"DB2_400"};
+                    case db::generic::Flavor::DB2_OS390:
+                        return std::string{"DB2_390"};
+                    case db::generic::Flavor::INGRES:
+                        return std::string{"DB2_390"};
+                    case db::generic::Flavor::ORACLE_9I:
+                        return std::string{"ORACLE"};
+                    case db::generic::Flavor::ORACLE_10G:
+                        return std::string{"ORACLE"};
+                    case db::generic::Flavor::POSTGRESQL:
+                        return std::string{"POSTGRESQL"};
+                    case db::generic::Flavor::SAP_DB:
+                        return std::string{"SAP"};
+                    case db::generic::Flavor::SYBASE:
+                        return std::string{"SYBASE"};
+                    case db::generic::Flavor::SYBASE_ANYWHERE:
+                        return std::string{"SYBASE_ANYWHERE"};
                 }
 
                 return std::string();
@@ -51,16 +71,33 @@ namespace dbcrudgen {
                 switch (flavor) {
                     case db::generic::Flavor::MSSQL:
                         return genMsSQLConnStrJava(host, port, user, password, dbName);
-                        break;
                     case db::generic::Flavor::MYSQL:
                         return genMySQLConnStrJava(host, port, dbName);
-                        break;
                     case db::generic::Flavor::ORACLE:
                         return genOracleConnStrJava(host, port, dbName);
-                        break;
                     case db::generic::Flavor::SQLITE:
                         return genSQLiteConnStrJava(dbName);
-                        break;
+                    case db::generic::Flavor::DB2:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_AS_400:
+                        return std::string{};
+                    case db::generic::Flavor::DB2_OS390:
+                        return std::string{};
+                    case db::generic::Flavor::INGRES:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_9I:
+                        return std::string{};
+                    case db::generic::Flavor::ORACLE_10G:
+                        return std::string{};
+                    case db::generic::Flavor::POSTGRESQL:
+                        return std::string{};
+                    case db::generic::Flavor::SAP_DB:
+                        return std::string{};
+                    case db::generic::Flavor::SYBASE:
+                        return std::string{};
+
+                    case db::generic::Flavor::SYBASE_ANYWHERE:
+                        return std::string{};
                 }
 
                 return std::string();
