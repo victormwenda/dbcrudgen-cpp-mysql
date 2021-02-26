@@ -200,7 +200,7 @@ namespace dbcrudgen {
                     std::string httpReqInstanceVars;
                     std::string httpParamsGetters;
 
-                    std::string modelSetters;
+                    std::string modelGetterSetters;
                     std::string modelInstanceVars;
 
                     std::string entityDataFromPostRequest;
@@ -228,7 +228,7 @@ namespace dbcrudgen {
                             httpParamsGetters += SpringBootRepoCodeGen::createHttpParamsGetter(column);
 
                             modelInstanceVars += SpringBootRepoCodeGen::createColumnInstanceVariable(column);
-                            modelSetters += SpringBootRepoCodeGen::createModelSetters(column);
+                            modelGetterSetters += SpringBootRepoCodeGen::createModelGetterSetters(column);
 
                             entityDataFromPostRequest += SpringBootRepoCodeGen::createEntityDataFromRequest(
                                     entityClass, httpReqPostClass, column);
@@ -261,7 +261,7 @@ namespace dbcrudgen {
                     SpringBootHttpCodeGen::addHttpRequestParamsGetters(httpPutReqSrc, httpParamsGetters);
 
                     SpringBootHttpCodeGen::addModelInstanceVariables(modelSource, modelInstanceVars);
-                    SpringBootHttpCodeGen::addModelSetters(modelSource, modelSetters);
+                    SpringBootHttpCodeGen::addModelGetterSetters(modelSource, modelGetterSetters);
 
                     SpringBootHttpCodeGen::addTrxServicePostRequestEntityData(dbTrxSrc, entityDataFromPostRequest);
                     SpringBootHttpCodeGen::addTrxServicePutRequestEntityData(dbTrxSrc, entityDataFromPutRequest);

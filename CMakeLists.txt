@@ -327,6 +327,7 @@ set(SOURCE_FILES
         src/orm/codegen/java/spring-boot/SpringBootHttpErrorCodeGen.h
         src/orm/codegen/java/spring-boot/SpringBootHttpCodeGen.h
         src/orm/codegen/java/spring-boot/SpringBootRepoCodeGen.h
+        src/orm/codegen/java/spring-boot/SpringBootServiceDbCodeGen.h
 
         src/orm/codegen/postman/PostmanProjectCodeGen.h
 
@@ -514,7 +515,10 @@ set(SOURCE_FILES
 
         src/orm/templates/java/JavaTemplateFiles.h
         src/orm/templates/java/JavaClassTemplate.h
+        src/orm/templates/java/JavaGetterTemplate.h
+        src/orm/templates/java/JavaGetterSetterTemplate.h
         src/orm/templates/java/JavaMethodTemplate.h
+        src/orm/templates/java/JavaSetterTemplate.h
         src/orm/templates/java/JavaVariableInstanceTemplate.h
         src/orm/templates/java/JavaVariableLocalTemplate.h
         src/orm/templates/java/JavaVariableStaticTemplate.h
@@ -532,10 +536,13 @@ set(SOURCE_FILES
         src/orm/templates/java/spring-boot/SpringBootClassRepoTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassControllerTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassModelTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassServiceDbTemplate.h
         src/orm/templates/java/spring-boot/SpringBootFileApplicationPropertiesTemplate.h
         src/orm/templates/java/spring-boot/SpringBootHttpErrorTemplate.h
         src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h
         src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h
+
 
         src/orm/templates/mssql/MSSQLStrTemplates.h
 
@@ -577,7 +584,9 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanTemplateFiles.h
 
         src/orm/utils/StringUtils.h
-        src/orm/templates/java/spring-boot/SpringBootClassModelTemplate.h src/orm/templates/java/spring-boot/SpringBootClassServiceDbTemplate.h src/orm/codegen/java/spring-boot/SpringBootServiceDbCodeGen.h src/orm/templates/java/JavaGetterTemplate.h src/orm/templates/java/JavaSetterTemplate.h src/orm/templates/java/JavaGetterSetterTemplate.h)
+
+
+        )
 
 #GoogleTest
 add_subdirectory(include/google-test)

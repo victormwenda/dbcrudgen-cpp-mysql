@@ -258,8 +258,8 @@ namespace dbcrudgen {
             * @return
             */
             static std::string
-            substituteModelSetters(std::string &modelSource, const std::string &modelSetters) {
-                StringUtils::replace(modelSource, "${SETTER_METHODS}", modelSetters);
+            substituteModelGetterSetters(std::string &modelSource, const std::string &modelGetterSetters) {
+                StringUtils::replace(modelSource, "${GETTER_SETTER_METHODS}", modelGetterSetters);
                 return modelSource;
             }
 

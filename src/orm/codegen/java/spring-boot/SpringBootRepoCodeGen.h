@@ -73,8 +73,8 @@ namespace dbcrudgen {
            * @return
            */
             static std::string
-            createModelSetters(const dbcrudgen::db::generic::Column &column, std::string visibility = "public") {
-                JavaSetterTemplate setterTemplate;
+            createModelGetterSetters(const dbcrudgen::db::generic::Column &column, std::string visibility = "public") {
+                JavaGetterSetterTemplate setterTemplate;
                 std::string srcTemplate = setterTemplate.getTemplate();
 
                 StringUtils::replace(srcTemplate, "${VISIBILITY}", visibility);
@@ -107,7 +107,8 @@ namespace dbcrudgen {
 
 
             static std::string
-            createModelDataFromEntity(const std::string &entityClass,const std::string &modelClass, const db::generic::Column &column) {
+            createModelDataFromEntity(const std::string &entityClass, const std::string &modelClass,
+                                      const db::generic::Column &column) {
                 std::string methodName = JavaParser::toJavaClassName(column.getColumnName());
                 std::string modelObject = JavaParser::toJavaVariableLocal(modelClass);
                 std::string entityObject = JavaParser::toJavaVariableLocal(entityClass);

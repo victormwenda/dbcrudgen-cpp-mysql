@@ -24,4 +24,8 @@ ${VISIBILITY} class ${CLASS_NAME} {
     public void set${TABLE_CLASS}(${MODEL_CLASS} ${MODEL_OBJECT}){
         this.${MODEL_OBJECT} = ${MODEL_OBJECT};
     }
+
+    public ${MODEL_CLASS} get${TABLE_CLASS}(){
+       return this.${MODEL_OBJECT};
+    }
 }

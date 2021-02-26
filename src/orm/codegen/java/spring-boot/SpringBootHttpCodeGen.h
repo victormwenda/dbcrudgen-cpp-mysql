@@ -44,10 +44,10 @@ namespace dbcrudgen {
             }
 
             static std::string
-            addModelSetters(std::string &modelSource, const std::string &modelSetters) {
+            addModelGetterSetters(std::string &modelSource, const std::string &modelSetters) {
 
-                return SpringBootApplicationParser::substituteModelSetters(modelSource,
-                                                                           modelSetters);
+                return SpringBootApplicationParser::substituteModelGetterSetters(modelSource,
+                                                                                 modelSetters);
             }
 
             static std::string
