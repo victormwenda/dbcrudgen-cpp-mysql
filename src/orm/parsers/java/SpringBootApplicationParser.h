@@ -24,6 +24,9 @@ namespace dbcrudgen {
                 StringUtils::replace(sbAppClassSrc, "${PROJECT_PACKAGE}", model.getPackageName());
                 StringUtils::replace(sbAppClassSrc, "${SB_APPLICATION_PACKAGE}", model.getSBAppClassPkg());
                 StringUtils::replace(sbAppClassSrc, "${CONTROLLERS_PACKAGE}", model.getControllersPkg());
+                StringUtils::replace(sbAppClassSrc, "${REPOSITORIES_PACKAGE}", model.getRepositoriesPkg());
+                StringUtils::replace(sbAppClassSrc, "${SERVICES_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(sbAppClassSrc, "${ENTITIES_PACKAGE}", model.getEntitiesPkg());
                 StringUtils::replace(sbAppClassSrc, "${CLASS_NAME}", model.getSBAppClassName());
 
             }
