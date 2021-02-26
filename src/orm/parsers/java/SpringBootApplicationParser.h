@@ -100,7 +100,8 @@ namespace dbcrudgen {
                                        const db::generic::Column &column, std::string ctrlSource,
                                        const std::string &ctrlClass, const std::string &entityClass,
                                        const std::string &trxClass, const std::string &modelClass,
-                                       const std::string &repoClass, const std::string &apiResName) {
+                                       const std::string &repoClass, const std::string &httpReqPostClass,
+                                       const std::string &apiResName) {
 
                 std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
                 std::string tablePkgName = StringUtils::to_lower(tableClassName);
@@ -109,15 +110,17 @@ namespace dbcrudgen {
 
                 StringUtils::replace(ctrlSource, "${PROJECT_PACKAGE}", model.getPackageName());
 
+                StringUtils::replace(ctrlSource, "${SERVICES_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(ctrlSource, "${SERVICE_CLASS}", trxClass);
+                std::string trxObject = toJavaVariableLocal(trxClass);
+                StringUtils::replace(ctrlSource, "${SERVICE_OBJECT}", trxObject);
+
                 StringUtils::replace(ctrlSource, "${REPOSITORY_PACKAGE}", model.getRepositoriesPkg());
                 StringUtils::replace(ctrlSource, "${REPOSITORY_CLASS}", repoClass);
                 std::string repoObject = toJavaVariableLocal(repoClass);
                 StringUtils::replace(ctrlSource, "${REPOSITORY_OBJECT}", repoObject);
 
-                StringUtils::replace(ctrlSource, "${SERVICES_PACKAGE}", model.getTransactionsPkg());
-                StringUtils::replace(ctrlSource, "${SERVICE_CLASS}", trxClass);
-                std::string trxObject = toJavaVariableLocal(trxClass);
-                StringUtils::replace(ctrlSource, "${SERVICE_OBJECT}", trxObject);
+
 
                 StringUtils::replace(ctrlSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
                 StringUtils::replace(ctrlSource, "${ENTITY_CLASS}", entityClass);
@@ -132,6 +135,10 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${TABLE_CLASS}", tableClassName);
                 StringUtils::replace(ctrlSource, "${REQUEST_TABLE_PACKAGE}", requestsPksName);
                 StringUtils::replace(ctrlSource, "${RESPONSE_TABLE_PACKAGE}", responsesPksName);
+
+                StringUtils::replace(ctrlSource, "${POST_REQUEST_CLASS}", httpReqPostClass);
+                std::string postClassObject = toJavaVariableLocal(httpReqPostClass);
+                StringUtils::replace(ctrlSource, "${POST_REQUEST_OBJECT}", postClassObject);
 
                 StringUtils::replace(ctrlSource, "${PK_OBJECT}", column.getColumnName());
                 StringUtils::replace(ctrlSource, "${PK_COLUMN_DATATYPE}",

@@ -1,13 +1,13 @@
 package ${PROJECT_PACKAGE}.${SERVICES_PACKAGE};
 
-import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
 import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
+import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.*;
 import ${PROJECT_PACKAGE}.${REPOSITORY_PACKAGE}.${REPOSITORY_CLASS};
 
 @Service

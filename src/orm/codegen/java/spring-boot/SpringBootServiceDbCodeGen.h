@@ -32,7 +32,7 @@ namespace dbcrudgen {
                                   const dbcrudgen::db::generic::Table &table,
                                   const std::string &apiClass, const std::string &entityClass,
                                   const std::string &trxClass, const std::string &modelClass,
-                                  const std::string &repoClass) {
+                                  const std::string &repoClass, const std::string &httpReqPostClass) {
 
                 SpringBootClassServiceDbTemplate serviceTemplate;
                 std::string serviceSource = serviceTemplate.getTemplate();
@@ -49,6 +49,7 @@ namespace dbcrudgen {
                                                                                         trxClass,
                                                                                         modelClass,
                                                                                         repoClass,
+                                                                                        httpReqPostClass,
                                                                                         apiResName);
                 return serviceSource;
             }
