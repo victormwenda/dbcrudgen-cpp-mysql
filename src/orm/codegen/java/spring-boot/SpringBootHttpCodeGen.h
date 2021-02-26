@@ -44,6 +44,20 @@ namespace dbcrudgen {
             }
 
             static std::string
+            addModelSetters(std::string &modelSource, const std::string &modelSetters) {
+
+                return SpringBootApplicationParser::substituteModelSetters(modelSource,
+                                                                           modelSetters);
+            }
+
+            static std::string
+            addHttpRequestParamsGetters(std::string &modelSource, const std::string &modelGetters) {
+
+                return SpringBootApplicationParser::substituteModelGetters(modelSource,
+                                                                           modelGetters);
+            }
+
+            static std::string
             addRepositoryPrimaryKey(std::string &httpReqSource, const dbcrudgen::db::generic::Column *pkColumn) {
                 if (pkColumn == nullptr) {
                     return SpringBootApplicationParser::substituteRepoPrimaryKeyCol(httpReqSource, "Object");
@@ -117,6 +131,19 @@ namespace dbcrudgen {
                 resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
                                                                                        httpResPutClass, modelClass);
                 return resSource;
+            }
+
+            static void
+            addTrxServicePostRequestEntityData(std::string &trxServiceSource, const std::string &modelData) {
+                SpringBootApplicationParser::substituteTrxClassPostRequestEntityData(trxServiceSource, modelData);
+            }
+
+            static void addTrxServicePutRequestEntityData(std::string &trxServiceSource, const std::string &modelData) {
+                SpringBootApplicationParser::substituteTrxClassPutRequestEntityData(trxServiceSource, modelData);
+            }
+
+            static void addTrxServiceModelData(std::string &trxServiceSource, const std::string &entityData) {
+                SpringBootApplicationParser::substituteTrxClassModelData(trxServiceSource, entityData);
             }
         };
 

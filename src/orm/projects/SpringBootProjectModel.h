@@ -313,6 +313,25 @@ namespace dbcrudgen {
             const std::string getAbstractableTransactionsExecutorFileAbsolutePath() {
                 return getTransactionsAbsolutePath() + "/AbstractableTransactionsExecutor.java";
             }
+
+            /**
+             * Create HTTP Request/Response File
+             * @param httpPkgDir
+             * @param tablePackage
+             * @param className
+             * @return
+             */
+            std::string
+            createHttpRqRsFile(const std::string &httpPkgDir, const std::string &tablePackage,
+                               const std::string &className) {
+                return std::string{}.append(httpPkgDir)
+                        .append("/")
+                        .append(tablePackage)
+                        .append("/")
+                        .append(className)
+                        .append(".java");
+            }
+
         };
     }
 }

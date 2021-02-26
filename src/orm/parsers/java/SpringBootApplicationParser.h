@@ -123,7 +123,6 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${REPOSITORY_OBJECT}", repoObject);
 
 
-
                 StringUtils::replace(ctrlSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
                 StringUtils::replace(ctrlSource, "${ENTITY_CLASS}", entityClass);
                 std::string entityObject = toJavaVariableLocal(entityClass);
@@ -229,6 +228,28 @@ namespace dbcrudgen {
             }
 
             /**
+            * Substitute model setters
+            * @param model
+            * @return
+            */
+            static std::string
+            substituteModelSetters(std::string &modelSource, const std::string &modelSetters) {
+                StringUtils::replace(modelSource, "${SETTER_METHODS}", modelSetters);
+                return modelSource;
+            }
+
+            /**
+            * Substitute model getters
+            * @param model
+            * @return
+            */
+            static std::string
+            substituteModelGetters(std::string &modelSource, const std::string &modelGetters) {
+                StringUtils::replace(modelSource, "${GETTER_METHODS}", modelGetters);
+                return modelSource;
+            }
+
+            /**
             * Substitute http res class details
             * @param model
             * @return
@@ -267,17 +288,30 @@ namespace dbcrudgen {
                 const std::string dbType = dbcrudgen::db::DatabaseUtils::getDbType(flavor);
                 const std::string hibernateDialect = dbcrudgen::db::DatabaseUtils::getHibernateDialect(flavor);
 
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${SERVER_PORT}",
-                                                     std::to_string(model.getServerPort()));
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_DRIVER}", getDatabaseDriver(flavor));
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_CONNECTION_STRING}", connStr);
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_USER}", user);
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${USER_PASSWORD}", password);
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${DATABASE_TYPE}", dbType);
-                propertiesSrc = StringUtils::replace(propertiesSrc, "${HIBERNATE_DIALECT}", hibernateDialect);
+                StringUtils::replace(propertiesSrc, "${SERVER_PORT}", std::to_string(model.getServerPort()));
+                StringUtils::replace(propertiesSrc, "${DATABASE_DRIVER}", getDatabaseDriver(flavor));
+                StringUtils::replace(propertiesSrc, "${DATABASE_CONNECTION_STRING}", connStr);
+                StringUtils::replace(propertiesSrc, "${DATABASE_USER}", user);
+                StringUtils::replace(propertiesSrc, "${USER_PASSWORD}", password);
+                StringUtils::replace(propertiesSrc, "${DATABASE_TYPE}", dbType);
+                StringUtils::replace(propertiesSrc, "${HIBERNATE_DIALECT}", hibernateDialect);
 
 
                 return propertiesSrc;
+            }
+
+            static void
+            substituteTrxClassPostRequestEntityData(std::string &trxServiceSource, const std::string &modelData) {
+                StringUtils::replace(trxServiceSource, "${ENTITY_DATA_FROM_POST_REQUEST}", modelData);
+            }
+
+            static void
+            substituteTrxClassPutRequestEntityData(std::string &trxServiceSource, const std::string &modelData) {
+                StringUtils::replace(trxServiceSource, "${ENTITY_DATA_FROM_PUT_REQUEST}", modelData);
+            }
+
+            static void substituteTrxClassModelData(std::string &trxServiceSource, const std::string &entityData) {
+                StringUtils::replace(trxServiceSource, "${MODEL_DATA_FROM_ENTITY}", entityData);
             }
         };
     }

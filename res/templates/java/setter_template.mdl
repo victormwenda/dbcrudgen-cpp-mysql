@@ -1,0 +1,3 @@
+${VISIBILITY} void set${METHOD_NAME} (${DATA_TYPE} ${VARIABLE_NAME}) {
+    this.${VARIABLE_NAME} =  ${VARIABLE_NAME};
+}

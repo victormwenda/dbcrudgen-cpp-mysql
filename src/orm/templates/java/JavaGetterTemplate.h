@@ -1,19 +1,19 @@
 //
-// Created by victor on 4/14/20.
+// Created by victor on 2/26/21.
 //
 
-#ifndef DBCRUDGEN_CPP_JAVAMETHODTEMPLATE_H
-#define DBCRUDGEN_CPP_JAVAMETHODTEMPLATE_H
+#ifndef DBCRUDGEN_CPP_JAVAGETTERTEMPLATE_H
+#define DBCRUDGEN_CPP_JAVAGETTERTEMPLATE_H
 
 #include "../FileSourceCodeTemplate.h"
 #include "JavaTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class JavaMethodTemplate : public FileSourceCodeTemplate {
+        class JavaGetterTemplate : public FileSourceCodeTemplate {
         protected:
             std::string getSourceFile() override {
-                return std::string{JavaTemplateFiles::DEFAULT_METHOD_TEMPLATE};
+                return std::string{JavaTemplateFiles::GETTER_TEMPLATE};
             }
 
             std::string getLanguage() override {
@@ -22,4 +22,5 @@ namespace dbcrudgen {
         };
     };
 }
-#endif //DBCRUDGEN_CPP_JAVAMETHODTEMPLATE_H
+
+#endif //DBCRUDGEN_CPP_JAVAGETTERTEMPLATE_H

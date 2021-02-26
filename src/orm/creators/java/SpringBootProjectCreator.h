@@ -150,7 +150,8 @@ namespace dbcrudgen {
 
                     std::string dbTrxSrc =
                             SpringBootServiceDbCodeGen::createServiceDbSource(projectModel, table, dbTrxClass,
-                                                                              entityClass, dbTrxClass, modelClass, repoClass, httpReqPostClass);
+                                                                              entityClass, dbTrxClass, modelClass,
+                                                                              repoClass, httpReqPostClass);
 
 
                     std::string httpPostReqSrc = SpringBootHttpCodeGen::createReqPostSrc(projectModel, tablePkgName,
@@ -197,7 +198,14 @@ namespace dbcrudgen {
                     std::string beanDefaultCtorVariablesInit;
 
                     std::string httpReqInstanceVars;
+                    std::string httpParamsGetters;
+
+                    std::string modelSetters;
                     std::string modelInstanceVars;
+
+                    std::string entityDataFromPostRequest;
+                    std::string entityDataFromPutRequest;
+                    std::string modelDataFromEntity;
 
                     const std::vector<dbcrudgen::db::generic::Column> &columns = table.getTableColumns();
 
@@ -216,8 +224,20 @@ namespace dbcrudgen {
                                 column);
 
                         if (!column.isNullable()) {
-                            httpReqInstanceVars += SpringBootRepoCodeGen::createInstanceVariable(column);
-                            modelInstanceVars += SpringBootRepoCodeGen::createInstanceVariable(column);
+                            httpReqInstanceVars += SpringBootRepoCodeGen::createColumnInstanceVariable(column);
+                            httpParamsGetters += SpringBootRepoCodeGen::createHttpParamsGetter(column);
+
+                            modelInstanceVars += SpringBootRepoCodeGen::createColumnInstanceVariable(column);
+                            modelSetters += SpringBootRepoCodeGen::createModelSetters(column);
+
+                            entityDataFromPostRequest += SpringBootRepoCodeGen::createEntityDataFromRequest(
+                                    entityClass, httpReqPostClass, column);
+
+                            entityDataFromPutRequest += SpringBootRepoCodeGen::createEntityDataFromRequest(
+                                    entityClass, httpReqPutClass, column);
+
+                            modelDataFromEntity += SpringBootRepoCodeGen::createModelDataFromEntity(entityClass,
+                                                                                                    column);
                         }
 
                         if (column.isPrimary()) {
@@ -236,9 +256,16 @@ namespace dbcrudgen {
                     JaxbCodeGen::addDefaultInstanceVariablesInitialization(beansSource, beanDefaultCtorVariablesInit);
 
                     SpringBootHttpCodeGen::addHttpReqInstanceVariables(httpPostReqSrc, modelInstanceVars);
+                    SpringBootHttpCodeGen::addHttpRequestParamsGetters(httpPostReqSrc, httpParamsGetters);
                     SpringBootHttpCodeGen::addHttpReqInstanceVariables(httpPutReqSrc, modelInstanceVars);
+                    SpringBootHttpCodeGen::addHttpRequestParamsGetters(httpPutReqSrc, httpParamsGetters);
 
                     SpringBootHttpCodeGen::addModelInstanceVariables(modelSource, modelInstanceVars);
+                    SpringBootHttpCodeGen::addModelSetters(modelSource, modelSetters);
+
+                    SpringBootHttpCodeGen::addTrxServicePostRequestEntityData(dbTrxSrc, entityDataFromPostRequest);
+                    SpringBootHttpCodeGen::addTrxServicePutRequestEntityData(dbTrxSrc, entityDataFromPutRequest);
+                    SpringBootHttpCodeGen::addTrxServiceModelData(dbTrxSrc, modelDataFromEntity);
 
                     SpringBootHttpCodeGen::addRepositoryPrimaryKey(repoSource, pkColumn);
 
@@ -261,23 +288,25 @@ namespace dbcrudgen {
                             projectModel.getHttpResponsesDirPath() + "/" + httpResClass + ".java";
 
                     std::string httpReqPostFile =
-                            projectModel.getHttpRequestsDirPath() + "/" + tablePkgName + "/" + httpReqPostClass +
-                            ".java";
+                            projectModel.createHttpRqRsFile(projectModel.getHttpRequestsDirPath(),
+                                                            tablePkgName, httpReqPostClass);
+
+
                     std::string httpReqPutFile =
-                            projectModel.getHttpRequestsDirPath() + "/" + tablePkgName + "/" + httpReqPutClass +
-                            ".java";
+                            projectModel.createHttpRqRsFile(projectModel.getHttpRequestsDirPath(), tablePkgName,
+                                                            httpReqPutClass);
                     std::string httpResGetFile =
-                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResGetClass +
-                            ".java";
+                            projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
+                                                            httpResGetClass);
                     std::string httpResPostFile =
-                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResPostClass +
-                            ".java";
+                            projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
+                                                            httpResPostClass);
                     std::string httpResPutFile =
-                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResPutClass +
-                            ".java";
+                            projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
+                                                            httpResPutClass);
                     std::string httpResDelFile =
-                            projectModel.getHttpResponsesDirPath() + "/" + tablePkgName + "/" + httpResDelClass +
-                            ".java";
+                            projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
+                                                            httpResDelClass);
 
                     std::string modelFile =
                             projectModel.getModelsDirPath() + "/" + modelClass + ".java";

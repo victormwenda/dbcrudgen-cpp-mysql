@@ -13,6 +13,10 @@ namespace dbcrudgen {
             static constexpr const char *DEFAULT_CLASS_TEMPLATE = "templates/java/default_class_template.mdl";
             static constexpr const char *DEFAULT_METHOD_TEMPLATE = "templates/java/default_method_template.mdl";
 
+            static constexpr const char *GETTER_TEMPLATE = "templates/java/getter_template.mdl";
+            static constexpr const char *SETTER_TEMPLATE = "templates/java/setter_template.mdl";
+            static constexpr const char *GETTER_SETTER_TEMPLATE = "templates/java/getter_setter_template.mdl";
+
             static constexpr const char *DEFAULT_VARIABLE_INSTANCE_TEMPLATE = "templates/java/default_variable_instance_template.mdl";
             static constexpr const char *DEFAULT_VARIABLE_LOCAL_TEMPLATE = "templates/java/default_variable_local_template.mdl";
             static constexpr const char *DEFAULT_VARIABLE_STATIC_TEMPLATE = "templates/java/default_variable_static_template.mdl";

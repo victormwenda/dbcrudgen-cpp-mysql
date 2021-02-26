@@ -11,6 +11,7 @@
 #include "../../../databases/generic/Column.h"
 #include "../../templates/java/jax-b/JaxbAttributeTemplate.h"
 #include "../../templates/java/jax-b/JaxbElementTemplate.h"
+#include "../../templates/java/JavaGetterSetterTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -92,8 +93,8 @@ namespace dbcrudgen {
              * @return
              */
             static std::string createGetterSetter(const db::generic::Column &column) {
-                std::string srcTemplate = R"(${VISIBILITY} ${DATA_TYPE} get${METHOD_NAME} () { return ${VARIABLE_NAME};}
-                    ${VISIBILITY} void set${METHOD_NAME} (${DATA_TYPE} ${VARIABLE_NAME}) { this.${VARIABLE_NAME} =  ${VARIABLE_NAME};})";
+                JavaGetterSetterTemplate javaGetterSetterTemplate;
+                std::string srcTemplate = javaGetterSetterTemplate.getTemplate();
 
                 const std::string &columnName = column.getColumnName();
 

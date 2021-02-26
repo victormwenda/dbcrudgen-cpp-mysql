@@ -577,7 +577,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanTemplateFiles.h
 
         src/orm/utils/StringUtils.h
-        src/orm/templates/java/spring-boot/SpringBootClassModelTemplate.h src/orm/templates/java/spring-boot/SpringBootClassServiceDbTemplate.h src/orm/codegen/java/spring-boot/SpringBootServiceDbCodeGen.h)
+        src/orm/templates/java/spring-boot/SpringBootClassModelTemplate.h src/orm/templates/java/spring-boot/SpringBootClassServiceDbTemplate.h src/orm/codegen/java/spring-boot/SpringBootServiceDbCodeGen.h src/orm/templates/java/JavaGetterTemplate.h src/orm/templates/java/JavaSetterTemplate.h src/orm/templates/java/JavaGetterSetterTemplate.h)
 
 #GoogleTest
 add_subdirectory(include/google-test)

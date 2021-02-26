@@ -11,6 +11,8 @@
 #include "../../../parsers/java/SpringBootApplicationParser.h"
 #include "../../../templates/java/spring-boot/SpringBootClassRepoTemplate.h"
 #include "../../../templates/java/JavaVariableInstanceTemplate.h"
+#include "../../../templates/java/JavaGetterTemplate.h"
+#include "../../../templates/java/JavaSetterTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -18,30 +20,95 @@ namespace dbcrudgen {
         public:
             static std::string
             createRepositorySource(dbcrudgen::orm::SpringBootProjectModel &projectModel,
-                                   const std::string &repoClass , const std::string &entityClass) {
+                                   const std::string &repoClass, const std::string &entityClass) {
                 SpringBootClassRepoTemplate repoTemplate;
                 std::string repoSource = repoTemplate.getTemplate();
 
-                repoSource = SpringBootApplicationParser::substituteRepoClassDetails(projectModel, repoSource, repoClass,entityClass);
+                repoSource = SpringBootApplicationParser::substituteRepoClassDetails(projectModel, repoSource,
+                                                                                     repoClass, entityClass);
                 return repoSource;
             }
 
             /**
              * Create an instance variable
              * @param column
+             * @param visibility
              * @return
              */
-            static std::string createInstanceVariable(const dbcrudgen::db::generic::Column &column) {
-                JavaVariableInstanceTemplate javaVarTemplate;
-                std::string srcTemplate = javaVarTemplate.getTemplate();
+            static std::string
+            createColumnInstanceVariable(const dbcrudgen::db::generic::Column &column,
+                                         std::string visibility = "private") {
+                const std::string &dataType = JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType());
+                const std::string &objectName = JavaParser::toJavaVariableInstance(column.getColumnName());
 
-                StringUtils::replace(srcTemplate, "${VISIBILITY}", "private");
+                return createInstanceVariable(dataType, objectName);
+            }
+
+            /**
+           * Create model getter
+           * @param column
+           * @param visibility
+           * @return
+           */
+            static std::string
+            createHttpParamsGetter(const dbcrudgen::db::generic::Column &column, std::string visibility = "public") {
+                JavaGetterTemplate getterTemplate;
+                std::string srcTemplate = getterTemplate.getTemplate();
+
+                StringUtils::replace(srcTemplate, "${VISIBILITY}", visibility);
                 StringUtils::replace(srcTemplate, "${DATA_TYPE}",
                                      JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
-                StringUtils::replace(srcTemplate, "${OBJECT_NAME}",
+                StringUtils::replace(srcTemplate, "${METHOD_NAME}",
+                                     JavaParser::toJavaClassName(column.getColumnName()));
+                StringUtils::replace(srcTemplate, "${VARIABLE_NAME}",
                                      JavaParser::toJavaVariableInstance(column.getColumnName()));
 
                 return srcTemplate;
+            }
+
+            /**
+           * Create model getter
+           * @param column
+           * @param visibility
+           * @return
+           */
+            static std::string
+            createModelSetters(const dbcrudgen::db::generic::Column &column, std::string visibility = "public") {
+                JavaSetterTemplate setterTemplate;
+                std::string srcTemplate = setterTemplate.getTemplate();
+
+                StringUtils::replace(srcTemplate, "${VISIBILITY}", visibility);
+                StringUtils::replace(srcTemplate, "${DATA_TYPE}",
+                                     JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
+                StringUtils::replace(srcTemplate, "${METHOD_NAME}",
+                                     JavaParser::toJavaClassName(column.getColumnName()));
+                StringUtils::replace(srcTemplate, "${VARIABLE_NAME}",
+                                     JavaParser::toJavaVariableInstance(column.getColumnName()));
+
+                return srcTemplate;
+            }
+
+            static std::string
+            createEntityDataFromRequest(const std::string &entityClass, const std::string &httpReqPostClass,
+                                        const db::generic::Column &column) {
+
+                std::string methodName = JavaParser::toJavaClassName(column.getColumnName());
+                std::string requestObject = JavaParser::toJavaVariableLocal(httpReqPostClass);
+                std::string entityObject = JavaParser::toJavaVariableLocal(entityClass);
+
+                std::string srcTemplate = "${ENTITY_OBJECT}.set${METHOD_NAME}(${REQUEST_OBJECT}.get${METHOD_NAME}());";
+                StringUtils::replace(srcTemplate, "${ENTITY_OBJECT}", entityObject);
+                StringUtils::replace(srcTemplate, "${METHOD_NAME}", methodName);
+                StringUtils::replace(srcTemplate, "${REQUEST_OBJECT}", requestObject);
+
+                StringUtils::replace(srcTemplate, "${COLUMN_SETTER}", column.getColumnName());
+                return srcTemplate;
+            }
+
+
+            static std::string
+            createModelDataFromEntity(const std::string &entityClass, const db::generic::Column &column) {
+                return std::string();
             }
         };
 
