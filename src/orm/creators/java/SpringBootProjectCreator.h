@@ -151,7 +151,7 @@ namespace dbcrudgen {
                     std::string dbTrxSrc =
                             SpringBootServiceDbCodeGen::createServiceDbSource(projectModel, table, dbTrxClass,
                                                                               entityClass, dbTrxClass, modelClass,
-                                                                              repoClass, httpReqPostClass);
+                                                                              repoClass, httpReqPostClass, httpReqPutClass);
 
 
                     std::string httpPostReqSrc = SpringBootHttpCodeGen::createReqPostSrc(projectModel, tablePkgName,

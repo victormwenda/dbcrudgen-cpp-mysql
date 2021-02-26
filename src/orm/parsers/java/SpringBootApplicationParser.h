@@ -87,13 +87,21 @@ namespace dbcrudgen {
 
                 StringUtils::replace(ctrlSource, "${RESOURCE-NAME}", apiResName);
                 return ctrlSource;
-            } /**
+            }
+
+            /**
              * Substitute controller details
              * @param model
+             * @param table
+             * @param column
              * @param ctrlSource
              * @param ctrlClass
              * @param entityClass
              * @param trxClass
+             * @param modelClass
+             * @param repoClass
+             * @param httpReqPostClass
+             * @param httpReqPutClass
              * @param apiResName
              * @return
              */
@@ -103,7 +111,7 @@ namespace dbcrudgen {
                                        const std::string &ctrlClass, const std::string &entityClass,
                                        const std::string &trxClass, const std::string &modelClass,
                                        const std::string &repoClass, const std::string &httpReqPostClass,
-                                       const std::string &apiResName) {
+                                       const std::string &httpReqPutClass, const std::string &apiResName) {
 
                 std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
                 std::string tablePkgName = StringUtils::to_lower(tableClassName);
@@ -140,6 +148,10 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${POST_REQUEST_CLASS}", httpReqPostClass);
                 std::string postClassObject = toJavaVariableLocal(httpReqPostClass);
                 StringUtils::replace(ctrlSource, "${POST_REQUEST_OBJECT}", postClassObject);
+
+                StringUtils::replace(ctrlSource, "${PUT_REQUEST_CLASS}", httpReqPutClass);
+                std::string putClassObject = toJavaVariableLocal(httpReqPutClass);
+                StringUtils::replace(ctrlSource, "${PUT_REQUEST_OBJECT}", putClassObject);
 
                 StringUtils::replace(ctrlSource, "${PK_OBJECT}", column.getColumnName());
                 StringUtils::replace(ctrlSource, "${PK_COLUMN_DATATYPE}",

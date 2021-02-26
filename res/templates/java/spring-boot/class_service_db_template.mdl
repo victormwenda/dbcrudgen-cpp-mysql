@@ -47,7 +47,7 @@ public class ${SERVICE_CLASS} {
         return null;
     }
 
-    public ${MODEL_CLASS} update (${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
+    public ${MODEL_CLASS} update (${PK_COLUMN_DATATYPE} ${PK_OBJECT}, ${PUT_REQUEST_CLASS} ${PUT_REQUEST_OBJECT}) {
 
         Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
 
