@@ -49,7 +49,7 @@ namespace dbcrudgen {
                 std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
                 std::string tablePkgName = StringUtils::to_lower(tableClassName);
                 std::string requestsPksName = model.getHttpReqPkg() + '.' + tablePkgName;
-                std::string responsesPksName = model.getHttpReqPkg() + '.' + tablePkgName;
+                std::string responsesPksName = model.getHttpResPkg() + '.' + tablePkgName;
 
                 StringUtils::replace(ctrlSource, "${PROJECT_PACKAGE}", model.getPackageName());
 
@@ -72,6 +72,8 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${MODEL_OBJECT}", modelObject);
 
                 StringUtils::replace(ctrlSource, "${TABLE_CLASS}", tableClassName);
+                std::string tableObject = toJavaVariableLocal(tableClassName);
+                StringUtils::replace(ctrlSource, "${TABLE_OBJECT}", tableObject);
                 StringUtils::replace(ctrlSource, "${REQUEST_TABLE_PACKAGE}", requestsPksName);
                 StringUtils::replace(ctrlSource, "${RESPONSE_TABLE_PACKAGE}", responsesPksName);
 
@@ -106,7 +108,7 @@ namespace dbcrudgen {
                 std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
                 std::string tablePkgName = StringUtils::to_lower(tableClassName);
                 std::string requestsPksName = model.getHttpReqPkg() + '.' + tablePkgName;
-                std::string responsesPksName = model.getHttpReqPkg() + '.' + tablePkgName;
+                std::string responsesPksName = model.getHttpResPkg() + '.' + tablePkgName;
 
                 StringUtils::replace(ctrlSource, "${PROJECT_PACKAGE}", model.getPackageName());
 
