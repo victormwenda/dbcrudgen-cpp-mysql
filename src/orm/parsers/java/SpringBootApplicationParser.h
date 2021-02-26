@@ -73,6 +73,7 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${MODEL_CLASS}", modelClass);
                 std::string modelObject = toJavaVariableLocal(modelClass);
                 StringUtils::replace(ctrlSource, "${MODEL_OBJECT}", modelObject);
+                StringUtils::replace(ctrlSource, "${MODEL_OBJECT_SETTER}", tableClassName);
 
                 StringUtils::replace(ctrlSource, "${TABLE_CLASS}", tableClassName);
                 std::string tableObject = toJavaVariableLocal(tableClassName);
@@ -192,9 +193,13 @@ namespace dbcrudgen {
             */
             static std::string
             substituteHttpResClassDetails(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
-                                          std::string &pkgName,
+                                          const dbcrudgen::db::generic::Table &table,
+
                                           std::string httpResClsSource, const std::string &httpResClsName,
                                           const std::string &modelClass) {
+                std::string tmpClassName = JavaParser::toJavaClassName(table.getTableName());
+                std::string pkgName = StringUtils::to_lower(tmpClassName);
+
                 StringUtils::replace(httpResClsSource, "${CLASS_NAME}", httpResClsName);
                 StringUtils::replace(httpResClsSource, "${VISIBILITY}", "public");
                 StringUtils::replace(httpResClsSource, "${PROJECT_PACKAGE}", projectModel.getPackageName());
@@ -202,6 +207,11 @@ namespace dbcrudgen {
                 StringUtils::replace(httpResClsSource, "${TABLE_PACKAGE}", pkgName);
                 StringUtils::replace(httpResClsSource, "${MODEL_PACKAGE}", projectModel.getModelsPkg());
                 StringUtils::replace(httpResClsSource, "${MODEL_CLASS}", modelClass);
+                StringUtils::replace(httpResClsSource, "${TABLE_CLASS}", tmpClassName);
+
+                std::string modelObject = toJavaVariableLocal(modelClass);
+                StringUtils::replace(httpResClsSource, "${MODEL_OBJECT}", modelObject);
+
                 return httpResClsSource;
             }
 

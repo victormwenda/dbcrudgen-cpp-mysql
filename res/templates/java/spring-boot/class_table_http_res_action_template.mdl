@@ -6,7 +6,7 @@ ${VISIBILITY} class ${CLASS_NAME} {
 
     private int responseCode;
     private String responseMessage;
-    private ${MODEL_CLASS} payload;
+    private ${MODEL_CLASS} ${MODEL_OBJECT};
 
     public ${CLASS_NAME} (int responseCode, String responseMessage) {
         this.responseCode = responseCode;
@@ -21,7 +21,7 @@ ${VISIBILITY} class ${CLASS_NAME} {
         return this.responseMessage;
     }
 
-    public void setPayload(${MODEL_CLASS} payload){
-        this.payload = payload;
+    public void set${TABLE_CLASS}(${MODEL_CLASS} ${MODEL_OBJECT}){
+        this.${MODEL_OBJECT} = ${MODEL_OBJECT};
     }
 }

@@ -27,37 +27,57 @@ public class ${CONTROLLER_CLASS} {
     @GetMapping("/{${PK_COLUMN_NAME}}/get")
     public ResponseEntity<${TABLE_CLASS}GetResponse>get(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
 
-        ${MODEL_CLASS} payload = ${TRX_OBJECT}.find(${PK_COLUMN_NAME});
+        ${MODEL_CLASS} ${MODEL_OBJECT}  = ${TRX_OBJECT}.find(${PK_COLUMN_NAME});
+
+        if(${MODEL_OBJECT} == null) {
+             ${TABLE_CLASS}GetResponse responseBody = new ${TABLE_CLASS}GetResponse(HttpStatus.NOT_FOUND.value(), "Not Found");
+             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(responseBody);
+        }
+
+
         ${TABLE_CLASS}GetResponse responseBody = new ${TABLE_CLASS}GetResponse(HttpStatus.OK.value(), "");
-        responseBody.setPayload(payload);
+        responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT});
 
         return ResponseEntity.ok(responseBody);
     }
 
     @PostMapping("/create")
     public ResponseEntity<${TABLE_CLASS}PostResponse>create(${TABLE_CLASS}PostRequest ${TABLE_OBJECT}) {
-        ${MODEL_CLASS} payload = ${TRX_OBJECT}.insert(${TABLE_OBJECT});
+        ${MODEL_CLASS} ${MODEL_OBJECT} = ${TRX_OBJECT}.insert(${TABLE_OBJECT});
 
-        ${TABLE_CLASS}PostResponse responseBody = new ${TABLE_CLASS}PostResponse(HttpStatus.OK.value(), "");
-        responseBody.setPayload(payload);
+        ${TABLE_CLASS}PostResponse responseBody = new ${TABLE_CLASS}PostResponse(HttpStatus.OK.value(), "Created");
+        responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT});
 
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(responseBody);
     }
 
     @PutMapping("/{id}/update")
     public ResponseEntity<${TABLE_CLASS}PutResponse>update(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}, ${TABLE_CLASS}PutRequest ${TABLE_OBJECT}) {
-       ${MODEL_CLASS} payload = ${TRX_OBJECT}.update(${PK_COLUMN_NAME}, ${TABLE_OBJECT});
-       ${TABLE_CLASS}PutResponse responseBody = new ${TABLE_CLASS}PutResponse(HttpStatus.OK.value(), "");
-       responseBody.setPayload(payload);
+       ${MODEL_CLASS} ${MODEL_OBJECT} = ${TRX_OBJECT}.update(${PK_COLUMN_NAME}, ${TABLE_OBJECT});
+
+        if(${MODEL_OBJECT} == null) {
+             ${TABLE_CLASS}PutResponse responseBody = new ${TABLE_CLASS}PutResponse(HttpStatus.NOT_FOUND.value(), "Not Found");
+             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(responseBody);
+        }
+
+
+       ${TABLE_CLASS}PutResponse responseBody = new ${TABLE_CLASS}PutResponse(HttpStatus.NO_CONTENT.value(), "Updated");
+       responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT});
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT.value()).body(responseBody);
     }
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<${TABLE_CLASS}DelResponse>delete(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
-        ${MODEL_CLASS} payload = ${TRX_OBJECT}.delete(${PK_COLUMN_NAME});
-        ${TABLE_CLASS}DelResponse responseBody = new ${TABLE_CLASS}DelResponse(HttpStatus.OK.value(), "");
-        responseBody.setPayload(payload);
+        ${MODEL_CLASS} ${MODEL_OBJECT} = ${TRX_OBJECT}.delete(${PK_COLUMN_NAME});
+
+        if(${MODEL_OBJECT} == null) {
+             ${TABLE_CLASS}DelResponse responseBody = new ${TABLE_CLASS}DelResponse(HttpStatus.NOT_FOUND.value(), "Not Found");
+             return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(responseBody);
+        }
+
+        ${TABLE_CLASS}DelResponse responseBody = new ${TABLE_CLASS}DelResponse(HttpStatus.NO_CONTENT.value(), "Deleted");
+        responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT});
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT.value()).body(responseBody);
     }

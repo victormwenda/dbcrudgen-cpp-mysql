@@ -90,45 +90,51 @@ namespace dbcrudgen {
             }
 
             static std::string
-            createResGetSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResGetClass,
+            createResGetSrc(SpringBootProjectModel &model,
+                            const dbcrudgen::db::generic::Table &table,
+                            std::string &httpResGetClass,
                             std::string &modelClass) {
                 SpringBootClassHttpResTemplate resTemplate;
                 std::string resSource = resTemplate.getTemplate();
 
-                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, table, resSource,
                                                                                        httpResGetClass, modelClass);
                 return resSource;
             }
 
             static std::string
-            createResDelSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResDelClass,
+            createResDelSrc(SpringBootProjectModel &model,
+                            const dbcrudgen::db::generic::Table &table,
+                            std::string &httpResDelClass,
                             std::string &modelClass) {
                 SpringBootClassHttpResTemplate resTemplate;
                 std::string resSource = resTemplate.getTemplate();
 
-                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, table, resSource,
                                                                                        httpResDelClass, modelClass);
                 return resSource;
             }
 
             static std::string
-            createResPostSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResPostClass,
+            createResPostSrc(SpringBootProjectModel &model, const dbcrudgen::db::generic::Table &table,
+                             std::string &httpResPostClass,
                              std::string &modelClass) {
                 SpringBootClassHttpResTemplate resTemplate;
                 std::string resSource = resTemplate.getTemplate();
 
-                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, table, resSource,
                                                                                        httpResPostClass, modelClass);
                 return resSource;
             }
 
             static std::string
-            createResPutSrc(SpringBootProjectModel &model, std::string &pkgName, std::string &httpResPutClass,
+            createResPutSrc(SpringBootProjectModel &model, const dbcrudgen::db::generic::Table &table,
+                            std::string &httpResPutClass,
                             std::string &modelClass) {
                 SpringBootClassHttpResTemplate resTemplate;
                 std::string resSource = resTemplate.getTemplate();
 
-                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, pkgName, resSource,
+                resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, table, resSource,
                                                                                        httpResPutClass, modelClass);
                 return resSource;
             }

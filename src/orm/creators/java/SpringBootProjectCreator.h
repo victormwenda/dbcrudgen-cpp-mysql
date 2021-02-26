@@ -160,21 +160,21 @@ namespace dbcrudgen {
                     std::string httpPutReqSrc = SpringBootHttpCodeGen::createReqPutSrc(projectModel, tablePkgName,
                                                                                        httpReqPutClass,
                                                                                        modelClass);
-                    std::string httpGetResSrc = SpringBootHttpCodeGen::createResGetSrc(projectModel, tablePkgName,
+                    std::string httpGetResSrc = SpringBootHttpCodeGen::createResGetSrc(projectModel,table,
                                                                                        httpResGetClass,
                                                                                        modelClass);
-                    std::string httpResDelSrc = SpringBootHttpCodeGen::createResDelSrc(projectModel, tablePkgName,
+                    std::string httpResDelSrc = SpringBootHttpCodeGen::createResDelSrc(projectModel,table,
                                                                                        httpResDelClass,
                                                                                        modelClass);
-                    std::string httpPostResSrc = SpringBootHttpCodeGen::createResPostSrc(projectModel, tablePkgName,
+                    std::string httpPostResSrc = SpringBootHttpCodeGen::createResPostSrc(projectModel, table,
                                                                                          httpResPostClass,
                                                                                          modelClass);
-                    std::string httpResPutSrc = SpringBootHttpCodeGen::createResPutSrc(projectModel, tablePkgName,
+                    std::string httpResPutSrc = SpringBootHttpCodeGen::createResPutSrc(projectModel, table,
                                                                                        httpResPutClass,
                                                                                        modelClass);
 
                     std::string modelSource =
-                            SpringBootHttpCodeGen::createModelSource(projectModel, modelClass);
+                            SpringBootHttpCodeGen::createModelSource(projectModel,  modelClass);
 
                     std::string repoSource = SpringBootRepoCodeGen::createRepositorySource(projectModel,
                                                                                            repoClass, entityClass);
