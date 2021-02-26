@@ -22,6 +22,7 @@
 #include "../../codegen/java/spring-boot/SpringBootControllerCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootHttpCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootRepoCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootServiceDbCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -121,7 +122,7 @@ namespace dbcrudgen {
                     std::string httpReqClass = tmpClassName;
                     std::string httpResClass = tmpClassName;
                     std::string repoClass = tmpClassName;
-                    std::string trxClass = tmpClassName;
+                    std::string dbTrxClass = tmpClassName;
                     std::string modelClass = tmpClassName;
 
                     std::string httpReqPostClass = tmpClassName + "PostRequest";
@@ -137,19 +138,19 @@ namespace dbcrudgen {
                     httpReqClass.append(httpReqSuffix);
                     httpResClass.append(httpResSuffix);
                     repoClass.append(reposSuffix);
-                    trxClass.append(trxSuffix);
+                    dbTrxClass.append(trxSuffix);
                     modelClass.append(modelSuffix);
 
                     std::string ctlSource =
                             SpringBootControllerCodeGen::createControllerSource(projectModel, table, ctlClass,
-                                                                                entityClass, trxClass, modelClass);
+                                                                                entityClass, dbTrxClass, modelClass);
 
                     std::string entitySource =
                             HibernateEntityCodeGen::createHibernateEntitySource(projectModel, tableName, entityClass);
 
-                    std::string trxSource =
-                            HibernateTransactionsCodeGen::createHibernateTrxSource(projectModel, table, trxClass,
-                                                                                   entityClass);
+                    std::string dbTrxSrc =
+                            SpringBootServiceDbCodeGen::createServiceDbSource(projectModel, table, dbTrxClass,
+                                                                              entityClass, dbTrxClass, modelClass, repoClass);
 
 
                     std::string httpPostReqSrc = SpringBootHttpCodeGen::createReqPostSrc(projectModel, tablePkgName,
@@ -248,7 +249,7 @@ namespace dbcrudgen {
                             projectModel.getEntitiesAbsolutePath() + "/" + entityClass + ".java";
 
                     std::string trxFile =
-                            projectModel.getTransactionsAbsolutePath() + "/" + trxClass + ".java";
+                            projectModel.getTransactionsAbsolutePath() + "/" + dbTrxClass + ".java";
 
                     std::string beanFile =
                             projectModel.getBeansAbsolutePath() + "/" + beansClass + ".java";
@@ -286,7 +287,7 @@ namespace dbcrudgen {
 
                     FilesWriter::writeFile(ctlFile, ctlSource);
                     FilesWriter::writeFile(entityFile, entitySource);
-                    FilesWriter::writeFile(trxFile, trxSource);
+                    FilesWriter::writeFile(trxFile, dbTrxSrc);
                     FilesWriter::writeFile(beanFile, beansSource);
 
                     FilesWriter::writeFile(httpReqPostFile, httpPostReqSrc);

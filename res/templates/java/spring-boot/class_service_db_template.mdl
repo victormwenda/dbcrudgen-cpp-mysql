@@ -1,0 +1,84 @@
+package ${PROJECT_PACKAGE}.${SERVICES_PACKAGE};
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
+import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
+import ${PROJECT_PACKAGE}.${REPOSITORY_PACKAGE}.${REPOSITORY_CLASS};
+
+@Service
+public class ${SERVICE_CLASS} {
+
+    @Autowired
+    ${REPOSITORY_CLASS} ${REPOSITORY_OBJECT};
+
+    public ${MODEL_CLASS} insert(${POST_REQUEST_CLASS} ${POST_REQUEST_OBJECT}) {
+
+        ${ENTITY_CLASS} ${ENTITY_OBJECT} = new ${ENTITY_CLASS}();
+
+        ${REPOSITORY_OBJECT}.save(${ENTITY_OBJECT});
+
+        ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
+
+        return ${MODEL_OBJECT};
+    }
+
+    public ${MODEL_CLASS} find(${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
+
+        Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
+
+        if(${ENTITY_OBJECT}Opt.isPresent()) {
+
+            ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${ENTITY_OBJECT}Opt.get();
+
+            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
+
+            return ${MODEL_OBJECT};
+
+        }
+
+        return null;
+    }
+
+    public ${MODEL_CLASS} update (${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
+
+        Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
+
+        if(${ENTITY_OBJECT}Opt.isPresent()) {
+
+            ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${ENTITY_OBJECT}Opt.get();
+
+            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
+
+            ${REPOSITORY_OBJECT}.save(${ENTITY_OBJECT});
+
+            return ${MODEL_OBJECT};
+
+        }
+
+        return null;
+    }
+
+    public ${MODEL_CLASS} delete(${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
+
+        Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
+
+        if(${ENTITY_OBJECT}Opt.isPresent()) {
+
+            ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${ENTITY_OBJECT}Opt.get();
+
+            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
+
+            ${REPOSITORY_OBJECT}.delete(${ENTITY_OBJECT});
+
+            return ${MODEL_OBJECT};
+
+        }
+
+        return null;
+    }
+}
