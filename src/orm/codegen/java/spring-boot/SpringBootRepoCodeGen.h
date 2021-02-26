@@ -89,11 +89,11 @@ namespace dbcrudgen {
             }
 
             static std::string
-            createEntityDataFromRequest(const std::string &entityClass, const std::string &httpReqPostClass,
+            createEntityDataFromRequest(const std::string &entityClass, const std::string &httpReqClass,
                                         const db::generic::Column &column) {
 
                 std::string methodName = JavaParser::toJavaClassName(column.getColumnName());
-                std::string requestObject = JavaParser::toJavaVariableLocal(httpReqPostClass);
+                std::string requestObject = JavaParser::toJavaVariableLocal(httpReqClass);
                 std::string entityObject = JavaParser::toJavaVariableLocal(entityClass);
 
                 std::string srcTemplate = "${ENTITY_OBJECT}.set${METHOD_NAME}(${REQUEST_OBJECT}.get${METHOD_NAME}());";
@@ -107,8 +107,18 @@ namespace dbcrudgen {
 
 
             static std::string
-            createModelDataFromEntity(const std::string &entityClass, const db::generic::Column &column) {
-                return std::string();
+            createModelDataFromEntity(const std::string &entityClass,const std::string &modelClass, const db::generic::Column &column) {
+                std::string methodName = JavaParser::toJavaClassName(column.getColumnName());
+                std::string modelObject = JavaParser::toJavaVariableLocal(modelClass);
+                std::string entityObject = JavaParser::toJavaVariableLocal(entityClass);
+
+                std::string srcTemplate = "${MODEL_OBJECT}.set${METHOD_NAME}(${ENTITY_OBJECT}.get${METHOD_NAME}());";
+                StringUtils::replace(srcTemplate, "${ENTITY_OBJECT}", entityObject);
+                StringUtils::replace(srcTemplate, "${METHOD_NAME}", methodName);
+                StringUtils::replace(srcTemplate, "${MODEL_OBJECT}", modelObject);
+
+                StringUtils::replace(srcTemplate, "${COLUMN_SETTER}", column.getColumnName());
+                return srcTemplate;
             }
         };
 

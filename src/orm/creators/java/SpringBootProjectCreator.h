@@ -236,7 +236,7 @@ namespace dbcrudgen {
                             entityDataFromPutRequest += SpringBootRepoCodeGen::createEntityDataFromRequest(
                                     entityClass, httpReqPutClass, column);
 
-                            modelDataFromEntity += SpringBootRepoCodeGen::createModelDataFromEntity(entityClass,
+                            modelDataFromEntity += SpringBootRepoCodeGen::createModelDataFromEntity(entityClass,modelClass,
                                                                                                     column);
                         }
 
