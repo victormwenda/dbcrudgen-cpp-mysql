@@ -46,7 +46,7 @@ public class ${CONTROLLER_CLASS} {
 
     @PutMapping("/{id}/update")
     public ResponseEntity<${TABLE_CLASS}PutResponse>update(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}, ${TABLE_CLASS}PutRequest ${TABLE_OBJECT}) {
-       ${MODEL_CLASS} payload = ${TRX_OBJECT}.update(${PK_COLUMN_NAME});
+       ${MODEL_CLASS} payload = ${TRX_OBJECT}.update(${PK_COLUMN_NAME}, ${TABLE_OBJECT});
        ${TABLE_CLASS}PutResponse responseBody = new ${TABLE_CLASS}PutResponse(HttpStatus.OK.value(), "");
        responseBody.setPayload(payload);
 
