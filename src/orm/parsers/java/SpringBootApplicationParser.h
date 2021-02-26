@@ -39,11 +39,18 @@ namespace dbcrudgen {
              * @return
              */
             static std::string
-            substituteControllerDetails(const SpringBootProjectModel &model, const db::generic::Column &column,
-                                        std::string ctrlSource,
+            substituteControllerDetails(const SpringBootProjectModel &model, const dbcrudgen::db::generic::Table &table,
+                                        const db::generic::Column &column, std::string ctrlSource,
                                         const std::string &ctrlClass,
                                         const std::string &entityClass,
-                                        const std::string &trxClass, const std::string &apiResName) {
+                                        const std::string &trxClass, const std::string &modelClass,
+                                        const std::string &apiResName) {
+
+                std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
+                std::string tablePkgName = StringUtils::to_lower(tableClassName);
+                std::string requestsPksName = model.getHttpReqPkg() + '.' + tablePkgName;
+                std::string responsesPksName = model.getHttpReqPkg() + '.' + tablePkgName;
+
                 StringUtils::replace(ctrlSource, "${PROJECT_PACKAGE}", model.getPackageName());
 
                 StringUtils::replace(ctrlSource, "${CONTROLLER_PACKAGE}", model.getControllersPkg());
@@ -58,6 +65,15 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${ENTITY_CLASS}", entityClass);
                 std::string entityObject = toJavaVariableLocal(entityClass);
                 StringUtils::replace(ctrlSource, "${ENTITY_OBJECT}", entityObject);
+
+                StringUtils::replace(ctrlSource, "${MODEL_PACKAGE}", model.getModelsPkg());
+                StringUtils::replace(ctrlSource, "${MODEL_CLASS}", modelClass);
+                std::string modelObject = toJavaVariableLocal(modelClass);
+                StringUtils::replace(ctrlSource, "${MODEL_OBJECT}", modelObject);
+
+                StringUtils::replace(ctrlSource, "${TABLE_CLASS}", tableClassName);
+                StringUtils::replace(ctrlSource, "${REQUEST_TABLE_PACKAGE}", requestsPksName);
+                StringUtils::replace(ctrlSource, "${RESPONSE_TABLE_PACKAGE}", responsesPksName);
 
                 StringUtils::replace(ctrlSource, "${PK_COLUMN_NAME}", column.getColumnName());
                 StringUtils::replace(ctrlSource, "${PK_COLUMN_DATATYPE}",

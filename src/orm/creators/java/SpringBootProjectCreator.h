@@ -142,7 +142,7 @@ namespace dbcrudgen {
 
                     std::string ctlSource =
                             SpringBootControllerCodeGen::createControllerSource(projectModel, table, ctlClass,
-                                                                                entityClass, trxClass);
+                                                                                entityClass, trxClass, modelClass);
 
                     std::string entitySource =
                             HibernateEntityCodeGen::createHibernateEntitySource(projectModel, tableName, entityClass);

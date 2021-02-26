@@ -30,16 +30,16 @@ namespace dbcrudgen {
             createControllerSource(dbcrudgen::orm::SpringBootProjectModel &projectModel,
                                    const dbcrudgen::db::generic::Table &table,
                                    const std::string &apiClass, const std::string &entityClass,
-                                   const std::string &trxClass) {
+                                   const std::string &trxClass    , const std::string &modelClass) {
                 SpringBootClassControllerTemplate ctlTemplate;
                 std::string apiSource = ctlTemplate.getTemplate();
 
                 const db::generic::Column &pkColumn = getTablePrimaryKeyColumn(table);
 
                 std::string apiResName = SyntaxParser::toKebabCase(table.getTableName());
-                apiSource = SpringBootApplicationParser::substituteControllerDetails(projectModel, pkColumn, apiSource,
+                apiSource = SpringBootApplicationParser::substituteControllerDetails(projectModel,table, pkColumn, apiSource,
                                                                                      apiClass, entityClass,
-                                                                                     trxClass, apiResName);
+                                                                                     trxClass,modelClass, apiResName);
                 return apiSource;
             }
 

@@ -8,42 +8,29 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
+import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
+import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.*;
+import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.*;
 import ${PROJECT_PACKAGE}.${TRX_PACKAGE}.${TRX_CLASS};
 
 @RestController
 @RequestMapping("/${RESOURCE-NAME}")
 public class ${CONTROLLER_CLASS} {
 
-    @GetMapping("/index")
-    public ResponseEntity index() {
-        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
-        List list = ${TRX_OBJECT}.queryAll();
-        return ResponseEntity.ok(list);
-    }
-
-    @GetMapping("/get/{${PK_COLUMN_NAME}}")
-    public ResponseEntity get(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
+    @GetMapping("/{${PK_COLUMN_NAME}}/get")
+    public ResponseEntity<${TABLE_CLASS}GetResponse>get(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
         ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
         ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
-        return ResponseEntity.ok(${ENTITY_OBJECT});
-    }
+        
+        ${MODEL_CLASS} payload;
+        ${TABLE_CLASS}GetResponse responseBody = new ${TABLE_CLASS}GetResponse(HttpStatus.OK.value(), "");
+        responseBody.setPayload(payload);
 
-    @GetMapping("/list")
-    public ResponseEntity list() {
-        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
-        List list = ${TRX_OBJECT}.queryAll();
-        return ResponseEntity.ok(list);
-    }
-
-    @GetMapping("/search")
-    public ResponseEntity search() {
-        ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
-        List list = ${TRX_OBJECT}.queryAll();
-        return ResponseEntity.ok(list);
+        return ResponseEntity.ok(responseBody);
     }
 
     @PostMapping("/create")
-    public ResponseEntity create(${ENTITY_CLASS} ${ENTITY_OBJECT}) throws URISyntaxException {
+    public ResponseEntity<${TABLE_CLASS}PostResponse>create(${ENTITY_CLASS} ${ENTITY_OBJECT}) throws URISyntaxException {
         ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
         ${TRX_OBJECT}.insert(${ENTITY_OBJECT});
 
@@ -51,21 +38,35 @@ public class ${CONTROLLER_CLASS} {
 
         URI uri = new URI("http://127.0.0.1/${RESOURCE-NAME}/"+id);
 
-        return ResponseEntity.created(uri).body(${ENTITY_OBJECT});
+        ${MODEL_CLASS} payload;
+        ${TABLE_CLASS}PostResponse responseBody = new ${TABLE_CLASS}PostResponse(HttpStatus.OK.value(), "");
+        responseBody.setPayload(payload);
+
+        return ResponseEntity.created(uri).body(responseBody);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity update(${ENTITY_CLASS} ${ENTITY_OBJECT}) {
+    @PutMapping("/{id}/update")
+    public ResponseEntity<${TABLE_CLASS}PutResponse>update(${ENTITY_CLASS} ${ENTITY_OBJECT}) {
         ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
         ${TRX_OBJECT}.update(${ENTITY_OBJECT});
-        return ResponseEntity.accepted().body(${ENTITY_OBJECT});
+
+        ${MODEL_CLASS} payload;
+        ${TABLE_CLASS}PutResponse responseBody = new ${TABLE_CLASS}PutResponse(HttpStatus.OK.value(), "");
+        responseBody.setPayload(payload);
+
+        return ResponseEntity.accepted().body(responseBody);
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity delete(@PathVariable("${PK_COLUMN_NAME}")  ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<${TABLE_CLASS}DelResponse>delete(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
         ${TRX_CLASS} ${TRX_OBJECT} = new ${TRX_CLASS}();
         ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${TRX_OBJECT}.queryOne(${PK_COLUMN_NAME});
         ${TRX_OBJECT}.delete(${ENTITY_OBJECT});
-        return ResponseEntity.accepted().body(${ENTITY_OBJECT});
+
+        ${MODEL_CLASS} payload;
+        ${TABLE_CLASS}DelResponse responseBody = new ${TABLE_CLASS}DelResponse(HttpStatus.OK.value(), "");
+        responseBody.setPayload(payload);
+
+        return ResponseEntity.accepted().body(responseBody);
     }
 }
