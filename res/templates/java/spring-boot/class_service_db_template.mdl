@@ -1,5 +1,12 @@
 package ${PROJECT_PACKAGE}.${SERVICES_PACKAGE};
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +19,9 @@ import ${PROJECT_PACKAGE}.${REPOSITORY_PACKAGE}.${REPOSITORY_CLASS};
 
 @Service
 public class ${SERVICE_CLASS} {
+
+    @Autowired
+    EntityManager entityManager;
 
     @Autowired
     ${REPOSITORY_CLASS} ${REPOSITORY_OBJECT};
@@ -85,5 +95,27 @@ public class ${SERVICE_CLASS} {
         }
 
         return null;
+    }
+
+    public List<${MODEL_CLASS}> search() {
+
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<${ENTITY_CLASS}> criteriaQuery = criteriaBuilder.createQuery(${ENTITY_CLASS}.class);
+
+        Root<${ENTITY_CLASS}> adBaring = criteriaQuery.from(${ENTITY_CLASS}.class);
+        List<Predicate> predicates = new ArrayList<>();
+        //Add predicates
+        criteriaQuery.where(predicates.toArray(new Predicate[0]));
+        List<${ENTITY_CLASS}> ${ENTITY_OBJECT}List =  entityManager.createQuery(criteriaQuery).getResultList();
+        List<${MODEL_CLASS}> ${MODEL_OBJECT}List = new ArrayList<>(${ENTITY_OBJECT}List.size());
+
+        ${ENTITY_OBJECT}List.forEach(${ENTITY_OBJECT} -> {
+            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
+            ${MODEL_DATA_FROM_ENTITY}
+
+            ${MODEL_OBJECT}List.add(${MODEL_OBJECT});
+        });
+
+        return ${MODEL_OBJECT}List;
     }
 }

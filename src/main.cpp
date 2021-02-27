@@ -351,16 +351,16 @@ void createSpringBootHibernateProject() {
     dbcrudgen::orm::SpringProjectDirs sbDirs{srcDir, moduleDir, javaDir, libsDir, resourcesDir, webDir};
 
     std::string apisPkg = "apis";
-    std::string dbConnPkg = "database.conn";
-    std::string entitiesPkg = "database.tables";
-    std::string httpReqPkg = "http.requests";
-    std::string httpResPkg = "http.responses";
-    std::string reposPkg = "database.repos";
-    std::string transactionsPkg = "database.transactions";
-    std::string webAppPkg = "application";
-    std::string beansPkg = "beans";
-    std::string ctlPkg = "controllers";
-    std::string modelPkg = "models";
+    std::string dbConnPkg = "dblayer.conn";
+    std::string entitiesPkg = "dblayer.entities";
+    std::string httpReqPkg = "entry.http.requests";
+    std::string httpResPkg = "entry.http.responses";
+    std::string reposPkg = "dblayer.repos";
+    std::string transactionsPkg = "service.data";
+    std::string webAppPkg = "app";
+    std::string beansPkg = "dblayer.beans";
+    std::string ctlPkg = "entry.controllers";
+    std::string modelPkg = "dblayer.models";
     dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, ctlPkg, dbConnPkg, entitiesPkg, httpReqPkg,
                                                  httpResPkg, modelPkg, reposPkg, transactionsPkg, webAppPkg};
 
@@ -369,7 +369,7 @@ void createSpringBootHibernateProject() {
     std::string applicationProperties = "application.properties";
     dbcrudgen::orm::SpringProjectClasses sbClasses{dbConnClass, webAppClass, applicationProperties};
 
-    std::string urlPattern = "/api/v1/*";
+    std::string urlPattern = "/";
     int serverPort = 8080;
 
     std::string apiClassSuffix = "Controller";
@@ -378,7 +378,7 @@ void createSpringBootHibernateProject() {
     std::string httpReqClassSuffix = "Request";
     std::string httpResClassSuffix = "Response";
     std::string reposClassSuffix = "Repository";
-    std::string trxClassSuffix = "Transactions";
+    std::string trxClassSuffix = "Service";
     std::string modelClassSuffix = "Model";
 
     dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs{apiClassSuffix, beansClassSuffix, entityClassSuffix,
