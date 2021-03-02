@@ -23,6 +23,7 @@
 #include "../../codegen/java/spring-boot/SpringBootHttpCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootRepoCodeGen.h"
 #include "../../codegen/java/spring-boot/SpringBootServiceDbCodeGen.h"
+#include "../../codegen/java/spring-boot/SpringBootServiceBzLogicCodeGen.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -54,8 +55,9 @@ namespace dbcrudgen {
 
                 FilesWriter::createDirs(projectModel.getAbsoluteWebDirPath());
                 FilesWriter::createDirs(projectModel.getAbsoluteWebErrorDirPath());
-                FilesWriter::createDirs(projectModel.getApisAbsolutePath());
+                FilesWriter::createDirs(projectModel.getControllersAbsolutePath());
                 FilesWriter::createDirs(projectModel.getBeansAbsolutePath());
+                FilesWriter::createDirs(projectModel.getBzLogicAbsolutePath());
                 FilesWriter::createDirs(projectModel.getDatabaseConnectionAbsolutePath());
                 FilesWriter::createDirs(projectModel.getEntitiesAbsolutePath());
                 FilesWriter::createDirs(projectModel.getHttpRequestsDirPath());
@@ -106,23 +108,25 @@ namespace dbcrudgen {
                     FilesWriter::createDirs(projectModel.getHttpRequestsDirPath() + "/" + tablePkgName);
                     FilesWriter::createDirs(projectModel.getHttpResponsesDirPath() + "/" + tablePkgName);
 
-                    std::string apiSuffix = projectModel.getApiClassSuffix();
                     std::string beansSuffix = projectModel.getBeansClassSuffix();
+                    std::string bzLogicSuffix = projectModel.getBzLogicClassSuffix();
+                    std::string ctlSuffix = projectModel.getCtlClassSuffix();
                     std::string entitySuffix = projectModel.getEntityClassSuffix();
                     std::string httpReqSuffix = projectModel.getHttpReqClassSuffix();
                     std::string httpResSuffix = projectModel.getHttpResClassSuffix();
+                    std::string modelSuffix = projectModel.getModelClassSuffix();
                     std::string reposSuffix = projectModel.getRepoClassSuffix();
                     std::string trxSuffix = projectModel.getTrxClassSuffix();
-                    std::string modelSuffix = projectModel.getModelClassSuffix();
 
 
                     std::string beansClass = tmpClassName;
+                    std::string bzLogicClass = tmpClassName;
                     std::string ctlClass = tmpClassName;
                     std::string entityClass = tmpClassName;
                     std::string httpReqClass = tmpClassName;
                     std::string httpResClass = tmpClassName;
                     std::string repoClass = tmpClassName;
-                    std::string dbTrxClass = tmpClassName;
+                    std::string trxClass = tmpClassName;
                     std::string modelClass = tmpClassName;
 
                     std::string httpReqPostClass = tmpClassName + "PostRequest";
@@ -133,26 +137,25 @@ namespace dbcrudgen {
                     std::string httpResPutClass = tmpClassName + "PutResponse";
 
                     beansClass.append(beansSuffix);
-                    ctlClass.append(apiSuffix);
+                    bzLogicClass.append(bzLogicSuffix);
+                    ctlClass.append(ctlSuffix);
                     entityClass.append(entitySuffix);
                     httpReqClass.append(httpReqSuffix);
                     httpResClass.append(httpResSuffix);
-                    repoClass.append(reposSuffix);
-                    dbTrxClass.append(trxSuffix);
                     modelClass.append(modelSuffix);
+                    repoClass.append(reposSuffix);
+                    trxClass.append(trxSuffix);
 
+                    std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
+                    std::string bzLogicSource =
+                            SpringBootServiceBzLogicCodeGen::createBzLogicSource(projectModel, table, bzLogicClass,
+                                                                                 trxClass, modelClass, httpReqPostClass,
+                                                                                 httpReqPutClass);
                     std::string ctlSource =
                             SpringBootControllerCodeGen::createControllerSource(projectModel, table, ctlClass,
-                                                                                entityClass, dbTrxClass, modelClass);
-
+                                                                                entityClass, bzLogicClass, modelClass);
                     std::string entitySource =
                             HibernateEntityCodeGen::createHibernateEntitySource(projectModel, tableName, entityClass);
-
-                    std::string dbTrxSrc =
-                            SpringBootServiceDbCodeGen::createServiceDbSource(projectModel, table, dbTrxClass,
-                                                                              entityClass, dbTrxClass, modelClass,
-                                                                              repoClass, httpReqPostClass, httpReqPutClass);
-
 
                     std::string httpPostReqSrc = SpringBootHttpCodeGen::createReqPostSrc(projectModel, tablePkgName,
                                                                                          httpReqPostClass,
@@ -160,10 +163,10 @@ namespace dbcrudgen {
                     std::string httpPutReqSrc = SpringBootHttpCodeGen::createReqPutSrc(projectModel, tablePkgName,
                                                                                        httpReqPutClass,
                                                                                        modelClass);
-                    std::string httpGetResSrc = SpringBootHttpCodeGen::createResGetSrc(projectModel,table,
+                    std::string httpGetResSrc = SpringBootHttpCodeGen::createResGetSrc(projectModel, table,
                                                                                        httpResGetClass,
                                                                                        modelClass);
-                    std::string httpResDelSrc = SpringBootHttpCodeGen::createResDelSrc(projectModel,table,
+                    std::string httpResDelSrc = SpringBootHttpCodeGen::createResDelSrc(projectModel, table,
                                                                                        httpResDelClass,
                                                                                        modelClass);
                     std::string httpPostResSrc = SpringBootHttpCodeGen::createResPostSrc(projectModel, table,
@@ -172,14 +175,17 @@ namespace dbcrudgen {
                     std::string httpResPutSrc = SpringBootHttpCodeGen::createResPutSrc(projectModel, table,
                                                                                        httpResPutClass,
                                                                                        modelClass);
-
                     std::string modelSource =
-                            SpringBootHttpCodeGen::createModelSource(projectModel,  modelClass);
+                            SpringBootHttpCodeGen::createModelSource(projectModel, modelClass);
 
                     std::string repoSource = SpringBootRepoCodeGen::createRepositorySource(projectModel,
                                                                                            repoClass, entityClass);
+                    std::string trxSrc =
+                            SpringBootServiceDbCodeGen::createTrxSource(projectModel, table,
+                                                                        entityClass, trxClass, modelClass,
+                                                                        repoClass, httpReqPostClass,
+                                                                        httpReqPutClass);
 
-                    std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
                     std::string mappingSource = HibernateConfigCodeGen::createEntityTableMappingSource();
 
 
@@ -236,7 +242,8 @@ namespace dbcrudgen {
                             entityDataFromPutRequest += SpringBootRepoCodeGen::createEntityDataFromRequest(
                                     entityClass, httpReqPutClass, column);
 
-                            modelDataFromEntity += SpringBootRepoCodeGen::createModelDataFromEntity(entityClass,modelClass,
+                            modelDataFromEntity += SpringBootRepoCodeGen::createModelDataFromEntity(entityClass,
+                                                                                                    modelClass,
                                                                                                     column);
                         }
 
@@ -263,35 +270,27 @@ namespace dbcrudgen {
                     SpringBootHttpCodeGen::addModelInstanceVariables(modelSource, modelInstanceVars);
                     SpringBootHttpCodeGen::addModelGetterSetters(modelSource, modelGetterSetters);
 
-                    SpringBootHttpCodeGen::addTrxServicePostRequestEntityData(dbTrxSrc, entityDataFromPostRequest);
-                    SpringBootHttpCodeGen::addTrxServicePutRequestEntityData(dbTrxSrc, entityDataFromPutRequest);
-                    SpringBootHttpCodeGen::addTrxServiceModelData(dbTrxSrc, modelDataFromEntity);
+                    SpringBootHttpCodeGen::addTrxServicePostRequestEntityData(trxSrc, entityDataFromPostRequest);
+                    SpringBootHttpCodeGen::addTrxServicePutRequestEntityData(trxSrc, entityDataFromPutRequest);
+                    SpringBootHttpCodeGen::addTrxServiceModelData(trxSrc, modelDataFromEntity);
 
                     SpringBootHttpCodeGen::addRepositoryPrimaryKey(repoSource, pkColumn);
 
-                    std::string ctlFile =
-                            projectModel.getApisAbsolutePath() + "/" + ctlClass + ".java";
-
-                    std::string entityFile =
-                            projectModel.getEntitiesAbsolutePath() + "/" + entityClass + ".java";
-
-                    std::string trxFile =
-                            projectModel.getTransactionsAbsolutePath() + "/" + dbTrxClass + ".java";
-
                     std::string beanFile =
                             projectModel.getBeansAbsolutePath() + "/" + beansClass + ".java";
-
+                    std::string bzLogicFile =
+                            projectModel.getBzLogicAbsolutePath() + "/" + bzLogicClass + ".java";
+                    std::string ctlFile =
+                            projectModel.getControllersAbsolutePath() + "/" + ctlClass + ".java";
+                    std::string entityFile =
+                            projectModel.getEntitiesAbsolutePath() + "/" + entityClass + ".java";
                     std::string httpReqFile =
                             projectModel.getHttpRequestsDirPath() + "/" + httpReqClass + ".java";
-
                     std::string httpResFile =
                             projectModel.getHttpResponsesDirPath() + "/" + httpResClass + ".java";
-
                     std::string httpReqPostFile =
                             projectModel.createHttpRqRsFile(projectModel.getHttpRequestsDirPath(),
                                                             tablePkgName, httpReqPostClass);
-
-
                     std::string httpReqPutFile =
                             projectModel.createHttpRqRsFile(projectModel.getHttpRequestsDirPath(), tablePkgName,
                                                             httpReqPutClass);
@@ -307,17 +306,19 @@ namespace dbcrudgen {
                     std::string httpResDelFile =
                             projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
                                                             httpResDelClass);
-
                     std::string modelFile =
                             projectModel.getModelsDirPath() + "/" + modelClass + ".java";
 
                     std::string repoFile =
                             projectModel.getRepositoriesDirPath() + "/" + repoClass + ".java";
+                    std::string trxFile =
+                            projectModel.getTransactionsAbsolutePath() + "/" + trxClass + ".java";
 
+                    FilesWriter::writeFile(beanFile, beansSource);
+                    FilesWriter::writeFile(bzLogicFile, bzLogicSource);
                     FilesWriter::writeFile(ctlFile, ctlSource);
                     FilesWriter::writeFile(entityFile, entitySource);
-                    FilesWriter::writeFile(trxFile, dbTrxSrc);
-                    FilesWriter::writeFile(beanFile, beansSource);
+                    FilesWriter::writeFile(trxFile, trxSrc);
 
                     FilesWriter::writeFile(httpReqPostFile, httpPostReqSrc);
                     FilesWriter::writeFile(httpReqPutFile, httpPutReqSrc);

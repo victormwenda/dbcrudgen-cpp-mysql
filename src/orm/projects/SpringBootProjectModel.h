@@ -98,8 +98,12 @@ namespace dbcrudgen {
                 return sbPkgs.getBeansPkg();
             }
 
-            const std::string &getApiClassSuffix() const {
-                return sbClsSuffxs.getApiClassSuffix();
+            const std::string &getBzLogicPkg() const {
+                return sbPkgs.getBzLogicPkg();
+            }
+
+            const std::string &getCtlClassSuffix() const {
+                return sbClsSuffxs.getCtlClassSuffix();
             }
 
             const std::string &getEntityClassSuffix() const {
@@ -128,6 +132,10 @@ namespace dbcrudgen {
 
             const std::string &getBeansClassSuffix() const {
                 return sbClsSuffxs.getBeansClassSuffix();
+            }
+
+            const std::string &getBzLogicClassSuffix() const {
+                return sbClsSuffxs.getBzLogicClassSuffix();
             }
 
             const std::string &getSBAppClassName() const {
@@ -189,24 +197,35 @@ namespace dbcrudgen {
             }
 
             /**
-             * Get absolute path to apis dir
-             * @return
-             */
-            const std::string getApisAbsolutePath() {
-                std::string pkgName = getControllersPkg();
-                std::string apisPackage = StringUtils::replace(pkgName, ".", "/");
-                return getAbsoluteBaseCodePath() + "/" + apisPackage;
-            }
-
-            /**
-           * Get absolute path to beans package dir
-           * @return
-           */
+            * Get absolute path to beans package dir
+            * @return
+            */
             const std::string getBeansAbsolutePath() {
                 std::string pkgName = getBeansPkg();
                 std::string beansPackage = StringUtils::replace(pkgName, ".", "/");
                 const std::string &baseCodePath = getAbsoluteBaseCodePath();
                 return baseCodePath + "/" + beansPackage;
+            }
+
+            /**
+            * Get absolute path to beans package dir
+            * @return
+            */
+            const std::string getBzLogicAbsolutePath() {
+                std::string pkgName = getBzLogicPkg();
+                std::string beansPackage = StringUtils::replace(pkgName, ".", "/");
+                const std::string &baseCodePath = getAbsoluteBaseCodePath();
+                return baseCodePath + "/" + beansPackage;
+            }
+
+            /**
+            * Get absolute path to apis dir
+            * @return
+            */
+            const std::string getControllersAbsolutePath() {
+                std::string pkgName = getControllersPkg();
+                std::string apisPackage = StringUtils::replace(pkgName, ".", "/");
+                return getAbsoluteBaseCodePath() + "/" + apisPackage;
             }
 
             /**

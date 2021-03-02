@@ -37,7 +37,7 @@ namespace dbcrudgen {
              * @param ctrlSource
              * @param ctrlClass
              * @param entityClass
-             * @param trxClass
+             * @param bzLogicClass
              * @param apiResName
              * @return
              */
@@ -46,7 +46,7 @@ namespace dbcrudgen {
                                         const db::generic::Column &column, std::string ctrlSource,
                                         const std::string &ctrlClass,
                                         const std::string &entityClass,
-                                        const std::string &trxClass, const std::string &modelClass,
+                                        const std::string &bzLogicClass, const std::string &modelClass,
                                         const std::string &apiResName) {
 
                 std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
@@ -59,15 +59,11 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${CONTROLLER_PACKAGE}", model.getControllersPkg());
                 StringUtils::replace(ctrlSource, "${CONTROLLER_CLASS}", ctrlClass);
 
-                StringUtils::replace(ctrlSource, "${TRX_PACKAGE}", model.getTransactionsPkg());
-                StringUtils::replace(ctrlSource, "${TRX_CLASS}", trxClass);
-                std::string trxObject = toJavaVariableLocal(trxClass);
-                StringUtils::replace(ctrlSource, "${TRX_OBJECT}", trxObject);
+                StringUtils::replace(ctrlSource, "${BZLOGIC_PACKAGE}", model.getBzLogicPkg());
+                StringUtils::replace(ctrlSource, "${BZLOGIC_CLASS}", bzLogicClass);
+                std::string bzLogicObject = toJavaVariableLocal(bzLogicClass);
+                StringUtils::replace(ctrlSource, "${BZLOGIC_OBJECT}", bzLogicObject);
 
-                StringUtils::replace(ctrlSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
-                StringUtils::replace(ctrlSource, "${ENTITY_CLASS}", entityClass);
-                std::string entityObject = toJavaVariableLocal(entityClass);
-                StringUtils::replace(ctrlSource, "${ENTITY_OBJECT}", entityObject);
 
                 StringUtils::replace(ctrlSource, "${MODEL_PACKAGE}", model.getModelsPkg());
                 StringUtils::replace(ctrlSource, "${MODEL_CLASS}", modelClass);
@@ -112,10 +108,10 @@ namespace dbcrudgen {
             static std::string
             substituteDbServiceDetails(const SpringBootProjectModel &model, const dbcrudgen::db::generic::Table &table,
                                        const db::generic::Column &column, std::string ctrlSource,
-                                       const std::string &ctrlClass, const std::string &entityClass,
-                                       const std::string &trxClass, const std::string &modelClass,
-                                       const std::string &repoClass, const std::string &httpReqPostClass,
-                                       const std::string &httpReqPutClass, const std::string &apiResName) {
+                                       const std::string &entityClass, const std::string &trxClass,
+                                       const std::string &modelClass, const std::string &repoClass,
+                                       const std::string &httpReqPostClass, const std::string &httpReqPutClass
+            ) {
 
                 std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
                 std::string tablePkgName = StringUtils::to_lower(tableClassName);
@@ -124,10 +120,9 @@ namespace dbcrudgen {
 
                 StringUtils::replace(ctrlSource, "${PROJECT_PACKAGE}", model.getPackageName());
 
-                StringUtils::replace(ctrlSource, "${SERVICES_PACKAGE}", model.getTransactionsPkg());
-                StringUtils::replace(ctrlSource, "${SERVICE_CLASS}", trxClass);
-                std::string trxObject = toJavaVariableLocal(trxClass);
-                StringUtils::replace(ctrlSource, "${SERVICE_OBJECT}", trxObject);
+                StringUtils::replace(ctrlSource, "${DAOS_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(ctrlSource, "${DAO_CLASS}", trxClass);
+
 
                 StringUtils::replace(ctrlSource, "${REPOSITORY_PACKAGE}", model.getRepositoriesPkg());
                 StringUtils::replace(ctrlSource, "${REPOSITORY_CLASS}", repoClass);
@@ -161,12 +156,78 @@ namespace dbcrudgen {
                 StringUtils::replace(ctrlSource, "${PK_COLUMN_DATATYPE}",
                                      toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
 
+
+                return ctrlSource;
+            }
+
+            /**
+             * Create business logic source file
+             * @param model
+             * @param table
+             * @param column
+             * @param bzLogicSource
+             * @param bzLogicClass
+
+             * @param trxClass
+             * @param modelClass
+             * @param repoClass
+             * @param httpReqPostClass
+             * @param httpReqPutClass
+             * @param apiResName
+             * @return
+             */
+            static std::string
+            substituteBusinessLogicServiceDetails(const SpringBootProjectModel &model,
+                                                  const dbcrudgen::db::generic::Table &table,
+                                                  const db::generic::Column &column, std::string bzLogicSource,
+                                                  const std::string &bzLogicClass, const std::string &trxClass,
+                                                  const std::string &modelClass,
+                                                  const std::string &httpReqPostClass,
+                                                  const std::string &httpReqPutClass) {
+
+                std::string tableClassName = JavaParser::toJavaClassName(table.getTableName());
+                std::string tablePkgName = StringUtils::to_lower(tableClassName);
+                std::string requestsPksName = model.getHttpReqPkg() + '.' + tablePkgName;
+                std::string responsesPksName = model.getHttpResPkg() + '.' + tablePkgName;
+
+                StringUtils::replace(bzLogicSource, "${PROJECT_PACKAGE}", model.getPackageName());
+
+                StringUtils::replace(bzLogicSource, "${BZLOGIC_PACKAGE}", model.getBzLogicPkg());
+                StringUtils::replace(bzLogicSource, "${BZLOGIC_CLASS}", bzLogicClass);
+                std::string trxObject = toJavaVariableLocal(bzLogicClass);
+
+
+                StringUtils::replace(bzLogicSource, "${DAOS_PACKAGE}", model.getTransactionsPkg());
+                StringUtils::replace(bzLogicSource, "${DAO_CLASS}", trxClass);
+                StringUtils::replace(bzLogicSource, "${DAO_OBJECT}", trxObject);
+
+                StringUtils::replace(bzLogicSource, "${MODEL_PACKAGE}", model.getModelsPkg());
+                StringUtils::replace(bzLogicSource, "${MODEL_CLASS}", modelClass);
+                std::string modelObject = toJavaVariableLocal(modelClass);
+                StringUtils::replace(bzLogicSource, "${MODEL_OBJECT}", modelObject);
+
+                StringUtils::replace(bzLogicSource, "${TABLE_CLASS}", tableClassName);
+                StringUtils::replace(bzLogicSource, "${REQUEST_TABLE_PACKAGE}", requestsPksName);
+                StringUtils::replace(bzLogicSource, "${RESPONSE_TABLE_PACKAGE}", responsesPksName);
+
+                StringUtils::replace(bzLogicSource, "${POST_REQUEST_CLASS}", httpReqPostClass);
+                std::string postClassObject = toJavaVariableLocal(httpReqPostClass);
+                StringUtils::replace(bzLogicSource, "${POST_REQUEST_OBJECT}", postClassObject);
+
+                StringUtils::replace(bzLogicSource, "${PUT_REQUEST_CLASS}", httpReqPutClass);
+                std::string putClassObject = toJavaVariableLocal(httpReqPutClass);
+                StringUtils::replace(bzLogicSource, "${PUT_REQUEST_OBJECT}", putClassObject);
+
+                StringUtils::replace(bzLogicSource, "${PK_OBJECT}", column.getColumnName());
+                StringUtils::replace(bzLogicSource, "${PK_COLUMN_DATATYPE}",
+                                     toJavaPrimitiveDataTypeFromSQL(column.getDataType()));
+
                 std::string methodGetter = "get";
                 methodGetter = methodGetter.append(toJavaClassName(column.getColumnName()));
-                StringUtils::replace(ctrlSource, "${PK_METHOD_GETTER}", methodGetter);
+                StringUtils::replace(bzLogicSource, "${PK_METHOD_GETTER}", methodGetter);
 
-                StringUtils::replace(ctrlSource, "${RESOURCE-NAME}", apiResName);
-                return ctrlSource;
+
+                return bzLogicSource;
             }
 
             /**

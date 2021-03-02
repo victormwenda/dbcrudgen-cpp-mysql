@@ -11,27 +11,34 @@ namespace dbcrudgen {
     namespace orm {
         class SpringProjectSuffixes {
         private:
-            std::string apiClassSuffix;
             std::string beansClassSuffix;
+            std::string bzLogicClassSuffix;
+            std::string ctlClassSuffix;
             std::string entityClassSuffix;
             std::string httpReqClassSuffix;
             std::string httpResClassSuffix;
+            std::string modelClassSuffix;
             std::string repoClassSuffix;
             std::string trxClassSuffix;
-            std::string modelClassSuffix;
 
         public:
-            SpringProjectSuffixes(std::string &apiClassSuffix, std::string &beansClassSuffix,
-                                  std::string &entityClassSuffix, std::string &httpReqClassSuffix,
-                                  std::string &httpResClassSuffix, std::string &repoClassSuffix,
-                                  std::string &trxClassSuffix, std::string &modelClassSuffix)
-                    : apiClassSuffix(apiClassSuffix), beansClassSuffix(beansClassSuffix),
-                      entityClassSuffix(entityClassSuffix), httpReqClassSuffix(httpReqClassSuffix),
-                      httpResClassSuffix(httpResClassSuffix), repoClassSuffix(repoClassSuffix),
-                      trxClassSuffix(trxClassSuffix), modelClassSuffix(modelClassSuffix) {}
+            SpringProjectSuffixes(std::string &beansClassSuffix, std::string &bzLogicClassSuffix,
+                                  std::string &ctlClassSuffix, std::string &entityClassSuffix,
+                                  std::string &httpReqClassSuffix, std::string &httpResClassSuffix,
+                                  std::string &modelClassSuffix, std::string &repoClassSuffix,
+                                  std::string &trxClassSuffix)
+                    : beansClassSuffix(beansClassSuffix),
+                      bzLogicClassSuffix(bzLogicClassSuffix),
+                      ctlClassSuffix(ctlClassSuffix),
+                      entityClassSuffix(entityClassSuffix),
+                      httpReqClassSuffix(httpReqClassSuffix),
+                      httpResClassSuffix(httpResClassSuffix),
+                      modelClassSuffix(modelClassSuffix),
+                      repoClassSuffix(repoClassSuffix),
+                      trxClassSuffix(trxClassSuffix) {}
 
-            const std::string &getApiClassSuffix() const {
-                return apiClassSuffix;
+            const std::string &getCtlClassSuffix() const {
+                return ctlClassSuffix;
             }
 
             const std::string &getBeansClassSuffix() const {
@@ -54,12 +61,28 @@ namespace dbcrudgen {
                 return repoClassSuffix;
             }
 
+            /**
+             * Get DAO class suffix
+             * @return
+             */
             const std::string &getTrxClassSuffix() const {
                 return trxClassSuffix;
             }
 
+            /**
+             * Get DAO class suffix
+             * @return
+             */
+            const std::string &getDaoClassSuffix() const {
+                return getTrxClassSuffix();
+            }
+
             const std::string &getModelClassSuffix() const {
                 return modelClassSuffix;
+            }
+
+            const std::string &getBzLogicClassSuffix() const {
+                return bzLogicClassSuffix;
             }
         };
 

@@ -11,8 +11,8 @@ namespace dbcrudgen {
     namespace orm {
         class SpringProjectPackages {
 
-            std::string apisPkg;
             std::string beansPkg;
+            std::string bzLogicPkg;
             std::string ctlsPkg;
             std::string dbConnPkg;
             std::string entitiesPkg;
@@ -24,22 +24,21 @@ namespace dbcrudgen {
             std::string webAppPkg;
 
         public:
-            SpringProjectPackages(std::string &apisPkg, std::string &beansPkg, std::string &ctlsPkg,
-                                  std::string &dbConnPkg, std::string &entitiesPkg, std::string &httpReqPkg,
-                                  std::string &httpResPkg, std::string &modelsPkg, std::string &reposPkg,
-                                  std::string &transactionsPkg, std::string &webAppPkg)
-                    : apisPkg(apisPkg), beansPkg(beansPkg), ctlsPkg(ctlsPkg), dbConnPkg(dbConnPkg),
-                      entitiesPkg(entitiesPkg),
-                      httpReqPkg(httpReqPkg), httpResPkg(httpResPkg), modelsPkg(modelsPkg),
-                      reposPkg(reposPkg),
-                      transactionsPkg(transactionsPkg), webAppPkg(webAppPkg) {}
-
-            const std::string &getApisPkg() const {
-                return apisPkg;
-            }
+            SpringProjectPackages( std::string &beansPkg, std::string &bzLogicPkg,
+                                  std::string &ctlsPkg, std::string &dbConnPkg, std::string &entitiesPkg,
+                                  std::string &httpReqPkg, std::string &httpResPkg, std::string &modelsPkg,
+                                  std::string &reposPkg, std::string &transactionsPkg, std::string &webAppPkg)
+                    : beansPkg(beansPkg), bzLogicPkg(bzLogicPkg), ctlsPkg(ctlsPkg),
+                      dbConnPkg(dbConnPkg), entitiesPkg(entitiesPkg), httpReqPkg(httpReqPkg), httpResPkg(httpResPkg),
+                      modelsPkg(modelsPkg), reposPkg(reposPkg), transactionsPkg(transactionsPkg),
+                      webAppPkg(webAppPkg) {}
 
             const std::string &getBeansPkg() const {
                 return beansPkg;
+            }
+
+            const std::string &getBzLogicPkg() const {
+                return bzLogicPkg;
             }
 
             const std::string &getCtlsPkg() const {

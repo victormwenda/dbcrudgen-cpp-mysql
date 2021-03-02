@@ -1,4 +1,4 @@
-package ${PROJECT_PACKAGE}.${SERVICES_PACKAGE};
+package ${PROJECT_PACKAGE}.${DAOS_PACKAGE};
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,7 +18,7 @@ import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.*;
 import ${PROJECT_PACKAGE}.${REPOSITORY_PACKAGE}.${REPOSITORY_CLASS};
 
 @Service
-public class ${SERVICE_CLASS} {
+public class ${DAO_CLASS} {
 
     @Autowired
     EntityManager entityManager;

@@ -12,7 +12,8 @@
 #include "../../../templates/java/spring-boot/SpringBootClassControllerTemplate.h"
 #include "../../../templates/java/spring-boot/SpringBootClassHttpReqTemplate.h"
 #include "../../../templates/java/spring-boot/SpringBootClassRepoTemplate.h"
-#include "../../../templates/java/spring-boot/SpringBootClassServiceDbTemplate.h"
+#include "../../../templates/java/spring-boot/SpringBootClassServiceDaoTemplate.h"
+#include "../../../templates/java/spring-boot/SpringBootClassServiceBusinessTemplate.h"
 
 namespace dbcrudgen {
     namespace orm {
@@ -28,33 +29,31 @@ namespace dbcrudgen {
              * @return
              */
             static std::string
-            createServiceDbSource(dbcrudgen::orm::SpringBootProjectModel &projectModel,
-                                  const dbcrudgen::db::generic::Table &table,
-                                  const std::string &apiClass, const std::string &entityClass,
-                                  const std::string &trxClass, const std::string &modelClass,
-                                  const std::string &repoClass, const std::string &httpReqPostClass,
-                                  const std::string &httpReqPutClass) {
+            createTrxSource(dbcrudgen::orm::SpringBootProjectModel &projectModel,
+                            const dbcrudgen::db::generic::Table &table,
+                            const std::string &entityClass, const std::string &trxClass,
+                            const std::string &modelClass, const std::string &repoClass,
+                            const std::string &httpReqPostClass, const std::string &httpReqPutClass) {
 
-                SpringBootClassServiceDbTemplate serviceTemplate;
+                SpringBootClassServiceDaoTemplate serviceTemplate;
                 std::string serviceSource = serviceTemplate.getTemplate();
 
                 const db::generic::Column &pkColumn = getTablePrimaryKeyColumn(table);
 
-                std::string apiResName = SyntaxParser::toKebabCase(table.getTableName());
+
                 serviceSource = SpringBootApplicationParser::substituteDbServiceDetails(projectModel,
                                                                                         table,
                                                                                         pkColumn,
                                                                                         serviceSource,
-                                                                                        apiClass,
                                                                                         entityClass,
                                                                                         trxClass,
                                                                                         modelClass,
                                                                                         repoClass,
                                                                                         httpReqPostClass,
-                                                                                        httpReqPutClass,
-                                                                                        apiResName);
+                                                                                        httpReqPutClass);
                 return serviceSource;
             }
+
 
             /**
              * Get Table Primary Key Column

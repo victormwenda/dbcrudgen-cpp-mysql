@@ -350,18 +350,19 @@ void createSpringBootHibernateProject() {
     std::string webDir = "public";
     dbcrudgen::orm::SpringProjectDirs sbDirs{srcDir, moduleDir, javaDir, libsDir, resourcesDir, webDir};
 
-    std::string apisPkg = "apis";
+    std::string beansPkg = "dblayer.beans";
     std::string dbConnPkg = "dblayer.conn";
+    std::string reposPkg = "dblayer.repos";
     std::string entitiesPkg = "dblayer.entities";
+    std::string modelPkg = "dblayer.models";
+
     std::string httpReqPkg = "entry.http.requests";
     std::string httpResPkg = "entry.http.responses";
-    std::string reposPkg = "dblayer.repos";
-    std::string transactionsPkg = "service.data";
-    std::string webAppPkg = "app";
-    std::string beansPkg = "dblayer.beans";
     std::string ctlPkg = "entry.controllers";
-    std::string modelPkg = "dblayer.models";
-    dbcrudgen::orm::SpringProjectPackages sbPkgs{apisPkg, beansPkg, ctlPkg, dbConnPkg, entitiesPkg, httpReqPkg,
+    std::string transactionsPkg = "service.data";
+    std::string bzLogicPkg = "service.business";
+    std::string webAppPkg = "app";
+    dbcrudgen::orm::SpringProjectPackages sbPkgs{beansPkg, bzLogicPkg, ctlPkg, dbConnPkg, entitiesPkg, httpReqPkg,
                                                  httpResPkg, modelPkg, reposPkg, transactionsPkg, webAppPkg};
 
     std::string webAppClass = "Application";
@@ -372,18 +373,19 @@ void createSpringBootHibernateProject() {
     std::string urlPattern = "/";
     int serverPort = 8080;
 
-    std::string apiClassSuffix = "Controller";
+    std::string ctlClassSuffix = "Controller";
     std::string beansClassSuffix = "Beans";
+    std::string bzLogicClassSuffix = "Service";
     std::string entityClassSuffix = "Entity";
     std::string httpReqClassSuffix = "Request";
     std::string httpResClassSuffix = "Response";
     std::string reposClassSuffix = "Repository";
-    std::string trxClassSuffix = "Service";
+    std::string trxClassSuffix = "Trx";
     std::string modelClassSuffix = "Model";
 
-    dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs{apiClassSuffix, beansClassSuffix, entityClassSuffix,
-                                                      httpReqClassSuffix, httpResClassSuffix, reposClassSuffix,
-                                                      trxClassSuffix, modelClassSuffix};
+    dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs{beansClassSuffix, bzLogicClassSuffix, ctlClassSuffix,
+                                                      entityClassSuffix, httpReqClassSuffix, httpResClassSuffix,
+                                                      modelClassSuffix, reposClassSuffix, trxClassSuffix};
 
     dbcrudgen::orm::SpringBootProjectModel sbModel{projectName, workspaceDir, packageName, sbDirs, sbPkgs, sbClasses,
                                                    sbClsSuffxs, urlPattern, serverPort};

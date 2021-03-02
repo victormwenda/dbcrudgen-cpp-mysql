@@ -2,19 +2,19 @@
 // Created by victor on 2/26/21.
 //
 
-#ifndef DBCRUDGEN_CPP_SPRINGBOOTCLASSSERVICEDBTEMPLATE_H
-#define DBCRUDGEN_CPP_SPRINGBOOTCLASSSERVICEDBTEMPLATE_H
+#ifndef DBCRUDGEN_CPP_SPRINGBOOTCLASSSERVICEDAOTEMPLATE_H
+#define DBCRUDGEN_CPP_SPRINGBOOTCLASSSERVICEDAOTEMPLATE_H
 
 #include "../../FileSourceCodeTemplate.h"
 #include "../JavaTemplateFiles.h"
 
 namespace dbcrudgen {
     namespace orm {
-        class SpringBootClassServiceDbTemplate : public FileSourceCodeTemplate {
+        class SpringBootClassServiceDaoTemplate : public FileSourceCodeTemplate {
 
         protected:
             std::string getSourceFile() override {
-                return std::string{JavaTemplateFiles::SpringBoot::CLASS_SERVICE_DB_TEMPLATE};
+                return std::string{JavaTemplateFiles::SpringBoot::CLASS_SERVICE_DAO_TEMPLATE};
             }
 
             std::string getLanguage() override {
@@ -25,4 +25,4 @@ namespace dbcrudgen {
     }
 }
 
-#endif //DBCRUDGEN_CPP_SPRINGBOOTCLASSSERVICEDBTEMPLATE_H
+#endif //DBCRUDGEN_CPP_SPRINGBOOTCLASSSERVICEDAOTEMPLATE_H

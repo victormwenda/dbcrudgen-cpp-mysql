@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import ${PROJECT_PACKAGE}.${ENTITY_PACKAGE}.${ENTITY_CLASS};
 import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
 
 import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.${TABLE_CLASS}PostRequest;
@@ -15,19 +14,19 @@ import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}GetResponse;
 import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}PostResponse;
 import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}PutResponse;
 
-import ${PROJECT_PACKAGE}.${TRX_PACKAGE}.${TRX_CLASS};
+import ${PROJECT_PACKAGE}.${BZLOGIC_PACKAGE}.${BZLOGIC_CLASS};
 
 @RestController
 @RequestMapping("/${RESOURCE-NAME}")
 public class ${CONTROLLER_CLASS} {
 
     @Autowired
-    ${TRX_CLASS} ${TRX_OBJECT};
+    ${BZLOGIC_CLASS} ${BZLOGIC_OBJECT};
 
     @GetMapping("/{${PK_COLUMN_NAME}}/get")
     public ResponseEntity<${TABLE_CLASS}GetResponse>get(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
 
-        ${MODEL_CLASS} ${MODEL_OBJECT}  = ${TRX_OBJECT}.find(${PK_COLUMN_NAME});
+        ${MODEL_CLASS} ${MODEL_OBJECT}  = ${BZLOGIC_OBJECT}.find(${PK_COLUMN_NAME});
 
         if(${MODEL_OBJECT} == null) {
              ${TABLE_CLASS}GetResponse responseBody = new ${TABLE_CLASS}GetResponse(HttpStatus.NOT_FOUND.value(), "Not Found");
@@ -43,7 +42,7 @@ public class ${CONTROLLER_CLASS} {
 
     @PostMapping("/create")
     public ResponseEntity<${TABLE_CLASS}PostResponse>create(${TABLE_CLASS}PostRequest ${TABLE_OBJECT}) {
-        ${MODEL_CLASS} ${MODEL_OBJECT} = ${TRX_OBJECT}.insert(${TABLE_OBJECT});
+        ${MODEL_CLASS} ${MODEL_OBJECT} = ${BZLOGIC_OBJECT}.insert(${TABLE_OBJECT});
 
         ${TABLE_CLASS}PostResponse responseBody = new ${TABLE_CLASS}PostResponse(HttpStatus.OK.value(), "Created");
         responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT});
@@ -53,7 +52,7 @@ public class ${CONTROLLER_CLASS} {
 
     @PutMapping("/{id}/update")
     public ResponseEntity<${TABLE_CLASS}PutResponse>update(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}, ${TABLE_CLASS}PutRequest ${TABLE_OBJECT}) {
-       ${MODEL_CLASS} ${MODEL_OBJECT} = ${TRX_OBJECT}.update(${PK_COLUMN_NAME}, ${TABLE_OBJECT});
+       ${MODEL_CLASS} ${MODEL_OBJECT} = ${BZLOGIC_OBJECT}.update(${PK_COLUMN_NAME}, ${TABLE_OBJECT});
 
         if(${MODEL_OBJECT} == null) {
              ${TABLE_CLASS}PutResponse responseBody = new ${TABLE_CLASS}PutResponse(HttpStatus.NOT_FOUND.value(), "Not Found");
@@ -69,7 +68,7 @@ public class ${CONTROLLER_CLASS} {
 
     @DeleteMapping("/{id}/delete")
     public ResponseEntity<${TABLE_CLASS}DelResponse>delete(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}) {
-        ${MODEL_CLASS} ${MODEL_OBJECT} = ${TRX_OBJECT}.delete(${PK_COLUMN_NAME});
+        ${MODEL_CLASS} ${MODEL_OBJECT} = ${BZLOGIC_OBJECT}.delete(${PK_COLUMN_NAME});
 
         if(${MODEL_OBJECT} == null) {
              ${TABLE_CLASS}DelResponse responseBody = new ${TABLE_CLASS}DelResponse(HttpStatus.NOT_FOUND.value(), "Not Found");
