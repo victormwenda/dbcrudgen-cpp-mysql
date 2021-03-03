@@ -13,11 +13,12 @@ import java.util.Arrays;
 
 @EnableJpaRepositories (basePackages = {"${PROJECT_PACKAGE}.${REPOSITORIES_PACKAGE}"})
 @EntityScan(basePackages = {"${PROJECT_PACKAGE}.${ENTITIES_PACKAGE}"})
-@SpringBootApplication(scanBasePackages = {"${PROJECT_PACKAGE}.${CONTROLLERS_PACKAGE}",
-    "${PROJECT_PACKAGE}.${REPOSITORIES_PACKAGE}",
+@SpringBootApplication(scanBasePackages = {
+    "${PROJECT_PACKAGE}.${CONTROLLERS_PACKAGE}",
+    "${PROJECT_PACKAGE}.${DAOS_PACKAGE}",
     "${PROJECT_PACKAGE}.${ENTITIES_PACKAGE}",
-    "${PROJECT_PACKAGE}.${SERVICES_PACKAGE}",
-
+    "${PROJECT_PACKAGE}.${REPOSITORIES_PACKAGE}",
+    "${PROJECT_PACKAGE}.${SERVICES_PACKAGE}"
     })
 public class ${CLASS_NAME} {
 

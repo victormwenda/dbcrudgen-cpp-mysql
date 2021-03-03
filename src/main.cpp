@@ -340,7 +340,7 @@ void createSpringBootHibernateProject() {
 
     std::string projectName = "nmg-ads-mgmt";
     std::string workspaceDir = "/opt/workspace/java";
-    std::string packageName = "com.nmg.classifieds";
+    std::string packageName = "ke.co.nmg.classifieds";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";
@@ -359,7 +359,7 @@ void createSpringBootHibernateProject() {
     std::string httpReqPkg = "entry.http.requests";
     std::string httpResPkg = "entry.http.responses";
     std::string ctlPkg = "entry.controllers";
-    std::string transactionsPkg = "service.data";
+    std::string transactionsPkg = "dblayer.dao";
     std::string bzLogicPkg = "service.business";
     std::string webAppPkg = "app";
     dbcrudgen::orm::SpringProjectPackages sbPkgs{beansPkg, bzLogicPkg, ctlPkg, dbConnPkg, entitiesPkg, httpReqPkg,
@@ -380,7 +380,7 @@ void createSpringBootHibernateProject() {
     std::string httpReqClassSuffix = "Request";
     std::string httpResClassSuffix = "Response";
     std::string reposClassSuffix = "Repository";
-    std::string trxClassSuffix = "Trx";
+    std::string trxClassSuffix = "Dao";
     std::string modelClassSuffix = "Model";
 
     dbcrudgen::orm::SpringProjectSuffixes sbClsSuffxs{beansClassSuffix, bzLogicClassSuffix, ctlClassSuffix,
