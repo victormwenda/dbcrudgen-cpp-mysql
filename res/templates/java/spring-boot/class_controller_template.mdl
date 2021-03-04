@@ -41,7 +41,7 @@ public class ${CONTROLLER_CLASS} {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<${TABLE_CLASS}PostResponse>create(${TABLE_CLASS}PostRequest ${TABLE_OBJECT}) {
+    public ResponseEntity<${TABLE_CLASS}PostResponse>create(@RequestBody ${TABLE_CLASS}PostRequest ${TABLE_OBJECT}) {
         ${MODEL_CLASS} ${MODEL_OBJECT} = ${BZLOGIC_OBJECT}.insert(${TABLE_OBJECT});
 
         ${TABLE_CLASS}PostResponse responseBody = new ${TABLE_CLASS}PostResponse(HttpStatus.OK.value(), "Created");
