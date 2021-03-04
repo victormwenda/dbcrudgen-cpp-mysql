@@ -5,6 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.validation.BindingResult;
+import javax.validation.Valid;
+
 import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
 
 import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.${TABLE_CLASS}PostRequest;
@@ -41,7 +44,13 @@ public class ${CONTROLLER_CLASS} {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<${TABLE_CLASS}PostResponse>create(@RequestBody ${TABLE_CLASS}PostRequest ${TABLE_OBJECT}) {
+    public ResponseEntity<${TABLE_CLASS}PostResponse>create(@Valid @RequestBody ${TABLE_CLASS}PostRequest ${TABLE_OBJECT}, BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY.value()).body(new ${TABLE_CLASS}PostResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                    bindingResult.getFieldErrors().toString()));
+        }
+
         ${MODEL_CLASS} ${MODEL_OBJECT} = ${BZLOGIC_OBJECT}.insert(${TABLE_OBJECT});
 
         ${TABLE_CLASS}PostResponse responseBody = new ${TABLE_CLASS}PostResponse(HttpStatus.OK.value(), "Created");
@@ -51,7 +60,15 @@ public class ${CONTROLLER_CLASS} {
     }
 
     @PutMapping("/{id}/update")
-    public ResponseEntity<${TABLE_CLASS}PutResponse>update(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME}, ${TABLE_CLASS}PutRequest ${TABLE_OBJECT}) {
+    public ResponseEntity<${TABLE_CLASS}PutResponse>update(@PathVariable("${PK_COLUMN_NAME}") ${PK_COLUMN_DATATYPE} ${PK_COLUMN_NAME},
+                @Valid @RequestBody  ${TABLE_CLASS}PutRequest ${TABLE_OBJECT},
+                BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY.value()).body(new ${TABLE_CLASS}PutResponse(HttpStatus.UNPROCESSABLE_ENTITY.value(),
+                    bindingResult.getFieldErrors().toString()));
+        }
+
        ${MODEL_CLASS} ${MODEL_OBJECT} = ${BZLOGIC_OBJECT}.update(${PK_COLUMN_NAME}, ${TABLE_OBJECT});
 
         if(${MODEL_OBJECT} == null) {

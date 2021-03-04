@@ -338,7 +338,7 @@ void createSpringBootHibernateProject() {
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("nmg");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "nmg-ads-mgmt";
+    std::string projectName = "nmg-ads-mgmt2";
     std::string workspaceDir = "/opt/workspace/java";
     std::string packageName = "ke.co.nmg.classifieds";
 
