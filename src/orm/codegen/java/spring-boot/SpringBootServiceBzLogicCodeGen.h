@@ -24,6 +24,7 @@ namespace dbcrudgen {
             createBzLogicSource(dbcrudgen::orm::SpringBootProjectModel &projectModel,
                                 const dbcrudgen::db::generic::Table &table, const std::string &bzLogicClass,
                                 const std::string &trxClass, const std::string &modelClass,
+                                const std::string &entityClass,
                                 const std::string &httpReqPostClass, const std::string &httpReqPutClass) {
 
                 SpringBootClassServiceBusinessTemplate serviceTemplate;
@@ -35,8 +36,8 @@ namespace dbcrudgen {
                 bzLogicSource =
                         SpringBootApplicationParser::substituteBusinessLogicServiceDetails(projectModel, table,
                                                                                            pkColumn, bzLogicSource,
-                                                                                           bzLogicClass,
-                                                                                           trxClass, modelClass,
+                                                                                           bzLogicClass, trxClass,
+                                                                                           modelClass, entityClass,
                                                                                            httpReqPostClass,
                                                                                            httpReqPutClass);
                 return bzLogicSource;

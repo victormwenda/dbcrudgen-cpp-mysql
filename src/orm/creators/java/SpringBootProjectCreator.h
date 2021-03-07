@@ -149,7 +149,7 @@ namespace dbcrudgen {
                     std::string beansSource = JaxbCodeGen::createBeansSource(projectModel, beansClass);
                     std::string bzLogicSource =
                             SpringBootServiceBzLogicCodeGen::createBzLogicSource(projectModel, table, bzLogicClass,
-                                                                                 trxClass, modelClass, httpReqPostClass,
+                                                                                 trxClass, modelClass, entityClass, httpReqPostClass,
                                                                                  httpReqPutClass);
                     std::string ctlSource =
                             SpringBootControllerCodeGen::createControllerSource(projectModel, table, ctlClass,
@@ -273,6 +273,7 @@ namespace dbcrudgen {
                     SpringBootHttpCodeGen::addTrxServicePostRequestEntityData(trxSrc, entityDataFromPostRequest);
                     SpringBootHttpCodeGen::addTrxServicePutRequestEntityData(trxSrc, entityDataFromPutRequest);
                     SpringBootHttpCodeGen::addTrxServiceModelData(trxSrc, modelDataFromEntity);
+                    SpringBootHttpCodeGen::addBzLogicServiceModelData(bzLogicSource, modelDataFromEntity);
 
                     SpringBootHttpCodeGen::addRepositoryPrimaryKey(repoSource, pkColumn);
 

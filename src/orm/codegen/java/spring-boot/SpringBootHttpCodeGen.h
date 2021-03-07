@@ -151,6 +151,10 @@ namespace dbcrudgen {
             static void addTrxServiceModelData(std::string &trxServiceSource, const std::string &entityData) {
                 SpringBootApplicationParser::substituteTrxClassModelData(trxServiceSource, entityData);
             }
+
+            static void addBzLogicServiceModelData(std::string &trxServiceSource, const std::string &entityData) {
+                SpringBootApplicationParser::substituteBzLogicServiceModelData(trxServiceSource, entityData);
+            }
         };
 
     }

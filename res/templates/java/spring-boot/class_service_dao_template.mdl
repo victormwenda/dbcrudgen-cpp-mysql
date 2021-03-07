@@ -26,38 +26,22 @@ public class ${DAO_CLASS} {
     @Autowired
     ${REPOSITORY_CLASS} ${REPOSITORY_OBJECT};
 
-    public ${MODEL_CLASS} insert(${POST_REQUEST_CLASS} ${POST_REQUEST_OBJECT}) {
+    public ${ENTITY_CLASS} insert(${POST_REQUEST_CLASS} ${POST_REQUEST_OBJECT}) {
 
         ${ENTITY_CLASS} ${ENTITY_OBJECT} = new ${ENTITY_CLASS}();
         ${ENTITY_DATA_FROM_POST_REQUEST}
 
-        ${REPOSITORY_OBJECT}.save(${ENTITY_OBJECT});
-
-        ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
-        ${MODEL_DATA_FROM_ENTITY}
-
-        return ${MODEL_OBJECT};
+        return ${REPOSITORY_OBJECT}.save(${ENTITY_OBJECT});
     }
 
-    public ${MODEL_CLASS} find(${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
+    public ${ENTITY_CLASS} find(${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
 
         Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
 
-        if(${ENTITY_OBJECT}Opt.isPresent()) {
-
-            ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${ENTITY_OBJECT}Opt.get();
-
-            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
-            ${MODEL_DATA_FROM_ENTITY}
-
-            return ${MODEL_OBJECT};
-
-        }
-
-        return null;
+        return ${ENTITY_OBJECT}Opt.orElse(null);
     }
 
-    public ${MODEL_CLASS} update (${PK_COLUMN_DATATYPE} ${PK_OBJECT}, ${PUT_REQUEST_CLASS} ${PUT_REQUEST_OBJECT}) {
+    public ${ENTITY_CLASS} update (${PK_COLUMN_DATATYPE} ${PK_OBJECT}, ${PUT_REQUEST_CLASS} ${PUT_REQUEST_OBJECT}) {
 
         Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
 
@@ -66,19 +50,14 @@ public class ${DAO_CLASS} {
             ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${ENTITY_OBJECT}Opt.get();
             ${ENTITY_DATA_FROM_PUT_REQUEST}
 
-            ${REPOSITORY_OBJECT}.save(${ENTITY_OBJECT});
-
-            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
-            ${MODEL_DATA_FROM_ENTITY}
-
-            return ${MODEL_OBJECT};
+            return ${REPOSITORY_OBJECT}.save(${ENTITY_OBJECT});
 
         }
 
         return null;
     }
 
-    public ${MODEL_CLASS} delete(${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
+    public boolean delete(${PK_COLUMN_DATATYPE} ${PK_OBJECT}) {
 
         Optional<${ENTITY_CLASS}> ${ENTITY_OBJECT}Opt = ${REPOSITORY_OBJECT}.findById(${PK_OBJECT});
 
@@ -87,17 +66,13 @@ public class ${DAO_CLASS} {
             ${ENTITY_CLASS} ${ENTITY_OBJECT} = ${ENTITY_OBJECT}Opt.get();
             ${REPOSITORY_OBJECT}.delete(${ENTITY_OBJECT});
 
-            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
-            ${MODEL_DATA_FROM_ENTITY}
-
-            return ${MODEL_OBJECT};
-
+            return true;
         }
 
-        return null;
+        return false;
     }
 
-    public List<${MODEL_CLASS}> search() {
+    public List<${ENTITY_CLASS}> search() {
 
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<${ENTITY_CLASS}> criteriaQuery = criteriaBuilder.createQuery(${ENTITY_CLASS}.class);
@@ -107,15 +82,11 @@ public class ${DAO_CLASS} {
         //Add predicates
         criteriaQuery.where(predicates.toArray(new Predicate[0]));
         List<${ENTITY_CLASS}> ${ENTITY_OBJECT}List =  entityManager.createQuery(criteriaQuery).getResultList();
-        List<${MODEL_CLASS}> ${MODEL_OBJECT}List = new ArrayList<>(${ENTITY_OBJECT}List.size());
 
-        ${ENTITY_OBJECT}List.forEach(${ENTITY_OBJECT} -> {
-            ${MODEL_CLASS} ${MODEL_OBJECT} = new  ${MODEL_CLASS}();
-            ${MODEL_DATA_FROM_ENTITY}
+        return ${ENTITY_OBJECT}List;
+    }
 
-            ${MODEL_OBJECT}List.add(${MODEL_OBJECT});
-        });
-
-        return ${MODEL_OBJECT}List;
+    public List<${ENTITY_CLASS}> findAll() {
+        return ${REPOSITORY_OBJECT}.findAll();
     }
 }

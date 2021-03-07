@@ -182,7 +182,7 @@ namespace dbcrudgen {
                                                   const dbcrudgen::db::generic::Table &table,
                                                   const db::generic::Column &column, std::string bzLogicSource,
                                                   const std::string &bzLogicClass, const std::string &trxClass,
-                                                  const std::string &modelClass,
+                                                  const std::string &modelClass,   const std::string &entityClass,
                                                   const std::string &httpReqPostClass,
                                                   const std::string &httpReqPutClass) {
 
@@ -195,17 +195,22 @@ namespace dbcrudgen {
 
                 StringUtils::replace(bzLogicSource, "${BZLOGIC_PACKAGE}", model.getBzLogicPkg());
                 StringUtils::replace(bzLogicSource, "${BZLOGIC_CLASS}", bzLogicClass);
-                std::string trxObject = toJavaVariableLocal(bzLogicClass);
 
 
                 StringUtils::replace(bzLogicSource, "${DAOS_PACKAGE}", model.getTransactionsPkg());
                 StringUtils::replace(bzLogicSource, "${DAO_CLASS}", trxClass);
+                std::string trxObject = toJavaVariableLocal(trxClass);
                 StringUtils::replace(bzLogicSource, "${DAO_OBJECT}", trxObject);
 
                 StringUtils::replace(bzLogicSource, "${MODEL_PACKAGE}", model.getModelsPkg());
                 StringUtils::replace(bzLogicSource, "${MODEL_CLASS}", modelClass);
                 std::string modelObject = toJavaVariableLocal(modelClass);
                 StringUtils::replace(bzLogicSource, "${MODEL_OBJECT}", modelObject);
+
+               StringUtils::replace(bzLogicSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
+                StringUtils::replace(bzLogicSource, "${ENTITY_CLASS}", entityClass);
+                std::string entityObject = toJavaVariableLocal(entityClass);
+                StringUtils::replace(bzLogicSource, "${ENTITY_OBJECT}", entityObject);
 
                 StringUtils::replace(bzLogicSource, "${TABLE_CLASS}", tableClassName);
                 StringUtils::replace(bzLogicSource, "${REQUEST_TABLE_PACKAGE}", requestsPksName);
@@ -397,8 +402,12 @@ namespace dbcrudgen {
                 StringUtils::replace(trxServiceSource, "${ENTITY_DATA_FROM_PUT_REQUEST}", modelData);
             }
 
-            static void substituteTrxClassModelData(std::string &trxServiceSource, const std::string &entityData) {
-                StringUtils::replace(trxServiceSource, "${MODEL_DATA_FROM_ENTITY}", entityData);
+            static void substituteTrxClassModelData(std::string &trxDaoSource, const std::string &entityData) {
+                StringUtils::replace(trxDaoSource, "${MODEL_DATA_FROM_ENTITY}", entityData);
+            }
+
+            static void substituteBzLogicServiceModelData(std::string &serviceClassSource, const std::string &entityData) {
+                StringUtils::replace(serviceClassSource, "${MODEL_DATA_FROM_ENTITY}", entityData);
             }
         };
     }
