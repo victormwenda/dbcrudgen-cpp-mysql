@@ -532,12 +532,13 @@ set(SOURCE_FILES
         src/orm/templates/java/jax-rs/JaxRsMethodPutTemplate.h
         src/orm/templates/java/jax-ws/JaxWsClassResourcesTemplate.h
 
-        src/orm/templates/java/spring-boot/SpringBootClassHttpReqTemplate.h
-        src/orm/templates/java/spring-boot/SpringBootClassHttpResTemplate.h
-        src/orm/templates/java/spring-boot/SpringBootClassRepoTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassApplicationTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassControllerTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassHttpReqTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassHttpResTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassHttpResWithListTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassModelTemplate.h
+        src/orm/templates/java/spring-boot/SpringBootClassRepoTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassServiceBusinessTemplate.h
         src/orm/templates/java/spring-boot/SpringBootClassServiceDaoTemplate.h
         src/orm/templates/java/spring-boot/SpringBootFileApplicationPropertiesTemplate.h
@@ -586,7 +587,7 @@ set(SOURCE_FILES
 
         src/orm/utils/StringUtils.h
 
-        )
+       )
 
 #GoogleTest
 add_subdirectory(include/google-test)

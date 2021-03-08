@@ -1,0 +1,32 @@
+package ${PROJECT_PACKAGE}.${HTTP_RES_PACKAGE}.${TABLE_PACKAGE};
+
+import java.util.List;
+import ${PROJECT_PACKAGE}.${MODEL_PACKAGE}.${MODEL_CLASS};
+
+${VISIBILITY} class ${CLASS_NAME} {
+
+    private int responseCode;
+    private String responseMessage;
+    private List<${MODEL_CLASS}> ${MODEL_OBJECT}List;
+
+    public ${CLASS_NAME} (int responseCode, String responseMessage) {
+        this.responseCode = responseCode;
+        this.responseMessage = responseMessage;
+    }
+
+    public int getResponseCode() {
+        return this.responseCode;
+    }
+
+    public String getResponseMessage() {
+        return this.responseMessage;
+    }
+
+    public void set${TABLE_CLASS}(List<${MODEL_CLASS}> ${MODEL_OBJECT}List){
+        this.${MODEL_OBJECT}List = ${MODEL_OBJECT}List;
+    }
+
+    public List<${MODEL_CLASS}> get${TABLE_CLASS}(){
+       return this.${MODEL_OBJECT}List;
+    }
+}

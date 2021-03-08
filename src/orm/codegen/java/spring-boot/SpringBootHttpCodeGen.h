@@ -12,6 +12,7 @@
 #include "../../../templates/java/spring-boot/SpringBootClassHttpReqTemplate.h"
 #include "../../../templates/java/spring-boot/SpringBootClassHttpResTemplate.h"
 #include "../../../templates/java/spring-boot/SpringBootClassModelTemplate.h"
+#include "../../../templates/java/spring-boot/SpringBootClassHttpResWithListTemplate.h"
 
 
 namespace dbcrudgen {
@@ -98,6 +99,19 @@ namespace dbcrudgen {
                 std::string resSource = resTemplate.getTemplate();
 
                 resSource = SpringBootApplicationParser::substituteHttpResClassDetails(model, table, resSource,
+                                                                                       httpResGetClass, modelClass);
+                return resSource;
+            }
+
+            static std::string
+            createResGetListSrc(SpringBootProjectModel &model,
+                            const dbcrudgen::db::generic::Table &table,
+                            std::string &httpResGetClass,
+                            std::string &modelClass) {
+                SpringBootClassHttpResWithListTemplate resTemplate;
+                std::string resSource = resTemplate.getTemplate();
+
+                resSource = SpringBootApplicationParser::substituteHttpResWithListClassDetails(model, table, resSource,
                                                                                        httpResGetClass, modelClass);
                 return resSource;
             }

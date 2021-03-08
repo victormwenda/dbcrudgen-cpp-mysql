@@ -132,6 +132,7 @@ namespace dbcrudgen {
                     std::string httpReqPostClass = tmpClassName + "PostRequest";
                     std::string httpReqPutClass = tmpClassName + "PutRequest";
                     std::string httpResGetClass = tmpClassName + "GetResponse";
+                    std::string httpResGetListClass = tmpClassName + "ListResponse";
                     std::string httpResDelClass = tmpClassName + "DelResponse";
                     std::string httpResPostClass = tmpClassName + "PostResponse";
                     std::string httpResPutClass = tmpClassName + "PutResponse";
@@ -166,6 +167,9 @@ namespace dbcrudgen {
                     std::string httpGetResSrc = SpringBootHttpCodeGen::createResGetSrc(projectModel, table,
                                                                                        httpResGetClass,
                                                                                        modelClass);
+                    std::string httpGetListResSrc = SpringBootHttpCodeGen::createResGetListSrc(projectModel, table,
+                                                                                           httpResGetListClass,
+                                                                                           modelClass);
                     std::string httpResDelSrc = SpringBootHttpCodeGen::createResDelSrc(projectModel, table,
                                                                                        httpResDelClass,
                                                                                        modelClass);
@@ -298,6 +302,9 @@ namespace dbcrudgen {
                     std::string httpResGetFile =
                             projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
                                                             httpResGetClass);
+                    std::string httpGetListResFile =
+                            projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
+                                                            httpResGetListClass);
                     std::string httpResPostFile =
                             projectModel.createHttpRqRsFile(projectModel.getHttpResponsesDirPath(), tablePkgName,
                                                             httpResPostClass);
@@ -324,6 +331,7 @@ namespace dbcrudgen {
                     FilesWriter::writeFile(httpReqPostFile, httpPostReqSrc);
                     FilesWriter::writeFile(httpReqPutFile, httpPutReqSrc);
                     FilesWriter::writeFile(httpResGetFile, httpGetResSrc);
+                    FilesWriter::writeFile(httpGetListResFile, httpGetListResSrc);
                     FilesWriter::writeFile(httpResPostFile, httpPostResSrc);
                     FilesWriter::writeFile(httpResPutFile, httpResPutSrc);
                     FilesWriter::writeFile(httpResDelFile, httpResDelSrc);

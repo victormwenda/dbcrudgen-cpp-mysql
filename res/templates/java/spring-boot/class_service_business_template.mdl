@@ -67,7 +67,7 @@ public class ${BZLOGIC_CLASS} {
         return ${MODEL_OBJECT}List;
     }
 
-    public List<${MODEL_CLASS}> findAll() {
+    public List<${MODEL_CLASS}> list() {
         List<${ENTITY_CLASS}> ${ENTITY_OBJECT}List = ${DAO_OBJECT}.findAll();
         List<${MODEL_CLASS}> ${MODEL_OBJECT}List = new ArrayList<>(${ENTITY_OBJECT}List.size());
         ${ENTITY_OBJECT}List.forEach(${ENTITY_OBJECT} -> ${MODEL_OBJECT}List.add(modelFromEntity(${ENTITY_OBJECT})));

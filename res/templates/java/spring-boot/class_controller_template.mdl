@@ -1,5 +1,7 @@
 package ${PROJECT_PACKAGE}.${CONTROLLER_PACKAGE};
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.${TABLE_CLASS}PostRequest;
 import ${PROJECT_PACKAGE}.${REQUEST_TABLE_PACKAGE}.${TABLE_CLASS}PutRequest;
 import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}DelResponse;
 import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}GetResponse;
+import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}ListResponse;
 import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}PostResponse;
 import ${PROJECT_PACKAGE}.${RESPONSE_TABLE_PACKAGE}.${TABLE_CLASS}PutResponse;
 
@@ -39,6 +42,28 @@ public class ${CONTROLLER_CLASS} {
 
         ${TABLE_CLASS}GetResponse responseBody = new ${TABLE_CLASS}GetResponse(HttpStatus.OK.value(), "");
         responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT});
+
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<${TABLE_CLASS}ListResponse>list() {
+
+        List<${MODEL_CLASS}> ${MODEL_OBJECT}List  = ${BZLOGIC_OBJECT}.list();
+
+        ${TABLE_CLASS}ListResponse responseBody = new ${TABLE_CLASS}ListResponse(HttpStatus.OK.value(), "");
+        responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT}List);
+
+        return ResponseEntity.ok(responseBody);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<${TABLE_CLASS}ListResponse>search() {
+
+        List<${MODEL_CLASS}> ${MODEL_OBJECT}List  = ${BZLOGIC_OBJECT}.search();
+
+        ${TABLE_CLASS}ListResponse responseBody = new ${TABLE_CLASS}ListResponse(HttpStatus.OK.value(), "");
+        responseBody.set${MODEL_OBJECT_SETTER}(${MODEL_OBJECT}List);
 
         return ResponseEntity.ok(responseBody);
     }

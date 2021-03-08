@@ -182,7 +182,7 @@ namespace dbcrudgen {
                                                   const dbcrudgen::db::generic::Table &table,
                                                   const db::generic::Column &column, std::string bzLogicSource,
                                                   const std::string &bzLogicClass, const std::string &trxClass,
-                                                  const std::string &modelClass,   const std::string &entityClass,
+                                                  const std::string &modelClass, const std::string &entityClass,
                                                   const std::string &httpReqPostClass,
                                                   const std::string &httpReqPutClass) {
 
@@ -207,7 +207,7 @@ namespace dbcrudgen {
                 std::string modelObject = toJavaVariableLocal(modelClass);
                 StringUtils::replace(bzLogicSource, "${MODEL_OBJECT}", modelObject);
 
-               StringUtils::replace(bzLogicSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
+                StringUtils::replace(bzLogicSource, "${ENTITY_PACKAGE}", model.getEntitiesPkg());
                 StringUtils::replace(bzLogicSource, "${ENTITY_CLASS}", entityClass);
                 std::string entityObject = toJavaVariableLocal(entityClass);
                 StringUtils::replace(bzLogicSource, "${ENTITY_OBJECT}", entityObject);
@@ -264,6 +264,33 @@ namespace dbcrudgen {
 
                                           std::string httpResClsSource, const std::string &httpResClsName,
                                           const std::string &modelClass) {
+                std::string tmpClassName = JavaParser::toJavaClassName(table.getTableName());
+                std::string pkgName = StringUtils::to_lower(tmpClassName);
+
+                StringUtils::replace(httpResClsSource, "${CLASS_NAME}", httpResClsName);
+                StringUtils::replace(httpResClsSource, "${VISIBILITY}", "public");
+                StringUtils::replace(httpResClsSource, "${PROJECT_PACKAGE}", projectModel.getPackageName());
+                StringUtils::replace(httpResClsSource, "${HTTP_RES_PACKAGE}", projectModel.getHttpResPkg());
+                StringUtils::replace(httpResClsSource, "${TABLE_PACKAGE}", pkgName);
+                StringUtils::replace(httpResClsSource, "${MODEL_PACKAGE}", projectModel.getModelsPkg());
+                StringUtils::replace(httpResClsSource, "${MODEL_CLASS}", modelClass);
+                StringUtils::replace(httpResClsSource, "${TABLE_CLASS}", tmpClassName);
+
+                std::string modelObject = toJavaVariableLocal(modelClass);
+                StringUtils::replace(httpResClsSource, "${MODEL_OBJECT}", modelObject);
+
+                return httpResClsSource;
+            } /**
+            * Substitute http res class details
+            * @param model
+            * @return
+            */
+            static std::string
+            substituteHttpResWithListClassDetails(const dbcrudgen::orm::SpringBootProjectModel &projectModel,
+                                                  const dbcrudgen::db::generic::Table &table,
+
+                                                  std::string httpResClsSource, const std::string &httpResClsName,
+                                                  const std::string &modelClass) {
                 std::string tmpClassName = JavaParser::toJavaClassName(table.getTableName());
                 std::string pkgName = StringUtils::to_lower(tmpClassName);
 
@@ -406,7 +433,8 @@ namespace dbcrudgen {
                 StringUtils::replace(trxDaoSource, "${MODEL_DATA_FROM_ENTITY}", entityData);
             }
 
-            static void substituteBzLogicServiceModelData(std::string &serviceClassSource, const std::string &entityData) {
+            static void
+            substituteBzLogicServiceModelData(std::string &serviceClassSource, const std::string &entityData) {
                 StringUtils::replace(serviceClassSource, "${MODEL_DATA_FROM_ENTITY}", entityData);
             }
         };
