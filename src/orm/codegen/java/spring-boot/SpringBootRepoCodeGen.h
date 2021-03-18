@@ -41,7 +41,11 @@ namespace dbcrudgen {
                 const std::string &dataType = JavaParser::toJavaPrimitiveDataTypeFromSQL(column.getDataType());
                 const std::string &objectName = JavaParser::toJavaVariableInstance(column.getColumnName());
 
-                return createInstanceVariable(dataType, objectName);
+                std::string jsonPropTemplate = R"(@JsonProperty("${PROPERTY_NAME}"))";
+                std::string instanceName = createInstanceVariable(dataType, objectName);
+                StringUtils::replace(jsonPropTemplate, "${PROPERTY_NAME}", column.getColumnName());
+
+                return std::string{jsonPropTemplate + " " + instanceName};
             }
 
             /**

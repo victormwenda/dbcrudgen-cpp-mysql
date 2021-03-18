@@ -1,5 +1,7 @@
 package ${PROJECT_PACKAGE}.${HTTP_REQ_PACKAGE}.${TABLE_PACKAGE};
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 ${VISIBILITY} class ${CLASS_NAME} {
 
     ${INSTANCE_VARIABLES}

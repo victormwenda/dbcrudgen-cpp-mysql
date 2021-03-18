@@ -335,12 +335,12 @@ void createJaxRsHibernateProject() {
 }
 
 void createSpringBootHibernateProject() {
-    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("nmg");
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel("nats");
     auto genericDatabase = dbcrudgen::db::mysql::MYSQLDatabaseFlattener::flatten(databaseModel);
 
-    std::string projectName = "nmg-ads-mgmt2";
+    std::string projectName = "nats-java";
     std::string workspaceDir = "/opt/workspace/java";
-    std::string packageName = "ke.co.nmg.classifieds";
+    std::string packageName = "ke.co.nats";
 
     std::string srcDir = "src";
     std::string moduleDir = "main";
