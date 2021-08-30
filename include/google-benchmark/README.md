@@ -1,11 +1,11 @@
 # Benchmark
 
 [![build-and-test](https://github.com/google/benchmark/workflows/build-and-test/badge.svg)](https://github.com/google/benchmark/actions?query=workflow%3Abuild-and-test)
+[![bazel](https://github.com/google/benchmark/actions/workflows/bazel.yml/badge.svg)](https://github.com/google/benchmark/actions/workflows/bazel.yml)
 [![pylint](https://github.com/google/benchmark/workflows/pylint/badge.svg)](https://github.com/google/benchmark/actions?query=workflow%3Apylint)
 [![test-bindings](https://github.com/google/benchmark/workflows/test-bindings/badge.svg)](https://github.com/google/benchmark/actions?query=workflow%3Atest-bindings)
 
 [![Build Status](https://travis-ci.org/google/benchmark.svg?branch=master)](https://travis-ci.org/google/benchmark)
-[![Build status](https://ci.appveyor.com/api/projects/status/u0qsyp7t1tk7cpxs/branch/master?svg=true)](https://ci.appveyor.com/project/google/benchmark/branch/master)
 [![Coverage Status](https://coveralls.io/repos/google/benchmark/badge.svg)](https://coveralls.io/r/google/benchmark)
 
 
@@ -31,14 +31,15 @@ To get started, see [Requirements](#requirements) and
 [Installation](#installation). See [Usage](#usage) for a full example and the
 [User Guide](#user-guide) for a more comprehensive feature overview.
 
-It may also help to read the [Google Test documentation](https://github.com/google/googletest/blob/master/googletest/docs/primer.md)
+It may also help to read the [Google Test documentation](https://github.com/google/googletest/blob/master/docs/primer.md)
 as some of the structural aspects of the APIs are similar.
 
 ### Resources
 
 [Discussion group](https://groups.google.com/d/forum/benchmark-discuss)
 
-IRC channel: [freenode](https://freenode.net) #googlebenchmark
+IRC channels:
+* [libera](https://libera.chat) #benchmark
 
 [Additional Tooling Documentation](docs/tools.md)
 
@@ -272,11 +273,15 @@ too (`-lkstat`).
 
 [Result Comparison](#result-comparison)
 
+[Extra Context](#extra-context)
+
 ### Library
 
 [Runtime and Reporting Considerations](#runtime-and-reporting-considerations)
 
 [Passing Arguments](#passing-arguments)
+
+[Custom Benchmark Name](#custom-benchmark-name)
 
 [Calculating Asymptotic Complexity](#asymptotic-complexity)
 
@@ -293,6 +298,10 @@ too (`-lkstat`).
 [Manual Timing](#manual-timing)
 
 [Setting the Time Unit](#setting-the-time-unit)
+
+[Random Interleaving](docs/random_interleaving.md)
+
+[User-Requested Performance Counters](docs/perf_counters.md)
 
 [Preventing Optimization](#preventing-optimization)
 
@@ -392,7 +401,7 @@ Write benchmark results to a file with the `--benchmark_out=<filename>` option
 (or set `BENCHMARK_OUT`). Specify the output format with
 `--benchmark_out_format={json|console|csv}` (or set
 `BENCHMARK_OUT_FORMAT={json|console|csv}`). Note that the 'csv' reporter is
-deperecated and the saved `.csv` file 
+deprecated and the saved `.csv` file 
 [is not parsable](https://github.com/google/benchmark/issues/794) by csv 
 parsers.
 
@@ -436,6 +445,34 @@ BM_memcpy/32k       1834 ns       1837 ns     357143
 
 It is possible to compare the benchmarking results.
 See [Additional Tooling Documentation](docs/tools.md)
+
+<a name="extra-context" />
+
+### Extra Context
+
+Sometimes it's useful to add extra context to the content printed before the
+results. By default this section includes information about the CPU on which
+the benchmarks are running. If you do want to add more context, you can use
+the `benchmark_context` command line flag:
+
+```bash
+$ ./run_benchmarks --benchmark_context=pwd=`pwd`
+Run on (1 x 2300 MHz CPU)
+pwd: /home/user/benchmark/
+Benchmark              Time           CPU Iterations
+----------------------------------------------------
+BM_memcpy/32          11 ns         11 ns   79545455
+BM_memcpy/32k       2181 ns       2185 ns     324074
+```
+
+You can get the same effect with the API:
+
+```c++
+  benchmark::AddCustomContext("foo", "bar");
+```
+
+Note that attempts to add a second value with the same key will fail with an
+error message.
 
 <a name="runtime-and-reporting-considerations" />
 
@@ -651,6 +688,19 @@ that might be used to customize high-order term calculation.
 BENCHMARK(BM_StringCompare)->RangeMultiplier(2)
     ->Range(1<<10, 1<<18)->Complexity([](benchmark::IterationCount n)->double{return n; });
 ```
+
+<a name="custom-benchmark-name" />
+
+### Custom Benchmark Name
+
+You can change the benchmark's name as follows:
+
+```c++
+BENCHMARK(BM_memcpy)->Name("memcpy")->RangeMultiplier(2)->Range(8, 8<<10);
+```
+
+The invocation will execute the benchmark as before using `BM_memcpy` but changes
+the prefix in the report to `memcpy`.
 
 <a name="templated-benchmarks" />
 
@@ -1195,6 +1245,7 @@ int main(int argc, char** argv) {
       benchmark::RegisterBenchmark(test_input.name(), BM_test, test_input);
   benchmark::Initialize(&argc, argv);
   benchmark::RunSpecifiedBenchmarks();
+  benchmark::Shutdown();
 }
 ```
 

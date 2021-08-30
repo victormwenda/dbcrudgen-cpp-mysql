@@ -1,9 +1,11 @@
-import unittest
 """report.py - Utilities for reporting statistics about benchmark results
 """
+
+import unittest
 import os
 import re
 import copy
+import random
 
 from scipy.stats import mannwhitneyu
 
@@ -301,26 +303,23 @@ def print_difference_report(
     fmt_str = "{}{:<{}s}{endc}{}{:+16.4f}{endc}{}{:+16.4f}{endc}{:14.0f}{:14.0f}{endc}{:14.0f}{:14.0f}"
     for benchmark in json_diff_report:
         # *If* we were asked to only include aggregates,
-        # and if it is non-aggregate, then skip it.
-        if include_aggregates_only and 'run_type' in benchmark:
-            if benchmark['run_type'] != 'aggregate':
-                continue
-
-        for measurement in benchmark['measurements']:
-            output_strs += [color_format(use_color,
-                                         fmt_str,
-                                         BC_HEADER,
-                                         benchmark['name'],
-                                         first_col_width,
-                                         get_color(measurement['time']),
-                                         measurement['time'],
-                                         get_color(measurement['cpu']),
-                                         measurement['cpu'],
-                                         measurement['real_time'],
-                                         measurement['real_time_other'],
-                                         measurement['cpu_time'],
-                                         measurement['cpu_time_other'],
-                                         endc=BC_ENDC)]
+        # and if it is non-aggregate, then don't print it.
+        if not include_aggregates_only or not 'run_type' in benchmark or benchmark['run_type'] == 'aggregate':
+            for measurement in benchmark['measurements']:
+                output_strs += [color_format(use_color,
+                                            fmt_str,
+                                            BC_HEADER,
+                                            benchmark['name'],
+                                            first_col_width,
+                                            get_color(measurement['time']),
+                                            measurement['time'],
+                                            get_color(measurement['cpu']),
+                                            measurement['cpu'],
+                                            measurement['real_time'],
+                                            measurement['real_time_other'],
+                                            measurement['cpu_time'],
+                                            measurement['cpu_time_other'],
+                                            endc=BC_ENDC)]
 
         # After processing the measurements, if requested and
         # if applicable (e.g. u-test exists for given benchmark),
@@ -643,6 +642,52 @@ class TestReportDifferenceWithUTest(unittest.TestCase):
             parts = [x for x in output_lines[i].split(' ') if x]
             self.assertEqual(expect_lines[i], parts)
 
+    def test_json_diff_report_pretty_printing_aggregates_only(self):
+        expect_lines = [
+            ['BM_One', '-0.1000', '+0.1000', '10', '9', '100', '110'],
+            ['BM_Two_pvalue',
+             '0.6985',
+             '0.6985',
+             'U',
+             'Test,',
+             'Repetitions:',
+             '2',
+             'vs',
+             '2.',
+             'WARNING:',
+             'Results',
+             'unreliable!',
+             '9+',
+             'repetitions',
+             'recommended.'],
+            ['short', '-0.1250', '-0.0625', '8', '7', '80', '75'],
+            ['short', '-0.4325', '-0.1351', '8', '5', '77', '67'],
+            ['short_pvalue',
+             '0.7671',
+             '0.1489',
+             'U',
+             'Test,',
+             'Repetitions:',
+             '2',
+             'vs',
+             '3.',
+             'WARNING:',
+             'Results',
+             'unreliable!',
+             '9+',
+             'repetitions',
+             'recommended.'],
+        ]
+        output_lines_with_header = print_difference_report(
+            self.json_diff_report, include_aggregates_only=True, utest=True, utest_alpha=0.05, use_color=False)
+        output_lines = output_lines_with_header[2:]
+        print("\n")
+        print("\n".join(output_lines_with_header))
+        self.assertEqual(len(output_lines), len(expect_lines))
+        for i in range(0, len(output_lines)):
+            parts = [x for x in output_lines[i].split(' ') if x]
+            self.assertEqual(expect_lines[i], parts)
+
     def test_json_diff_report(self):
         expected_output = [
             {
@@ -867,6 +912,49 @@ class TestReportDifferenceWithUTestWhileDisplayingAggregatesOnly(
             self.assertEqual(out['time_unit'], expected['time_unit'])
             assert_utest(self, out, expected)
             assert_measurements(self, out, expected)
+
+
+class TestReportSorting(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        def load_result():
+            import json
+            testInputs = os.path.join(
+                os.path.dirname(
+                    os.path.realpath(__file__)),
+                'Inputs')
+            testOutput = os.path.join(testInputs, 'test4_run.json')
+            with open(testOutput, 'r') as f:
+                json = json.load(f)
+            return json
+
+        cls.json = load_result()
+
+    def test_json_diff_report_pretty_printing(self):
+        import util
+
+        expected_names = [
+            "99 family 0 instance 0 repetition 0",
+            "98 family 0 instance 0 repetition 1",
+            "97 family 0 instance 0 aggregate",
+            "96 family 0 instance 1 repetition 0",
+            "95 family 0 instance 1 repetition 1",
+            "94 family 0 instance 1 aggregate",
+            "93 family 1 instance 0 repetition 0",
+            "92 family 1 instance 0 repetition 1",
+            "91 family 1 instance 0 aggregate",
+            "90 family 1 instance 1 repetition 0",
+            "89 family 1 instance 1 repetition 1",
+            "88 family 1 instance 1 aggregate"
+        ]
+
+        for n in range(len(self.json['benchmarks']) ** 2):
+            random.shuffle(self.json['benchmarks'])
+            sorted_benchmarks = util.sort_benchmark_results(self.json)[
+                'benchmarks']
+            self.assertEqual(len(expected_names), len(sorted_benchmarks))
+            for out, expected in zip(sorted_benchmarks, expected_names):
+                self.assertEqual(out['name'], expected)
 
 
 def assert_utest(unittest_instance, lhs, rhs):
