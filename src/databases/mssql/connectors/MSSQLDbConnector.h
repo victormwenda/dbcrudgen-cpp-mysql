@@ -66,6 +66,7 @@ namespace dbcrudgen {
                             return false;
                         case SQL_ERROR:
                             std::cout << "ALLOCATE ENVIRONMENT HANDLE  FAILED SQL ERROR" << std::endl;
+                            printErrorDiagInfo(SQL_HANDLE_ENV, hEnv);
                             return false;
                         default:
                             std::cout << "FAILED :: " << allocReturn << std::endl;
@@ -95,6 +96,7 @@ namespace dbcrudgen {
                             return false;
                         case SQL_ERROR:
                             std::cout << "SET ENV ATTR  FAILED SQL ERROR" << std::endl;
+                            printErrorDiagInfo(SQL_HANDLE_ENV, hEnv);
                             return false;
                         default:
                             std::cout << "ALLOCATE ENV FAILED :: ERROR CODE" << setEnvReturn << std::endl;
@@ -122,6 +124,7 @@ namespace dbcrudgen {
                             return false;
                         case SQL_ERROR:
                             std::cout << "SET CONN HANDLE FAILED SQL ERROR" << std::endl;
+                            printErrorDiagInfo(SQL_HANDLE_DBC, hDbc);
                             return false;
                         default:
                             std::cout << "CONNECTION HANDLE FAILED :: ERROR CODE" << allocHandle << std::endl;
@@ -143,6 +146,9 @@ namespace dbcrudgen {
                             return true;
                         case SQL_INVALID_HANDLE:
                             std::cout << "INVALID DB CONN HANDLE" << std::endl;
+                        case SQL_ERROR:
+                            std::cout << "SET CONN HANDLE FAILED SQL ERROR" << std::endl;
+                            printErrorDiagInfo(SQL_HANDLE_DBC, hDbc);
                         default:
                             std::cout << "CONNECTION FAILED :: ERROR CODE : " << connResult << std::endl;
                             return false;
@@ -194,6 +200,22 @@ namespace dbcrudgen {
                 }
 
             private:
+                /**
+                 * Print SQL Error
+                 * @param handleType
+                 * @param sqlHandle
+                 * @param recNumber
+                 */
+                void printErrorDiagInfo(SQLSMALLINT handleType, SQLHANDLE sqlHandle, SQLSMALLINT recNumber = 1) {
+                    SQLCHAR sqlState[10];
+                    SQLINTEGER nativeError;
+                    SQLCHAR messageTxt[256];
+                    SQLSMALLINT length;
+                    SQLGetDiagRec(handleType, sqlHandle, recNumber, sqlState, &nativeError, messageTxt,
+                                  sizeof(messageTxt), &length);
+                    printf("%s:%d:%d:%s\n", sqlState, 1, nativeError, messageTxt);
+                }
+
                 void disconnect() {
                     SQLDisconnect(hDbc);
                 }

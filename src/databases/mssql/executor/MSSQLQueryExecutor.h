@@ -19,7 +19,10 @@ namespace dbcrudgen {
                     createStatementHandle();
                 }
 
-
+                /**
+                 * Create statement handle
+                 * @return
+                 */
                 bool createStatementHandle() {
                     SQLRETURN allocReturn = SQLAllocHandle(SQL_HANDLE_STMT, hDbc, &hSmt);
                     switch (allocReturn) {
@@ -34,6 +37,7 @@ namespace dbcrudgen {
                             return false;
                         case SQL_ERROR:
                             std::cout << " ALLOCATE STATEMENT HANDLE  FAILED SQL ERROR" << std::endl;
+                            printErrorDiagInfo(SQL_HANDLE_STMT, hDbc, 1);
                             return false;
                         default:
                             std::cout << "FAILED :: " << allocReturn << std::endl;
@@ -41,6 +45,18 @@ namespace dbcrudgen {
                     }
                 }
 
+                /**
+                 * Free statement handle
+                 */
+                void freeStatementHandle() {
+                    SQLFreeHandle(SQL_HANDLE_STMT, hSmt);
+                }
+
+                /**
+                 * Prepare statement
+                 * @param statement
+                 * @return
+                 */
                 bool prepareStatement(const std::string &statement) {
                     SQLCHAR *query = (SQLCHAR *) statement.c_str();
                     std::cout << query << std::endl;
@@ -58,6 +74,7 @@ namespace dbcrudgen {
                             return false;
                         case SQL_ERROR:
                             std::cout << " PREPARE STATEMENT    FAILED SQL ERROR" << std::endl;
+                            printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
                             return false;
                         default:
                             std::cout << "FAILED :: " << prepareStmt << std::endl;
@@ -66,12 +83,13 @@ namespace dbcrudgen {
 
                 }
 
-                void freeStatementHandle() {
-                    SQLFreeHandle(SQL_HANDLE_STMT, hSmt);
-                }
-
-                static void printErrorDiagInfo(SQLSMALLINT handleType, SQLHANDLE sqlHandle,
-                                        SQLSMALLINT recNumber) {
+                /**
+                 * Print SQL Error
+                 * @param handleType
+                 * @param sqlHandle
+                 * @param recNumber
+                 */
+                static void printErrorDiagInfo(SQLSMALLINT handleType, SQLHANDLE sqlHandle, SQLSMALLINT recNumber = 1) {
                     SQLCHAR sqlState[10];
                     SQLINTEGER nativeError;
                     SQLCHAR messageTxt[256];
@@ -81,16 +99,18 @@ namespace dbcrudgen {
                     printf("%s:%d:%d:%s\n", sqlState, 1, nativeError, messageTxt);
                 }
 
+                /**
+                 * Execute query
+                 * @param sqlQuery
+                 */
                 void execQuery(const std::string &sqlQuery) {
                     bool prepStmt = prepareStatement(sqlQuery);
                     if (prepStmt) {
                         std::cout << "prepare success" << std::endl;
 
-
                         unsigned long numRows;
                         SQLUSMALLINT rowStatus[20];
                         SQLRETURN fetchResponse = SQLExtendedFetch(hSmt, SQL_FETCH_NEXT, 0, &numRows, rowStatus);
-
 
                         switch (fetchResponse) {
                             case SQL_SUCCESS:
@@ -104,6 +124,7 @@ namespace dbcrudgen {
                                 break;
                             case SQL_ERROR:
                                 std::cout << "FETCH FAILED SQL ERROR" << std::endl;
+                                printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
                                 break;
                             default:
                                 std::cout << "FAILED :: " << fetchResponse << std::endl;
