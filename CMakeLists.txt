@@ -590,7 +590,7 @@ set(SOURCE_FILES
         src/orm/utils/StringUtils.h
 
 
-        )
+        src/databases/mssql/builder/MSSQLDatabaseModelBuilder.h src/databases/mssql/decomposer/MSSQLDatabaseDecomposer.h src/databases/mssql/decomposer/MSSQLDatabasePreparedDecomposer.h src/databases/mssql/models/MSSQLDatabaseModel.h src/databases/mssql/scaffolding/queries/MSSQLQueries.h src/databases/mssql/scaffolding/entities/SysDatabases.h)
 
 #GoogleTest
 add_subdirectory(include/google-test)
