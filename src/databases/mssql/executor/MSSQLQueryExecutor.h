@@ -110,7 +110,7 @@ namespace dbcrudgen {
 
                         unsigned long numRows;
                         SQLUSMALLINT rowStatus[20];
-                        SQLRETURN fetchResponse = SQLExtendedFetch(hSmt, SQL_FETCH_NEXT, 0, &numRows, rowStatus);
+                        SQLRETURN fetchResponse = SQLExecDirect(hSmt, (SQLCHAR *) sqlQuery.c_str(), SQL_NTS);
 
                         switch (fetchResponse) {
                             case SQL_SUCCESS:
@@ -128,6 +128,31 @@ namespace dbcrudgen {
                                 break;
                             default:
                                 std::cout << "FAILED :: " << fetchResponse << std::endl;
+                        }
+                        SQLCHAR         username[255]; // value/length columns
+                        SQLLEN          username_length;
+                        SQLRETURN bindColReturn = SQLBindCol(hSmt, 1, SQL_C_CHAR, username,
+                                                             255, &username_length);
+                        switch (bindColReturn) {
+                            case SQL_SUCCESS:
+                                std::cout << "BIND COL SUCCESS" << std::endl;
+                                break;
+                            case SQL_SUCCESS_WITH_INFO:
+                                std::cout << "BIND COL WITH INFO" << std::endl;
+                                break;
+                            case SQL_INVALID_HANDLE:
+                                std::cout << "BIND COL FAILED INVALID HANDLE" << std::endl;
+                                break;
+                            case SQL_ERROR:
+                                std::cout << "BIND COL FAILED SQL ERROR" << std::endl;
+                                printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
+                                break;
+                            default:
+                                std::cout << "FAILED :: " << fetchResponse << std::endl;
+                        }
+
+                        while (SQLRETURN queryReturn = SQLFetch(hSmt) == SQL_SUCCESS){
+                            std::cout << username << std::endl;
                         }
 
 

@@ -21,6 +21,8 @@
 #include "orm/projects/SpringBootProjectModel.h"
 #include "orm/creators/java/SpringBootProjectCreator.h"
 #include "databases/mssql/executor/MSSQLQueryExecutor.h"
+#include "databases/mssql/connectors/MSSQLDbConnParams.h"
+#include "databases/mssql/connectors/MSSQLDbConnector.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -75,7 +77,7 @@ void testPostmanProject();
 
 int main(int argc, char **argv) {
 
-    /*std::string host = "localhost";
+    std::string host = "localhost";
     int port = 1433;
     std::string database = "dbcrudgen";
     std::string user = "sa";
@@ -92,9 +94,9 @@ int main(int argc, char **argv) {
     dbcrudgen::db::mssql::MSSQLQueryExecutor executor{hDbc};
     executor.execQuery("SELECT * FROM test;");
     executor.freeStatementHandle();
-    connector.closeConnection();*/
+    connector.closeConnection();
 
-    createSpringBootHibernateProject();
+    //createSpringBootHibernateProject();
     //createPhpProject();
     return EXIT_SUCCESS;
 }
