@@ -23,6 +23,7 @@
 #include "databases/mssql/executor/MSSQLQueryExecutor.h"
 #include "databases/mssql/connectors/MSSQLDbConnParams.h"
 #include "databases/mssql/connectors/MSSQLDbConnector.h"
+#include "databases/mssql/executor/MSSQLColBinder.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -91,8 +92,29 @@ int main(int argc, char **argv) {
         std::cout << "second check -- null" << std::endl;
     }
 
+    SQLCHAR username[255];
+    SQLLEN username_indicator;
+    std::string usernameColName = "username";
+
+    SQLCHAR fullname[255];
+    SQLLEN fullname_indicator;
+    std::string fullnameColName = "fullname";
+
     dbcrudgen::db::mssql::MSSQLQueryExecutor executor{hDbc};
-    executor.execQuery("SELECT * FROM test;");
+    std::vector<dbcrudgen::db::mssql::MSSQLColBinder> colBindings;
+    colBindings.emplace_back(  dbcrudgen::db::mssql::MSSQLColBinder{1, SQL_C_CHAR,usernameColName, username, 255, &username_indicator});
+    colBindings.emplace_back(  dbcrudgen::db::mssql::MSSQLColBinder{2, SQL_C_CHAR, fullnameColName, fullname, 255, &fullname_indicator});
+    std::vector<dbcrudgen::db::mssql::MSSQLResultSet> resultSet{};
+    executor.execQuery("SELECT * FROM test;", colBindings, resultSet);
+
+    std::cout << "--------------PRINTING RESULTS -------" << std::endl;
+    for (const dbcrudgen::db::mssql::MSSQLResultSet& data: resultSet) {
+        void *colValue = data.getColumnValue();
+        std::cout << " Column Index : " << data.columnIndex
+                  << " : Column name : " << data.columnName
+                  << " : Column Value : " << *reinterpret_cast<std::string *>(colValue) << std::endl;
+    }
+
     executor.freeStatementHandle();
     connector.closeConnection();
 
@@ -309,25 +331,25 @@ void createMYSQLProjectBuilder() {
     const std::vector<dbcrudgen::db::mysql::Tables> &tables = builder.getSchemaTables();
 
     std::cout << "--------------------------- TABLES ---------------------------------" << std::endl;
-    for (const auto &table : tables) {
+    for (const auto &table: tables) {
         std::cout << table.getTableName() << std::endl;
     }
 
     std::cout << "--------------------------- PRIMARY KEYS ---------------------------------" << std::endl;
     const std::vector<dbcrudgen::db::mysql::Columns> &primaryKeys = builder.getTablePrimaryKeyColumns("child");
-    for (const auto &key : primaryKeys) {
+    for (const auto &key: primaryKeys) {
         std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
     }
 
     std::cout << "--------------------------- TABLE KEYS ---------------------------------" << std::endl;
     const std::vector<dbcrudgen::db::mysql::Columns> &keys = builder.getTableKeysColumns("child");
-    for (const auto &key : keys) {
+    for (const auto &key: keys) {
         std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
     }
 
     std::cout << "--------------------------- FOREIGN KEYS ---------------------------------" << std::endl;
     const std::vector<dbcrudgen::db::mysql::Columns> &foreign = builder.getTableForeignKeyColumns("child");
-    for (const auto &key : foreign) {
+    for (const auto &key: foreign) {
         std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
     }
 }

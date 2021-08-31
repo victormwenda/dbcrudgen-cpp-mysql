@@ -6,6 +6,8 @@
 #define DBCRUDGEN_CPP_MSSQLQUERYEXECUTOR_H
 
 #include <autotest.h>
+#include "MSSQLColBinder.h"
+#include "MSSQLResultSet.h"
 
 namespace dbcrudgen {
     namespace db {
@@ -103,16 +105,17 @@ namespace dbcrudgen {
                  * Execute query
                  * @param sqlQuery
                  */
-                void execQuery(const std::string &sqlQuery) {
+                void
+                execQuery(const std::string &sqlQuery, std::vector<MSSQLColBinder> &colBindings,
+                          std::vector<dbcrudgen::db::mssql::MSSQLResultSet> &resultSet) {
+
                     bool prepStmt = prepareStatement(sqlQuery);
                     if (prepStmt) {
                         std::cout << "prepare success" << std::endl;
 
-                        unsigned long numRows;
-                        SQLUSMALLINT rowStatus[20];
-                        SQLRETURN fetchResponse = SQLExecDirect(hSmt, (SQLCHAR *) sqlQuery.c_str(), SQL_NTS);
+                        SQLRETURN execReturnInt = SQLExecDirect(hSmt, (SQLCHAR *) sqlQuery.c_str(), SQL_NTS);
 
-                        switch (fetchResponse) {
+                        switch (execReturnInt) {
                             case SQL_SUCCESS:
                                 std::cout << "FETCH SUCCESS" << std::endl;
                                 break;
@@ -127,34 +130,64 @@ namespace dbcrudgen {
                                 printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
                                 break;
                             default:
-                                std::cout << "FAILED :: " << fetchResponse << std::endl;
-                        }
-                        SQLCHAR         username[255]; // value/length columns
-                        SQLLEN          username_length;
-                        SQLRETURN bindColReturn = SQLBindCol(hSmt, 1, SQL_C_CHAR, username,
-                                                             255, &username_length);
-                        switch (bindColReturn) {
-                            case SQL_SUCCESS:
-                                std::cout << "BIND COL SUCCESS" << std::endl;
-                                break;
-                            case SQL_SUCCESS_WITH_INFO:
-                                std::cout << "BIND COL WITH INFO" << std::endl;
-                                break;
-                            case SQL_INVALID_HANDLE:
-                                std::cout << "BIND COL FAILED INVALID HANDLE" << std::endl;
-                                break;
-                            case SQL_ERROR:
-                                std::cout << "BIND COL FAILED SQL ERROR" << std::endl;
-                                printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
-                                break;
-                            default:
-                                std::cout << "FAILED :: " << fetchResponse << std::endl;
+                                std::cout << "FAILED :: " << execReturnInt << std::endl;
                         }
 
-                        while (SQLRETURN queryReturn = SQLFetch(hSmt) == SQL_SUCCESS){
-                            std::cout << username << std::endl;
+                        for (MSSQLColBinder colBinder: colBindings) {
+                            SQLRETURN bindColReturnInt = SQLBindCol(hSmt, colBinder.columnIndex,
+                                                                    colBinder.dataType,
+                                                                    colBinder.columnValue,
+                                                                    colBinder.columnValueLength,
+                                                                    colBinder.ptrLengthBufferOrIndicator);
+                            switch (bindColReturnInt) {
+                                case SQL_SUCCESS:
+                                    std::cout << "BIND COL SUCCESS" << std::endl;
+                                    break;
+                                case SQL_SUCCESS_WITH_INFO:
+                                    std::cout << "BIND COL WITH INFO" << std::endl;
+                                    break;
+                                case SQL_INVALID_HANDLE:
+                                    std::cout << "BIND COL FAILED INVALID HANDLE" << std::endl;
+                                    break;
+                                case SQL_ERROR:
+                                    std::cout << "BIND COL FAILED SQL ERROR" << std::endl;
+                                    printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
+                                    break;
+                                default:
+                                    std::cout << "FAILED :: " << execReturnInt << std::endl;
+                            }
                         }
 
+                        //Fetch data from database
+                        while (SQLRETURN fetchReturnInt = SQLFetch(hSmt) == SQL_SUCCESS) {
+
+                            for (int i = 0; i < colBindings.size(); i++) {
+
+                                //Add fetched data to result set
+                                resultSet.emplace_back(
+                                        MSSQLResultSet{colBindings[i].columnIndex, colBindings[i].columnName,
+                                                       colBindings[i].dataType, colBindings[i].columnValue});
+                            }
+
+
+                            switch (fetchReturnInt) {
+                                case SQL_SUCCESS:
+                                    std::cout << "BIND COL SUCCESS" << std::endl;
+                                    break;
+                                case SQL_SUCCESS_WITH_INFO:
+                                    std::cout << "FETCH WITH INFO" << std::endl;
+                                    break;
+                                case SQL_INVALID_HANDLE:
+                                    std::cout << "FETCH FAILED INVALID HANDLE" << std::endl;
+                                    break;
+                                case SQL_ERROR:
+                                    std::cout << "FETCH SQL ERROR" << std::endl;
+                                    printErrorDiagInfo(SQL_HANDLE_STMT, hSmt, 1);
+                                    break;
+                                default:
+                                    std::cout << "FAILED :: " << execReturnInt << std::endl;
+                            }
+                        }
 
                     } else {
                         std::cout << "prep stmt failed " << std::endl;

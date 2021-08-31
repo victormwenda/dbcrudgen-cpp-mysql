@@ -85,7 +85,9 @@ set(SOURCE_FILES
 
         src/databases/mssql/connectors/MSSQLDbConnParams.h
         src/databases/mssql/connectors/MSSQLDbConnector.h
+        src/databases/mssql/executor/MSSQLColBinder.h
         src/databases/mssql/executor/MSSQLQueryExecutor.h
+        src/databases/mssql/executor/MSSQLResultSet.h
         src/databases/mssql/models/MSSQLDatabaseSchemas.h
         src/databases/mssql/parsers/MSSQLDatabaseFlattener.h
 
@@ -587,7 +589,8 @@ set(SOURCE_FILES
 
         src/orm/utils/StringUtils.h
 
-       )
+
+        )
 
 #GoogleTest
 add_subdirectory(include/google-test)
