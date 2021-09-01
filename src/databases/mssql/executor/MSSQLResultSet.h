@@ -27,7 +27,6 @@ namespace dbcrudgen {
                 bool bColumnValue;
                 short shColumnValue;
                 int iColumnValue;
-                long int liColumnValue;
                 float fColumnValue;
                 double dColumnValue;
                 long lColumnValue;
@@ -66,7 +65,7 @@ namespace dbcrudgen {
                  * Get column value
                  * @return void* ptr of column value. user *reinterpret_cast<datatype>(pVoid) to get value of object
                  */
-                void *getColumnValue() const {
+                void *getColumnValue()  const {
                     switch (dataType) {
                         case SQL_C_BINARY:
                             break;
@@ -79,6 +78,7 @@ namespace dbcrudgen {
                         case SQL_C_FLOAT:
                             break;
                         case SQL_C_LONG:
+                            return const_cast<long *>(reinterpret_cast<const long *>(&lColumnValue));
                             break;
                         case SQL_C_SHORT:
                             break;
@@ -101,32 +101,48 @@ namespace dbcrudgen {
                  * @param ptrColumnValue
                  */
                 void setColumnValue(SQLPOINTER ptrColumnValue) {
+
                     switch (dataType) {
                         case SQL_C_BINARY:
+                            std::cout << "SQL_C_BINARY : " << dataType << std::endl;
                             break;
                         case SQL_C_BIT:
+                            std::cout << "SQL_C_BIT : " << dataType << std::endl;
                             break;
-                        case SQL_C_CHAR:
+                        case SQL_C_CHAR://1
                             strColumnValue = std::string(
                                     reinterpret_cast<const char *>(reinterpret_cast<SQLCHAR *>(ptrColumnValue)));
                             break;
                         case SQL_C_DOUBLE:
+                            std::cout << "SQL_C_DOUBLE : " << dataType << std::endl;
                             break;
                         case SQL_C_FLOAT:
+                            std::cout << "SQL_C_FLOAT : " << dataType << std::endl;
                             break;
-                        case SQL_C_LONG:
+                        case SQL_C_LONG: //4
+                            lColumnValue = *reinterpret_cast<SQLINTEGER *>(ptrColumnValue);
                             break;
                         case SQL_C_SHORT:
+                            std::cout << "SQL_C_SHORT : " << dataType << std::endl;
                             break;
                         case SQL_C_TYPE_DATE:
+                            std::cout << "SQL_C_TYPE_DATE : " << dataType << std::endl;
                             break;
                         case SQL_C_TYPE_TIME:
+                            std::cout << "SQL_C_TYPE_TIME : " << dataType << std::endl;
                             break;
                         case SQL_C_TYPE_TIMESTAMP:
+                            std::cout << "SQL_C_TYPE_TIMESTAMP : " << dataType << std::endl;
                             break;
                         case SQL_C_TINYINT:
+                            std::cout << "SQL_C_TINYINT : " << dataType << std::endl;
                             break;
                         case SQL_C_WCHAR:
+                            std::cout << "SQL_C_WCHAR : " << dataType << std::endl;
+                            break;
+                        default:
+                            std::cout << "Cannot get value for column: " << columnName << " of data type : " << dataType
+                                      << std::endl;
                             break;
                     }
                 }

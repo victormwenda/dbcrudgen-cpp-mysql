@@ -172,7 +172,6 @@ namespace dbcrudgen {
                         while (SQLRETURN fetchReturnInt = SQLFetch(hSmt) == SQL_SUCCESS) {
 
                             for (int i = 0; i < colBindings.size(); i++) {
-
                                 //Add fetched data to result set
                                 resultSet.emplace_back(
                                         MSSQLResultSet{colBindings[i].columnIndex, colBindings[i].columnName,
