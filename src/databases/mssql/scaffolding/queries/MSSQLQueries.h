@@ -8,6 +8,9 @@
 namespace dbcrudgen {
     namespace db {
         namespace mssql {
+            /**
+             * MSSQL Queries
+             */
             class MSSQLQueries {
             public:
                 /////////////////////////////////////////////////////////////////////////////////

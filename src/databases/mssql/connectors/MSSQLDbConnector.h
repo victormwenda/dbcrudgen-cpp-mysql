@@ -19,9 +19,8 @@ namespace dbcrudgen {
                 SQLHDBC hDbc = nullptr;
                 dbcrudgen::db::mssql::MSSQLDbConnParams &connParams;
             public:
-                explicit MSSQLDbConnector(dbcrudgen::db::mssql::MSSQLDbConnParams &params) : connParams(params) {
 
-                }
+                explicit MSSQLDbConnector(dbcrudgen::db::mssql::MSSQLDbConnParams &params) : connParams(params) {}
 
                 dbcrudgen::db::mssql::MSSQLDbConnParams &getConnParams() const {
                     return connParams;

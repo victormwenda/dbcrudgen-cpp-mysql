@@ -10,6 +10,10 @@
 namespace dbcrudgen {
     namespace db {
         namespace mssql {
+            /**
+             * SysDatabases
+             * Represents the table sys.databases;
+             */
             class SysDatabases {
             private:
                 std::string name;
@@ -95,33 +99,33 @@ namespace dbcrudgen {
 
                 struct COLUMNS {
                     struct NAME {
-                        static constexpr const char *NAME = "name";
-                        static const int INDEX = 0;
+                        static constexpr const char *NAME_ = "name";
+                        static const int INDEX = 1;
                         static constexpr const char *DATA_TYPE = "sysname";
                     };
                     struct DATABASE_ID {
                         static constexpr const char *NAME = "database_id";
-                        static const int INDEX = 1;
+                        static const int INDEX = 2;
                         static constexpr const char *DATA_TYPE = "int";
                     };
                     struct SOURCE_DATABASE_ID {
                         static constexpr const char *NAME = "source_database_id";
-                        static const int INDEX = 2;
+                        static const int INDEX = 3;
                         static constexpr const char *DATA_TYPE = "int";
                     };
                     struct OWNER_SID {
                         static constexpr const char *NAME = "owner_sid";
-                        static const int INDEX = 3;
+                        static const int INDEX = 4;
                         static constexpr const char *DATA_TYPE = "varbinary";
                     };
                     struct CREATE_DATE {
                         static constexpr const char *NAME = "create_date";
-                        static const int INDEX = 4;
+                        static const int INDEX = 5;
                         static constexpr const char *DATA_TYPE = "datetime";
                     };
                     struct COMPATIBILITY_LEVEL {
                         static constexpr const char *NAME = "compatibility_level";
-                        static const int INDEX = 5;
+                        static const int INDEX = 6;
                         static constexpr const char *DATA_TYPE = "tinyint";
                     };
                     struct COLLATION_NAME {

@@ -15,9 +15,19 @@ namespace dbcrudgen {
             class MSSQLQueryExecutor {
             private:
                 SQLHDBC hDbc;
-                SQLHSTMT hSmt = nullptr;
+                SQLHSTMT hSmt;
             public:
-                explicit MSSQLQueryExecutor(const SQLHDBC &hDbc) : hDbc{hDbc} {
+
+                /**
+                 * MSSQL Query Executor
+                 */
+                MSSQLQueryExecutor() : hDbc{nullptr}, hSmt{nullptr} {}
+
+                /**
+                 * MSSQL Query Executor
+                 * @param hDbc
+                 */
+                explicit MSSQLQueryExecutor(const SQLHDBC &hDbc) : hDbc{hDbc}, hSmt{nullptr} {
                     createStatementHandle();
                 }
 

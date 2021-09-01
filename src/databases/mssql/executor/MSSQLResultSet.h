@@ -12,6 +12,10 @@
 namespace dbcrudgen {
     namespace db {
         namespace mssql {
+            /**
+             * MSSQL Result Set
+             *  - Contains the data returned from the database
+             */
             class MSSQLResultSet {
             public:
 
@@ -29,7 +33,14 @@ namespace dbcrudgen {
                 long lColumnValue;
                 std::string strColumnValue;
 
-
+                /**
+                 * MSSQL Result Set
+                 * - Contains the data returned from the database
+                 * @param columnIndex
+                 * @param columnName
+                 * @param dataType
+                 * @param columnValue
+                 */
                 MSSQLResultSet(int &columnIndex, std::string &columnName, SQLSMALLINT &dataType, SQLPOINTER columnValue)
                         : columnIndex(columnIndex), dataType(dataType), columnName(columnName) {
                     setColumnValue(columnValue);
@@ -82,6 +93,7 @@ namespace dbcrudgen {
                         case SQL_C_WCHAR:
                             break;
                     }
+                    return nullptr;
                 }
 
                 /**

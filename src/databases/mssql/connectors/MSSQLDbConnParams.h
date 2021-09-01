@@ -32,7 +32,7 @@ namespace dbcrudgen {
                 std::string user;
                 std::string password;
             public:
-
+                MSSQLDbConnParams() = default;
 
                 /**
                  * Connect to a Microsoft SQL Server database
