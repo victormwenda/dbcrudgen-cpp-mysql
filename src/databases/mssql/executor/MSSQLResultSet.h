@@ -65,12 +65,12 @@ namespace dbcrudgen {
                  * Get column value
                  * @return void* ptr of column value. user *reinterpret_cast<datatype>(pVoid) to get value of object
                  */
-                void *getColumnValue()  const {
+                void *getColumnValue() const {
                     switch (dataType) {
                         case SQL_C_BINARY:
                             break;
                         case SQL_C_BIT:
-                            break;
+                            return const_cast<bool *>( reinterpret_cast<const bool *>(&bColumnValue));
                         case SQL_C_CHAR:
                             return (char *) &strColumnValue;
                         case SQL_C_DOUBLE:
@@ -107,9 +107,9 @@ namespace dbcrudgen {
                             std::cout << "SQL_C_BINARY : " << dataType << std::endl;
                             break;
                         case SQL_C_BIT:
-                            std::cout << "SQL_C_BIT : " << dataType << std::endl;
+                            bColumnValue = *reinterpret_cast<bool *>(ptrColumnValue);
                             break;
-                        case SQL_C_CHAR://1
+                        case SQL_C_CHAR: //1
                             strColumnValue = std::string(
                                     reinterpret_cast<const char *>(reinterpret_cast<SQLCHAR *>(ptrColumnValue)));
                             break;
