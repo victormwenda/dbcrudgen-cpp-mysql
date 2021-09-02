@@ -83,13 +83,20 @@ set(SOURCE_FILES
         # MSSQL DATABASE SOURCE FILES
         ##############################################################################################################
 
+        src/databases/mssql/builder/MSSQLDatabaseModelBuilder.h
         src/databases/mssql/connectors/MSSQLDbConnParams.h
         src/databases/mssql/connectors/MSSQLDbConnector.h
+        src/databases/mssql/decomposer/MSSQLDatabaseDecomposer.h
+        src/databases/mssql/decomposer/MSSQLDatabasePreparedDecomposer.h
+        src/databases/mssql/decomposer/SysDatabasesDecomposer.h
         src/databases/mssql/executor/MSSQLColBinder.h
         src/databases/mssql/executor/MSSQLQueryExecutor.h
         src/databases/mssql/executor/MSSQLResultSet.h
+        src/databases/mssql/models/MSSQLDatabaseModel.h
         src/databases/mssql/models/MSSQLDatabaseSchemas.h
         src/databases/mssql/parsers/MSSQLDatabaseFlattener.h
+        src/databases/mssql/scaffolding/queries/MSSQLQueries.h
+        src/databases/mssql/scaffolding/entities/SysDatabases.h
 
         ##############################################################################################################
         # MySQL DATABASE SOURCE FILES
@@ -590,7 +597,7 @@ set(SOURCE_FILES
         src/orm/utils/StringUtils.h
 
 
-        src/databases/mssql/builder/MSSQLDatabaseModelBuilder.h src/databases/mssql/decomposer/MSSQLDatabaseDecomposer.h src/databases/mssql/decomposer/MSSQLDatabasePreparedDecomposer.h src/databases/mssql/models/MSSQLDatabaseModel.h src/databases/mssql/scaffolding/queries/MSSQLQueries.h src/databases/mssql/scaffolding/entities/SysDatabases.h src/databases/mssql/decomposer/SysDatabasesDecomposer.h)
+        )
 
 #GoogleTest
 add_subdirectory(include/google-test)

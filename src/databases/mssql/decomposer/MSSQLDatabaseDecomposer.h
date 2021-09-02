@@ -36,6 +36,7 @@ namespace dbcrudgen {
                     executor = dbcrudgen::db::mssql::MSSQLQueryExecutor{hDbc};
                     sysDatabasesDecomposer = dbcrudgen::db::mssql::SysDatabasesDecomposer{executor};
                 }
+
                 /**
                  * Get sys databases
                  * Executes SELECT * FROM SYS.DATABASES;
@@ -46,11 +47,9 @@ namespace dbcrudgen {
                 }
 
                 ~MSSQLDatabaseDecomposer() {
-                    std::cout << "killing connections";
                     executor.freeStatementHandle();
                     connector.closeConnection();
                 }
-
             };
         }
     }

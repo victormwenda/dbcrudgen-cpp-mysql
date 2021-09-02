@@ -18,7 +18,8 @@ namespace dbcrudgen {
                 SysDatabasesDecomposer() = default;
 
                 explicit SysDatabasesDecomposer(dbcrudgen::db::mssql::MSSQLQueryExecutor &executor)
-                        : executor{executor} {}
+                        : executor{executor} {
+                }
 
                 /**
                 * Get all Sys databases
@@ -1164,6 +1165,8 @@ namespace dbcrudgen {
                     }
                     return sysDatabases;
                 }
+
+                ~SysDatabasesDecomposer() {}
             };
         }
     }

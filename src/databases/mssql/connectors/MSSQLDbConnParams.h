@@ -41,13 +41,13 @@ namespace dbcrudgen {
                  * @param user
                  * @param password
                  */
-                MSSQLDbConnParams(std::string &host, int port, std::string& database, std::string &user,
+                MSSQLDbConnParams(std::string &host, int port, std::string &database, std::string &user,
                                   std::string &password)
                         : host(host), port(port), database(database), user(user), password(password) {
+
                 }
 
-                std::string
-                getConnStr() const {
+                std::string getConnStr() const {
                     std::string connStrTpl = dbcrudgen::orm::mssql::MSSQLStrTemplates::CONN_STR::TEMPLATE;
 
                     StringUtils::replace(connStrTpl, "${HOST}", getHost());
@@ -77,6 +77,9 @@ namespace dbcrudgen {
 
                 std::string getPassword() const {
                     return password;
+                }
+
+                ~MSSQLDbConnParams() {
                 }
             };
         }
