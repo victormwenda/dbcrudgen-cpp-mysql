@@ -88,6 +88,7 @@ set(SOURCE_FILES
         src/databases/mssql/connectors/MSSQLDbConnector.h
         src/databases/mssql/decomposer/MSSQLDatabaseDecomposer.h
         src/databases/mssql/decomposer/MSSQLDatabasePreparedDecomposer.h
+        src/databases/mssql/decomposer/SpColumnsDecomposer.h
         src/databases/mssql/decomposer/SysDatabasesDecomposer.h
         src/databases/mssql/executor/MSSQLColBinder.h
         src/databases/mssql/executor/MSSQLQueryExecutor.h
@@ -97,6 +98,7 @@ set(SOURCE_FILES
         src/databases/mssql/parsers/MSSQLDatabaseFlattener.h
         src/databases/mssql/scaffolding/queries/MSSQLQueries.h
         src/databases/mssql/scaffolding/entities/SysDatabases.h
+        src/databases/mssql/scaffolding/sp/SpColumns.h
 
         ##############################################################################################################
         # MySQL DATABASE SOURCE FILES
@@ -595,7 +597,6 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanTemplateFiles.h
 
         src/orm/utils/StringUtils.h
-
 
         )
 

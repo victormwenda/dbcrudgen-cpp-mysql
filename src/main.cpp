@@ -89,23 +89,32 @@ int main(int argc, char **argv) {
     dbcrudgen::db::mssql::MSSQLDbConnParams connParams{host, port, database, user, password};
     dbcrudgen::db::mssql::MSSQLDbConnector connector{connParams};
     dbcrudgen::db::mssql::MSSQLDatabaseDecomposer decomposer{connector};
-    std::vector<dbcrudgen::db::mssql::SysDatabases> sysDatabases = decomposer.getSysDatabases();
+    std::string tableName = "all_columns";
+    std::vector<dbcrudgen::db::mssql::SpColumns> tableCols = decomposer.getTableColumns(tableName);
 
-    for (dbcrudgen::db::mssql::SysDatabases &sysDbs: sysDatabases) {
-        std::cout << sysDbs.getDatabaseId() << " "
-                  << sysDbs.getName() << " "
-                  << sysDbs.getOwnerSid() << " "
-                  // << sysDbs.getSourceDatabaseId()  << " "
-                  // << sysDbs.getOwnerSid()  << " "
-                  //   << sysDbs.getCreateDate()  << " "
-                  << sysDbs.getCollationName() << " "
-                  << sysDbs.getUserAccessDesc() << " "
-                  << sysDbs.getStateDesc() << " "
-                  << sysDbs.getSnapshotIsolationStateDesc() << " "
-                  << sysDbs.getServiceBrokerGuid() << " "
-                  << sysDbs.getLogReuseWaitDesc() << " "
-                  << sysDbs.getReplicaId() << " "
-                  << sysDbs.getGroupDatabaseId() << " "
+    std::cout << "TableQualifier\t"
+              << "TableOwner\t"
+              << "TableName\t"
+              << "ColumnName\t"
+              << "TypeName\t"
+              << "Precision\t"
+              << "Length\t"
+              << "Nullable\t"
+              << "Ordinal Position\t"
+              << "SS Data Type\t"
+              << std::endl;
+
+    for (dbcrudgen::db::mssql::SpColumns &cols: tableCols) {
+        std::cout << cols.getTableQualifier() << "\t"
+                  << cols.getTableOwner() << "\t"
+                  << cols.getTableName() << "\t"
+                  << cols.getColumnName() << "\t"
+                  << cols.getTypeName() << "\t"
+                  << cols.getPrecision() << "\t"
+                  << cols.getLength() << "\t"
+                  << cols.getIsNullable() << "\t"
+                  << cols.getOrdinalPosition() << "\t"
+                  << cols.getSsDataType() << "\t"
                   << std::endl;
     }
 

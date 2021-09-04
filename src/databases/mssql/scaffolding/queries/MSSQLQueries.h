@@ -17,6 +17,10 @@ namespace dbcrudgen {
                 // SYS OBJECTS
                 ////////////////////////////////////////////////////////////////////////////////
                 static constexpr const char *GET_SYS_DATABASES = "select * from sys.databases;";
+                /////////////////////////////////////////////////////////////////////////////////
+                // STORED PROCEDURES
+                ////////////////////////////////////////////////////////////////////////////////
+                static constexpr const char *SP_COLUMNS = "sp_columns ";
             };
         }
     }

@@ -13,6 +13,7 @@
 #include "../scaffolding/queries/MSSQLQueries.h"
 #include "../scaffolding/entities/SysDatabases.h"
 #include "SysDatabasesDecomposer.h"
+#include "SpColumnsDecomposer.h"
 
 namespace dbcrudgen {
     namespace db {
@@ -24,6 +25,7 @@ namespace dbcrudgen {
                 SQLHDBC hDbc = nullptr;
             protected:
                 dbcrudgen::db::mssql::SysDatabasesDecomposer sysDatabasesDecomposer;
+                dbcrudgen::db::mssql::SpColumnsDecomposer spColsDecomposer;
             public:
                 /**
                  * MSSQL Database Decomposer
@@ -35,6 +37,7 @@ namespace dbcrudgen {
                     hDbc = connector.getHDbc();
                     executor = dbcrudgen::db::mssql::MSSQLQueryExecutor{hDbc};
                     sysDatabasesDecomposer = dbcrudgen::db::mssql::SysDatabasesDecomposer{executor};
+                    spColsDecomposer = dbcrudgen::db::mssql::SpColumnsDecomposer{executor};
                 }
 
                 /**
@@ -44,6 +47,15 @@ namespace dbcrudgen {
                  */
                 std::vector<dbcrudgen::db::mssql::SysDatabases> getSysDatabases() {
                     return sysDatabasesDecomposer.getSysDatabases();
+                }
+
+                /**
+                 * Get table columns
+                 * Executes sp_columns(@table_name, @table_owner , @table_qualifier , @column_name , @ODBCVer )
+                 * @return
+                 */
+                std::vector<dbcrudgen::db::mssql::SpColumns> getTableColumns(const std::string& tableName) {
+                    return spColsDecomposer.getTableColumns(tableName);
                 }
 
                 ~MSSQLDatabaseDecomposer() {
