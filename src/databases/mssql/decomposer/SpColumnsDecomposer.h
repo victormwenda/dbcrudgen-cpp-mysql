@@ -18,6 +18,10 @@ namespace dbcrudgen {
             public:
                 SpColumnsDecomposer() = default;
 
+                /**
+                 * Invokes the stored procedure sp_columns
+                 * @param executor
+                 */
                 explicit SpColumnsDecomposer(dbcrudgen::db::mssql::MSSQLQueryExecutor
                                              &executor) : executor{executor} {
 
@@ -68,7 +72,8 @@ namespace dbcrudgen {
                         SQLLEN data_type_indicator;
                         std::string columnName{SpColumns::COLUMNS::DATA_TYPE::NAME};
                         colBindings.emplace_back(
-                                MSSQLColBinder{SpColumns::COLUMNS::DATA_TYPE::INDEX, SQL_INTEGER, columnName, &data_type,
+                                MSSQLColBinder{SpColumns::COLUMNS::DATA_TYPE::INDEX, SQL_INTEGER, columnName,
+                                               &data_type,
                                                sizeof(data_type), &data_type_indicator});
                     }
                     {
@@ -84,7 +89,8 @@ namespace dbcrudgen {
                         SQLLEN precision_indicator;
                         std::string columnName{SpColumns::COLUMNS::PRECISION::NAME};
                         colBindings.emplace_back(
-                                MSSQLColBinder{SpColumns::COLUMNS::PRECISION::INDEX, SQL_INTEGER, columnName, &precision,
+                                MSSQLColBinder{SpColumns::COLUMNS::PRECISION::INDEX, SQL_INTEGER, columnName,
+                                               &precision,
                                                sizeof(precision), &precision_indicator});
                     }
                     {

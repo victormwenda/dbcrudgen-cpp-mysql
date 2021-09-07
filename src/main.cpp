@@ -90,31 +90,21 @@ int main(int argc, char **argv) {
     dbcrudgen::db::mssql::MSSQLDbConnector connector{connParams};
     dbcrudgen::db::mssql::MSSQLDatabaseDecomposer decomposer{connector};
     std::string tableName = "all_columns";
-    std::vector<dbcrudgen::db::mssql::SpColumns> tableCols = decomposer.getTableColumns(tableName);
+    std::vector<dbcrudgen::db::mssql::SpTables> tables = decomposer.getTables();
 
     std::cout << "TableQualifier\t"
               << "TableOwner\t"
               << "TableName\t"
-              << "ColumnName\t"
-              << "TypeName\t"
-              << "Precision\t"
-              << "Length\t"
-              << "Nullable\t"
-              << "Ordinal Position\t"
-              << "SS Data Type\t"
+              << "TableType\t"
+              << "Remarks\t"
               << std::endl;
 
-    for (dbcrudgen::db::mssql::SpColumns &cols: tableCols) {
-        std::cout << cols.getTableQualifier() << "\t"
-                  << cols.getTableOwner() << "\t"
-                  << cols.getTableName() << "\t"
-                  << cols.getColumnName() << "\t"
-                  << cols.getTypeName() << "\t"
-                  << cols.getPrecision() << "\t"
-                  << cols.getLength() << "\t"
-                  << cols.getIsNullable() << "\t"
-                  << cols.getOrdinalPosition() << "\t"
-                  << cols.getSsDataType() << "\t"
+    for (dbcrudgen::db::mssql::SpTables &table: tables) {
+        std::cout << table.getTableQualifier() << "\t"
+                  << table.getTableOwner() << "\t"
+                  << table.getTableName() << "\t"
+                  << table.getTableType() << "\t"
+                  << table.getRemarks() << "\t"
                   << std::endl;
     }
 

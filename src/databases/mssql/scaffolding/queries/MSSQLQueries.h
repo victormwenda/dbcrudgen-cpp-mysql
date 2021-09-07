@@ -21,6 +21,7 @@ namespace dbcrudgen {
                 // STORED PROCEDURES
                 ////////////////////////////////////////////////////////////////////////////////
                 static constexpr const char *SP_COLUMNS = "sp_columns ";
+                static constexpr const char *SP_TABLES = "sp_tables ";
             };
         }
     }

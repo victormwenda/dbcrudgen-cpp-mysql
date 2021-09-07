@@ -89,6 +89,7 @@ set(SOURCE_FILES
         src/databases/mssql/decomposer/MSSQLDatabaseDecomposer.h
         src/databases/mssql/decomposer/MSSQLDatabasePreparedDecomposer.h
         src/databases/mssql/decomposer/SpColumnsDecomposer.h
+        src/databases/mssql/decomposer/SpTablesDecomposer.h
         src/databases/mssql/decomposer/SysDatabasesDecomposer.h
         src/databases/mssql/executor/MSSQLColBinder.h
         src/databases/mssql/executor/MSSQLQueryExecutor.h
@@ -99,7 +100,7 @@ set(SOURCE_FILES
         src/databases/mssql/scaffolding/queries/MSSQLQueries.h
         src/databases/mssql/scaffolding/entities/SysDatabases.h
         src/databases/mssql/scaffolding/sp/SpColumns.h
-
+        src/databases/mssql/scaffolding/sp/SpTables.h
         ##############################################################################################################
         # MySQL DATABASE SOURCE FILES
         ##############################################################################################################
@@ -596,9 +597,7 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestTemplate.h
         src/orm/templates/postman/PostmanTemplateFiles.h
 
-        src/orm/utils/StringUtils.h
-
-        )
+        src/orm/utils/StringUtils.h)
 
 #GoogleTest
 add_subdirectory(include/google-test)

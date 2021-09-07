@@ -142,8 +142,8 @@ namespace dbcrudgen {
                 };
 
                 SpColumns(std::string &tableQualifier, std::string &tableOwner, std::string &tableName,
-                          std::string &columnName, int dataType, std::string &typeName, int precision, int length,
-                          int scale, int radix, bool nullable, std::string &remarks, std::string &columnDef,
+                          std::string &columnName, signed int dataType, std::string &typeName, int precision,
+                          int length, int scale, int radix, bool nullable, std::string &remarks, std::string &columnDef,
                           int sqlDataType, int sqlDatetimeSub, int charOctetLength, int ordinalPosition,
                           std::string &isNullable, int ssDataType)
                         : table_qualifier(tableQualifier), table_owner(tableOwner), table_name(tableName),
@@ -185,11 +185,11 @@ namespace dbcrudgen {
                     column_name = columnName;
                 }
 
-                int getDataType() const {
+                signed int getDataType() const {
                     return data_type;
                 }
 
-                void setDataType(int dataType) {
+                void setDataType(signed int dataType) {
                     data_type = dataType;
                 }
 
