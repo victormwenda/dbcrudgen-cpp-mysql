@@ -600,10 +600,10 @@ set(SOURCE_FILES
         src/orm/utils/StringUtils.h)
 
 #GoogleTest
-add_subdirectory(include/google-test)
+add_subdirectory(include/google/googletest)
 
 #GoogleBenchmark
-#add_subdirectory(include/google-benchmark)
+#add_subdirectory(include/google/benchmark)
 
 #Create executable
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
