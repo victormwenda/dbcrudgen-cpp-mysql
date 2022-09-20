@@ -4,9 +4,9 @@ cmake_minimum_required(VERSION 3.7)
 #Project name
 project(dbcrudgen_cpp)
 
-#Compilers
-SET(CMAKE_C_COMPILER /usr/bin/clang-10)
-SET(CMAKE_CXX_COMPILER /usr/bin/clang++-10)
+#Compilers - Comment out for custom compiler paths
+#SET(CMAKE_C_COMPILER /usr/bin/clang-10)
+#SET(CMAKE_CXX_COMPILER /usr/bin/clang++-10)
 
 #Linker flags
 if (${CMAKE_CXX_COMPILER} STREQUAL "/usr/bin/g++-4.8")
