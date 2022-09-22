@@ -8,8 +8,8 @@ project(dbcrudgen_cpp)
 set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 
 #Set build type
-set(CMAKE_BUILD_TYPE Debug)
-set(CMAKE_MESSAGE_LOG_LEVEL Debug)
+#set(CMAKE_BUILD_TYPE Debug)
+#set(CMAKE_MESSAGE_LOG_LEVEL Debug)
 
 #Set development environment
 set(DEV_ENV MACOS_ARM64)
