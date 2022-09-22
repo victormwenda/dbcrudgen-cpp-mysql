@@ -4,28 +4,43 @@ cmake_minimum_required(VERSION 3.7)
 #Project name
 project(dbcrudgen_cpp)
 
-#Compilers - Comment out for custom compiler paths
-#SET(CMAKE_C_COMPILER /usr/bin/clang-10)
-#SET(CMAKE_CXX_COMPILER /usr/bin/clang++-10)
+#Project path
+set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 
-#Linker flags
+#Set build type
+set(CMAKE_BUILD_TYPE Debug)
+set(CMAKE_MESSAGE_LOG_LEVEL Debug)
+
+#Set development environment
+set(DEV_ENV MACOS_ARM64)
+
+#-----------------------------------------------------------------------------------------------------------------------
+# COMPILERS
+#-----------------------------------------------------------------------------------------------------------------------
+
+if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+    SET(CMAKE_C_COMPILER /usr/bin/clang-10)
+    SET(CMAKE_CXX_COMPILER /usr/bin/clang++-10)
+elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
+    #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
+    #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
+endif ()
+
+#-----------------------------------------------------------------------------------------------------------------------
+# LINKER FLAGS
+#-----------------------------------------------------------------------------------------------------------------------
+
 if (${CMAKE_CXX_COMPILER} STREQUAL "/usr/bin/g++-4.8")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++1y")
 else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 endif ()
 
-#Project path
-set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
+#-----------------------------------------------------------------------------------------------------------------------
+# ORACLE CONFIGURATIONS
+#-----------------------------------------------------------------------------------------------------------------------
 
-#MYSQL Configs
-set(MYSQL_HEADERS ${PROJECT_DIR}/include/mysql-connector-cpp/include)
-include_directories(${MYSQL_HEADERS})
-set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/mysql-connector-cpp/lib64)
-set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn8.so.2)
-
-#Oracle configs
-set(ORACLE_VERSION "19.6")
+set(ORACLE_VERSION "18.1")
 set(ORACLE_INSTANT_CLIENT_HOME "")
 set(ORACLE_HEADERS "")
 set(ORACLE_LIBS "")
@@ -34,39 +49,87 @@ set(OCCI_LIBS_VARIANTS "")
 
 include_directories(${ORACLE_HEADERS})
 
-if (${ORACLE_VERSION} STREQUAL "10.1")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_1)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_1)
-elseif (${ORACLE_VERSION} STREQUAL "10.2")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_2)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_2)
-elseif (${ORACLE_VERSION} STREQUAL "11.1")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
-elseif (${ORACLE_VERSION} STREQUAL "12.1")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_1)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_1)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
-elseif (${ORACLE_VERSION} STREQUAL "12.2")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_2)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_2)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
-elseif (${ORACLE_VERSION} STREQUAL "18.5")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_5)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_5)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
-elseif (${ORACLE_VERSION} STREQUAL "19.6")
-    set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_6)
-    set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
-    set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
+if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+    if (${ORACLE_VERSION} STREQUAL "10.1") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_1)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_1)
+    elseif (${ORACLE_VERSION} STREQUAL "10.2") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_2)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_2)
+    elseif (${ORACLE_VERSION} STREQUAL "11.1") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
+    elseif (${ORACLE_VERSION} STREQUAL "12.1") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_1)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_1)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
+    elseif (${ORACLE_VERSION} STREQUAL "12.2") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_2)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_2)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
+    elseif (${ORACLE_VERSION} STREQUAL "18.5") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_5)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_5)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
+    elseif (${ORACLE_VERSION} STREQUAL "19.6") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_6)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
+    endif ()
+elseif (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+    if (${ORACLE_VERSION} STREQUAL "18.1") #MacOs x64
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_1)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_1)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.18.1 ${ORACLE_LIBS}/libclntsh.dylib.18.1 ${ORACLE_LIBS}/libocci.dylib.18.1 ${ORACLE_LIBS}/libnnz18.dylib)
+    elseif (${ORACLE_VERSION} STREQUAL "19.8") #MacOs x86
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_8)
+        set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_8)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.19.1 ${ORACLE_LIBS}/libclntsh.dylib.19.1 ${ORACLE_LIBS}/libocci.dylib.19.1 ${ORACLE_LIBS}/libnnz19.dylib)
+    endif ()
 endif ()
 
+#Oracle
 set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
 set(OCCI_LIBS ${OCCI_LIBS_VARIANTS})
 
-include_directories(${ORACLE_HEADERS})
 
+#-----------------------------------------------------------------------------------------------------------------------
+# MYSQL CONFIGURATIONS
+#-----------------------------------------------------------------------------------------------------------------------
+
+include_directories(${PROJECT_DIR}/include/macos/unixodbc/2.3.11/include)
+
+set(MYSQL_HEADERS "")
+
+if (${DEV_ENV} STREQUAL "MACOS_ARM64")
+    set(MYSQL_HEADERS ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/include/jdbc)
+    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/lib64)
+    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.dylib)
+elseif (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+    set(MYSQL_HEADERS ${PROJECT_DIR}/include/mysql-connector-cpp/include/jdbc)
+    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/linux/mysql-connector-cpp/lib64)
+    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7 )
+endif ()
+include_directories(${MYSQL_HEADERS})
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+# MSSQL CONFIGURATIONS
+#-----------------------------------------------------------------------------------------------------------------------
+
+set(ODBC_LIBS "")
+
+if (${DEV_ENV} STREQUAL "MACOS_ARM64")
+   set(ODBC_LIBS ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbc.dylib
+           ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbccr.dylib
+           ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbcinst.dylib
+           )
+endif ()
+
+#-----------------------------------------------------------------------------------------------------------------------
+# SOURCE FILES
+#-----------------------------------------------------------------------------------------------------------------------
 
 set(SOURCE_FILES
 
@@ -608,27 +671,30 @@ add_subdirectory(include/google/googletest)
 #Create executable
 add_executable(dbcrudgen_cpp ${SOURCE_FILES})
 
+#-----------------------------------------------------------------------------------------------------------------------
+# LIBRARY LINKING
+#-----------------------------------------------------------------------------------------------------------------------
+
 #Link with GoogleTest
-target_link_libraries(dbcrudgen_cpp gtest gtest_main pthread)
+#target_link_libraries(dbcrudgen_cpp gtest gtest_main pthread)
 
 #Link with GoogleMock
-target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread)
+#target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread) - Disable Google Mock
 
 #Link with GoogleBenchmark
-#target_link_libraries(dbcrudgen_cpp benchmark)
+#target_link_libraries(dbcrudgen_cpp benchmark) - Disable Google Benchmark
 
 #Link SQLite3 libs
 target_link_libraries(dbcrudgen_cpp sqlite3)
 
 #Link MysqlCpp libs
-#target_link_libraries(dbcrudgen_cpp ${MYSQL_LIBS}) # Using bundled mysql libs
-target_link_libraries(dbcrudgen_cpp mysqlcppconn) #TODO : Not using bundled lib with source code - ${MYSQL_LIBS}
+target_link_libraries(dbcrudgen_cpp ${MYSQL_LIBS})
 
 #Link the Oracle libs
 target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
 
 #Link with ODBC drivers
-target_link_libraries(dbcrudgen_cpp odbc)
+target_link_libraries(dbcrudgen_cpp ${ODBC_LIBS})
 
 #Copy the template resources
 file(COPY res/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
