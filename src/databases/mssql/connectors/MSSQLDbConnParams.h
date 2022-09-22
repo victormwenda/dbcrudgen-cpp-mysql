@@ -48,7 +48,7 @@ namespace dbcrudgen {
                 }
 
                 std::string getConnStr() const {
-                    std::string connStrTpl = dbcrudgen::orm::mssql::MSSQLStrTemplates::CONN_STR::TEMPLATE;
+                    std::string connStrTpl = dbcrudgen::orm::mssql::MSSQLStrTemplates::CONN_STR::TEMPLATE_AZURE_AD;
 
                     StringUtils::replace(connStrTpl, "${HOST}", getHost());
                     StringUtils::replace(connStrTpl, "${PORT}", std::to_string(port));

@@ -107,6 +107,7 @@ namespace dbcrudgen {
                                   sizeof(messageTxt), &length);
                     std::cerr << "SQL state: " << sqlState << " Native error: " << nativeError << " Message text: "
                               << messageTxt << std::endl;
+                    std::cout << std::endl;
                 }
 
                 /**

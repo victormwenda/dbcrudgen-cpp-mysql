@@ -80,10 +80,10 @@ void testPostmanProject();
 
 int main(int argc, char **argv) {
 
-    std::string host = "localhost";
+    std::string host = "127.0.0.1";
     int port = 1433;
     std::string database = "dbcrudgen";
-    std::string user = "sa";
+    std::string user = "SA";
     std::string password = "Root@3358";
 
     dbcrudgen::db::mssql::MSSQLDbConnParams connParams{host, port, database, user, password};

@@ -11,7 +11,6 @@
 #ifndef DBCRUDGEN_CPP_MYSQLDATABASECONNECTOR_H
 #define DBCRUDGEN_CPP_MYSQLDATABASECONNECTOR_H
 
-
 #include <cppconn/connection.h>
 #include <cppconn/driver.h>
 #include <cppconn/statement.h>
