@@ -69,6 +69,11 @@ void createPostmanProject(std::string &projectName, std::string &storeDirectory,
                           std::string &apiHost, int port, std::string &pathSegments, std::string &databaseType,
                           std::string &databaseName);
 
+dbcrudgen::db::mysql::MYSQLDatabaseModel getMYSQLDatabaseModel(std::string database,
+                                                               std::string username,
+                                                               std::string password,
+                                                               std::string host, int port);
+
 void createJavaProject();
 
 void createJaxRsHibernateProject();
@@ -77,9 +82,31 @@ void createSpringBootHibernateProject();
 
 void testPostmanProject();
 
+void mssqlDevelopment();
+
+void mysqlDevelopment();
 
 int main(int argc, char **argv) {
 
+    mysqlDevelopment();
+
+    return EXIT_SUCCESS;
+}
+
+void mysqlDevelopment() {
+    std::string database = "dbcrudgen";
+    std::string username = "root";
+    std::string password = "Root@3358";
+    std::string host = "127.0.0.1";
+    int port = 13306;
+    dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel(
+            database, username, password, host, port);
+    for (auto &model: databaseModel.getTables()) {
+        std::cout << model.getTableName() << std::endl;
+    }
+}
+
+void mssqlDevelopment() {
     std::string host = "127.0.0.1";
     int port = 1433;
     std::string database = "dbcrudgen";
@@ -90,7 +117,7 @@ int main(int argc, char **argv) {
     dbcrudgen::db::mssql::MSSQLDbConnector connector{connParams};
     dbcrudgen::db::mssql::MSSQLDatabaseDecomposer decomposer{connector};
     std::string tableName = "all_columns";
-    std::vector<dbcrudgen::db::mssql::SpTables> tables = decomposer.getTables();
+    std::__1::vector<dbcrudgen::db::mssql::SpTables> tables = decomposer.getTables();
 
     std::cout << "TableQualifier\t"
               << "TableOwner\t"
@@ -119,15 +146,7 @@ int main(int argc, char **argv) {
                   << "static constexpr const char *NAME = " << "\"" << item << "\";"
                   << "static const int INDEX = " << i+1 << ";"
                   << "};"<< std::endl;
-    }*/
-
-
-
-
-    //createSpringBootHibernateProject();
-    //createPhpProject();
-    return EXIT_SUCCESS;
-}
+    }*/}
 
 
 /**

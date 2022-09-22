@@ -1,0 +1,1 @@
+docker run --name=dbcrudgen-mysql -p 13306:3306 --restart=always -e MYSQL_ROOT_PASSWORD=Root@3358 -d arm64v8/mysql:8.0.30
