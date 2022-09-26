@@ -77,13 +77,13 @@ if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
     endif ()
-elseif (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
     if (${ORACLE_VERSION} STREQUAL "18.1") #MacOs x64
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_1)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/macos/oracle/instantclient_18_1)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_1)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.18.1 ${ORACLE_LIBS}/libclntsh.dylib.18.1 ${ORACLE_LIBS}/libocci.dylib.18.1 ${ORACLE_LIBS}/libnnz18.dylib)
     elseif (${ORACLE_VERSION} STREQUAL "19.8") #MacOs x86
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_8)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/macos/oracle/instantclient_19_8)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_8)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.19.1 ${ORACLE_LIBS}/libclntsh.dylib.19.1 ${ORACLE_LIBS}/libocci.dylib.19.1 ${ORACLE_LIBS}/libnnz19.dylib)
     endif ()
@@ -92,7 +92,7 @@ endif ()
 #Oracle
 set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
 set(OCCI_LIBS ${OCCI_LIBS_VARIANTS})
-
+include_directories(${ORACLE_HEADERS})
 
 #-----------------------------------------------------------------------------------------------------------------------
 # MYSQL CONFIGURATIONS

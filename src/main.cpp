@@ -26,6 +26,9 @@
 #include "databases/mssql/connectors/MSSQLDbConnector.h"
 #include "databases/mssql/executor/MSSQLColBinder.h"
 #include "databases/mssql/decomposer/MSSQLDatabaseDecomposer.h"
+#include "databases/oracle/connectors/OracleDatabaseConnectionParams.h"
+#include "databases/oracle/connectors/OracleDatabaseConnector.h"
+#include "databases/oracle/models/OracleDatabaseModel.h"
 
 /**
  * Returns a MYSQL Database Model
@@ -86,11 +89,29 @@ void mssqlDevelopment();
 
 void mysqlDevelopment();
 
+void oracleDevelopment();
+
 int main(int argc, char **argv) {
 
-    mysqlDevelopment();
+    oracleDevelopment();
 
     return EXIT_SUCCESS;
+}
+
+void oracleDevelopment() {
+    std::string host = "10.197.14.207";
+    int port = 1521;
+    std::string username = "WEBSCSB4";
+    std::string password = "Luk3#Bryan#2O22";
+    std::string serviceName = "WEBSCTST";
+    dbcrudgen::db::oracle::OracleDatabaseConnectionParams connectionParams{host, port, username, password, serviceName};
+    dbcrudgen::db::oracle::OracleDatabaseConnector connector{connectionParams, true};
+    std::string connectionString = connectionParams.getConnectString();
+    dbcrudgen::db::oracle::OracleDatabaseModel model{username, password, connectionString};
+    const std::vector<dbcrudgen::db::oracle::OracleUser> &allUsers = model.getAllUsers();
+    for (const dbcrudgen::db::oracle::OracleUser& user: allUsers) {
+        std::cout << user.getUserid() << " " << user.getUsername() << std::endl;
+    }
 }
 
 void mysqlDevelopment() {

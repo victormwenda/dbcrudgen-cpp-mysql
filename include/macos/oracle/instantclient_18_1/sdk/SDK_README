@@ -1,0 +1,36 @@
+SDK Package Information
+=======================
+
+Thu Feb 28 04:04:29 PST 2019
+
+Client Shared Library 64-bit - 18.1.0.0.0
+
+System name:	Darwin
+Release:	17.6.0
+Version:	Darwin Kernel Version 17.6.0: Tue May  8 15:22:16 PDT 2018; root:xnu-4570.61.1~1/RELEASE_X86_64
+Machine:	x86_64
+
+TIMEZONE INFORMATION
+--------------------
+Operating in ORACLE_HOME environment.
+
+Small timezone file = timezone_31.dat
+Large timezone file = timezlrg_31.dat
+
+LICENSE AGREEMENT
+-----------------
+You acknowledge that your use of this copy of Oracle Instant Client software
+product is subject to, and may not exceed the use(s) for which you are
+authorized under one of the following:
+
+  (i) the license or cloud services terms that you accepted when you obtained
+      the right to use Oracle Instant Client software; or
+ (ii) the license terms that you agreed to when you placed your order with
+      Oracle for an Oracle product containing Oracle Instant Client software; or
+(iii) the Oracle Instant Client software license terms, if any, included with
+      the hardware that you acquired from Oracle; or, if (i), (ii) and or (iii)
+      are not applicable, then,
+ (iv) the Oracle Technology Network License Agreement (which you acknowledge
+      you have read and agree to) available at
+    http://www.oracle.com/technetwork/licenses/distribution-license-152002.html.
+
