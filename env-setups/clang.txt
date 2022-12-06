@@ -1,0 +1,6 @@
+[UBUNTU]
+
+# Automatic installation script
+bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
+
+# https://apt.llvm.org/

@@ -138,7 +138,7 @@ void mssqlDevelopment() {
     dbcrudgen::db::mssql::MSSQLDbConnector connector{connParams};
     dbcrudgen::db::mssql::MSSQLDatabaseDecomposer decomposer{connector};
     std::string tableName = "all_columns";
-    std::__1::vector<dbcrudgen::db::mssql::SpTables> tables = decomposer.getTables();
+    std::vector<dbcrudgen::db::mssql::SpTables> tables = decomposer.getTables();
 
     std::cout << "TableQualifier\t"
               << "TableOwner\t"

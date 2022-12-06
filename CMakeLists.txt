@@ -12,15 +12,15 @@ set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 #set(CMAKE_MESSAGE_LOG_LEVEL Debug)
 
 #Set development environment
-set(DEV_ENV MACOS_ARM64)
+set(DEV_ENV LINUX_DEBIAN)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # COMPILERS
 #-----------------------------------------------------------------------------------------------------------------------
 
 if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
-    SET(CMAKE_C_COMPILER /usr/bin/clang-10)
-    SET(CMAKE_CXX_COMPILER /usr/bin/clang++-10)
+    SET(CMAKE_C_COMPILER /usr/bin/clang-15)
+    SET(CMAKE_CXX_COMPILER /usr/bin/clang++-15)
 elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
     #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
     #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
@@ -36,48 +36,78 @@ else ()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 endif ()
 
-#-----------------------------------------------------------------------------------------------------------------------
-# ORACLE CONFIGURATIONS
-#-----------------------------------------------------------------------------------------------------------------------
 
-set(ORACLE_VERSION "18.1")
+# ORACLE CONFIGURATIONS ------------------------------------------------------------------------------------------------
+set(ORACLE_VERSION "19.6")
 set(ORACLE_INSTANT_CLIENT_HOME "")
 set(ORACLE_HEADERS "")
 set(ORACLE_LIBS "")
 set(OCCI_LIBS "")
 set(OCCI_LIBS_VARIANTS "")
 
-include_directories(${ORACLE_HEADERS})
+# MYSQL CONFIGURATIONS -------------------------------------------------------------------------------------------------
+set(MYSQL_HEADERS "")
+
+
+# MSSQL CONFIGURATIONS -------------------------------------------------------------------------------------------------
+set(ODBC_LIBS "")
+
+#-----------------------------------------------------------------------------------------------------------------------
+# WINDOWS BUILD ENVIRONMENT
+#-----------------------------------------------------------------------------------------------------------------------
+
+
+#-----------------------------------------------------------------------------------------------------------------------
+# LINUX BUILD ENVIRONMENT
+#-----------------------------------------------------------------------------------------------------------------------
+
 
 if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+
+    # ------------------------------------ ORACLE ---------------------------------------------------------------------#
+
     if (${ORACLE_VERSION} STREQUAL "10.1") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_1)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_10_1)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_1)
     elseif (${ORACLE_VERSION} STREQUAL "10.2") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_10_2)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_10_2)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_10_2)
     elseif (${ORACLE_VERSION} STREQUAL "11.1") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_11_1)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_11_1)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_11_2)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
     elseif (${ORACLE_VERSION} STREQUAL "12.1") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_1)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_12_1)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_1)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
     elseif (${ORACLE_VERSION} STREQUAL "12.2") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_12_2)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_12_2)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_12_2)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
     elseif (${ORACLE_VERSION} STREQUAL "18.5") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_18_5)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_18_5)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_5)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
     elseif (${ORACLE_VERSION} STREQUAL "19.6") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/oracle/instantclient_19_6)
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/linux/oracle/instantclient_19_6)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_6)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
     endif ()
-elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
+
+    # ------------------------------------ MYSQL ----------------------------------------------------------------------#
+
+    set(MYSQL_HEADERS ${PROJECT_DIR}/include/linux/mysql-connector-cpp/include/jdbc)
+    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/linux/mysql-connector-cpp/lib64)
+    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7)
+endif ()
+
+#-----------------------------------------------------------------------------------------------------------------------
+# MACOS BUILD ENVIRONMENT
+#-----------------------------------------------------------------------------------------------------------------------
+
+if (${DEV_ENV} STREQUAL "MACOS_ARM64")
+
+    #ORACLE Database
     if (${ORACLE_VERSION} STREQUAL "18.1") #MacOs x64
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/macos/oracle/instantclient_18_1)
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_18_1)
@@ -87,45 +117,39 @@ elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
         set(ORACLE_LIBS /opt/oracle/instant-client/instantclient_19_8)
         set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.19.1 ${ORACLE_LIBS}/libclntsh.dylib.19.1 ${ORACLE_LIBS}/libocci.dylib.19.1 ${ORACLE_LIBS}/libnnz19.dylib)
     endif ()
+
+    # MYSQL
+    set(MYSQL_HEADERS ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/include/jdbc)
+    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/lib64)
+    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.dylib)
+
+
+    # MSSQL
+    set(ODBC_LIBS ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbc.dylib
+            ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbccr.dylib
+            ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbcinst.dylib
+            )
 endif ()
+
+#-----------------------------------------------------------------------------------------------------------------------
+# ALL CONFIGURATIONS
+#-----------------------------------------------------------------------------------------------------------------------
 
 #Oracle
 set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
 set(OCCI_LIBS ${OCCI_LIBS_VARIANTS})
 include_directories(${ORACLE_HEADERS})
 
-#-----------------------------------------------------------------------------------------------------------------------
 # MYSQL CONFIGURATIONS
-#-----------------------------------------------------------------------------------------------------------------------
-
 include_directories(${PROJECT_DIR}/include/macos/unixodbc/2.3.11/include)
-
-set(MYSQL_HEADERS "")
-
-if (${DEV_ENV} STREQUAL "MACOS_ARM64")
-    set(MYSQL_HEADERS ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/include/jdbc)
-    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/lib64)
-    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.dylib)
-elseif (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
-    set(MYSQL_HEADERS ${PROJECT_DIR}/include/mysql-connector-cpp/include/jdbc)
-    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/linux/mysql-connector-cpp/lib64)
-    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7 )
-endif ()
 include_directories(${MYSQL_HEADERS})
 
 
-#-----------------------------------------------------------------------------------------------------------------------
 # MSSQL CONFIGURATIONS
-#-----------------------------------------------------------------------------------------------------------------------
+include_directories(${ODBC_HEADERS})
 
-set(ODBC_LIBS "")
 
-if (${DEV_ENV} STREQUAL "MACOS_ARM64")
-   set(ODBC_LIBS ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbc.dylib
-           ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbccr.dylib
-           ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbcinst.dylib
-           )
-endif ()
+
 
 #-----------------------------------------------------------------------------------------------------------------------
 # SOURCE FILES
