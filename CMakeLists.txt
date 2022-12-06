@@ -98,7 +98,16 @@ if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
 
     set(MYSQL_HEADERS ${PROJECT_DIR}/include/linux/mysql-connector-cpp/include/jdbc)
     set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/linux/mysql-connector-cpp/lib64)
-    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7)
+    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.so.7 ${MYSQL_LIBS_DIR}/libssl.so.1.1 ${MYSQL_LIBS_DIR}/libcrypto.so.1.1)
+
+
+    # ------------------------------------ MSSQL ----------------------------------------------------------------------#
+
+    set(MSSQL_HEADERS ${PROJECT_DIR}/include/linux/mysql-connector-cpp/include/jdbc)
+    set(ODBC_LIBS_DIR ${PROJECT_DIR}/lib/microsoft/msodbcsql18/lib64)
+    #set(ODBC_LIBS ${ODBC_LIBS_DIR}/libmsodbcsql-18.1.so.2.1)
+    set(ODBC_LIBS odbc)
+
 endif ()
 
 #-----------------------------------------------------------------------------------------------------------------------
