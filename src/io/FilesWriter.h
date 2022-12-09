@@ -5,6 +5,12 @@
 #ifndef DBCRUDGEN_CPP_FILESWRITER_H
 #define DBCRUDGEN_CPP_FILESWRITER_H
 
+#ifdef __unix__
+#define WINDOWS_PLATFORM 0
+#elif defined(_WIN32) || defined (WIN32)
+#define WINDOWS_PLATFORM 1
+#endif
+
 #include <fstream>
 #include <string>
 #include <sys/stat.h>
@@ -44,7 +50,7 @@ public:
      */
     static bool createDir(const std::string &dir) {
 
-        int status = mkdir(dir.c_str(), 0777);
+        int status = mkdir(dir.c_str());
 
         return status == EEXIST || status == 0;
 
@@ -83,7 +89,7 @@ public:
 
             if (statRC != 0) {
 
-                int status = mkdir(parentDir.c_str(), 0777);
+                int status = mkdir(parentDir.c_str());
 
                 if (verbose) {
                     std::cout << "Creating dir : (" << parentDir << ") Status :: [" << status << "]" << std::endl;
