@@ -4,3 +4,6 @@
 [submodule "include/google/googletest"]
 	path = include/google/googletest
 	url = https://github.com/google/googletest
+[submodule "dependencies"]
+	path = dependencies
+	url = git@gitlab.com:victormwenda/dbcrudgen-cpp-dependencies.git
