@@ -5,7 +5,7 @@
 #ifndef DBCRUDGEN_CPP_MSSQLQUERYEXECUTOR_H
 #define DBCRUDGEN_CPP_MSSQLQUERYEXECUTOR_H
 
-#include <autotest.h>
+#include <sql.h>
 #include "MSSQLColBinder.h"
 #include "MSSQLResultSet.h"
 

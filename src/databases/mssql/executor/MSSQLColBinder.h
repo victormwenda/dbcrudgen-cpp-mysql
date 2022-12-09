@@ -5,7 +5,7 @@
 #ifndef DBCRUDGEN_CPP_MSSQLCOLBINDER_H
 #define DBCRUDGEN_CPP_MSSQLCOLBINDER_H
 
-#include <autotest.h>
+#include <sql.h>
 
 namespace dbcrudgen {
     namespace db {

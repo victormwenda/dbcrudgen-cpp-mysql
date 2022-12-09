@@ -6,7 +6,7 @@
 #define DBCRUDGEN_CPP_MSSQLRESULTSET_H
 
 #include <sqlext.h>
-#include <autotest.h>
+#include <sql.h>
 #include <string>
 
 namespace dbcrudgen {

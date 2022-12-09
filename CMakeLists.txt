@@ -12,7 +12,7 @@ set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
 #set(CMAKE_MESSAGE_LOG_LEVEL Debug)
 
 #Set development environment
-set(DEV_ENV LINUX_DEBIAN)
+set(DEV_ENV WIN32)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # COMPILERS
@@ -22,6 +22,12 @@ if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
     SET(CMAKE_C_COMPILER /usr/bin/clang-15)
     SET(CMAKE_CXX_COMPILER /usr/bin/clang++-15)
 elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
+    #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
+    #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
+elseif (${DEV_ENV} STREQUAL "WIN64")
+    #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
+    #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
+elseif (${DEV_ENV} STREQUAL "WIN32")
     #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
     #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
 endif ()
@@ -38,7 +44,7 @@ endif ()
 
 
 # ORACLE CONFIGURATIONS ------------------------------------------------------------------------------------------------
-set(ORACLE_VERSION "19.6")
+set(ORACLE_VERSION "21.7")
 set(ORACLE_INSTANT_CLIENT_HOME "")
 set(ORACLE_HEADERS "")
 set(ORACLE_LIBS "")
@@ -56,13 +62,67 @@ set(ODBC_LIBS "")
 # WINDOWS BUILD ENVIRONMENT
 #-----------------------------------------------------------------------------------------------------------------------
 
+if (WIN32)
+
+    # ------------------------------------ ORACLE ---------------------------------------------------------------------#
+
+    if (${ORACLE_VERSION} STREQUAL "10.1")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_10_1)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci10.dll ${ORACLE_LIBS}/orannzsbb10.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "10.2")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_10_2)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci11.dll ${ORACLE_LIBS}/orannzsbb11.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "11.1")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_11_1)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci11.dll ${ORACLE_LIBS}/orannzsbb11.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "12.1")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_12_1)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci12.dll ${ORACLE_LIBS}/orannzsbb12.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "12.2")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_12_2)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci12.dll ${ORACLE_LIBS}/orannzsbb12.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "18.5")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_18_5)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci18.dll ${ORACLE_LIBS}/orannzsbb18.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "19.6")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_19_6)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci19.dll ${ORACLE_LIBS}/orannzsbb.dll)
+    elseif (${ORACLE_VERSION} STREQUAL "21.7")
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/dependencies/windows/oracle/instantclient_21_7)
+        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci21.dll ${ORACLE_LIBS}/orannzsbb.dll)
+    endif ()
+
+    # ------------------------------------ MYSQL ----------------------------------------------------------------------#
+
+    set(MYSQL_HEADERS ${PROJECT_DIR}/dependencies/windows/mysql/c++-8.0.31-winx64/include/jdbc)
+    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/dependencies/windows/mysql/c++-8.0.31-winx64/lib64)
+    set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/mysqlcppconn8-2-vs14.dll ${MYSQL_LIBS_DIR}/libssl-1_1-x64.dll ${MYSQL_LIBS_DIR}/libcrypto-1_1-x64.dll)
+
+
+    # ------------------------------------ MSSQL ----------------------------------------------------------------------#
+
+    set(ODBC_HEADERS ${PROJECT_DIR}/dependencies/windows/msodbc/ODBC-Specification/Windows/inc)
+    set(ODBC_LIBS_DIR ${PROJECT_DIR}/dependencies/windows/msodbc/ODBC/180/KeyFile/1033)
+    set(ODBC_LIBS ${ODBC_LIBS_DIR}/sqlodbc_keyfile.dll)
+
+    message(${PROJECT_DIR}\\dependencies\\windows\\msodbc\\ODBC-Specification\\Windows\\inc)
+
+endif (WIN32)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # LINUX BUILD ENVIRONMENT
 #-----------------------------------------------------------------------------------------------------------------------
 
 
-if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
+if (UNIX)
 
     # ------------------------------------ ORACLE ---------------------------------------------------------------------#
 
@@ -103,18 +163,18 @@ if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
 
     # ------------------------------------ MSSQL ----------------------------------------------------------------------#
 
-    set(MSSQL_HEADERS ${PROJECT_DIR}/include/linux/mysql-connector-cpp/include/jdbc)
+    set(ODBC_HEADERS ${PROJECT_DIR}/include/linux/mysql-connector-cpp/include/jdbc)
     set(ODBC_LIBS_DIR ${PROJECT_DIR}/lib/microsoft/msodbcsql18/lib64)
     #set(ODBC_LIBS ${ODBC_LIBS_DIR}/libmsodbcsql-18.1.so.2.1)
     set(ODBC_LIBS odbc)
 
-endif ()
+endif (UNIX)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # MACOS BUILD ENVIRONMENT
 #-----------------------------------------------------------------------------------------------------------------------
 
-if (${DEV_ENV} STREQUAL "MACOS_ARM64")
+if (APPLE)
 
     #ORACLE Database
     if (${ORACLE_VERSION} STREQUAL "18.1") #MacOs x64
@@ -138,7 +198,7 @@ if (${DEV_ENV} STREQUAL "MACOS_ARM64")
             ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbccr.dylib
             ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbcinst.dylib
             )
-endif ()
+endif (APPLE)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # ALL CONFIGURATIONS
@@ -150,15 +210,10 @@ set(OCCI_LIBS ${OCCI_LIBS_VARIANTS})
 include_directories(${ORACLE_HEADERS})
 
 # MYSQL CONFIGURATIONS
-include_directories(${PROJECT_DIR}/include/macos/unixodbc/2.3.11/include)
 include_directories(${MYSQL_HEADERS})
-
 
 # MSSQL CONFIGURATIONS
 include_directories(${ODBC_HEADERS})
-
-
-
 
 #-----------------------------------------------------------------------------------------------------------------------
 # SOURCE FILES
