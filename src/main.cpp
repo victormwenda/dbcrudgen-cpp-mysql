@@ -99,11 +99,11 @@ int main(int argc, char **argv) {
 }
 
 void oracleDevelopment() {
-    std::string host = "10.197.14.207";
+    std::string host = "0.0.0.0";
     int port = 1521;
-    std::string username = "WEBSCSB4";
-    std::string password = "Luk3#Bryan#2O22";
-    std::string serviceName = "WEBSCTST";
+    std::string username = "dbcrudgen";
+    std::string password = "Root@3358";
+    std::string serviceName = "xe";
     dbcrudgen::db::oracle::OracleDatabaseConnectionParams connectionParams{host, port, username, password, serviceName};
     dbcrudgen::db::oracle::OracleDatabaseConnector connector{connectionParams, true};
     std::string connectionString = connectionParams.getConnectString();
