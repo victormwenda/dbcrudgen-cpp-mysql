@@ -54,16 +54,15 @@ namespace dbcrudgen {
                 bool open() override {
 
                     try {
+                        auto connDesc = connectionParams.getConnDesc();
+
                         connection = environment->createConnection(
                                 connectionParams.getUsername(),
-                                connectionParams.getPassword(),
-                                connectionParams.getConnectString()
+                                connectionParams.getPassword()
                         );
-
                     } catch (::oracle::occi::SQLException &exception) {
                         onError("FATAL_ERROR", exception.getMessage(), true);
                     }
-
 
                     return connection != nullptr;
                 }
@@ -86,10 +85,13 @@ namespace dbcrudgen {
                  * @param sql
                  * @return result set
                  */
-                ::oracle::occi::ResultSet &executeQuery(const std::string& sql) {
+                ::oracle::occi::ResultSet &executeQuery(const std::string &sql) {
                     return *getStatement(sql).executeQuery();
                 }
 
+                void onError(const std::string &errorLevel, const std::string &errorMessage, bool logError) override {
+
+                }
 
                 bool close() override {
                     if (connection != nullptr) {
@@ -112,8 +114,6 @@ namespace dbcrudgen {
         }
     }
 }
-
-
 
 
 #endif //DBCRUDGEN_CPP_ORACLEDATABASECONNECTOR_H

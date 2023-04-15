@@ -93,23 +93,25 @@ void oracleDevelopment();
 
 int main(int argc, char **argv) {
 
-    mysqlDevelopment();
+    oracleDevelopment();
 
     return EXIT_SUCCESS;
 }
 
 void oracleDevelopment() {
-    std::string host = "0.0.0.0";
+    std::string host = "127.0.0.1";
     int port = 1521;
     std::string username = "dbcrudgen";
     std::string password = "Root@3358";
-    std::string serviceName = "xe";
-    dbcrudgen::db::oracle::OracleDatabaseConnectionParams connectionParams{host, port, username, password, serviceName};
+    std::string serviceName = "XE";
+    std::string connDesc = "sid";
+    dbcrudgen::db::oracle::OracleDatabaseConnectionParams connectionParams{host, port, username, password,
+                                                                           connDesc, serviceName};
     dbcrudgen::db::oracle::OracleDatabaseConnector connector{connectionParams, true};
     std::string connectionString = connectionParams.getConnectString();
     dbcrudgen::db::oracle::OracleDatabaseModel model{username, password, connectionString};
     const std::vector<dbcrudgen::db::oracle::OracleUser> &allUsers = model.getAllUsers();
-    for (const dbcrudgen::db::oracle::OracleUser& user: allUsers) {
+    for (const dbcrudgen::db::oracle::OracleUser &user: allUsers) {
         std::cout << user.getUserid() << " " << user.getUsername() << std::endl;
     }
 }

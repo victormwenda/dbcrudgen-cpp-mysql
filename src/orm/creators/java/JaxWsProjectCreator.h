@@ -17,7 +17,7 @@ namespace dbcrudgen {
         class JaxWsProjectCreator : public JavaProjectCreator {
 
         private:
-            JaxWsProjectModel &projectModel;
+            JaxWsProjectModel projectModel;
             dbcrudgen::db::generic::Database database;
         public:
 
@@ -26,7 +26,7 @@ namespace dbcrudgen {
              * @param projectModel
              */
             explicit JaxWsProjectCreator(JaxWsProjectModel &projectModel, dbcrudgen::db::generic::Database &database)
-                    : projectModel{projectModel}, database{database}, JavaProjectCreator{projectModel} {}
+                    : JavaProjectCreator{projectModel}, projectModel{projectModel}, database{database} {}
 
             std::string getLanguage() override {
                 return std::string{Languages::JAVA};
@@ -59,7 +59,7 @@ namespace dbcrudgen {
 
                 std::vector<dbcrudgen::db::generic::Table> tables = database.getTables();
 
-                for (const dbcrudgen::db::generic::Table &table : tables) {
+                for (const dbcrudgen::db::generic::Table &table: tables) {
 
                     std::string tableName = table.getTableName();
 

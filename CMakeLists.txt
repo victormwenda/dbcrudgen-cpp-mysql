@@ -21,8 +21,8 @@ set(DEV_ENV LINUX_DEBIAN)
 #-----------------------------------------------------------------------------------------------------------------------
 
 if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
-    SET(CMAKE_C_COMPILER /usr/bin/clang-15)
-    SET(CMAKE_CXX_COMPILER /usr/bin/clang++-15)
+    SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
+    SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
 elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
     SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
     SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
@@ -37,7 +37,7 @@ endif ()
 #-----------------------------------------------------------------------------------------------------------------------
 # LINKER FLAGS
 #-----------------------------------------------------------------------------------------------------------------------
-#set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 
 
 # ORACLE CONFIGURATIONS ------------------------------------------------------------------------------------------------
@@ -130,7 +130,7 @@ if (UNIX)
 
     # ------------------------------------ ORACLE ---------------------------------------------------------------------#
 
-    set(ORACLE_VERSION "21.8")
+    set(ORACLE_VERSION "21.9")
 
     if (${ORACLE_VERSION} STREQUAL "10.1") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_10_1)
@@ -141,27 +141,31 @@ if (UNIX)
     elseif (${ORACLE_VERSION} STREQUAL "11.1") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_11_1)
         set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_11_2)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
     elseif (${ORACLE_VERSION} STREQUAL "12.1") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_12_1)
         set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_12_1)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
     elseif (${ORACLE_VERSION} STREQUAL "12.2") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_12_2)
         set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_12_2)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
     elseif (${ORACLE_VERSION} STREQUAL "18.5") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_18_5)
         set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_18_5)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
     elseif (${ORACLE_VERSION} STREQUAL "19.6") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_19_6)
         set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_19_6)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libocci.so ${ORACLE_LIBS}/libnnz19.so)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so  ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libnnz19.so)
     elseif (${ORACLE_VERSION} STREQUAL "21.8") #Linux - Debian
         set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_21_8)
         set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_21_8)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.so.21.1 ${ORACLE_LIBS}/libclntsh.so.21.1 ${ORACLE_LIBS}/libocci.so.21.1 ${ORACLE_LIBS}/libnnz21.so)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.21.1 ${ORACLE_LIBS}/libclntshcore.so.21.1 ${ORACLE_LIBS}/libclntsh.so.21.1 )
+    elseif (${ORACLE_VERSION} STREQUAL "21.9") #Linux - Debian
+        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_21_9)
+        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_21_9)
+        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.21.1 ${ORACLE_LIBS}/libclntshcore.so.21.1 ${ORACLE_LIBS}/libclntsh.so.21.1 )
     endif ()
 
     # ------------------------------------ MYSQL ----------------------------------------------------------------------#
@@ -185,7 +189,7 @@ if (UNIX)
 
     # ------------------------------------ MSSQL ----------------------------------------------------------------------#
 
-    set(ODBC_HEADERS ${PROJECT_DIR}/include/linux/mysql-connector-cpp/include/jdbc)
+    set(ODBC_HEADERS ${PROJECT_DIR}/include/db-conn/linux/msodbc/msodbcsql18/include/)
     set(ODBC_LIBS_DIR ${PROJECT_DIR}/lib/microsoft/msodbcsql18/lib64)
     #set(ODBC_LIBS ${ODBC_LIBS_DIR}/libmsodbcsql-18.1.so.2.1)
     set(ODBC_LIBS odbc)

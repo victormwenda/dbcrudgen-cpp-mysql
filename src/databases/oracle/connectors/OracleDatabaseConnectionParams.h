@@ -31,15 +31,16 @@ namespace dbcrudgen {
 
                 std::string username;
                 std::string password;
-                std::string serviceName;
+                std::string connDesc;
+                std::string databaseName;
 
                 /**
                  * Get oracle connection string
-                 * @param type
+                 * @param connDesc
                  * @return
                  */
-                std::string getConnectStringTemplate(const std::string &type = "sname") const {
-                    if (type == "sid") {
+                std::string getConnectStringTemplate(const std::string &connDescriptor = "sname") const {
+                    if (connDescriptor == "sid") {
                         return getConnectStringSIDTemplate();
                     }
                     return getConnectStringSNameTemplate();
@@ -63,19 +64,17 @@ namespace dbcrudgen {
 
             public:
                 OracleDatabaseConnectionParams(std::string &host, int &port, std::string &username,
-                                               std::string &password, std::string &serviceName)
-                        : host(host), port(port),
-                          username(username),
-                          password(password),
-                          serviceName(serviceName) {}
+                                               std::string &password, std::string &connDesc, std::string &databaseName)
+                        : host(host), port(port), username(username), password(password), databaseName(databaseName),
+                          connDesc(connDesc) {}
 
                 explicit OracleDatabaseConnectionParams(std::string &connectString) : connectString(connectString) {}
 
-                const std::string &getConnectString() {
-                    std::string _connectionString = getConnectStringTemplate();
+                const std::string &getConnectString(const std::string &connDesc = "sname") {
+                    std::string _connectionString = getConnectStringTemplate(connDesc);
                     StringUtils::replace(_connectionString, "${HOST}", host);
                     StringUtils::replace(_connectionString, "${PORT}", std::to_string(port));
-                    StringUtils::replace(_connectionString, "${SERVICE_NAME}", serviceName);
+                    StringUtils::replace(_connectionString, "${SERVICE_NAME}", databaseName);
                     connectString = std::move_if_noexcept(_connectionString);
                     return connectString;
                 }
@@ -96,8 +95,12 @@ namespace dbcrudgen {
                     return password;
                 }
 
-                const std::string &getServiceName() const {
-                    return serviceName;
+                const std::string &getDatabaseName() const {
+                    return databaseName;
+                }
+
+                const std::string &getConnDesc() const {
+                    return connDesc;
                 }
             };
 
