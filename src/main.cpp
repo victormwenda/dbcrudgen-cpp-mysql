@@ -93,7 +93,7 @@ void oracleDevelopment();
 
 int main(int argc, char **argv) {
 
-    oracleDevelopment();
+    mysqlDevelopment();
 
     return EXIT_SUCCESS;
 }
@@ -119,7 +119,7 @@ void mysqlDevelopment() {
     std::string username = "root";
     std::string password = "Root@3358";
     std::string host = "127.0.0.1";
-    int port = 13306;
+    int port = 3306;
     dbcrudgen::db::mysql::MYSQLDatabaseModel databaseModel = getMYSQLDatabaseModel(
             database, username, password, host, port);
     for (auto &model: databaseModel.getTables()) {

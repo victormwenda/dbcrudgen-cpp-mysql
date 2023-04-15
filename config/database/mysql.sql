@@ -1,5 +1,4 @@
-create
-    database dbcrudgen;
+create database dbcrudgen;
 use dbcrudgen;
 create table test
 (
