@@ -50,7 +50,7 @@ public:
      */
     static bool createDir(const std::string &dir) {
 
-        int status = mkdir(dir.c_str());
+        int status = 0;
 
         return status == EEXIST || status == 0;
 
@@ -89,7 +89,7 @@ public:
 
             if (statRC != 0) {
 
-                int status = mkdir(parentDir.c_str());
+                int status = mkdir(parentDir.c_str(),0777);
 
                 if (verbose) {
                     std::cout << "Creating dir : (" << parentDir << ") Status :: [" << status << "]" << std::endl;

@@ -33,6 +33,7 @@
 
 #Ignore cmake outputs
 /cmake-build-debug
+/cmake-build-release
 
 #Ignore idea files
 /.idea
