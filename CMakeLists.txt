@@ -19,20 +19,8 @@ set(CMAKE_MESSAGE_LOG_LEVEL Debug)
 set(CMAKE_CXX_STANDARD 11)
 
 
-# ORACLE CONFIGURATIONS ------------------------------------------------------------------------------------------------
-set(ORACLE_INSTANT_CLIENT_HOME "")
-set(ORACLE_HEADERS "")
-set(ORACLE_LIBS "")
-set(OCCI_LIBS "")
-set(OCCI_LIBS_VARIANTS "")
-
 # MYSQL CONFIGURATIONS -------------------------------------------------------------------------------------------------
 set(MYSQL_HEADERS "")
-
-
-# MSSQL CONFIGURATIONS -------------------------------------------------------------------------------------------------
-set(ODBC_LIBS "")
-
 
 # OTHER LIBS  ----------------------------------------------------------------------------------------------------------
 set(OTHER_LIBS_PATH "")
@@ -43,58 +31,11 @@ set(OTHER_LIBS_PATH "")
 
 if (WIN32)
 
-    # ------------------------------------ ORACLE ---------------------------------------------------------------------#
-
-    set(ORACLE_VERSION "21.7")
-
-    if (${ORACLE_VERSION} STREQUAL "10.1")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_10_1)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci10.dll ${ORACLE_LIBS}/orannzsbb10.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "10.2")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_10_2)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci11.dll ${ORACLE_LIBS}/orannzsbb11.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "11.1")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_11_1)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci11.dll ${ORACLE_LIBS}/orannzsbb11.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "12.1")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_12_1)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci12.dll ${ORACLE_LIBS}/orannzsbb12.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "12.2")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_12_2)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci12.dll ${ORACLE_LIBS}/orannzsbb12.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "18.5")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_18_5)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci18.dll ${ORACLE_LIBS}/orannzsbb18.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "19.6")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_19_6)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci19.dll ${ORACLE_LIBS}/orannzsbb.dll)
-    elseif (${ORACLE_VERSION} STREQUAL "21.7")
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/windows/oracle/instantclient_21_7)
-        set(ORACLE_LIBS ${ORACLE_INSTANT_CLIENT_HOME})
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/oraocci21.dll ${ORACLE_LIBS}/orannzsbb.dll)
-    endif ()
-
     # ------------------------------------ MYSQL ----------------------------------------------------------------------#
 
     set(MYSQL_HEADERS ${PROJECT_DIR}/include/db-conn/windows/mysql/c++-8.0.31-winx64/include/jdbc)
     set(MYSQL_LIBS_DIR ${PROJECT_DIR}/include/db-conn/windows/mysql/c++-8.0.31-winx64/lib64)
     set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/mysqlcppconn8-2-vs14.dll ${MYSQL_LIBS_DIR}/libssl-1_1-x64.dll ${MYSQL_LIBS_DIR}/libcrypto-1_1-x64.dll)
-
-
-    # ------------------------------------ MSSQL ----------------------------------------------------------------------#
-
-    set(ODBC_HEADERS ${PROJECT_DIR}/include/db-conn/windows/msodbc/ODBC-Specification/Windows/inc)
-    set(ODBC_LIBS_DIR ${PROJECT_DIR}/include/db-conn/windows/msodbc/ODBC/180/KeyFile/1033)
-    set(ODBC_LIBS ${ODBC_LIBS_DIR}/sqlodbc_keyfile.dll)
-
-    message(${PROJECT_DIR}\\include/db-conn\\windows\\msodbc\\ODBC-Specification\\Windows\\inc)
 
 endif (WIN32)
 
@@ -107,45 +48,6 @@ if (UNIX)
 
     set(OTHER_LIBS_PATH ${PROJECT_DIR}/lib/linux/others/)
 
-    # ------------------------------------ ORACLE ---------------------------------------------------------------------#
-
-    set(ORACLE_VERSION "21.9")
-
-    if (${ORACLE_VERSION} STREQUAL "10.1") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_10_1)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_10_1)
-    elseif (${ORACLE_VERSION} STREQUAL "10.2") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_10_2)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_10_2)
-    elseif (${ORACLE_VERSION} STREQUAL "11.1") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_11_1)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_11_2)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.11.1 ${ORACLE_LIBS}/libclntsh.so.11.1 ${ORACLE_LIBS}/libnnz11.so)
-    elseif (${ORACLE_VERSION} STREQUAL "12.1") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_12_1)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_12_1)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
-    elseif (${ORACLE_VERSION} STREQUAL "12.2") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_12_2)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_12_2)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.12.1 ${ORACLE_LIBS}/libclntsh.so.12.1 ${ORACLE_LIBS}/libnnz12.so)
-    elseif (${ORACLE_VERSION} STREQUAL "18.5") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_18_5)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_18_5)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.18.1 ${ORACLE_LIBS}/libclntsh.so.18.1 ${ORACLE_LIBS}/libnnz18.so)
-    elseif (${ORACLE_VERSION} STREQUAL "19.6") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_19_6)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_19_6)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so  ${ORACLE_LIBS}/libclntshcore.so.19.1 ${ORACLE_LIBS}/libclntsh.so.19.1 ${ORACLE_LIBS}/libnnz19.so)
-    elseif (${ORACLE_VERSION} STREQUAL "21.8") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_21_8)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_21_8)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.21.1 ${ORACLE_LIBS}/libclntshcore.so.21.1 ${ORACLE_LIBS}/libclntsh.so.21.1 )
-    elseif (${ORACLE_VERSION} STREQUAL "21.9") #Linux - Debian
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/db-conn/linux/oracle/instantclient_21_9)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_21_9)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libocci.so.21.1 ${ORACLE_LIBS}/libclntshcore.so.21.1 ${ORACLE_LIBS}/libclntsh.so.21.1 )
-    endif ()
 
     # ------------------------------------ MYSQL ----------------------------------------------------------------------#
 
@@ -165,14 +67,6 @@ if (UNIX)
         set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn8-static.a)
     endif ()
 
-
-    # ------------------------------------ MSSQL ----------------------------------------------------------------------#
-
-    set(ODBC_HEADERS ${PROJECT_DIR}/include/db-conn/linux/msodbc/msodbcsql18/include/)
-    set(ODBC_LIBS_DIR ${PROJECT_DIR}/lib/microsoft/msodbcsql18/lib64)
-    #set(ODBC_LIBS ${ODBC_LIBS_DIR}/libmsodbcsql-18.1.so.2.1)
-    set(ODBC_LIBS odbc)
-
 endif (UNIX)
 
 #-----------------------------------------------------------------------------------------------------------------------
@@ -181,44 +75,19 @@ endif (UNIX)
 
 if (APPLE)
 
-    #ORACLE Database
-    if (${ORACLE_VERSION} STREQUAL "18.1") #MacOs x64
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/macos/oracle/instantclient_18_1)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_18_1)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.18.1 ${ORACLE_LIBS}/libclntsh.dylib.18.1 ${ORACLE_LIBS}/libocci.dylib.18.1 ${ORACLE_LIBS}/libnnz18.dylib)
-    elseif (${ORACLE_VERSION} STREQUAL "19.8") #MacOs x86
-        set(ORACLE_INSTANT_CLIENT_HOME ${PROJECT_DIR}/include/macos/oracle/instantclient_19_8)
-        set(ORACLE_LIBS ${PROJECT_DIR}/lib/linux/oracle/instantclient_19_8)
-        set(OCCI_LIBS_VARIANTS ${ORACLE_LIBS}/libclntshcore.dylib.19.1 ${ORACLE_LIBS}/libclntsh.dylib.19.1 ${ORACLE_LIBS}/libocci.dylib.19.1 ${ORACLE_LIBS}/libnnz19.dylib)
-    endif ()
-
     # MYSQL
     set(MYSQL_HEADERS ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/include/jdbc)
     set(MYSQL_LIBS_DIR ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/lib64)
     set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.dylib)
 
-
-    # MSSQL
-    set(ODBC_LIBS ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbc.dylib
-            ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbccr.dylib
-            ${PROJECT_DIR}/include/macos/unixodbc/2.3.11/lib/libodbcinst.dylib
-            )
 endif (APPLE)
 
 #-----------------------------------------------------------------------------------------------------------------------
 # ALL CONFIGURATIONS
 #-----------------------------------------------------------------------------------------------------------------------
 
-#Oracle
-set(ORACLE_HEADERS ${ORACLE_INSTANT_CLIENT_HOME}/sdk/include)
-set(OCCI_LIBS ${OCCI_LIBS_VARIANTS})
-include_directories(${ORACLE_HEADERS})
-
 # MYSQL CONFIGURATIONS
 include_directories(${MYSQL_HEADERS})
-
-# MSSQL CONFIGURATIONS
-include_directories(${ODBC_HEADERS})
 
 #-----------------------------------------------------------------------------------------------------------------------
 # SOURCE FILES
@@ -235,28 +104,7 @@ set(SOURCE_FILES
         src/databases/generic/Table.h
         src/databases/generic/User.h
 
-        ##############################################################################################################
-        # MSSQL DATABASE SOURCE FILES
-        ##############################################################################################################
 
-        src/databases/mssql/builder/MSSQLDatabaseModelBuilder.h
-        src/databases/mssql/connectors/MSSQLDbConnParams.h
-        src/databases/mssql/connectors/MSSQLDbConnector.h
-        src/databases/mssql/decomposer/MSSQLDatabaseDecomposer.h
-        src/databases/mssql/decomposer/MSSQLDatabasePreparedDecomposer.h
-        src/databases/mssql/decomposer/SpColumnsDecomposer.h
-        src/databases/mssql/decomposer/SpTablesDecomposer.h
-        src/databases/mssql/decomposer/SysDatabasesDecomposer.h
-        src/databases/mssql/executor/MSSQLColBinder.h
-        src/databases/mssql/executor/MSSQLQueryExecutor.h
-        src/databases/mssql/executor/MSSQLResultSet.h
-        src/databases/mssql/models/MSSQLDatabaseModel.h
-        src/databases/mssql/models/MSSQLDatabaseSchemas.h
-        src/databases/mssql/parsers/MSSQLDatabaseFlattener.h
-        src/databases/mssql/scaffolding/queries/MSSQLQueries.h
-        src/databases/mssql/scaffolding/entities/SysDatabases.h
-        src/databases/mssql/scaffolding/sp/SpColumns.h
-        src/databases/mssql/scaffolding/sp/SpTables.h
         ##############################################################################################################
         # MySQL DATABASE SOURCE FILES
         ##############################################################################################################
@@ -370,43 +218,6 @@ set(SOURCE_FILES
         src/databases/mysql/scaffolding/entities/TimeZoneTransitionType.h
         src/databases/mysql/scaffolding/entities/User.h
 
-        ##############################################################################################################
-        # ORACLE DATABASE SOURCE FILES
-        ##############################################################################################################
-        src/databases/oracle/connectors/OracleDatabaseConnector.h
-        src/databases/oracle/connectors/OracleDatabaseConnectionParams.h
-
-        src/databases/oracle/dsl/OracleDataTypes.h
-
-        src/databases/oracle/indices/OracleAllTablesColumns.h
-        src/databases/oracle/indices/OracleColsColumns.h
-        src/databases/oracle/indices/OracleDBATablesColumns.h
-        src/databases/oracle/indices/OracleDBAUsersColumns.h
-        src/databases/oracle/indices/OracleDbaColsColumns.h
-        src/databases/oracle/dsl/OracleObject.h
-        src/databases/oracle/dsl/OracleObjectTypes.h
-        src/databases/oracle/dsl/OracleSchemaObject.h
-        src/databases/oracle/indices/OracleUsersColumns.h
-        src/databases/oracle/indices/OracleUserTablesColumns.h
-
-        src/databases/oracle/models/OracleDatabaseSchemas.h
-        src/databases/oracle/models/OracleDatabaseModel.h
-
-        src/databases/oracle/parsers/MysqlTags.h
-        src/databases/oracle/parsers/OracleTags.h
-        src/databases/oracle/parsers/OracleDatabaseFlattener.h
-
-
-        src/databases/oracle/queries/OracleStatements.h
-
-        src/databases/oracle/objects/OracleDBATables.h
-        src/databases/oracle/objects/OracleDBAUser.h
-        src/databases/oracle/objects/OracleTableColumn.h
-        src/databases/oracle/objects/OracleTableColsDba.h
-        src/databases/oracle/models/OracleTableDDL.h
-        src/databases/oracle/models/OracleUser.h
-
-        src/databases/oracle/objects/OracleUserTables.h
 
         ##############################################################################################################
         # SQL GENERIC SOURCE FILES
@@ -476,11 +287,9 @@ set(SOURCE_FILES
         src/orm/codegen/cpp/CppMYSQLSCRUDCodeGen.h
         src/orm/codegen/cpp/CppProjectCodeGen.h
         src/orm/codegen/cpp/CppSQLiteProjectCodeGen.h
-        src/orm/codegen/cpp/CppOracleProjectCodeGen.h
 
         src/orm/codegen/java/JavaProjectCodeGen.h
         src/orm/codegen/java/JavaMYSQLProjectCodeGen.h
-        src/orm/codegen/java/JavaOracleProjectCodeGen.h
         src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JaxbCodeGen.h
         src/orm/codegen/java/jax-rs/JaxRsWebXMLCodeGen.h
@@ -501,7 +310,6 @@ set(SOURCE_FILES
         src/orm/codegen/postman/PostmanProjectCodeGen.h
 
         src/orm/codegen/php/PHPProjectCodeGen.h
-        src/orm/codegen/php/PHPOracleProjectCodeGen.h
         src/orm/codegen/php/PHPMYSQLProjectCodeGen.h
         src/orm/codegen/php/PHPSQLiteProjectCodeGen.h
 
@@ -512,12 +320,10 @@ set(SOURCE_FILES
         src/orm/creators/angular/AngularProjectCreator.h
 
         src/orm/creators/cpp/CppMYSQLProjectCreator.h
-        src/orm/creators/cpp/CppOracleProjectCreator.h
         src/orm/creators/cpp/CppProjectCreator.h
         src/orm/creators/cpp/CppSQLiteProjectCreator.h
 
         src/orm/creators/java/JavaMYSQLProjectCreator.h
-        src/orm/creators/java/JavaOracleProjectCreator.h
         src/orm/creators/java/JavaProjectCreator.h
         src/orm/creators/java/JavaSQLiteProjectCreator.h
 
@@ -531,7 +337,6 @@ set(SOURCE_FILES
         src/orm/creators/postman/PostmanProjectCreator.h
 
         src/orm/creators/swift/SwiftSQLiteProjectCreator.h
-        src/orm/creators/swift/SwiftOracleProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
 
         src/orm/dslmodels/java/springboot/SpringProjectDirs.h
@@ -568,12 +373,10 @@ set(SOURCE_FILES
         src/orm/projects/AngularProjectModel.h
 
         src/orm/projects/CppMYSQLProjectModel.h
-        src/orm/projects/CppOracleProjectModel.h
         src/orm/projects/CppSQLiteProjectModel.h
         src/orm/projects/CppProjectModel.h
 
         src/orm/projects/JavaMYSQLProjectModel.h
-        src/orm/projects/JavaOracleProjectModel.h
         src/orm/projects/JavaProjectModel.h
         src/orm/projects/JavaSQLiteProjectModel.h
 
@@ -583,7 +386,6 @@ set(SOURCE_FILES
         src/orm/projects/LaravelProjectModel.h
 
         src/orm/projects/PHPMYSQLProjectModel.h
-        src/orm/projects/PHPOracleProjectModel.h
         src/orm/projects/PHPProjectModel.h
         src/orm/projects/PHPSQLiteProjectModel.h
         src/orm/projects/PostmanProjectModel.h
@@ -624,7 +426,6 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppCtorInitializersTemplate.h
         src/orm/templates/cpp/CppClassTemplate.h
         src/orm/templates/cpp/CppMYSQLConnectorTemplate.h
-        src/orm/templates/cpp/CppOracleConnectorTemplate.h
         src/orm/templates/cpp/CppPropertyGetterTemplate.h
         src/orm/templates/cpp/CppPropertySetterTemplate.h
         src/orm/templates/cpp/CppPropertyGetterSetterTemplate.h
@@ -661,26 +462,20 @@ set(SOURCE_FILES
         src/orm/templates/java/jax-rs/JaxRsScriptWebXMLTemplate.h
         src/orm/templates/java/jax-rs/JaxRsClassWebApplicationTemplate.h
 
-        src/orm/templates/java/crud/classic/JavaOracleConnectorTemplate.h
         src/orm/templates/java/crud/classic/JavaMYSQLConnectorTemplate.h
         src/orm/templates/java/crud/classic/JavaSQLiteConnectorTemplate.h
 
         src/orm/templates/java/crud/connections/JavaMYSQLConnectionStringTemplate.h
         src/orm/templates/java/crud/connections/JavaSQLiteConnectionStringTemplate.h
-        src/orm/templates/java/crud/connections/JavaOracleSIDConnectionStringTemplate.h
-        src/orm/templates/java/crud/connections/JavaOracleSNameConnectionStringTemplate.h
 
         src/orm/templates/java/crud/drivers/JavaMYSQLConnectionDriverTemplate.h
-        src/orm/templates/java/crud/drivers/JavaOracleConnectionDriverTemplate.h
         src/orm/templates/java/crud/drivers/JavaSQLiteConnectionDriverTemplate.h
-        src/orm/templates/java/crud/drivers/JavaMSSQLConnectionDriverTemplate.h
 
         src/orm/templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h
         src/orm/templates/java/crud/hibernate/HibernateClassEntityTemplate.h
         src/orm/templates/java/crud/hibernate/HibernateClassTransactionsTemplate.h
         src/orm/templates/java/crud/hibernate/HibernateScriptConfigurationTemplate.h
         src/orm/templates/java/crud/hibernate/HibernateParameterEntityMappingTemplate.h
-        src/orm/templates/java/crud/connections/JavaMSSQLConnectionStringTemplate.h
 
         src/orm/templates/java/JavaTemplateFiles.h
         src/orm/templates/java/JavaClassTemplate.h
@@ -714,8 +509,6 @@ set(SOURCE_FILES
         src/orm/templates/java/spring-boot/SpringBootWebErrorFileTemplate.h
         src/orm/templates/java/spring-boot/SpringBootWebFileIndexTemplate.h
 
-        src/orm/templates/mssql/MSSQLStrTemplates.h
-
         src/orm/templates/php/laravel/LaravelControllerTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodCreateTemplate.h
         src/orm/templates/php/laravel/LaravelControllerMethodEditTemplate.h
@@ -742,7 +535,6 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelTableWebRoutesTemplate.h
         src/orm/templates/php/laravel/LaravelViewTemplate.h
 
-        src/orm/templates/php/PHPOracleConnectorTemplate.h
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
         src/orm/templates/php/PHPSQLiteConnectorTemplate.h
 
@@ -782,12 +574,6 @@ target_link_libraries(dbcrudgen_cpp_mysql sqlite3)
 
 #Link MysqlCpp libs
 target_link_libraries(dbcrudgen_cpp_mysql ${MYSQL_LIBS})
-
-#Link the Oracle libs
-target_link_libraries(dbcrudgen_cpp_mysql ${OCCI_LIBS})
-
-#Link with ODBC drivers
-target_link_libraries(dbcrudgen_cpp_mysql ${ODBC_LIBS})
 
 #Copy the template resources
 file(COPY res/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
