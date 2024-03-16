@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.24.2)
 
 #Project name
-project(dbcrudgen_cpp)
+project(dbcrudgen_cpp_mysql)
 
 #Project path
 set(PROJECT_DIR ${PROJECT_SOURCE_DIR}) #Replace with the path to your project
@@ -777,38 +777,38 @@ set(SOURCE_FILES
         src/orm/utils/StringUtils.h)
 
 #GoogleTest
-add_subdirectory(include/google/googletest)
+#add_subdirectory(include/google/googletest)
 
 #GoogleBenchmark
 #add_subdirectory(include/google/benchmark)
 
 #Create executable
-add_executable(dbcrudgen_cpp ${SOURCE_FILES})
+add_executable(dbcrudgen_cpp_mysql ${SOURCE_FILES})
 
 #-----------------------------------------------------------------------------------------------------------------------
 # LIBRARY LINKING
 #-----------------------------------------------------------------------------------------------------------------------
 
 #Link with GoogleTest
-#target_link_libraries(dbcrudgen_cpp gtest gtest_main pthread)
+#target_link_libraries(dbcrudgen_cpp_mysql gtest gtest_main pthread)
 
 #Link with GoogleMock
-#target_link_libraries(dbcrudgen_cpp gmock gmock_main pthread) - Disable Google Mock
+#target_link_libraries(dbcrudgen_cpp_mysql gmock gmock_main pthread) - Disable Google Mock
 
 #Link with GoogleBenchmark
-#target_link_libraries(dbcrudgen_cpp benchmark) - Disable Google Benchmark
+#target_link_libraries(dbcrudgen_cpp_mysql benchmark) - Disable Google Benchmark
 
 #Link SQLite3 libs
-target_link_libraries(dbcrudgen_cpp sqlite3)
+target_link_libraries(dbcrudgen_cpp_mysql sqlite3)
 
 #Link MysqlCpp libs
-target_link_libraries(dbcrudgen_cpp ${MYSQL_LIBS})
+target_link_libraries(dbcrudgen_cpp_mysql ${MYSQL_LIBS})
 
 #Link the Oracle libs
-target_link_libraries(dbcrudgen_cpp ${OCCI_LIBS})
+target_link_libraries(dbcrudgen_cpp_mysql ${OCCI_LIBS})
 
 #Link with ODBC drivers
-target_link_libraries(dbcrudgen_cpp ${ODBC_LIBS})
+target_link_libraries(dbcrudgen_cpp_mysql ${ODBC_LIBS})
 
 #Copy the template resources
 file(COPY res/templates DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)
