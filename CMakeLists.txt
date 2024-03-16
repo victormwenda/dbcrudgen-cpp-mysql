@@ -13,27 +13,6 @@ set(SYS_ARCH ${CMAKE_SYSTEM_PROCESSOR})
 set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_MESSAGE_LOG_LEVEL Debug)
 
-#Set development environment
-set(DEV_ENV LINUX_DEBIAN)
-
-#-----------------------------------------------------------------------------------------------------------------------
-# COMPILERS
-#-----------------------------------------------------------------------------------------------------------------------
-
-if (${DEV_ENV} STREQUAL "LINUX_DEBIAN")
-    SET(CMAKE_C_COMPILER /usr/bin/gcc-4.8)
-    SET(CMAKE_CXX_COMPILER /usr/bin/g++-4.8)
-elseif (${DEV_ENV} STREQUAL "MACOS_ARM64")
-    SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
-    SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
-elseif (${DEV_ENV} STREQUAL "WIN64")
-    #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
-    #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
-elseif (${DEV_ENV} STREQUAL "WIN32")
-    #SET(CMAKE_C_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/gcc-12)
-    #SET(CMAKE_CXX_COMPILER /opt/homebrew/Cellar/gcc/12.2.0/bin/g++-12)
-endif ()
-
 #-----------------------------------------------------------------------------------------------------------------------
 # LINKER FLAGS
 #-----------------------------------------------------------------------------------------------------------------------
