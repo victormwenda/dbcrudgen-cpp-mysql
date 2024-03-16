@@ -226,7 +226,6 @@ set(SOURCE_FILES
 
         src/databases/sql/connectors/DatabaseConnector.h
         src/databases/sql/connectors/DatabaseConnection.h
-        src/databases/sql/connectors/SQLiteDatabaseConnectionParams.h
 
         src/databases/sql/dsl/DataType.h
 
@@ -237,14 +236,6 @@ set(SOURCE_FILES
         src/databases/sql/models/DatabaseTable.h
 
         src/databases/sql/parsers/Tags.h
-
-        ##############################################################################################################
-        # SQLITE SOURCE FILES
-        ##############################################################################################################
-        src/databases/sqlite/connectors/SQLiteDatabaseConnector.h
-        src/databases/sqlite/connectors/SQLiteQueryExecutor.h
-        src/databases/sqlite/models/SQLiteDatabaseModel.h
-        src/databases/sqlite/parsers/SQLiteDatabaseFlattener.h
 
         src/databases/utils/DatabaseUtils.h
 
@@ -286,11 +277,9 @@ set(SOURCE_FILES
         src/orm/codegen/cpp/CppMYSQLProjectCodeGen.h
         src/orm/codegen/cpp/CppMYSQLSCRUDCodeGen.h
         src/orm/codegen/cpp/CppProjectCodeGen.h
-        src/orm/codegen/cpp/CppSQLiteProjectCodeGen.h
 
         src/orm/codegen/java/JavaProjectCodeGen.h
         src/orm/codegen/java/JavaMYSQLProjectCodeGen.h
-        src/orm/codegen/java/JavaSQLiteProjectCodeGen.h
         src/orm/codegen/java/JaxbCodeGen.h
         src/orm/codegen/java/jax-rs/JaxRsWebXMLCodeGen.h
         src/orm/codegen/java/jax-rs/JaxRSWebApplicationCodeGen.h
@@ -311,7 +300,6 @@ set(SOURCE_FILES
 
         src/orm/codegen/php/PHPProjectCodeGen.h
         src/orm/codegen/php/PHPMYSQLProjectCodeGen.h
-        src/orm/codegen/php/PHPSQLiteProjectCodeGen.h
 
         src/orm/codegen/swift/SwiftProjectCodeGen.h
 
@@ -321,11 +309,9 @@ set(SOURCE_FILES
 
         src/orm/creators/cpp/CppMYSQLProjectCreator.h
         src/orm/creators/cpp/CppProjectCreator.h
-        src/orm/creators/cpp/CppSQLiteProjectCreator.h
 
         src/orm/creators/java/JavaMYSQLProjectCreator.h
         src/orm/creators/java/JavaProjectCreator.h
-        src/orm/creators/java/JavaSQLiteProjectCreator.h
 
         src/orm/creators/java/JaxRsProjectCreator.h
         src/orm/creators/java/JaxWsProjectCreator.h
@@ -336,7 +322,6 @@ set(SOURCE_FILES
         src/orm/creators/php/PHPMYSQLProjectCreator.h
         src/orm/creators/postman/PostmanProjectCreator.h
 
-        src/orm/creators/swift/SwiftSQLiteProjectCreator.h
         src/orm/creators/swift/SwiftMYSQLProjectCreator.h
 
         src/orm/dslmodels/java/springboot/SpringProjectDirs.h
@@ -373,12 +358,10 @@ set(SOURCE_FILES
         src/orm/projects/AngularProjectModel.h
 
         src/orm/projects/CppMYSQLProjectModel.h
-        src/orm/projects/CppSQLiteProjectModel.h
         src/orm/projects/CppProjectModel.h
 
         src/orm/projects/JavaMYSQLProjectModel.h
         src/orm/projects/JavaProjectModel.h
-        src/orm/projects/JavaSQLiteProjectModel.h
 
         src/orm/projects/JaxRsProjectModel.h
         src/orm/projects/JaxWsProjectModel.h
@@ -387,7 +370,6 @@ set(SOURCE_FILES
 
         src/orm/projects/PHPMYSQLProjectModel.h
         src/orm/projects/PHPProjectModel.h
-        src/orm/projects/PHPSQLiteProjectModel.h
         src/orm/projects/PostmanProjectModel.h
         src/orm/projects/ProjectModel.h
         src/orm/projects/SwiftProjectModel.h
@@ -400,7 +382,6 @@ set(SOURCE_FILES
         src/orm/templates/TemplateFiles.h
 
         src/orm/templates/android/AndroidContentProviderTemplate.h
-        src/orm/templates/android/AndroidSQLiteOpenHelperTemplate.h
 
         src/orm/templates/angular/AngularClassTemplate.h
         src/orm/templates/angular/AngularClassTableModelTemplate.h
@@ -430,7 +411,6 @@ set(SOURCE_FILES
         src/orm/templates/cpp/CppPropertySetterTemplate.h
         src/orm/templates/cpp/CppPropertyGetterSetterTemplate.h
         src/orm/templates/cpp/CppClassTableSCRUDTemplate.h
-        src/orm/templates/cpp/CppSQLiteConnectorTemplate.h
         src/orm/templates/cpp/CppStructTableColumnModelTemplate.h
         src/orm/templates/cpp/CppMYSQLTableInsertWithModelTemplate.h
         src/orm/templates/cpp/CppMYSQLTableDeleteWithModelTemplate.h
@@ -463,13 +443,10 @@ set(SOURCE_FILES
         src/orm/templates/java/jax-rs/JaxRsClassWebApplicationTemplate.h
 
         src/orm/templates/java/crud/classic/JavaMYSQLConnectorTemplate.h
-        src/orm/templates/java/crud/classic/JavaSQLiteConnectorTemplate.h
 
         src/orm/templates/java/crud/connections/JavaMYSQLConnectionStringTemplate.h
-        src/orm/templates/java/crud/connections/JavaSQLiteConnectionStringTemplate.h
 
         src/orm/templates/java/crud/drivers/JavaMYSQLConnectionDriverTemplate.h
-        src/orm/templates/java/crud/drivers/JavaSQLiteConnectionDriverTemplate.h
 
         src/orm/templates/java/crud/hibernate/HibernateClassConfigurationTemplate.h
         src/orm/templates/java/crud/hibernate/HibernateClassEntityTemplate.h
@@ -536,7 +513,6 @@ set(SOURCE_FILES
         src/orm/templates/php/laravel/LaravelViewTemplate.h
 
         src/orm/templates/php/PHPMYSQLConnectorTemplate.h
-        src/orm/templates/php/PHPSQLiteConnectorTemplate.h
 
 
         src/orm/templates/postman/PostmanCollectionTemplate.h
@@ -568,9 +544,6 @@ add_executable(dbcrudgen_cpp_mysql ${SOURCE_FILES})
 
 #Link with GoogleBenchmark
 #target_link_libraries(dbcrudgen_cpp_mysql benchmark) - Disable Google Benchmark
-
-#Link SQLite3 libs
-target_link_libraries(dbcrudgen_cpp_mysql sqlite3)
 
 #Link MysqlCpp libs
 target_link_libraries(dbcrudgen_cpp_mysql ${MYSQL_LIBS})
