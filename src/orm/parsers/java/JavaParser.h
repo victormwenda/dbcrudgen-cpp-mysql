@@ -8,14 +8,8 @@
 #include "../SyntaxParser.h"
 
 #include "../../templates/java/crud/connections/JavaMYSQLConnectionStringTemplate.h"
-#include "../../templates/java/crud/connections/JavaMSSQLConnectionStringTemplate.h"
-#include "../../templates/java/crud/connections/JavaSQLiteConnectionStringTemplate.h"
-#include "../../templates/java/crud/connections/JavaOracleSIDConnectionStringTemplate.h"
-
-#include "../../templates/java/crud/drivers/JavaOracleConnectionDriverTemplate.h"
 #include "../../templates/java/crud/drivers/JavaMYSQLConnectionDriverTemplate.h"
-#include "../../templates/java/crud/drivers/JavaMSSQLConnectionDriverTemplate.h"
-#include "../../templates/java/crud/drivers/JavaSQLiteConnectionDriverTemplate.h"
+
 
 namespace dbcrudgen {
     namespace orm {
@@ -321,18 +315,7 @@ namespace dbcrudgen {
                         JavaMYSQLConnectionDriverTemplate drivTpl;
                         return drivTpl.getTemplate();
                     }
-                    case db::generic::Flavor::MSSQL: {
-                        JavaMSSQLConnectionDriverTemplate drivTpl;
-                        return drivTpl.getTemplate();
-                    }
-                    case db::generic::Flavor::ORACLE: {
-                        JavaOracleConnectionDriverTemplate drivTpl;
-                        return drivTpl.getTemplate();
-                    }
-                    case db::generic::Flavor::SQLITE: {
-                        JavaSQLiteConnectionDriverTemplate drivTpl;
-                        return drivTpl.getTemplate();
-                    }
+
                     case db::generic::Flavor::DB2:
                         return std::string{};
                     case db::generic::Flavor::DB2_AS_400:
@@ -371,18 +354,7 @@ namespace dbcrudgen {
                         JavaMYSQLConnectionStringTemplate connStrTpl;
                         return connStrTpl.getTemplate();
                     }
-                    case db::generic::Flavor::MSSQL: {
-                        JavaMSSQLConnectionStringTemplate connStrTpl;
-                        return connStrTpl.getTemplate();
-                    }
-                    case db::generic::Flavor::ORACLE: {
-                        JavaOracleSIDConnectionStringTemplate connStrTpl;
-                        return connStrTpl.getTemplate();
-                    }
-                    case db::generic::Flavor::SQLITE: {
-                        JavaSQLiteConnectionStringTemplate connStrTpl;
-                        return connStrTpl.getTemplate();
-                    }
+
                     case db::generic::Flavor::DB2:
                         return std::string{};
                     case db::generic::Flavor::DB2_AS_400:
