@@ -499,20 +499,10 @@ namespace dbcrudgen {
 
                     std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_EVENTS;
 
-                    if (!schema.empty()) {
-                        query.append(" ")
-                                .append(Events::COLUMNS::EVENT_SCHEMA::NAME)
-                                .append(" = ")
-                                .append("'").append(schema)
-                                .append("'");
-                    }
-                    if (!name.empty()) {
-                        query.append(" ")
-                                .append(Events::COLUMNS::EVENT_NAME::NAME)
-                                .append(" = ")
-                                .append("'").append(name)
-                                .append("'");
-                    }
+                    std::map<std::string, std::string> whereFilters;
+                    whereFilters[Events::COLUMNS::EVENT_SCHEMA::NAME] = schema;
+                    whereFilters[Events::COLUMNS::EVENT_NAME::NAME] = name;
+                    query = appendWhereClauseFilters(query, whereFilters);
 
 
                     sql::Statement *statement = &connector.createStatement();
@@ -561,6 +551,84 @@ namespace dbcrudgen {
                     statement->close();
 
                     return events;
+                }
+
+                /**
+                * Get all ROUTINES
+                */
+                std::vector<Routines> getRoutines(const std::string &type = "", const std::string &name = "",
+                                                  const std::string &schema = "") {
+
+                    std::vector<Routines> routines;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_ROUTINES;
+                    std::map<std::string, std::string> whereFilters;
+                    whereFilters[Routines::COLUMNS::ROUTINE_SCHEMA::NAME] = schema;
+                    whereFilters[Routines::COLUMNS::ROUTINE_NAME::NAME] = name;
+                    whereFilters[Routines::COLUMNS::ROUTINE_TYPE::NAME] = type;
+
+                    query = appendWhereClauseFilters(query, whereFilters);
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string specificName = resultSet->getString(Routines::COLUMNS::SPECIFIC_NAME::INDEX);
+                        std::string routineCatalog = resultSet->getString(Routines::COLUMNS::ROUTINE_CATALOG::INDEX);
+                        std::string routineSchema = resultSet->getString(Routines::COLUMNS::ROUTINE_SCHEMA::INDEX);
+                        std::string routineName = resultSet->getString(Routines::COLUMNS::ROUTINE_NAME::INDEX);
+                        std::string routineType = resultSet->getString(Routines::COLUMNS::ROUTINE_TYPE::INDEX);
+                        std::string dataType = resultSet->getString(Routines::COLUMNS::DATA_TYPE::INDEX);
+                        int characterMaximumLength = resultSet->getInt(
+                                Routines::COLUMNS::CHARACTER_MAXIMUM_LENGTH::INDEX);
+                        int characterOctetLength = resultSet->getInt(Routines::COLUMNS::CHARACTER_OCTET_LENGTH::INDEX);
+                        long numericPrecision = resultSet->getInt(Routines::COLUMNS::NUMERIC_PRECISION::INDEX);
+                        int numericScale = resultSet->getInt(Routines::COLUMNS::NUMERIC_SCALE::INDEX);
+                        long datetimePrecision = resultSet->getInt(Routines::COLUMNS::DATETIME_PRECISION::INDEX);
+                        std::string characterSetName = resultSet->getString(
+                                Routines::COLUMNS::CHARACTER_SET_NAME::INDEX);
+                        std::string collationName = resultSet->getString(Routines::COLUMNS::COLLATION_NAME::INDEX);
+                        std::string dtdIdentifier = resultSet->getString(Routines::COLUMNS::DTD_IDENTIFIER::INDEX);
+                        std::string routineBody = resultSet->getString(Routines::COLUMNS::ROUTINE_BODY::INDEX);
+                        std::string routineDefinition = resultSet->getString(
+                                Routines::COLUMNS::ROUTINE_DEFINITION::INDEX);
+                        std::string externalName = resultSet->getString(Routines::COLUMNS::EXTERNAL_NAME::INDEX);
+                        std::string externalLanguage = resultSet->getString(
+                                Routines::COLUMNS::EXTERNAL_LANGUAGE::INDEX);
+                        std::string parameterStyle = resultSet->getString(Routines::COLUMNS::PARAMETER_STYLE::INDEX);
+                        std::string isDeterministic = resultSet->getString(Routines::COLUMNS::IS_DETERMINISTIC::INDEX);
+                        std::string sqlDataAccess = resultSet->getString(Routines::COLUMNS::SQL_DATA_ACCESS::INDEX);
+                        std::string sqlPath = resultSet->getString(Routines::COLUMNS::SQL_PATH::INDEX);
+                        std::string securityType = resultSet->getString(Routines::COLUMNS::SECURITY_TYPE::INDEX);
+                        std::string created = resultSet->getString(Routines::COLUMNS::CREATED::INDEX);
+                        std::string lastAltered = resultSet->getString(Routines::COLUMNS::LAST_ALTERED::INDEX);
+                        std::string sqlMode = resultSet->getString(Routines::COLUMNS::SQL_MODE::INDEX);
+                        std::string routineComment = resultSet->getString(Routines::COLUMNS::ROUTINE_COMMENT::INDEX);
+                        std::string definer = resultSet->getString(Routines::COLUMNS::DEFINER::INDEX);
+                        std::string characterSetClient = resultSet->getString(
+                                Routines::COLUMNS::CHARACTER_SET_CLIENT::INDEX);
+                        std::string collationConnection = resultSet->getString(
+                                Routines::COLUMNS::COLLATION_CONNECTION::INDEX);
+                        std::string databaseCollation = resultSet->getString(
+                                Routines::COLUMNS::DATABASE_COLLATION::INDEX);
+
+                        routines.emplace_back(
+                                Routines{specificName, routineCatalog, routineSchema, routineName, routineType,
+                                         dataType,
+                                         characterMaximumLength, characterOctetLength, numericPrecision, numericScale,
+                                         datetimePrecision, characterSetName, collationName, dtdIdentifier, routineBody,
+                                         routineDefinition, externalName, externalLanguage, parameterStyle,
+                                         isDeterministic,
+                                         sqlDataAccess, sqlPath, securityType, created, lastAltered, sqlMode,
+                                         routineComment, definer, characterSetClient, collationConnection,
+                                         databaseCollation});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return routines;
                 }
             };
         }

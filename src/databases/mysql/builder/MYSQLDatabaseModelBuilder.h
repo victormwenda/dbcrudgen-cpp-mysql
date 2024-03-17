@@ -152,15 +152,24 @@ namespace dbcrudgen {
                     return deComposer.getEvents(name, schema);
                 }
 
-                void getFunctions() {}
+                std::vector<db::mysql::Routines>
+                getFunctions(const std::string &name = "", const std::string &schema = "") {
+                    return getRoutines("FUNCTION", name, schema);
+                }
 
                 void getPartitions() {}
 
-                void getProcedures() {}
+                std::vector<db::mysql::Routines>
+                getProcedures(const std::string &name = "", const std::string &schema = "") {
+                    return getRoutines("PROCEDURE", name, schema);
+                }
 
                 void getResourceGroups() {}
 
-                void getRoutines() {}
+                std::vector<db::mysql::Routines> getRoutines(const std::string &type = "", const std::string &name = "",
+                                                             const std::string &schema = "") {
+                    return deComposer.getRoutines(type, name, schema);
+                }
 
                 void getStoredObjects() { /*Stored objects include stored programs and views.*/}
 

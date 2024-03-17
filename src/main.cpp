@@ -134,4 +134,19 @@ void createMYSQLProjectBuilder() {
     for (auto &event: events) {
         std::cout << event.getEventSchema() << "." << event.getEventName() << std::endl;
     }
+    std::cout << "--------------------------- ROUTINES ---------------------------------" << std::endl;
+    auto routines = builder.getRoutines();
+    for (auto &routine: routines) {
+        std::cout << routine.getRoutineSchema() << "." << routine.getRoutineName() << std::endl;
+    }
+    std::cout << "--------------------------- FUNCTIONS ---------------------------------" << std::endl;
+    auto functions = builder.getFunctions();
+    for (auto &function: functions) {
+        std::cout << function.getRoutineSchema() << "." << function.getRoutineName() << std::endl;
+    }
+    std::cout << "--------------------------- PROCEDURES ---------------------------------" << std::endl;
+    auto procedures = builder.getProcedures();
+    for (auto &procedure: procedures) {
+        std::cout << procedure.getRoutineSchema() << "." << procedure.getRoutineName() << std::endl;
+    }
 }

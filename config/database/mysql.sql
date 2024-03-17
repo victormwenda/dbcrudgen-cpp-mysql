@@ -58,3 +58,23 @@ SELECT *
 FROM information_schema.EVENTS;
 
 CREATE EVENT IF NOT EXISTS monthly_db_cleanup ON SCHEDULE EVERY 1 MONTH DO TRUNCATE TABLE test;
+
+-- Functions/Procedures - Routines
+SHOW PROCEDURE STATUS;
+SHOW FUNCTION STATUS;
+select *
+from mysql.procs_priv;
+
+select *
+from information_schema.ROUTINES;
+
+select distinct ROUTINE_TYPE
+from information_schema.ROUTINES;
+
+select *
+from information_schema.ROUTINES
+where ROUTINE_TYPE = 'FUNCTION';
+
+select *
+from information_schema.ROUTINES
+where ROUTINE_TYPE = 'PROCEDURE';

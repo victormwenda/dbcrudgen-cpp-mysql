@@ -3700,6 +3700,42 @@ namespace dbcrudgen {
                     return users;
                 }
             };
+
+            /**
+             * Prepares where clause filters
+             *
+             * @param filterParams
+             * @return
+             */
+            std::string
+            appendWhereClauseFilters(const std::string &query, const std::map<std::string, std::string> &filterParams) {
+
+                if (filterParams.empty()) {
+                    return {};
+                }
+
+                std::string whereClause;
+
+                for (auto paramsItr = filterParams.begin(); paramsItr != filterParams.end(); ++paramsItr) {
+                    if (paramsItr->second.empty()) {
+                        continue;
+                    }
+
+                    if (!whereClause.empty()) {
+                        whereClause.append(" AND ");
+                    }
+
+                    whereClause
+                            .append(" ")
+                            .append(paramsItr->first)
+                            .append(" = ")
+                            .append("'")
+                            .append(paramsItr->second)
+                            .append("'");
+                }
+
+                return whereClause.empty() ? query : std::string{query + " WHERE " + whereClause};
+            }
         }
     }
 
