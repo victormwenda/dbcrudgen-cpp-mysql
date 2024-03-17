@@ -489,6 +489,79 @@ namespace dbcrudgen {
 
                     return keyColumnUsage;
                 }
+
+                /**
+                * Get all EVENTS
+                */
+                std::vector<Events> getEvents(const std::string &name = "", const std::string &schema = "") {
+
+                    std::vector<Events> events;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_EVENTS;
+
+                    if (!schema.empty()) {
+                        query.append(" ")
+                                .append(Events::COLUMNS::EVENT_SCHEMA::NAME)
+                                .append(" = ")
+                                .append("'").append(schema)
+                                .append("'");
+                    }
+                    if (!name.empty()) {
+                        query.append(" ")
+                                .append(Events::COLUMNS::EVENT_NAME::NAME)
+                                .append(" = ")
+                                .append("'").append(name)
+                                .append("'");
+                    }
+
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string eventCatalog = resultSet->getString(Events::COLUMNS::EVENT_CATALOG::INDEX);
+                        std::string eventSchema = resultSet->getString(Events::COLUMNS::EVENT_SCHEMA::INDEX);
+                        std::string eventName = resultSet->getString(Events::COLUMNS::EVENT_NAME::INDEX);
+                        std::string definer = resultSet->getString(Events::COLUMNS::DEFINER::INDEX);
+                        std::string timeZone = resultSet->getString(Events::COLUMNS::TIME_ZONE::INDEX);
+                        std::string eventBody = resultSet->getString(Events::COLUMNS::EVENT_BODY::INDEX);
+                        std::string eventDefinition = resultSet->getString(Events::COLUMNS::EVENT_DEFINITION::INDEX);
+                        std::string eventType = resultSet->getString(Events::COLUMNS::EVENT_TYPE::INDEX);
+                        std::string executeAt = resultSet->getString(Events::COLUMNS::EXECUTE_AT::INDEX);
+                        std::string intervalValue = resultSet->getString(Events::COLUMNS::INTERVAL_VALUE::INDEX);
+                        std::string intervalField = resultSet->getString(Events::COLUMNS::INTERVAL_FIELD::INDEX);
+                        std::string sqlMode = resultSet->getString(Events::COLUMNS::SQL_MODE::INDEX);
+                        std::string starts = resultSet->getString(Events::COLUMNS::STARTS::INDEX);
+                        std::string ends = resultSet->getString(Events::COLUMNS::ENDS::INDEX);
+                        std::string status = resultSet->getString(Events::COLUMNS::STATUS::INDEX);
+                        std::string onCompletion = resultSet->getString(Events::COLUMNS::ON_COMPLETION::INDEX);
+                        std::string created = resultSet->getString(Events::COLUMNS::CREATED::INDEX);
+                        std::string lastAltered = resultSet->getString(Events::COLUMNS::LAST_ALTERED::INDEX);
+                        std::string lastExecuted = resultSet->getString(Events::COLUMNS::LAST_EXECUTED::INDEX);
+                        std::string eventComment = resultSet->getString(Events::COLUMNS::EVENT_COMMENT::INDEX);
+                        long originator = resultSet->getInt(Events::COLUMNS::ORIGINATOR::INDEX);
+                        std::string characterSetClient = resultSet->getString(
+                                Events::COLUMNS::CHARACTER_SET_CLIENT::INDEX);
+                        std::string collationConnection = resultSet->getString(
+                                Events::COLUMNS::COLLATION_CONNECTION::INDEX);
+                        std::string databaseCollation = resultSet->getString(
+                                Events::COLUMNS::DATABASE_COLLATION::INDEX);
+
+                        events.emplace_back(
+                                Events{eventCatalog, eventSchema, eventName, definer, timeZone, eventBody,
+                                       eventDefinition,
+                                       eventType, executeAt, intervalValue, intervalField, sqlMode, starts, ends,
+                                       status,
+                                       onCompletion, created, lastAltered, lastExecuted, eventComment, originator,
+                                       characterSetClient, collationConnection, databaseCollation});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return events;
+                }
             };
         }
     }

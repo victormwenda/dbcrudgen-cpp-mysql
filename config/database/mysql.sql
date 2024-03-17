@@ -52,3 +52,9 @@ create table if not exists method_variables
     index (id),
     foreign key (method_id) references class_methods (id)
 );
+
+-- Show Events
+SELECT *
+FROM information_schema.EVENTS;
+
+CREATE EVENT IF NOT EXISTS monthly_db_cleanup ON SCHEDULE EVERY 1 MONTH DO TRUNCATE TABLE test;

@@ -99,7 +99,7 @@ namespace dbcrudgen {
 
                     const std::vector<Statistics> statistics = deComposer.getTablePrimaryKeys(getSchemas(), tableName);
 
-                    for (const Statistics &stats : statistics) {
+                    for (const Statistics &stats: statistics) {
                         db::mysql::Columns column = deComposer.getColumn(getSchemas(), tableName,
                                                                          stats.getColumnName());
                         columns.emplace_back(column);
@@ -118,7 +118,7 @@ namespace dbcrudgen {
 
                     const std::vector<Statistics> statistics = deComposer.getTableKeyColumns(getSchemas(), tableName);
 
-                    for (const Statistics &stats : statistics) {
+                    for (const Statistics &stats: statistics) {
                         db::mysql::Columns column = deComposer.getColumn(getSchemas(), tableName,
                                                                          stats.getColumnName());
                         columns.emplace_back(column);
@@ -135,16 +135,46 @@ namespace dbcrudgen {
 
                     std::vector<dbcrudgen::db::mysql::Columns> columns;
 
-                    const std::vector<KeyColumnUsage> keyColumns = deComposer.getTableForeignKeyColumns(getSchemas(),
-                                                                                                        tableName);
-
-                    for (const KeyColumnUsage &keyColumn : keyColumns) {
+                    const std::vector<KeyColumnUsage> keyColumns =
+                            deComposer.getTableForeignKeyColumns(getSchemas(),
+                                                                 tableName);
+                    for (const KeyColumnUsage &keyColumn: keyColumns) {
                         db::mysql::Columns column =
-                                deComposer.getColumn(getSchemas(), tableName, keyColumn.getColumnName());
+                                deComposer.getColumn(getSchemas(),
+                                                     tableName,
+                                                     keyColumn.getColumnName());
                         columns.emplace_back(column);
                     }
                     return columns;
                 }
+
+                std::vector<db::mysql::Events> getEvents(const std::string &name = "", const std::string &schema = "") {
+                    return deComposer.getEvents(name, schema);
+                }
+
+                void getFunctions() {}
+
+                void getPartitions() {}
+
+                void getProcedures() {}
+
+                void getResourceGroups() {}
+
+                void getRoutines() {}
+
+                void getStoredObjects() { /*Stored objects include stored programs and views.*/}
+
+                void getStoredProcedures() {}
+
+                void getStoredRoutines() { /*Stored routines include stored procedures and functions.*/}
+
+                void getStoredPrograms() { /* Stored programs include stored routines, triggers, and events.*/ }
+
+                void getTableSpaces() {}
+
+                void getTriggers() {}
+
+                void getViews() {}
             };
         }
     }

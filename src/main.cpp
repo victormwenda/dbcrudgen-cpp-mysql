@@ -129,5 +129,9 @@ void createMYSQLProjectBuilder() {
         }
     }
 
-
+    std::cout << "--------------------------- EVENTS ---------------------------------" << std::endl;
+    auto events = builder.getEvents();
+    for (auto &event: events) {
+        std::cout << event.getEventSchema() << "." << event.getEventName() << std::endl;
+    }
 }
