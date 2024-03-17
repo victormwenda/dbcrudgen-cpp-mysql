@@ -10,6 +10,7 @@
 #include "../connectors/MYSQLDatabaseConnectionParams.h"
 #include "../connectors/MYSQLDatabaseConnector.h"
 #include "../decomposer/MYSQLDatabasePreparedDecomposer.h"
+#include "../scaffolding/entities/ResourceGroups.h"
 
 namespace dbcrudgen {
     namespace db {
@@ -164,7 +165,9 @@ namespace dbcrudgen {
                     return getRoutines("PROCEDURE", name, schema);
                 }
 
-                void getResourceGroups() {}
+                std::vector<db::mysql::ResourceGroups> getResourceGroups( ) {
+                    return deComposer.getResourceGroups( );
+                }
 
                 std::vector<db::mysql::Routines> getRoutines(const std::string &type = "", const std::string &name = "",
                                                              const std::string &schema = "") {

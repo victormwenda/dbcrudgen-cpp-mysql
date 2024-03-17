@@ -149,4 +149,9 @@ void createMYSQLProjectBuilder() {
     for (auto &procedure: procedures) {
         std::cout << procedure.getRoutineSchema() << "." << procedure.getRoutineName() << std::endl;
     }
+    std::cout << "--------------------------- RESOURCE GROUPS ---------------------------------" << std::endl;
+    auto resourceGroups = builder.getResourceGroups();
+    for (auto &group: resourceGroups) {
+        std::cout << group.getResourceGroupType() << "." << group.getResourceGroupName() << std::endl;
+    }
 }

@@ -162,30 +162,53 @@ set(SOURCE_FILES
         src/databases/mysql/scaffolding/entities/Parameters.h
         src/databases/mysql/scaffolding/entities/Partitions.h
         src/databases/mysql/scaffolding/entities/Plugins.h
-        src/databases/mysql/scaffolding/entities/ProcessList.h src/databases/mysql/scaffolding/entities/Profiling.h
+        src/databases/mysql/scaffolding/entities/ProcessList.h
+        src/databases/mysql/scaffolding/entities/Profiling.h
         src/databases/mysql/scaffolding/entities/ReferentialConstraints.h
+        src/databases/mysql/scaffolding/entities/ResourceGroups.h
         src/databases/mysql/scaffolding/entities/Routines.h
-        src/databases/mysql/scaffolding/entities/Schemata.h src/databases/mysql/scaffolding/entities/SchemaPrivileges.h
-        src/databases/mysql/scaffolding/entities/SessionStatus.h src/databases/mysql/scaffolding/entities/SessionVariables.h
-        src/databases/mysql/scaffolding/entities/Statistics.h src/databases/mysql/scaffolding/entities/Tables.h
-        src/databases/mysql/scaffolding/entities/TableSpaces.h src/databases/mysql/scaffolding/entities/TableConstraints.h
-        src/databases/mysql/scaffolding/entities/TablePrivileges.h src/databases/mysql/scaffolding/entities/Triggers.h
-        src/databases/mysql/scaffolding/entities/UserPrivileges.h src/databases/mysql/scaffolding/entities/Views.h
-        src/databases/mysql/scaffolding/entities/InnoDbLocks.h src/databases/mysql/scaffolding/entities/InnoDbTrx.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysDataFiles.h src/databases/mysql/scaffolding/entities/InnoDbFtConfig.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysVirtual.h src/databases/mysql/scaffolding/entities/InnoDbCmp.h
-        src/databases/mysql/scaffolding/entities/InnoDbFtBeingDeleted.h src/databases/mysql/scaffolding/entities/InnoDbCmpReset.h
-        src/databases/mysql/scaffolding/entities/InnoDbCmpPerIndex.h src/databases/mysql/scaffolding/entities/InnoDbCmpMemReset.h
-        src/databases/mysql/scaffolding/entities/InnoDbFtDeleted.h src/databases/mysql/scaffolding/entities/InnoDbBufferPageLRU.h
-        src/databases/mysql/scaffolding/entities/InnoDbLockWaits.h src/databases/mysql/scaffolding/entities/InnoDbTempTableInfo.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysIndexes.h src/databases/mysql/scaffolding/entities/InnoDbSysTables.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysFields.h src/databases/mysql/scaffolding/entities/InnoDbCmpPerIndexReset.h
-        src/databases/mysql/scaffolding/entities/InnoDbBufferPage.h src/databases/mysql/scaffolding/entities/InnoDbFtDefaultStopWord.h
-        src/databases/mysql/scaffolding/entities/InnoDbFtIndexTable.h src/databases/mysql/scaffolding/entities/InnoDbFtIndexCache.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysTableSpaces.h src/databases/mysql/scaffolding/entities/InnoDbMetrics.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysForeignCols.h src/databases/mysql/scaffolding/entities/InnoDbCmpMem.h
-        src/databases/mysql/scaffolding/entities/InnoDbBufferPoolStats.h src/databases/mysql/scaffolding/entities/InnoDbSysColumns.h
-        src/databases/mysql/scaffolding/entities/InnoDbSysForeign.h src/databases/mysql/scaffolding/entities/InnoDbSysTableStats.h
+        src/databases/mysql/scaffolding/entities/Schemata.h
+        src/databases/mysql/scaffolding/entities/SchemaPrivileges.h
+        src/databases/mysql/scaffolding/entities/SessionStatus.h
+        src/databases/mysql/scaffolding/entities/SessionVariables.h
+        src/databases/mysql/scaffolding/entities/Statistics.h
+        src/databases/mysql/scaffolding/entities/Tables.h
+        src/databases/mysql/scaffolding/entities/TableSpaces.h
+        src/databases/mysql/scaffolding/entities/TableConstraints.h
+        src/databases/mysql/scaffolding/entities/TablePrivileges.h
+        src/databases/mysql/scaffolding/entities/Triggers.h
+        src/databases/mysql/scaffolding/entities/UserPrivileges.h
+        src/databases/mysql/scaffolding/entities/Views.h
+        src/databases/mysql/scaffolding/entities/InnoDbLocks.h
+        src/databases/mysql/scaffolding/entities/InnoDbTrx.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysDataFiles.h
+        src/databases/mysql/scaffolding/entities/InnoDbFtConfig.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysVirtual.h
+        src/databases/mysql/scaffolding/entities/InnoDbCmp.h
+        src/databases/mysql/scaffolding/entities/InnoDbFtBeingDeleted.h
+        src/databases/mysql/scaffolding/entities/InnoDbCmpReset.h
+        src/databases/mysql/scaffolding/entities/InnoDbCmpPerIndex.h
+        src/databases/mysql/scaffolding/entities/InnoDbCmpMemReset.h
+        src/databases/mysql/scaffolding/entities/InnoDbFtDeleted.h
+        src/databases/mysql/scaffolding/entities/InnoDbBufferPageLRU.h
+        src/databases/mysql/scaffolding/entities/InnoDbLockWaits.h
+        src/databases/mysql/scaffolding/entities/InnoDbTempTableInfo.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysIndexes.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysTables.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysFields.h
+        src/databases/mysql/scaffolding/entities/InnoDbCmpPerIndexReset.h
+        src/databases/mysql/scaffolding/entities/InnoDbBufferPage.h
+        src/databases/mysql/scaffolding/entities/InnoDbFtDefaultStopWord.h
+        src/databases/mysql/scaffolding/entities/InnoDbFtIndexTable.h
+        src/databases/mysql/scaffolding/entities/InnoDbFtIndexCache.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysTableSpaces.h
+        src/databases/mysql/scaffolding/entities/InnoDbMetrics.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysForeignCols.h
+        src/databases/mysql/scaffolding/entities/InnoDbCmpMem.h
+        src/databases/mysql/scaffolding/entities/InnoDbBufferPoolStats.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysColumns.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysForeign.h
+        src/databases/mysql/scaffolding/entities/InnoDbSysTableStats.h
         src/databases/mysql/scaffolding/entities/ColumnsPriv.h
         src/databases/mysql/scaffolding/entities/Db.h
         src/databases/mysql/scaffolding/entities/EngineCost.h
@@ -521,7 +544,9 @@ set(SOURCE_FILES
         src/orm/templates/postman/PostmanRequestTemplate.h
         src/orm/templates/postman/PostmanTemplateFiles.h
 
-        src/orm/utils/StringUtils.h)
+        src/orm/utils/StringUtils.h
+
+)
 
 #GoogleTest
 #add_subdirectory(include/google/googletest)

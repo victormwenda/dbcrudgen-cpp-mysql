@@ -114,6 +114,7 @@
 #include "../scaffolding/entities/TimeZoneTransition.h"
 #include "../scaffolding/entities/TimeZoneTransitionType.h"
 #include "../scaffolding/entities/User.h"
+#include "../scaffolding/entities/ResourceGroups.h"
 
 //
 // MYSQLDatabaseDecomposer
@@ -631,6 +632,8 @@ namespace dbcrudgen {
                     return routines;
                 }
             };
+
+
         }
     }
 

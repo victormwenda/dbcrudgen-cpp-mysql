@@ -62,6 +62,7 @@ namespace dbcrudgen {
                 static constexpr const char *GET_PROCESSLIST = "SELECT * FROM information_schema.PROCESSLIST";
                 static constexpr const char *GET_PROFILING = "SELECT * FROM information_schema.PROFILING";
                 static constexpr const char *GET_REFERENTIAL_CONSTRAINTS = "SELECT * FROM information_schema.REFERENTIAL_CONSTRAINTS";
+                static constexpr const char *GET_RESOURCE_GROUPS = "SELECT * FROM information_schema.RESOURCE_GROUPS";
                 static constexpr const char *GET_ROUTINES = "SELECT * FROM information_schema.ROUTINES";
                 static constexpr const char *GET_SCHEMATA = "SELECT * FROM information_schema.SCHEMATA";
                 static constexpr const char *GET_SCHEMA_PRIVILEGES = "SELECT * FROM information_schema.SCHEMA_PRIVILEGES";

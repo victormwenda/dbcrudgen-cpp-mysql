@@ -120,6 +120,7 @@
 #include "../scaffolding/entities/TimeZoneTransition.h"
 #include "../scaffolding/entities/TimeZoneTransitionType.h"
 #include "../scaffolding/entities/User.h"
+#include "../scaffolding/entities/ResourceGroups.h"
 
 //
 // MYSQLDatabaseDecomposer
@@ -906,6 +907,42 @@ namespace dbcrudgen {
                     statement->close();
 
                     return referentialConstraints;
+                }
+
+                /**
+                * Get all RESOURCE_GROUPS
+                */
+                std::vector<ResourceGroups> getResourceGroups() {
+
+                    std::vector<ResourceGroups> resourceGroups;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_RESOURCE_GROUPS;
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string resourceGroupName = resultSet->getString(
+                                ResourceGroups::COLUMNS::RESOURCE_GROUP_NAME::INDEX);
+                        std::string resourceGroupType = resultSet->getString(
+                                ResourceGroups::COLUMNS::RESOURCE_GROUP_TYPE::INDEX);
+                        int resourceGroupEnabled = resultSet->getInt(
+                                ResourceGroups::COLUMNS::RESOURCE_GROUP_ENABLED::INDEX);
+                        std::string vcpIds = resultSet->getString(
+                                ResourceGroups::COLUMNS::VCPU_IDS::INDEX);
+                        int threadPriority = resultSet->getInt(
+                                ResourceGroups::COLUMNS::THREAD_PRIORITY::INDEX);
+
+                        resourceGroups.emplace_back(
+                                ResourceGroups{resourceGroupName, resourceGroupType, resourceGroupEnabled, vcpIds,
+                                               threadPriority});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return resourceGroups;
                 }
 
                 /**

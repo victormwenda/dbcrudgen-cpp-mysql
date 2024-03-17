@@ -78,3 +78,8 @@ where ROUTINE_TYPE = 'FUNCTION';
 select *
 from information_schema.ROUTINES
 where ROUTINE_TYPE = 'PROCEDURE';
+
+-- Resource Groups
+show create table information_schema.RESOURCE_GROUPS;
+select * from information_schema.RESOURCE_GROUPS;
+
