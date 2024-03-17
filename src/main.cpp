@@ -86,7 +86,7 @@ dbcrudgen::db::generic::Database getGenericDatabase(dbcrudgen::db::mysql::MYSQLD
 }
 
 void createMYSQLProjectBuilder() {
-    std::string database = "mysql";
+    std::string database = "dbcrudgen";
     std::string user = "root";
     std::string password = "Root@3358";
     std::string host = "127.0.0.1";
@@ -102,20 +102,32 @@ void createMYSQLProjectBuilder() {
     }
 
     std::cout << "--------------------------- PRIMARY KEYS ---------------------------------" << std::endl;
-    const std::vector<dbcrudgen::db::mysql::Columns> &primaryKeys = builder.getTablePrimaryKeyColumns("child");
-    for (const auto &key: primaryKeys) {
-        std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+
+    for (auto &table: tables) {
+        std::cout << " - - ::::::: - " << table.getTableName() << " - ::::::: - - " << std::endl;
+        auto primaryKeys = builder.getTablePrimaryKeyColumns(table.getTableName());
+        for (const auto &key: primaryKeys) {
+            std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+        }
     }
 
     std::cout << "--------------------------- TABLE KEYS ---------------------------------" << std::endl;
-    const std::vector<dbcrudgen::db::mysql::Columns> &keys = builder.getTableKeysColumns("child");
-    for (const auto &key: keys) {
-        std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+    for (auto &table: tables) {
+        std::cout << " - - ::::::: - " << table.getTableName() << " - ::::::: - - " << std::endl;
+        auto keys = builder.getTableKeysColumns(table.getTableName());
+        for (const auto &key: keys) {
+            std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+        }
     }
 
     std::cout << "--------------------------- FOREIGN KEYS ---------------------------------" << std::endl;
-    const std::vector<dbcrudgen::db::mysql::Columns> &foreign = builder.getTableForeignKeyColumns("child");
-    for (const auto &key: foreign) {
-        std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+    for (auto &table: tables) {
+        std::cout << " - - ::::::: - " << table.getTableName() << " - ::::::: - - " << std::endl;
+        auto foreign = builder.getTableForeignKeyColumns(table.getTableName());
+        for (const auto &key: foreign) {
+            std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+        }
     }
+
+
 }
