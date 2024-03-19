@@ -37,3 +37,6 @@
 
 #Ignore idea files
 /.idea
+
+#Mac Os Files
+.DS_Store

@@ -75,9 +75,30 @@ endif (UNIX)
 
 if (APPLE)
 
-    # MYSQL
-    set(MYSQL_HEADERS ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/include/jdbc)
-    set(MYSQL_LIBS_DIR ${PROJECT_DIR}/include/macos/mysql-connector-c++-8.0.30-macos12-arm64/lib64)
+    set(MYSQL_HEADERS)
+    set(MYSQL_LIBS_DIR)
+    set(MYSQL_LIBS)
+
+    message(${CMAKE_BINARY_DIR})
+
+    if (CMAKE_SYSTEM_PROCESSOR MATCHES "(x86)|(X86)|(amd64)|(AMD64)")
+        set(MYSQL_HEADERS ${PROJECT_DIR}/include/connectors/macos/mysql-connector-c++-8.0.31-macos12-arm64/include/jdbc)
+        set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/macos/mysql-connector-c++-8.0.31-macos12-x86-64bit/lib64)
+    endif ()
+
+    if (CMAKE_SYSTEM_PROCESSOR MATCHES "(arm64)|(ARM64)")
+        set(MYSQL_HEADERS ${PROJECT_DIR}/include/connectors/macos/mysql-connector-c++-8.0.31-macos12-x86-64bit/include/jdbc)
+        set(MYSQL_LIBS_DIR ${PROJECT_DIR}/lib/macos/mysql-connector-c++-8.0.31-macos12-arm64/lib64)
+    endif ()
+
+    #Copy libs to cmake-build-debug
+    if (NOT EXISTS ${CMAKE_BINARY_DIR}/libssl.1.1.dylib)
+        CONFIGURE_FILE(${MYSQL_LIBS_DIR}/libssl.1.1.dylib ${CMAKE_BINARY_DIR}/libssl.1.1.dylib COPYONLY)
+    endif ()
+    if (NOT EXISTS ${CMAKE_BINARY_DIR}/libcrypto.1.1.dylib)
+        CONFIGURE_FILE(${MYSQL_LIBS_DIR}/libcrypto.1.1.dylib ${CMAKE_BINARY_DIR}/libcrypto.1.1.dylib COPYONLY)
+    endif ()
+
     set(MYSQL_LIBS ${MYSQL_LIBS_DIR}/libmysqlcppconn.dylib)
 
 endif (APPLE)
