@@ -90,7 +90,7 @@ void createMYSQLProjectBuilder() {
     std::string user = "root";
     std::string password = "Root@3358";
     std::string host = "127.0.0.1";
-    int port = 13306;
+    int port = 3306;
     std::string connStr{"tcp://"};
     connStr = connStr.append(host).append(":").append(std::to_string(port));
     dbcrudgen::db::mysql::MYSQLDatabaseModelBuilder builder{connStr, host, port, user, password, database};
