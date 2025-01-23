@@ -204,7 +204,24 @@ namespace dbcrudgen {
 
                 void getTriggers() {}
 
-                void getViews() {}
+                /**
+                 * Get views
+                 * @param schema
+                 * @return
+                 */
+                std::vector<Views> getViews(std::string &schema) {
+                    return deComposer.getViews();
+                }
+
+                /**
+                 * Get table types
+                 * @param schema
+                 * @param type BASE TABLE, SYSTEM VIEW, VIEW
+                 * @return
+                 */
+                std::vector<Tables> getTableType(std::string &schema, std::string &type) {
+                    return deComposer.getSchemaTableType(schema, type);
+                }
             };
         }
     }

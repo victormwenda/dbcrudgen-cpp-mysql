@@ -1467,8 +1467,9 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all VIEWS
-                */
+                 * Get all views
+                 * @return
+                 */
                 std::vector<Views> getViews() {
 
                     std::vector<Views> views;

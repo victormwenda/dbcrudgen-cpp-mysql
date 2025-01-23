@@ -170,4 +170,9 @@ void createMYSQLProjectBuilder() {
     for (auto &index: indexes) {
         std::cout << index.getTableName() << "." << index.getIndexName() << std::endl;
     }
+    std::cout << "--------------------------- VIEWS ---------------------------------" << std::endl;
+    auto views = builder.getViews(database);
+    for (auto &view: views) {
+        std::cout << view.getTableSchema() << "." << view.getTableName() << std::endl;
+    }
 }

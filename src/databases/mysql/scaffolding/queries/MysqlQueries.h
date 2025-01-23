@@ -15,11 +15,16 @@ namespace dbcrudgen {
                     static constexpr const char *TABLE_SCHEMA = "${TABLE_SCHEMA}";
                     static constexpr const char *TABLE_NAME = "${TABLE_NAME}";
                     static constexpr const char *COLUMN_NAME = "${COLUMN_NAME}";
+                    static constexpr const char *TABLE_TYPE = "${TABLE_TYPE}";
                 };
 
 
                 struct Prepared {
+                    static constexpr const char *GET_SCHEMA_TABLE_TYPE = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}' AND TABLE_TYPE = '${TABLE_TYPE}';";
+
                     static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}' AND TABLE_TYPE = 'BASE TABLE';";
+
+                    static constexpr const char *GET_SCHEMA_VIEWS = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}' AND TABLE_TYPE = 'VIEW';";
 
                     static constexpr const char *GET_SCHEMA_KEYS =
                             "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}'";

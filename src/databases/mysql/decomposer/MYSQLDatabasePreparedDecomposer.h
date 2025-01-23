@@ -133,11 +133,57 @@ namespace dbcrudgen {
                 explicit MYSQLDatabasePreparedDecomposer(MYSQLDatabaseConnector &connector)
                         : MYSQLDatabaseDecomposer{connector}, connector(connector) {}
 
-                /**
-               * Get all the tables in a schema
-               * @param schema
-               * @return
-               */
+
+                std::vector<Tables> getSchemaTableType(const std::string &schema, const std::string &type) {
+
+                    std::vector<Tables> tables;
+
+                    std::string query = mysql::MYSQLQueries::Prepared::GET_SCHEMA_TABLE_TYPE;
+                    query = StringUtils::replace(query, mysql::MYSQLQueries::Tags::TABLE_SCHEMA, schema);
+                    query = StringUtils::replace(query, mysql::MYSQLQueries::Tags::TABLE_TYPE, type);
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
+
+                    while (resultSet->next()) {
+
+                        std::string tableCatalog = resultSet->getString(Tables::COLUMNS::TABLE_CATALOG::INDEX);
+                        std::string tableSchema = resultSet->getString(Tables::COLUMNS::TABLE_SCHEMA::INDEX);
+                        std::string tableName = resultSet->getString(Tables::COLUMNS::TABLE_NAME::INDEX);
+                        std::string tableType = resultSet->getString(Tables::COLUMNS::TABLE_TYPE::INDEX);
+                        std::string engine = resultSet->getString(Tables::COLUMNS::ENGINE::INDEX);
+                        long version = resultSet->getInt(Tables::COLUMNS::VERSION::INDEX);
+                        std::string rowFormat = resultSet->getString(Tables::COLUMNS::ROW_FORMAT::INDEX);
+                        long tableRows = resultSet->getInt(Tables::COLUMNS::TABLE_ROWS::INDEX);
+                        long avgRowLength = resultSet->getInt(Tables::COLUMNS::AVG_ROW_LENGTH::INDEX);
+                        long dataLength = resultSet->getInt(Tables::COLUMNS::DATA_LENGTH::INDEX);
+                        long maxDataLength = resultSet->getInt(Tables::COLUMNS::MAX_DATA_LENGTH::INDEX);
+                        long indexLength = resultSet->getInt(Tables::COLUMNS::INDEX_LENGTH::INDEX);
+                        long dataFree = resultSet->getInt(Tables::COLUMNS::DATA_FREE::INDEX);
+                        long autoIncrement = resultSet->getInt(Tables::COLUMNS::AUTO_INCREMENT::INDEX);
+                        std::string createTime = resultSet->getString(Tables::COLUMNS::CREATE_TIME::INDEX);
+                        std::string updateTime = resultSet->getString(Tables::COLUMNS::UPDATE_TIME::INDEX);
+                        std::string checkTime = resultSet->getString(Tables::COLUMNS::CHECK_TIME::INDEX);
+                        std::string tableCollation = resultSet->getString(Tables::COLUMNS::TABLE_COLLATION::INDEX);
+                        long checksum = resultSet->getInt(Tables::COLUMNS::CHECKSUM::INDEX);
+                        std::string createOptions = resultSet->getString(Tables::COLUMNS::CREATE_OPTIONS::INDEX);
+                        std::string tableComment = resultSet->getString(Tables::COLUMNS::TABLE_COMMENT::INDEX);
+
+                        Tables table{tableCatalog, tableSchema, tableName, tableType, engine, version, rowFormat,
+                                     tableRows,
+                                     avgRowLength, dataLength, maxDataLength, indexLength, dataFree, autoIncrement,
+                                     createTime, updateTime, checkTime, tableCollation, checksum, createOptions,
+                                     tableComment};
+
+                        tables.emplace_back(table);
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return tables;
+                }
+
                 std::vector<Tables> getSchemaTables(const std::string &schema) {
 
                     std::vector<Tables> tables;
@@ -187,6 +233,59 @@ namespace dbcrudgen {
                     return tables;
                 }
 
+                /**
+                 * Get Schema Views
+                 * @param schema
+                 * @return
+                 */
+                std::vector<Tables> getSchemaViews(const std::string &schema) {
+
+                    std::vector<Tables> tables;
+
+                    std::string query = mysql::MYSQLQueries::Prepared::GET_SCHEMA_VIEWS;
+                    query = StringUtils::replace(query, mysql::MYSQLQueries::Tags::TABLE_SCHEMA, schema);
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(sql::SQLString{query});
+
+                    while (resultSet->next()) {
+
+                        std::string tableCatalog = resultSet->getString(Tables::COLUMNS::TABLE_CATALOG::INDEX);
+                        std::string tableSchema = resultSet->getString(Tables::COLUMNS::TABLE_SCHEMA::INDEX);
+                        std::string tableName = resultSet->getString(Tables::COLUMNS::TABLE_NAME::INDEX);
+                        std::string tableType = resultSet->getString(Tables::COLUMNS::TABLE_TYPE::INDEX);
+                        std::string engine = resultSet->getString(Tables::COLUMNS::ENGINE::INDEX);
+                        long version = resultSet->getInt(Tables::COLUMNS::VERSION::INDEX);
+                        std::string rowFormat = resultSet->getString(Tables::COLUMNS::ROW_FORMAT::INDEX);
+                        long tableRows = resultSet->getInt(Tables::COLUMNS::TABLE_ROWS::INDEX);
+                        long avgRowLength = resultSet->getInt(Tables::COLUMNS::AVG_ROW_LENGTH::INDEX);
+                        long dataLength = resultSet->getInt(Tables::COLUMNS::DATA_LENGTH::INDEX);
+                        long maxDataLength = resultSet->getInt(Tables::COLUMNS::MAX_DATA_LENGTH::INDEX);
+                        long indexLength = resultSet->getInt(Tables::COLUMNS::INDEX_LENGTH::INDEX);
+                        long dataFree = resultSet->getInt(Tables::COLUMNS::DATA_FREE::INDEX);
+                        long autoIncrement = resultSet->getInt(Tables::COLUMNS::AUTO_INCREMENT::INDEX);
+                        std::string createTime = resultSet->getString(Tables::COLUMNS::CREATE_TIME::INDEX);
+                        std::string updateTime = resultSet->getString(Tables::COLUMNS::UPDATE_TIME::INDEX);
+                        std::string checkTime = resultSet->getString(Tables::COLUMNS::CHECK_TIME::INDEX);
+                        std::string tableCollation = resultSet->getString(Tables::COLUMNS::TABLE_COLLATION::INDEX);
+                        long checksum = resultSet->getInt(Tables::COLUMNS::CHECKSUM::INDEX);
+                        std::string createOptions = resultSet->getString(Tables::COLUMNS::CREATE_OPTIONS::INDEX);
+                        std::string tableComment = resultSet->getString(Tables::COLUMNS::TABLE_COMMENT::INDEX);
+
+                        Tables table{tableCatalog, tableSchema, tableName, tableType, engine, version, rowFormat,
+                                     tableRows,
+                                     avgRowLength, dataLength, maxDataLength, indexLength, dataFree, autoIncrement,
+                                     createTime, updateTime, checkTime, tableCollation, checksum, createOptions,
+                                     tableComment};
+
+                        tables.emplace_back(table);
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return tables;
+                }
 
                 /**
                  * Get Table Create Statement
