@@ -101,6 +101,16 @@ void createMYSQLProjectBuilder() {
         std::cout << table.getTableName() << std::endl;
     }
 
+    std::cout << "--------------------------- KEYS ---------------------------------" << std::endl;
+
+    for (auto &table: tables) {
+        std::cout << " - - ::::::: - " << table.getTableName() << " - ::::::: - - " << std::endl;
+        auto keys = builder.getTableKeysColumns(table.getTableName());
+        for (const auto &key: keys) {
+            std::cout << key.getTableName() << "." << key.getColumnName() << std::endl;
+        }
+    }
+
     std::cout << "--------------------------- PRIMARY KEYS ---------------------------------" << std::endl;
 
     for (auto &table: tables) {
@@ -153,5 +163,11 @@ void createMYSQLProjectBuilder() {
     auto resourceGroups = builder.getResourceGroups();
     for (auto &group: resourceGroups) {
         std::cout << group.getResourceGroupType() << "." << group.getResourceGroupName() << std::endl;
+    }
+
+    std::cout << "--------------------------- INDEXES ---------------------------------" << std::endl;
+    auto indexes = builder.getSchemaIndexes();
+    for (auto &index: indexes) {
+        std::cout << index.getTableName() << "." << index.getIndexName() << std::endl;
     }
 }

@@ -292,7 +292,11 @@ namespace dbcrudgen {
                 }
 
                 /**
-                 * Get a MYSQL Database Table Column
+                 * Get all the columns in the provided table in the provided schema
+                 * @param schema_name
+                 * @param tableName
+                 * @param columnName
+                 * @return
                  */
                 mysql::Columns
                 getColumn(const std::string &schema_name, const std::string &tableName, const std::string &columnName) {
@@ -349,9 +353,59 @@ namespace dbcrudgen {
                 }
 
                 /**
-               * Get the table statistics
-                * Return all the schema tables with the provided indexes
-               */
+                 * Get all the keys in the provided schema
+                 * @param schema_name
+                 * @return
+                 */
+                std::vector<Statistics>
+                getSchemaKeyColumns(const std::string &schema_name) {
+
+                    std::vector<Statistics> statistics;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::Prepared::GET_SCHEMA_KEYS;
+
+                    query = StringUtils::replace(query, "${TABLE_SCHEMA}", schema_name);
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string tableCatalog = resultSet->getString(Statistics::COLUMNS::TABLE_CATALOG::INDEX);
+                        std::string tableSchema = resultSet->getString(Statistics::COLUMNS::TABLE_SCHEMA::INDEX);
+                        std::string tableName = resultSet->getString(Statistics::COLUMNS::TABLE_NAME::INDEX);
+                        long nonUnique = resultSet->getInt(Statistics::COLUMNS::NON_UNIQUE::INDEX);
+                        std::string indexSchema = resultSet->getString(Statistics::COLUMNS::INDEX_SCHEMA::INDEX);
+                        std::string indexName = resultSet->getString(Statistics::COLUMNS::INDEX_NAME::INDEX);
+                        long seqInIndex = resultSet->getInt(Statistics::COLUMNS::SEQ_IN_INDEX::INDEX);
+                        std::string columnName = resultSet->getString(Statistics::COLUMNS::COLUMN_NAME::INDEX);
+                        std::string collation = resultSet->getString(Statistics::COLUMNS::COLLATION::INDEX);
+                        long cardinality = resultSet->getInt(Statistics::COLUMNS::CARDINALITY::INDEX);
+                        long subPart = resultSet->getInt(Statistics::COLUMNS::SUB_PART::INDEX);
+                        std::string packed = resultSet->getString(Statistics::COLUMNS::PACKED::INDEX);
+                        std::string nullable = resultSet->getString(Statistics::COLUMNS::NULLABLE::INDEX);
+                        std::string indexType = resultSet->getString(Statistics::COLUMNS::INDEX_TYPE::INDEX);
+                        std::string comment = resultSet->getString(Statistics::COLUMNS::COMMENT::INDEX);
+                        std::string indexComment = resultSet->getString(Statistics::COLUMNS::INDEX_COMMENT::INDEX);
+
+                        statistics.emplace_back(
+                                Statistics{tableCatalog, tableSchema, tableName, nonUnique, indexSchema, indexName,
+                                           seqInIndex, columnName, collation, cardinality, subPart, packed, nullable,
+                                           indexType, comment, indexComment});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return statistics;
+                }
+
+                /**
+                 * Get all the key/indexes in the provided table
+                 * @param schema_name
+                 * @param table_name
+                 * @return
+                 */
                 std::vector<Statistics>
                 getTableKeyColumns(const std::string &schema_name, const std::string &table_name) {
 

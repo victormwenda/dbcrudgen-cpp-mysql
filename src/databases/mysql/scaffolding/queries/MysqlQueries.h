@@ -21,6 +21,9 @@ namespace dbcrudgen {
                 struct Prepared {
                     static constexpr const char *GET_SCHEMA_TABLES = "SELECT * FROM information_schema.tables WHERE table_schema = '${TABLE_SCHEMA}' AND TABLE_TYPE = 'BASE TABLE';";
 
+                    static constexpr const char *GET_SCHEMA_KEYS =
+                            "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}'";
+
                     static constexpr const char *GET_TABLE_CREATE_STATEMENT = "SHOW CREATE TABLE ${TABLE_SCHEMA}.${TABLE_NAME}";
 
                     static constexpr const char *GET_SCHEMA_TABLE_COLUMNS =
@@ -28,6 +31,9 @@ namespace dbcrudgen {
 
                     static constexpr const char *GET_SCHEMA_TABLE_COLUMN =
                             "SELECT * FROM information_schema.columns WHERE table_schema = '${TABLE_SCHEMA}' AND table_name='${TABLE_NAME}' and COLUMN_NAME = '${COLUMN_NAME}';";
+
+                    static constexpr const char *GET_TABLE_KEYS =
+                            "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}' AND TABLE_NAME='${TABLE_NAME}'";
 
                     static constexpr const char *GET_TABLE_PRIMARY_KEY_COLUMNS =
                             "SELECT * FROM information_schema.STATISTICS WHERE TABLE_SCHEMA='${TABLE_SCHEMA}' AND TABLE_NAME='${TABLE_NAME}' AND INDEX_NAME = 'PRIMARY'";

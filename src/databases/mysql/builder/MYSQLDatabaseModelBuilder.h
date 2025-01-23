@@ -81,6 +81,24 @@ namespace dbcrudgen {
                 }
 
                 /**
+                  * Get all the indexes in a schema
+                  * @param schema
+                  * @return
+                */
+                std::vector<db::mysql::Statistics> getSchemaIndexes() {
+                    return deComposer.getSchemaKeyColumns(getSchemas());
+                }
+
+                /**
+                  * Get all the keys in a schema
+                  * @param schema
+                  * @return
+                */
+                std::vector<db::mysql::Statistics> getSchemaKeys() {
+                    return getSchemaIndexes();
+                }
+
+                /**
                  * Get all the columns in a table
                  * @param tableName
                  * @return
@@ -165,8 +183,8 @@ namespace dbcrudgen {
                     return getRoutines("PROCEDURE", name, schema);
                 }
 
-                std::vector<db::mysql::ResourceGroups> getResourceGroups( ) {
-                    return deComposer.getResourceGroups( );
+                std::vector<db::mysql::ResourceGroups> getResourceGroups() {
+                    return deComposer.getResourceGroups();
                 }
 
                 std::vector<db::mysql::Routines> getRoutines(const std::string &type = "", const std::string &name = "",
