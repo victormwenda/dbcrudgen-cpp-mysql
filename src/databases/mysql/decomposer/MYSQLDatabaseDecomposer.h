@@ -1372,8 +1372,9 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all TRIGGERS
-                */
+                 * Get all triggers
+                 * @return
+                 */
                 std::vector<Triggers> getTriggers() {
 
                     std::vector<Triggers> triggers;
@@ -1438,8 +1439,10 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all USER_PRIVILEGES
-                */
+                 * Get all user privileges
+                 *
+                 * @return
+                 */
                 std::vector<UserPrivileges> getUserPrivileges() {
 
                     std::vector<UserPrivileges> userPrivileges;
@@ -3739,12 +3742,12 @@ namespace dbcrudgen {
                 }
             };
 
-            /**
-             * Prepares where clause filters
-             *
-             * @param filterParams
-             * @return
-             */
+           /**
+            * Prepares where clause filters
+            * @param query
+            * @param filterParams
+            * @return
+            */
             std::string
             appendWhereClauseFilters(const std::string &query, const std::map<std::string, std::string> &filterParams) {
 
@@ -3754,8 +3757,10 @@ namespace dbcrudgen {
 
                 std::string whereClause;
 
-                for (auto paramsItr = filterParams.begin(); paramsItr != filterParams.end(); ++paramsItr) {
-                    if (paramsItr->second.empty()) {
+                for (auto filters: filterParams) {
+                    std::string columnName = filters.first;
+                    std::string columnValue = filters.second;
+                    if (columnValue.empty()) {
                         continue;
                     }
 
@@ -3765,10 +3770,10 @@ namespace dbcrudgen {
 
                     whereClause
                             .append(" ")
-                            .append(paramsItr->first)
+                            .append(columnName)
                             .append(" = ")
                             .append("'")
-                            .append(paramsItr->second)
+                            .append(columnValue)
                             .append("'");
                 }
 
@@ -3776,7 +3781,6 @@ namespace dbcrudgen {
             }
         }
     }
-
 }
 
 

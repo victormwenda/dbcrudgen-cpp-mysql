@@ -186,4 +186,10 @@ void createMYSQLProjectBuilder() {
                   << partition.getTableSchema()
                   << std::endl;
     }
+
+    std::cout << "--------------------------- TRIGGERS ---------------------------------" << std::endl;
+    auto triggers = builder.getTriggers("sys");
+    for (auto &trigger: triggers) {
+        std::cout << trigger.getTriggerCatalog() << "." << trigger.getTriggerName() << std::endl;
+    }
 }

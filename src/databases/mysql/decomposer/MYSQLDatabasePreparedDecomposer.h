@@ -837,14 +837,22 @@ namespace dbcrudgen {
                         std::string tableSchema = resultSet->getString(Partitions::COLUMNS::TABLE_SCHEMA::INDEX);
                         std::string tableName = resultSet->getString(Partitions::COLUMNS::TABLE_NAME::INDEX);
                         std::string partitionName = resultSet->getString(Partitions::COLUMNS::PARTITION_NAME::INDEX);
-                        std::string subpartitionName = resultSet->getString(Partitions::COLUMNS::SUBPARTITION_NAME::INDEX);
-                        long partitionOrdinalPosition = resultSet->getInt(Partitions::COLUMNS::PARTITION_ORDINAL_POSITION::INDEX);
-                        long subpartitionOrdinalPosition = resultSet->getInt(Partitions::COLUMNS::SUBPARTITION_ORDINAL_POSITION::INDEX);
-                        std::string partitionMethod = resultSet->getString(Partitions::COLUMNS::PARTITION_METHOD::INDEX);
-                        std::string subpartitionMethod = resultSet->getString(Partitions::COLUMNS::SUBPARTITION_METHOD::INDEX);
-                        std::string partitionExpression = resultSet->getString(Partitions::COLUMNS::PARTITION_EXPRESSION::INDEX);
-                        std::string subpartitionExpression = resultSet->getString(Partitions::COLUMNS::SUBPARTITION_EXPRESSION::INDEX);
-                        std::string partitionDescription = resultSet->getString(Partitions::COLUMNS::PARTITION_DESCRIPTION::INDEX);
+                        std::string subpartitionName = resultSet->getString(
+                                Partitions::COLUMNS::SUBPARTITION_NAME::INDEX);
+                        long partitionOrdinalPosition = resultSet->getInt(
+                                Partitions::COLUMNS::PARTITION_ORDINAL_POSITION::INDEX);
+                        long subpartitionOrdinalPosition = resultSet->getInt(
+                                Partitions::COLUMNS::SUBPARTITION_ORDINAL_POSITION::INDEX);
+                        std::string partitionMethod = resultSet->getString(
+                                Partitions::COLUMNS::PARTITION_METHOD::INDEX);
+                        std::string subpartitionMethod = resultSet->getString(
+                                Partitions::COLUMNS::SUBPARTITION_METHOD::INDEX);
+                        std::string partitionExpression = resultSet->getString(
+                                Partitions::COLUMNS::PARTITION_EXPRESSION::INDEX);
+                        std::string subpartitionExpression = resultSet->getString(
+                                Partitions::COLUMNS::SUBPARTITION_EXPRESSION::INDEX);
+                        std::string partitionDescription = resultSet->getString(
+                                Partitions::COLUMNS::PARTITION_DESCRIPTION::INDEX);
                         long tableRows = resultSet->getInt(Partitions::COLUMNS::TABLE_ROWS::INDEX);
                         long avgRowLength = resultSet->getInt(Partitions::COLUMNS::AVG_ROW_LENGTH::INDEX);
                         long dataLength = resultSet->getInt(Partitions::COLUMNS::DATA_LENGTH::INDEX);
@@ -864,10 +872,9 @@ namespace dbcrudgen {
                                 Partitions{tableCatalog, tableSchema, tableName, partitionName, subpartitionName,
                                            partitionOrdinalPosition, subpartitionOrdinalPosition, partitionMethod,
                                            subpartitionMethod, partitionExpression, subpartitionExpression,
-                                           partitionDescription,
-                                           tableRows, avgRowLength, dataLength, maxDataLength, indexLength, dataFree,
-                                           createTime, updateTime, checkTime, checksum, partitionComment, nodegroup,
-                                           tablespaceName});
+                                           partitionDescription, tableRows, avgRowLength, dataLength, maxDataLength,
+                                           indexLength, dataFree, createTime, updateTime, checkTime, checksum,
+                                           partitionComment, nodegroup, tablespaceName});
                     }
 
                     resultSet->close();
@@ -877,6 +884,73 @@ namespace dbcrudgen {
                 }
 
 
+                std::vector<Triggers> getTriggers(const std::string &schema = "") {
+
+                    std::vector<Triggers> triggers;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_TRIGGERS;
+
+                    std::map<std::string, std::string> whereFilters;
+                    whereFilters[Triggers::COLUMNS::TRIGGER_SCHEMA::NAME] = schema;
+
+                    query = appendWhereClauseFilters(query, whereFilters);
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string triggerCatalog = resultSet->getString(Triggers::COLUMNS::TRIGGER_CATALOG::INDEX);
+                        std::string triggerSchema = resultSet->getString(Triggers::COLUMNS::TRIGGER_SCHEMA::INDEX);
+                        std::string triggerName = resultSet->getString(Triggers::COLUMNS::TRIGGER_NAME::INDEX);
+                        std::string eventManipulation = resultSet->getString(
+                                Triggers::COLUMNS::EVENT_MANIPULATION::INDEX);
+                        std::string eventObjectCatalog = resultSet->getString(
+                                Triggers::COLUMNS::EVENT_OBJECT_CATALOG::INDEX);
+                        std::string eventObjectSchema = resultSet->getString(
+                                Triggers::COLUMNS::EVENT_OBJECT_SCHEMA::INDEX);
+                        std::string eventObjectTable = resultSet->getString(
+                                Triggers::COLUMNS::EVENT_OBJECT_TABLE::INDEX);
+                        long actionOrder = resultSet->getInt(Triggers::COLUMNS::ACTION_ORDER::INDEX);
+                        std::string actionCondition = resultSet->getString(Triggers::COLUMNS::ACTION_CONDITION::INDEX);
+                        std::string actionStatement = resultSet->getString(Triggers::COLUMNS::ACTION_STATEMENT::INDEX);
+                        std::string actionOrientation = resultSet->getString(
+                                Triggers::COLUMNS::ACTION_ORIENTATION::INDEX);
+                        std::string actionTiming = resultSet->getString(Triggers::COLUMNS::ACTION_TIMING::INDEX);
+                        std::string actionReferenceOldTable = resultSet->getString(
+                                Triggers::COLUMNS::ACTION_REFERENCE_OLD_TABLE::INDEX);
+                        std::string actionReferenceNewTable = resultSet->getString(
+                                Triggers::COLUMNS::ACTION_REFERENCE_NEW_TABLE::INDEX);
+                        std::string actionReferenceOldRow = resultSet->getString(
+                                Triggers::COLUMNS::ACTION_REFERENCE_OLD_ROW::INDEX);
+                        std::string actionReferenceNewRow = resultSet->getString(
+                                Triggers::COLUMNS::ACTION_REFERENCE_NEW_ROW::INDEX);
+                        std::string created = resultSet->getString(Triggers::COLUMNS::CREATED::INDEX);
+                        std::string sqlMode = resultSet->getString(Triggers::COLUMNS::SQL_MODE::INDEX);
+                        std::string definer = resultSet->getString(Triggers::COLUMNS::DEFINER::INDEX);
+                        std::string characterSetClient = resultSet->getString(
+                                Triggers::COLUMNS::CHARACTER_SET_CLIENT::INDEX);
+                        std::string collationConnection = resultSet->getString(
+                                Triggers::COLUMNS::COLLATION_CONNECTION::INDEX);
+                        std::string databaseCollation = resultSet->getString(
+                                Triggers::COLUMNS::DATABASE_COLLATION::INDEX);
+
+                        triggers.emplace_back(
+                                Triggers{triggerCatalog, triggerSchema, triggerName, eventManipulation,
+                                         eventObjectCatalog,
+                                         eventObjectSchema, eventObjectTable, actionOrder, actionCondition,
+                                         actionStatement,
+                                         actionOrientation, actionTiming, actionReferenceOldTable,
+                                         actionReferenceNewTable,
+                                         actionReferenceOldRow, actionReferenceNewRow, created, sqlMode, definer,
+                                         characterSetClient, collationConnection, databaseCollation});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return triggers;
+                }
             };
         }
     }
