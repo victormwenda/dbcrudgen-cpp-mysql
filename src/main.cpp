@@ -175,4 +175,15 @@ void createMYSQLProjectBuilder() {
     for (auto &view: views) {
         std::cout << view.getTableSchema() << "." << view.getTableName() << std::endl;
     }
+
+    std::cout << "--------------------------- PARTITIONS ---------------------------------" << std::endl;
+    auto partitions = builder.getPartitions();
+    for (auto &partition: partitions) {
+        if (partition.getPartitionName().empty()) {
+            continue;
+        }
+        std::cout << partition.getPartitionName() << "." << partition.getTableName() << "."
+                  << partition.getTableSchema()
+                  << std::endl;
+    }
 }

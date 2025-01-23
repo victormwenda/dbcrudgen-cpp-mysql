@@ -550,9 +550,11 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get the table statistics
-                 * Return all the schema tables with the provided indexes
-                */
+                 * Get all the table primary keys
+                 * @param schema_name
+                 * @param table_name
+                 * @return
+                 */
                 std::vector<Statistics>
                 getTablePrimaryKeys(const std::string &schema_name, const std::string &table_name) {
 
@@ -597,6 +599,13 @@ namespace dbcrudgen {
                     return statistics;
                 }
 
+                /**
+                 * Get all foreign keys for a table
+                 *
+                 * @param schema_name
+                 * @param table_name
+                 * @return
+                 */
                 std::vector<KeyColumnUsage>
                 getTableForeignKeyColumns(const std::string &schema_name, const std::string &table_name) {
                     std::vector<KeyColumnUsage> keyColumnUsage;
@@ -645,8 +654,12 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all EVENTS
-                */
+                 * Get all events
+                 *
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
                 std::vector<Events> getEvents(const std::string &name = "", const std::string &schema = "") {
 
                     std::vector<Events> events;
@@ -708,8 +721,13 @@ namespace dbcrudgen {
                 }
 
                 /**
-                * Get all ROUTINES
-                */
+                 * Get all routines
+                 *
+                 * @param type
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
                 std::vector<Routines> getRoutines(const std::string &type = "", const std::string &name = "",
                                                   const std::string &schema = "") {
 
@@ -784,12 +802,84 @@ namespace dbcrudgen {
 
                     return routines;
                 }
+
+
+                /**
+                 * Get all routines
+                 *
+                 * @param type
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
+                std::vector<Partitions> getPartitions(const std::string &partitionName = "",
+                                                      const std::string &tableName = "",
+                                                      const std::string &tableSpaceName = "",
+                                                      const std::string &schema = "") {
+
+                    std::vector<Partitions> partitions;
+
+                    std::string query = dbcrudgen::db::mysql::MYSQLQueries::GET_PARTITIONS;
+                    std::map<std::string, std::string> whereFilters;
+                    whereFilters[Partitions::COLUMNS::PARTITION_NAME::NAME] = partitionName;
+                    whereFilters[Partitions::COLUMNS::TABLE_NAME::NAME] = tableName;
+                    whereFilters[Partitions::COLUMNS::TABLESPACE_NAME::NAME] = tableSpaceName;
+                    whereFilters[Partitions::COLUMNS::TABLE_SCHEMA::NAME] = schema;
+
+                    query = appendWhereClauseFilters(query, whereFilters);
+
+                    sql::Statement *statement = &connector.createStatement();
+                    sql::ResultSet *resultSet = statement->executeQuery(query);
+
+                    while (resultSet->next()) {
+
+                        std::string tableCatalog = resultSet->getString(Partitions::COLUMNS::TABLE_CATALOG::INDEX);
+                        std::string tableSchema = resultSet->getString(Partitions::COLUMNS::TABLE_SCHEMA::INDEX);
+                        std::string tableName = resultSet->getString(Partitions::COLUMNS::TABLE_NAME::INDEX);
+                        std::string partitionName = resultSet->getString(Partitions::COLUMNS::PARTITION_NAME::INDEX);
+                        std::string subpartitionName = resultSet->getString(Partitions::COLUMNS::SUBPARTITION_NAME::INDEX);
+                        long partitionOrdinalPosition = resultSet->getInt(Partitions::COLUMNS::PARTITION_ORDINAL_POSITION::INDEX);
+                        long subpartitionOrdinalPosition = resultSet->getInt(Partitions::COLUMNS::SUBPARTITION_ORDINAL_POSITION::INDEX);
+                        std::string partitionMethod = resultSet->getString(Partitions::COLUMNS::PARTITION_METHOD::INDEX);
+                        std::string subpartitionMethod = resultSet->getString(Partitions::COLUMNS::SUBPARTITION_METHOD::INDEX);
+                        std::string partitionExpression = resultSet->getString(Partitions::COLUMNS::PARTITION_EXPRESSION::INDEX);
+                        std::string subpartitionExpression = resultSet->getString(Partitions::COLUMNS::SUBPARTITION_EXPRESSION::INDEX);
+                        std::string partitionDescription = resultSet->getString(Partitions::COLUMNS::PARTITION_DESCRIPTION::INDEX);
+                        long tableRows = resultSet->getInt(Partitions::COLUMNS::TABLE_ROWS::INDEX);
+                        long avgRowLength = resultSet->getInt(Partitions::COLUMNS::AVG_ROW_LENGTH::INDEX);
+                        long dataLength = resultSet->getInt(Partitions::COLUMNS::DATA_LENGTH::INDEX);
+                        long maxDataLength = resultSet->getInt(Partitions::COLUMNS::MAX_DATA_LENGTH::INDEX);
+                        long indexLength = resultSet->getInt(Partitions::COLUMNS::INDEX_LENGTH::INDEX);
+                        long dataFree = resultSet->getInt(Partitions::COLUMNS::DATA_FREE::INDEX);
+                        std::string createTime = resultSet->getString(Partitions::COLUMNS::CREATE_TIME::INDEX);
+                        std::string updateTime = resultSet->getString(Partitions::COLUMNS::UPDATE_TIME::INDEX);
+                        std::string checkTime = resultSet->getString(Partitions::COLUMNS::CHECK_TIME::INDEX);
+                        long checksum = resultSet->getInt(Partitions::COLUMNS::CHECKSUM::INDEX);
+                        std::string partitionComment = resultSet->getString(
+                                Partitions::COLUMNS::PARTITION_COMMENT::INDEX);
+                        std::string nodegroup = resultSet->getString(Partitions::COLUMNS::NODEGROUP::INDEX);
+                        std::string tablespaceName = resultSet->getString(Partitions::COLUMNS::TABLESPACE_NAME::INDEX);
+
+                        partitions.emplace_back(
+                                Partitions{tableCatalog, tableSchema, tableName, partitionName, subpartitionName,
+                                           partitionOrdinalPosition, subpartitionOrdinalPosition, partitionMethod,
+                                           subpartitionMethod, partitionExpression, subpartitionExpression,
+                                           partitionDescription,
+                                           tableRows, avgRowLength, dataLength, maxDataLength, indexLength, dataFree,
+                                           createTime, updateTime, checkTime, checksum, partitionComment, nodegroup,
+                                           tablespaceName});
+                    }
+
+                    resultSet->close();
+                    statement->close();
+
+                    return partitions;
+                }
+
+
             };
-
-
         }
     }
-
 }
 
 

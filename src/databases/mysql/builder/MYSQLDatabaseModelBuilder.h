@@ -167,27 +167,75 @@ namespace dbcrudgen {
                     return columns;
                 }
 
+                /**
+                 * Get all the events
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
                 std::vector<db::mysql::Events> getEvents(const std::string &name = "", const std::string &schema = "") {
                     return deComposer.getEvents(name, schema);
                 }
 
+                /**
+                 * Get all the functions
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
                 std::vector<db::mysql::Routines>
                 getFunctions(const std::string &name = "", const std::string &schema = "") {
                     return getRoutines("FUNCTION", name, schema);
                 }
 
-                void getPartitions() {}
 
+                /**
+                 * Get partitions
+                 *
+                 * @param partitionName
+                 * @param tableName
+                 * @param tablespaceName
+                 * @param schema
+                 * @return
+                 */
+                std::vector<db::mysql::Partitions> getPartitions(
+                        const std::string &partitionName = "",
+                        const std::string &tableName = "",
+                        const std::string &tablespaceName = "",
+                        const std::string &schema = "") {
+                    return deComposer.getPartitions(partitionName, tableName, tablespaceName, schema);
+                }
+
+                /**
+                 * Get all the procedures
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
                 std::vector<db::mysql::Routines>
                 getProcedures(const std::string &name = "", const std::string &schema = "") {
                     return getRoutines("PROCEDURE", name, schema);
                 }
 
+                /**
+                 * Get resource groups
+                 *
+                 * @return
+                 */
                 std::vector<db::mysql::ResourceGroups> getResourceGroups() {
                     return deComposer.getResourceGroups();
                 }
 
-                std::vector<db::mysql::Routines> getRoutines(const std::string &type = "", const std::string &name = "",
+                /**
+                 * Get all routines
+                 *
+                 * @param type
+                 * @param name
+                 * @param schema
+                 * @return
+                 */
+                std::vector<db::mysql::Routines> getRoutines(const std::string &type = "",
+                                                             const std::string &name = "",
                                                              const std::string &schema = "") {
                     return deComposer.getRoutines(type, name, schema);
                 }
